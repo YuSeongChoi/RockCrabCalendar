@@ -1,0 +1,535 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */; };
+		5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */; };
+		5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */; };
+		5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */; };
+		5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */; };
+		5DE024352CA3D79E00472395 /* RockTurtleCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */; };
+		5DE024372CA3D79E00472395 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024362CA3D79E00472395 /* ContentView.swift */; };
+		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
+		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
+		5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024472CA3DC2500472395 /* Lato-Italic.ttf */; };
+		5DE0245A2CA3DC2500472395 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024482CA3DC2500472395 /* Lato-LightItalic.ttf */; };
+		5DE0245B2CA3DC2500472395 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024492CA3DC2500472395 /* Lato-Thin.ttf */; };
+		5DE0245C2CA3DC2500472395 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0244A2CA3DC2500472395 /* Lato-Bold.ttf */; };
+		5DE0245D2CA3DC2500472395 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0244B2CA3DC2500472395 /* Lato-Black.ttf */; };
+		5DE0245E2CA3DC2500472395 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0244C2CA3DC2500472395 /* Pretendard-Regular.otf */; };
+		5DE0245F2CA3DC2500472395 /* NotoSans-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0244D2CA3DC2500472395 /* NotoSans-Bold.otf */; };
+		5DE024602CA3DC2500472395 /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0244E2CA3DC2500472395 /* NotoSansCJKkr-Medium.otf */; };
+		5DE024612CA3DC2500472395 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0244F2CA3DC2500472395 /* Lato-Regular.ttf */; };
+		5DE024622CA3DC2500472395 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024502CA3DC2500472395 /* Lato-BlackItalic.ttf */; };
+		5DE024632CA3DC2500472395 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024512CA3DC2500472395 /* Pretendard-Medium.otf */; };
+		5DE024642CA3DC2500472395 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024522CA3DC2500472395 /* Lato-BoldItalic.ttf */; };
+		5DE024652CA3DC2500472395 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024532CA3DC2500472395 /* Pretendard-Bold.otf */; };
+		5DE024662CA3DC2500472395 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024542CA3DC2500472395 /* Lato-Light.ttf */; };
+		5DE024672CA3DC2500472395 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024552CA3DC2500472395 /* Lato-ThinItalic.ttf */; };
+		5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */; };
+		5DE024692CA3DC2500472395 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */; };
+		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
+		5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246C2CA3DC4A00472395 /* RswiftLibrary */; };
+		5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246E2CA3DC4A00472395 /* rswift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Resources.swift"; sourceTree = "<group>"; };
+		5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarResources.swift; sourceTree = "<group>"; };
+		5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Extension.swift"; sourceTree = "<group>"; };
+		5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
+		5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockTurtleCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarApp.swift; sourceTree = "<group>"; };
+		5DE024362CA3D79E00472395 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5DE0243A2CA3D7A000472395 /* RockTurtleCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RockTurtleCalendar.entitlements; sourceTree = "<group>"; };
+		5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5DE024472CA3DC2500472395 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		5DE024482CA3DC2500472395 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		5DE024492CA3DC2500472395 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		5DE0244A2CA3DC2500472395 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		5DE0244B2CA3DC2500472395 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		5DE0244C2CA3DC2500472395 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		5DE0244D2CA3DC2500472395 /* NotoSans-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSans-Bold.otf"; sourceTree = "<group>"; };
+		5DE0244E2CA3DC2500472395 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
+		5DE0244F2CA3DC2500472395 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		5DE024502CA3DC2500472395 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		5DE024512CA3DC2500472395 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		5DE024522CA3DC2500472395 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		5DE024532CA3DC2500472395 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		5DE024542CA3DC2500472395 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		5DE024552CA3DC2500472395 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
+		5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
+		5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
+		5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5DE0242E2CA3D79E00472395 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */,
+				5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5D029BD82CA3E1670090B4D1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		5DE024282CA3D79E00472395 = {
+			isa = PBXGroup;
+			children = (
+				5DE024332CA3D79E00472395 /* RockTurtleCalendar */,
+				5DE024322CA3D79E00472395 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5DE024322CA3D79E00472395 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5DE024332CA3D79E00472395 /* RockTurtleCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				5DE024432CA3DA4600472395 /* App */,
+				5D029BD82CA3E1670090B4D1 /* Extensions */,
+				5DE024442CA3DA5900472395 /* Resources */,
+			);
+			path = RockTurtleCalendar;
+			sourceTree = "<group>";
+		};
+		5DE0243B2CA3D7A000472395 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5DE024432CA3DA4600472395 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */,
+				5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */,
+				5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */,
+				5DE024362CA3D79E00472395 /* ContentView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5DE024442CA3DA5900472395 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5DE024462CA3DC2500472395 /* Font */,
+				5DE024382CA3D7A000472395 /* Assets.xcassets */,
+				5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */,
+				5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */,
+				5DE0243B2CA3D7A000472395 /* Preview Content */,
+				5DE0243A2CA3D7A000472395 /* RockTurtleCalendar.entitlements */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5DE024462CA3DC2500472395 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				5DE024472CA3DC2500472395 /* Lato-Italic.ttf */,
+				5DE024482CA3DC2500472395 /* Lato-LightItalic.ttf */,
+				5DE024492CA3DC2500472395 /* Lato-Thin.ttf */,
+				5DE0244A2CA3DC2500472395 /* Lato-Bold.ttf */,
+				5DE0244B2CA3DC2500472395 /* Lato-Black.ttf */,
+				5DE0244C2CA3DC2500472395 /* Pretendard-Regular.otf */,
+				5DE0244D2CA3DC2500472395 /* NotoSans-Bold.otf */,
+				5DE0244E2CA3DC2500472395 /* NotoSansCJKkr-Medium.otf */,
+				5DE0244F2CA3DC2500472395 /* Lato-Regular.ttf */,
+				5DE024502CA3DC2500472395 /* Lato-BlackItalic.ttf */,
+				5DE024512CA3DC2500472395 /* Pretendard-Medium.otf */,
+				5DE024522CA3DC2500472395 /* Lato-BoldItalic.ttf */,
+				5DE024532CA3DC2500472395 /* Pretendard-Bold.otf */,
+				5DE024542CA3DC2500472395 /* Lato-Light.ttf */,
+				5DE024552CA3DC2500472395 /* Lato-ThinItalic.ttf */,
+				5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */,
+				5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */,
+				5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5DE024302CA3D79E00472395 /* RockTurtleCalendar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DE024402CA3D7A000472395 /* Build configuration list for PBXNativeTarget "RockTurtleCalendar" */;
+			buildPhases = (
+				5DE0242D2CA3D79E00472395 /* Sources */,
+				5DE0242E2CA3D79E00472395 /* Frameworks */,
+				5DE0242F2CA3D79E00472395 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5DE024712CA3DC5E00472395 /* PBXTargetDependency */,
+			);
+			name = RockTurtleCalendar;
+			packageProductDependencies = (
+				5DE0246C2CA3DC4A00472395 /* RswiftLibrary */,
+				5DE0246E2CA3DC4A00472395 /* rswift */,
+			);
+			productName = RockTurtleCalendar;
+			productReference = 5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5DE024292CA3D79E00472395 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					5DE024302CA3D79E00472395 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockTurtleCalendar" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5DE024282CA3D79E00472395;
+			packageReferences = (
+				5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */,
+			);
+			productRefGroup = 5DE024322CA3D79E00472395 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5DE024302CA3D79E00472395 /* RockTurtleCalendar */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5DE0242F2CA3D79E00472395 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DE024692CA3DC2500472395 /* NotoSansCJKkr-Bold.otf in Resources */,
+				5DE0245D2CA3DC2500472395 /* Lato-Black.ttf in Resources */,
+				5DE024652CA3DC2500472395 /* Pretendard-Bold.otf in Resources */,
+				5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */,
+				5DE0245C2CA3DC2500472395 /* Lato-Bold.ttf in Resources */,
+				5DE024632CA3DC2500472395 /* Pretendard-Medium.otf in Resources */,
+				5DE0245F2CA3DC2500472395 /* NotoSans-Bold.otf in Resources */,
+				5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */,
+				5DE024642CA3DC2500472395 /* Lato-BoldItalic.ttf in Resources */,
+				5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */,
+				5DE0245B2CA3DC2500472395 /* Lato-Thin.ttf in Resources */,
+				5DE0245E2CA3DC2500472395 /* Pretendard-Regular.otf in Resources */,
+				5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */,
+				5DE024622CA3DC2500472395 /* Lato-BlackItalic.ttf in Resources */,
+				5DE0245A2CA3DC2500472395 /* Lato-LightItalic.ttf in Resources */,
+				5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */,
+				5DE024602CA3DC2500472395 /* NotoSansCJKkr-Medium.otf in Resources */,
+				5DE024612CA3DC2500472395 /* Lato-Regular.ttf in Resources */,
+				5DE024662CA3DC2500472395 /* Lato-Light.ttf in Resources */,
+				5DE024672CA3DC2500472395 /* Lato-ThinItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5DE0242D2CA3D79E00472395 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
+				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
+				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
+				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
+				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
+				5DE024372CA3D79E00472395 /* ContentView.swift in Sources */,
+				5DE024352CA3D79E00472395 /* RockTurtleCalendarApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5DE024712CA3DC5E00472395 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5DE024702CA3DC5E00472395 /* RswiftGenerateInternalResources */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5DE0243E2CA3D7A000472395 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5DE0243F2CA3D7A000472395 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		5DE024412CA3D7A000472395 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RockTurtleCalendar/RockTurtleCalendar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RockTurtleCalendar/Preview Content\"";
+				DEVELOPMENT_TEAM = Y3SM86Y3Q4;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockTurtleCalendar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5DE024422CA3D7A000472395 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RockTurtleCalendar/RockTurtleCalendar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RockTurtleCalendar/Preview Content\"";
+				DEVELOPMENT_TEAM = Y3SM86Y3Q4;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockTurtleCalendar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockTurtleCalendar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DE0243E2CA3D7A000472395 /* Debug */,
+				5DE0243F2CA3D7A000472395 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DE024402CA3D7A000472395 /* Build configuration list for PBXNativeTarget "RockTurtleCalendar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DE024412CA3D7A000472395 /* Debug */,
+				5DE024422CA3D7A000472395 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mac-cain13/R.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.6.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5DE0246C2CA3DC4A00472395 /* RswiftLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
+			productName = RswiftLibrary;
+		};
+		5DE0246E2CA3DC4A00472395 /* rswift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
+			productName = rswift;
+		};
+		5DE024702CA3DC5E00472395 /* RswiftGenerateInternalResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "plugin:RswiftGenerateInternalResources";
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5DE024292CA3D79E00472395 /* Project object */;
+}
