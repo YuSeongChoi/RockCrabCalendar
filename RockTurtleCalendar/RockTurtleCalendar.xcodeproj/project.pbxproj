@@ -15,6 +15,7 @@
 		5D029BE32CA3F5120090B4D1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE22CA3F5120090B4D1 /* CalendarView.swift */; };
 		5D029BE72CA3F5D50090B4D1 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE62CA3F5D50090B4D1 /* CalendarManager.swift */; };
 		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
+		5D029BF12CA67BEE0090B4D1 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */; };
 		5DE024352CA3D79E00472395 /* RockTurtleCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -49,6 +50,7 @@
 		5D029BE22CA3F5120090B4D1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		5D029BE62CA3F5D50090B4D1 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockTurtleCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				5D029BE22CA3F5120090B4D1 /* CalendarView.swift */,
+				5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
 				5D029BE72CA3F5D50090B4D1 /* CalendarManager.swift in Sources */,
+				5D029BF12CA67BEE0090B4D1 /* CalendarCellView.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockTurtleCalendarApp.swift in Sources */,
