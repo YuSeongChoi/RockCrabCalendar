@@ -51,7 +51,7 @@
 		5D029BE62CA3F5D50090B4D1 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
-		5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockTurtleCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5DE0243A2CA3D7A000472395 /* RockTurtleCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RockTurtleCalendar.entitlements; sourceTree = "<group>"; };
@@ -118,7 +118,7 @@
 		5DE024282CA3D79E00472395 = {
 			isa = PBXGroup;
 			children = (
-				5DE024332CA3D79E00472395 /* RockTurtleCalendar */,
+				5DE024332CA3D79E00472395 /* RockCrabCalendar */,
 				5DE024322CA3D79E00472395 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -126,12 +126,12 @@
 		5DE024322CA3D79E00472395 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */,
+				5DE024312CA3D79E00472395 /* RockCrabCalendar.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5DE024332CA3D79E00472395 /* RockTurtleCalendar */ = {
+		5DE024332CA3D79E00472395 /* RockCrabCalendar */ = {
 			isa = PBXGroup;
 			children = (
 				5D029BE52CA3F5C20090B4D1 /* Common */,
@@ -140,7 +140,7 @@
 				5D029BD82CA3E1670090B4D1 /* Extensions */,
 				5DE024442CA3DA5900472395 /* Resources */,
 			);
-			path = RockTurtleCalendar;
+			path = RockCrabCalendar;
 			sourceTree = "<group>";
 		};
 		5DE0243B2CA3D7A000472395 /* Preview Content */ = {
@@ -202,9 +202,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5DE024302CA3D79E00472395 /* RockTurtleCalendar */ = {
+		5DE024302CA3D79E00472395 /* RockCrabCalendar */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5DE024402CA3D7A000472395 /* Build configuration list for PBXNativeTarget "RockTurtleCalendar" */;
+			buildConfigurationList = 5DE024402CA3D7A000472395 /* Build configuration list for PBXNativeTarget "RockCrabCalendar" */;
 			buildPhases = (
 				5DE0242D2CA3D79E00472395 /* Sources */,
 				5DE0242E2CA3D79E00472395 /* Frameworks */,
@@ -215,13 +215,13 @@
 			dependencies = (
 				5DE024712CA3DC5E00472395 /* PBXTargetDependency */,
 			);
-			name = RockTurtleCalendar;
+			name = RockCrabCalendar;
 			packageProductDependencies = (
 				5DE0246C2CA3DC4A00472395 /* RswiftLibrary */,
 				5DE0246E2CA3DC4A00472395 /* rswift */,
 			);
 			productName = RockTurtleCalendar;
-			productReference = 5DE024312CA3D79E00472395 /* RockTurtleCalendar.app */;
+			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -239,7 +239,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockTurtleCalendar" */;
+			buildConfigurationList = 5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockCrabCalendar" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -255,7 +255,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5DE024302CA3D79E00472395 /* RockTurtleCalendar */,
+				5DE024302CA3D79E00472395 /* RockCrabCalendar */,
 			);
 		};
 /* End PBXProject section */
@@ -437,10 +437,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = RockTurtleCalendar/RockTurtleCalendar.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RockCrabCalendar/RockTurtleCalendar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"RockTurtleCalendar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = Y3SM86Y3Q4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -460,7 +460,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ys.RockTurtleCalendar;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -475,10 +475,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = RockTurtleCalendar/RockTurtleCalendar.entitlements;
+				CODE_SIGN_ENTITLEMENTS = RockCrabCalendar/RockTurtleCalendar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"RockTurtleCalendar/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = Y3SM86Y3Q4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -498,7 +498,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ys.RockTurtleCalendar;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -511,7 +511,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockTurtleCalendar" */ = {
+		5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockCrabCalendar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5DE0243E2CA3D7A000472395 /* Debug */,
@@ -520,7 +520,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5DE024402CA3D7A000472395 /* Build configuration list for PBXNativeTarget "RockTurtleCalendar" */ = {
+		5DE024402CA3D7A000472395 /* Build configuration list for PBXNativeTarget "RockCrabCalendar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5DE024412CA3D7A000472395 /* Debug */,

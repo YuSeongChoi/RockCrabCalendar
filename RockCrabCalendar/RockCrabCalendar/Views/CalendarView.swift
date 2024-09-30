@@ -17,13 +17,24 @@ struct CalendarView: View {
         return Calendar.current.date(from: components)!
     }
     
-    
     var body: some View {
         VStack {
             headerView
             Divider()
             calendarGridView
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.vertical, 30)
+        .gesture(DragGesture()
+            .onEnded { value in
+                if value.translation.width < 0 {
+                    calendarManager.changeMonth(by: -1)
+                } else if value.translation.width > 0 {
+                    calendarManager.changeMonth(by: 1)
+                }
+            }
+        )
     }
     
     // MARK: - 헤더 뷰
