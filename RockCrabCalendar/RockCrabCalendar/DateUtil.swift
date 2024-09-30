@@ -112,4 +112,65 @@ extension Date {
     
 }
 
+extension Date {
+    var startOfDay: Date {
+        return Calendar.iso.startOfDay(for: self)
+    }
+    
+    var endOfDay: Date {
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        return Calendar.current.date(byAdding: components, to: startOfDay)!
+    }
+    
+    var startOfMonth: Date {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents([.year, .month], from: self)
+        return calendar.date(from: components)!
+    }
+    
+    var endOfMonth: Date {
+        var components = DateComponents()
+        components.month = 1
+        components.second = -1
+        return Calendar(identifier: .gregorian).date(byAdding: components, to: startOfMonth)!
+    }
+    
+    var startOfYear: Date {
+        let cal = Calendar.iso
+        var components = cal.dateComponents([.year], from: self)
+        components.calendar = cal
+        components.month = 1
+        components.day = 1
+        return cal.startOfDay(for: components.date!)
+    }
+    
+    var endOfYear: Date {
+        let cal = Calendar.iso
+        var components = cal.dateComponents([.year], from: self)
+        components.calendar = cal
+        components.month = 12
+        components.day = 31
+        return cal.startOfDay(for: components.date!)
+    }
+    
+    var startOfWeek: Date {
+        let date = Calendar.current.date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))!
+        let dslTimeOffset = NSTimeZone.local.daylightSavingTimeOffset(for: date)
+        return date.addingTimeInterval(dslTimeOffset)
+    }
+    
+    var endOfWeek: Date {
+        return Calendar.current.date(byAdding: .second, value: 604799, to: self.startOfWeek)!
+    }
+}
 
+extension Calendar {
+    static var iso: Self {
+        var cal = Calendar(identifier: .iso8601)
+        cal.locale = .autoupdatingCurrent
+        cal.timeZone = .autoupdatingCurrent
+        return cal
+    }
+}

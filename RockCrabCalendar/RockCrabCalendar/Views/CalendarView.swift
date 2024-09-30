@@ -18,20 +18,32 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        VStack {
-            headerView
-            Divider()
-            calendarGridView
-            Spacer()
+        ScrollView {
+            VStack(spacing: 20) {
+                headerView
+                Divider()
+                scrollableCalendarView
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.vertical, 30)
+        .padding(.vertical, 1)
+        // 좌우 제스처
         .gesture(DragGesture()
             .onEnded { value in
                 if value.translation.width < 0 {
-                    calendarManager.changeMonth(by: -1)
-                } else if value.translation.width > 0 {
                     calendarManager.changeMonth(by: 1)
+                } else if value.translation.width > 0 {
+                    calendarManager.changeMonth(by: -1)
+                }
+            }
+        )
+        // 상하 제스처
+        .gesture(DragGesture()
+            .onEnded { value in
+                if value.translation.height < 0 {
+                    calendarManager.changeMonth(by: 1)
+                } else if value.translation.height > 0 {
+                    calendarManager.changeMonth(by: -1)
                 }
             }
         )
@@ -83,7 +95,6 @@ struct CalendarView: View {
         .foregroundStyle(.black)
     }
     
-    @ViewBuilder
     private var calendarGridView: some View {
         /// 해당월에 존재하는 일자 수
         let daysInMonth: Int = calendarManager.numberOfDays(in: calendarManager.currentDate)
@@ -122,6 +133,20 @@ struct CalendarView: View {
                 }
             }
         }
+    }
+    
+    @ViewBuilder
+    private var scrollableCalendarView: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 100) {
+                calendarGridView
+                
+                calendarGridView
+                
+                calendarGridView
+            }
+        }
+        .scrollIndicators(.hidden)
     }
     
 }
