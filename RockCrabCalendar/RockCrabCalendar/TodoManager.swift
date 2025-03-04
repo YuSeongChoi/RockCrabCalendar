@@ -29,7 +29,7 @@ final class TodoManager: ObservableObject {
     }
     
     func addTodo(_ todo: TodoItem, for date: Date) {
-        let dateString = date.string(format: "yyyy년 M월")
+        let dateString = date.string(format: "yyyy-MM-dd")
         if todos[dateString] == nil {
             todos[dateString] = []
         }
@@ -38,7 +38,7 @@ final class TodoManager: ObservableObject {
     }
     
     func deleteTodo(_ todo: TodoItem, for date: Date) {
-        let dateString = date.string(format: "yyyy년 M월")
+        let dateString = date.string(format: "yyyy-MM-dd")
         if let index = todos[dateString]?.firstIndex(where: { $0.id == todo.id }) {
             todos[dateString]?.remove(at: index)
             saveTodos()
@@ -46,7 +46,7 @@ final class TodoManager: ObservableObject {
     }
     
     func toggleCompletion(of todo: TodoItem, for date: Date) {
-        let dateString = date.string(format: "yyyy년 M월")
+        let dateString = date.string(format: "yyyy-MM-dd")
         if let index = todos[dateString]?.firstIndex(where: { $0.id == todo.id}) {
             todos[dateString]?[index].isComplted.toggle()
             saveTodos()

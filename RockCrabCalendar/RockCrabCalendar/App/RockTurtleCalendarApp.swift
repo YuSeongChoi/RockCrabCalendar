@@ -13,7 +13,7 @@ struct RockTurtleCalendarApp: App {
     
     var body: some Scene {
         WindowGroup {
-            CustomCalendarView()
+            CalendarView()
                 .preferredColorScheme(.light)
         }
     }
