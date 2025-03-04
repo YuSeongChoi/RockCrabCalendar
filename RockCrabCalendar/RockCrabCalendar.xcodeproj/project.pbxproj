@@ -16,6 +16,10 @@
 		5D029BE72CA3F5D50090B4D1 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE62CA3F5D50090B4D1 /* CalendarManager.swift */; };
 		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
 		5D029BF12CA67BEE0090B4D1 /* CalendarCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */; };
+		5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A982D7045FF00D90C0D /* TodoItem.swift */; };
+		5D6B4A9B2D7047F000D90C0D /* TodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */; };
+		5D6B4A9D2D704A4000D90C0D /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A9C2D704A4000D90C0D /* TodoListView.swift */; };
+		5D6B4AC02D76BD2800D90C0D /* CustomCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CustomCalendarView.swift */; };
 		5DE024352CA3D79E00472395 /* RockTurtleCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -51,6 +55,10 @@
 		5D029BE62CA3F5D50090B4D1 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellView.swift; sourceTree = "<group>"; };
+		5D6B4A982D7045FF00D90C0D /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
+		5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoManager.swift; sourceTree = "<group>"; };
+		5D6B4A9C2D704A4000D90C0D /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
+		5D6B4ABF2D76BD2800D90C0D /* CustomCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockTurtleCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,6 +110,8 @@
 			children = (
 				5D029BE22CA3F5120090B4D1 /* CalendarView.swift */,
 				5D029BF02CA67BEE0090B4D1 /* CalendarCellView.swift */,
+				5D6B4A9C2D704A4000D90C0D /* TodoListView.swift */,
+				5D6B4ABF2D76BD2800D90C0D /* CustomCalendarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -110,9 +120,18 @@
 			isa = PBXGroup;
 			children = (
 				5D029BE62CA3F5D50090B4D1 /* CalendarManager.swift */,
+				5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */,
 				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
 			);
 			name = Common;
+			sourceTree = "<group>";
+		};
+		5D6B4A972D7045F600D90C0D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5D6B4A982D7045FF00D90C0D /* TodoItem.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		5DE024282CA3D79E00472395 = {
@@ -134,6 +153,7 @@
 		5DE024332CA3D79E00472395 /* RockCrabCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				5D6B4A972D7045F600D90C0D /* Models */,
 				5D029BE52CA3F5C20090B4D1 /* Common */,
 				5DE024432CA3DA4600472395 /* App */,
 				5D029BE12CA3F5020090B4D1 /* Views */,
@@ -232,7 +252,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					5DE024302CA3D79E00472395 = {
 						CreatedOnToolsVersion = 15.0;
@@ -296,13 +316,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
+				5D6B4A9B2D7047F000D90C0D /* TodoManager.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
+				5D6B4A9D2D704A4000D90C0D /* TodoListView.swift in Sources */,
 				5D029BE32CA3F5120090B4D1 /* CalendarView.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
+				5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */,
 				5D029BE72CA3F5D50090B4D1 /* CalendarManager.swift in Sources */,
 				5D029BF12CA67BEE0090B4D1 /* CalendarCellView.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
+				5D6B4AC02D76BD2800D90C0D /* CustomCalendarView.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockTurtleCalendarApp.swift in Sources */,
 			);
@@ -352,6 +376,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -413,6 +438,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -440,6 +466,7 @@
 				CODE_SIGN_ENTITLEMENTS = RockCrabCalendar/RockTurtleCalendar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = Y3SM86Y3Q4;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -478,6 +505,7 @@
 				CODE_SIGN_ENTITLEMENTS = RockCrabCalendar/RockTurtleCalendar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = Y3SM86Y3Q4;
 				ENABLE_HARDENED_RUNTIME = YES;

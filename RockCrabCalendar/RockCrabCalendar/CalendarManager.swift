@@ -7,12 +7,17 @@
 
 import Foundation
 
-class CalendarManager: ObservableObject {
+@MainActor
+final class CalendarManager: ObservableObject {
     @Published var currentDate: Date
     
     init() {
         // 현재 날짜로 초기화
         self.currentDate = Date()
+    }
+    
+    init(date: Date) {
+        self.currentDate = date
     }
     
     /// 특정 해당 날짜
@@ -44,7 +49,7 @@ class CalendarManager: ObservableObject {
     }
     
     /// 해당 월의 첫 날짜가 갖는 해당 주의 몇번째 요일
-    func firstWeekdayOfmOnth(in date: Date) -> Int {
+    func firstWeekdayOfMonth(in date: Date) -> Int {
         let components = Calendar.current.dateComponents([.year, .month], from: date)
         let firstDayOfMonth = Calendar.current.date(from: components)!
         return Calendar.current.component(.weekday, from: firstDayOfMonth)

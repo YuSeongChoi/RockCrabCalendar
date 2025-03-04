@@ -7,9 +7,15 @@
 
 import SwiftUI
 
+/*
 struct CalendarView: View {
-    @StateObject private var calendarManager = CalendarManager()
+    @StateObject private var calendarManager:CalendarManager
+    @StateObject private var todoManager = TodoManager()
     @State private var onSelectedDate: Date?
+    
+    init(date: Date = Date()) {
+        self._calendarManager = .init(wrappedValue: .init(date: date))
+    }
     
     var today: Date {
         let now = Date()
@@ -18,12 +24,10 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                headerView
-                Divider()
-                scrollableCalendarView
-            }
+        VStack(spacing: 0) {
+            headerView
+            Divider()
+            scrollableCalendarView
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.vertical, 1)
@@ -56,8 +60,15 @@ struct CalendarView: View {
             HStack {
                 yearMonthView
                 Spacer()
+                Button {
+                    // TODO: 일정 추가
+                    addTodoForSelectedDate()
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .foregroundStyle(.black)
             }
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 15)
             .padding(.bottom, 5)
             
             HStack {
@@ -67,41 +78,59 @@ struct CalendarView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-            .padding(.bottom, 5)
         }
+        .padding(.bottom, 10)
     }
     
     // MARK: 연월 표시 뷰
     @ViewBuilder
     private var yearMonthView: some View {
-        HStack(alignment: .center, spacing: 20) {
-            Button {
-                calendarManager.changeMonth(by: -1)
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.title)
+        Text(calendarManager.currentDate, formatter: Date.calendarHeaderDateFormatter)
+            .font(.title.bold())
+            .foregroundStyle(.black)
+    }
+    
+    // MARK: 캘린더 뷰
+    @ViewBuilder
+    private var scrollableCalendarView: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 5) {
+                calendarGridView
+                
+                
+                
+                if let selectedDate = onSelectedDate, let todos = todoManager.todos[selectedDate.string(format: "yyyy.MM.dd")] {
+                    TodoListView(todos: Binding(
+                        get: { todos },
+                        set: { newTodos in todoManager.todos[selectedDate.string(format: "yyyy.MM.dd")] = newTodos }
+                    )) { indexSet in
+                        for index in indexSet {
+                            todoManager.delete(date: selectedDate.string(format: "yyyy.MM.dd"), id: todos[index].id)
+                        }
+                    } onAdd: {
+                        addTodoForSelectedDate()
+                    }
+                }
             }
-            
-            Text(calendarManager.currentDate, formatter: Date.calendarHeaderDateFormatter)
-                .font(.title.bold())
-            
-            Button {
-                calendarManager.changeMonth(by: 1)
-            } label: {
-                Image(systemName: "chevron.right")
-                    .font(.title)
-            }
+            .padding(.top, 10)
         }
-        .foregroundStyle(.black)
+        .scrollIndicators(.hidden)
+    }
+    
+    private func addTodoForSelectedDate() {
+        let selectedDate = onSelectedDate ?? Date()
+        let newTodo = TodoItem(title: "New Task", isComplted: false)
+        todoManager.addTodo(date: selectedDate.string(format: "yyyy.MM.dd"), todo: newTodo)
     }
     
     private var calendarGridView: some View {
         /// 해당월에 존재하는 일자 수
         let daysInMonth: Int = calendarManager.numberOfDays(in: calendarManager.currentDate)
         /// 해당월의 첫 날짜가 갖는 요일
-        let firstWeekday: Int = calendarManager.firstWeekdayOfmOnth(in: calendarManager.currentDate) - 1
+        let firstWeekday: Int = calendarManager.firstWeekdayOfMonth(in: calendarManager.currentDate) - 1
         /// 지난달 일자 수
         let lastDayOfMonthBefore: Int = calendarManager.numberOfDays(in: calendarManager.previousMonth())
+        
         /// 해당월의 주차 수
         let numberOfRows: Int = Int(ceil(Double(daysInMonth + firstWeekday) / 7.0))
         /// 보여지는 일수
@@ -135,23 +164,6 @@ struct CalendarView: View {
         }
     }
     
-    @ViewBuilder
-    private var scrollableCalendarView: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 100) {
-                calendarGridView
-                
-                calendarGridView
-                
-                calendarGridView
-            }
-        }
-        .scrollIndicators(.hidden)
-    }
-    
 }
 
-
-#Preview {
-    CalendarView()
-}
+*/
