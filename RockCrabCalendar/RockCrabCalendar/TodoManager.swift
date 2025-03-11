@@ -11,6 +11,12 @@ import Foundation
 final class TodoManager: ObservableObject {
     @Published var todos: [String: [TodoItem]] = [:]
     
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
     init() {
         loadTodos()
     }
@@ -29,7 +35,7 @@ final class TodoManager: ObservableObject {
     }
     
     func addTodo(_ todo: TodoItem, for date: Date) {
-        let dateString = date.string(format: "yyyy-MM-dd")
+        let dateString = dateFormatter.string(from: date)
         if todos[dateString] == nil {
             todos[dateString] = []
         }
@@ -38,7 +44,7 @@ final class TodoManager: ObservableObject {
     }
     
     func deleteTodo(_ todo: TodoItem, for date: Date) {
-        let dateString = date.string(format: "yyyy-MM-dd")
+        let dateString = dateFormatter.string(from: date)
         if let index = todos[dateString]?.firstIndex(where: { $0.id == todo.id }) {
             todos[dateString]?.remove(at: index)
             saveTodos()
@@ -46,7 +52,7 @@ final class TodoManager: ObservableObject {
     }
     
     func toggleCompletion(of todo: TodoItem, for date: Date) {
-        let dateString = date.string(format: "yyyy-MM-dd")
+        let dateString = dateFormatter.string(from: date)
         if let index = todos[dateString]?.firstIndex(where: { $0.id == todo.id}) {
             todos[dateString]?[index].isComplted.toggle()
             saveTodos()

@@ -12,6 +12,7 @@ struct CalendarView: View {
     @State private var selectedDate: Date = Date()
     @State private var currentMonth: Date = Date()
     @State private var newTodoTitle = ""
+    @State private var dragOffset: CGFloat = 0
     
     private let calendar = Calendar.current
     private let monthYearFormatter: DateFormatter = {
@@ -69,6 +70,20 @@ struct CalendarView: View {
                     }
                 }
             }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        dragOffset = value.translation.width
+                    }
+                    .onEnded { value in
+                        if value.translation.width < -50 {
+                            changeMonth(by: 1)
+                        } else if value.translation.width > 50 {
+                            changeMonth(by: -1)
+                        }
+                        dragOffset = 0
+                    }
+            )
             
             // Todo 리스트와 추가 버튼
             VStack {
