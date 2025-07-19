@@ -29,8 +29,6 @@ SwiftUI와 Firebase Analytics 기반으로 제작되었습니다.
 ![퀴즈 진행 화면](media/quiz_screen.png)
 ![결과 화면 + 스크린샷 버튼](media/result_screen.png)
 
-*(이미지는 `media/` 디렉토리에 저장된 파일로 바꿔줘)*
-
 ---
 
 ## 🚀 시작하기
