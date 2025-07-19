@@ -8,7 +8,7 @@
 
 ## 📖 소개
 
-`RockTurtleQuiz`는 **QWER(바위게)** 팬들을 위한 **팬메이드 아이템 맞추기 퀴즈 앱**입니다..  
+`RockTurtleQuiz`는 **QWER(바위게)** 팬들을 위한 **팬메이드 아이템 맞추기 퀴즈 앱**입니다.
 SwiftUI와 Firebase Analytics 기반으로 제작되었습니다.
 
 ---
