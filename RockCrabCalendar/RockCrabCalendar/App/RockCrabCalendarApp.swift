@@ -8,13 +8,15 @@
 import SwiftUI
 
 @main
-struct RockTurtleCalendarApp: App {
+struct RockCrabCalendarApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     
     var body: some Scene {
         WindowGroup {
-            CalendarView()
-                .preferredColorScheme(.light)
+            NavigationView {
+                CalendarView()
+                    .preferredColorScheme(.light)
+            }
         }
     }
     

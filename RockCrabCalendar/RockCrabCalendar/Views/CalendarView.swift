@@ -14,6 +14,8 @@ struct CalendarView: View {
     @State private var newTodoTitle = ""
     @State private var dragOffset: CGFloat = 0
     
+    @State private var showTodoSheet: Bool = false
+    
     private let calendar = Calendar.current
     private let monthYearFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -87,9 +89,17 @@ struct CalendarView: View {
             
             // Todo 리스트와 추가 버튼
             VStack {
-                Text("할 일 목록")
-                    .font(.headline)
-                    .padding(.top)
+                HStack {
+                    Text("할 일 목록")
+                        .pretendSemiBold(size: 18)
+                    Spacer()
+                    Button {
+                        showTodoSheet.toggle()
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundStyle(.black)
+                    }
+                }
                 
                 let dateString = selectedDate.string(format: "yyyy-MM-dd")
                 if let todos = todoManager.todos[dateString], !todos.isEmpty {
@@ -127,6 +137,9 @@ struct CalendarView: View {
             }
             
             Spacer()
+        }
+        .sheet(isPresented: $showTodoSheet) {
+            TodoView(todoManager: todoManager, selectedDate: selectedDate)
         }
     }
     

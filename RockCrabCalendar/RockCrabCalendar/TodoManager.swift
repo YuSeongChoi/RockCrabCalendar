@@ -11,7 +11,7 @@ import Foundation
 final class TodoManager: ObservableObject {
     @Published var todos: [String: [TodoItem]] = [:]
     
-    private let dateFormatter: DateFormatter = {
+    let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
