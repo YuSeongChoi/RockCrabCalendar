@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 import RswiftResources
 
 extension Text {
@@ -83,4 +82,11 @@ extension View {
     func pretendReg(size: CGFloat) -> some View {
         self.font(R.font.pretendardRegular.swiftFontOfSize(size))
     }
+}
+
+extension Color {
+    static let pastelMagenta = Color(red: 244/255, green: 175/255, blue: 199/255)
+    static let pastelBlue = Color(red: 175/255, green: 205/255, blue: 244/255)
+    static let pastelGreen = Color(red: 199/255, green: 232/255, blue: 199/255)
+    static let pastelYellow = Color(red: 255/255, green: 249/255, blue: 196/255)
 }

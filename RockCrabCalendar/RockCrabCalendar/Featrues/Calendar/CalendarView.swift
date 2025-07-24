@@ -56,17 +56,18 @@ struct CalendarView: View {
             
             // 날짜 그리드
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
-                ForEach(generateDaysInMonth(for: currentMonth), id: \.self) { date in
+                ForEach(generateDaysInMonth(for: currentMonth), id: \.self) { date    in
                     if let date = date {
-                        let isCurrentMonth = calendar.isDate(date, equalTo: currentMonth, toGranularity: .month)
-                        Text("\(calendar.component(.day, from: date))")
-                            .frame(width: 40, height: 40)
-                            .background(calendar.isDate(date, inSameDayAs: selectedDate) ? Color.blue : Color.clear)
-                            .clipShape(Circle())
-                            .foregroundColor(isCurrentMonth ? .primary : .gray)
-                            .onTapGesture {
-                                selectedDate = date
-                            }
+                        CalendarDayCell(
+                            date: date,
+                            isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
+                            isInCurrentMonth: calendar.isDate(date, equalTo: currentMonth, toGranularity: .month),
+                            image: nil,
+                            hasSchedule: true
+                        )
+                        .onTapGesture {
+                            selectedDate = date
+                        }
                     } else {
                         Color.clear.frame(width: 40, height: 40)
                     }
