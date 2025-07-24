@@ -89,4 +89,9 @@ extension Color {
     static let pastelBlue = Color(red: 175/255, green: 205/255, blue: 244/255)
     static let pastelGreen = Color(red: 199/255, green: 232/255, blue: 199/255)
     static let pastelYellow = Color(red: 255/255, green: 249/255, blue: 196/255)
+    static let pastelChodan  = Color.white.opacity(0.9) // 쵸단
+    static let pastelMajenta = Color(red: 1.0, green: 0.75, blue: 0.9) // 마젠타
+    static let pastelHina    = Color(red: 0.75, green: 0.85, blue: 1.0) // 히나
+    static let pastelMing    = Color(red: 0.75, green: 1.0, blue: 0.8)  // 시요밍
+    static let calendarBackground = Color(red: 1.0, green: 0.96, blue: 0.97) // 훨씬 연한 톤
 }

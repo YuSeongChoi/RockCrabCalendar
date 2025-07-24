@@ -17,6 +17,8 @@
 		5D5E85582E30BA6E00DB8775 /* QWERFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E85572E30BA6E00DB8775 /* QWERFetcher.swift */; };
 		5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */; };
 		5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */; };
+		5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */; };
+		5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */; };
 		5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A982D7045FF00D90C0D /* TodoItem.swift */; };
 		5D6B4A9B2D7047F000D90C0D /* TodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */; };
 		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
@@ -57,6 +59,8 @@
 		5D5E85572E30BA6E00DB8775 /* QWERFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERFetcher.swift; sourceTree = "<group>"; };
 		5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
 		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
+		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		5D6B4A982D7045FF00D90C0D /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoManager.swift; sourceTree = "<group>"; };
 		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -110,6 +114,7 @@
 		5D5E85302E30B9F800DB8775 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				5D5E857E2E31F6C200DB8775 /* Service */,
 				5D5E85372E30BA0600DB8775 /* Manager */,
 				5D6B4A972D7045F600D90C0D /* Model */,
 			);
@@ -128,27 +133,28 @@
 			isa = PBXGroup;
 			children = (
 				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
+				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
 				5D029BD82CA3E1670090B4D1 /* Extensions */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		5D5E854B2E30BA3B00DB8775 /* Featrues */ = {
+		5D5E854B2E30BA3B00DB8775 /* Features */ = {
 			isa = PBXGroup;
 			children = (
 				5D5E854C2E30BA4700DB8775 /* Calendar */,
 				5D5E854D2E30BA4C00DB8775 /* Todo */,
 				5D5E854E2E30BA5300DB8775 /* Schedule */,
 			);
-			path = Featrues;
+			path = Features;
 			sourceTree = "<group>";
 		};
 		5D5E854C2E30BA4700DB8775 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
 				5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */,
-				5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */,
-				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
+				5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */,
+				5D5E85822E31F6D800DB8775 /* Component */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -167,6 +173,22 @@
 				5D5E85572E30BA6E00DB8775 /* QWERFetcher.swift */,
 			);
 			path = Schedule;
+			sourceTree = "<group>";
+		};
+		5D5E857E2E31F6C200DB8775 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		5D5E85822E31F6D800DB8775 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		5D6B4A972D7045F600D90C0D /* Model */ = {
@@ -200,7 +222,7 @@
 				5DE024432CA3DA4600472395 /* App */,
 				5D5E85302E30B9F800DB8775 /* Core */,
 				5D5E853C2E30BA1100DB8775 /* Utils */,
-				5D5E854B2E30BA3B00DB8775 /* Featrues */,
+				5D5E854B2E30BA3B00DB8775 /* Features */,
 				5DE024442CA3DA5900472395 /* Resources */,
 			);
 			path = RockCrabCalendar;
@@ -366,9 +388,11 @@
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
 				5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
+				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
 				5D5E85582E30BA6E00DB8775 /* QWERFetcher.swift in Sources */,
+				5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */,
 				5D5E852D2E30B9D700DB8775 /* ScheduleItem.swift in Sources */,
 				5DEA6B962D9E4F3600E085EB /* TodoView.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
@@ -514,6 +538,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
+				DEVELOPMENT_TEAM = 23Z89DEDAB;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -552,6 +577,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
+				DEVELOPMENT_TEAM = 23Z89DEDAB;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
