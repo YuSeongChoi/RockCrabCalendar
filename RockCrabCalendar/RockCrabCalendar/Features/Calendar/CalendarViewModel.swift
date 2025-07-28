@@ -79,13 +79,16 @@ final class CalendarViewModel: ObservableObject {
         let members = Set(items.flatMap { $0.members })
 
         return QWERMember.allCases.compactMap { member in
-            guard members.contains(member) else { return nil }
-            switch member {
-            case .chodan: return .pastelChodan
-            case .magenta: return .pastelMajenta
-            case .hina: return .pastelHina
-            case .siyo: return .pastelMing
-            }
+            members.contains(member) ? memberColor(member) : nil
+        }
+    }
+    
+    func memberColor(_ member: QWERMember) -> Color {
+        switch member {
+        case .chodan: return .pastelChodan
+        case .magenta: return .pastelMajenta
+        case .hina: return .pastelHina
+        case .siyo: return .pastelMing
         }
     }
     

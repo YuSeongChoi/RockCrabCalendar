@@ -128,17 +128,44 @@ private func dateGridView(height: CGFloat) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(viewModel.scheduleItems(for: viewModel.selectedDate), id: \.id) { item in
-                    HStack {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text(item.title)
-                            .font(.system(size: 14))
-                            .foregroundColor(.black)
+                            .font(.system(size: 16, weight: .semibold))
+
+                        HStack(spacing: 8) {
+                            Label(item.time, systemImage: "clock")
+                            Label(item.place, systemImage: "house.lodge.circle.fill")
+                        }
+                        .font(.system(size: 13))
+                        .foregroundColor(.gray)
+
+                        if !item.members.isEmpty {
+                            HStack(spacing: 4) {
+                                Image(systemName: item.members.count == 1 ? "person.fill" : "person.3.fill")
+                                    .foregroundColor(.blue)
+                                ForEach(item.members, id: \.self) { member in
+                                    Text(member.rawValue.capitalized)
+                                        .font(.system(size: 13))
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(
+                                            Capsule().fill(viewModel.memberColor(member))
+                                        )
+                                        .foregroundColor(.black)
+                                }
+                            }
+                        }
                     }
-                    .padding(.horizontal)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color(red: 248/255, green: 248/255, blue: 248/255))
+                    .cornerRadius(10)
+                    .padding(.horizontal, 16)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .top)
             .padding(.vertical)
-            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .transition(.opacity)
         }
         .scrollIndicators(.hidden)
     }

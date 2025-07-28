@@ -43,9 +43,14 @@ struct CalendarDayCell: View {
                         if !eventColors.isEmpty {
                             HStack(spacing: 4) {
                                 ForEach(0..<eventColors.count, id: \.self) { i in
-                                    Circle()
-                                        .fill(eventColors[i])
-                                        .frame(width: 6, height: 6)
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color(white: 0.85))
+                                            .frame(width: 7.5, height: 7.5)
+                                        Circle()
+                                            .fill(eventColors[i])
+                                            .frame(width: 6, height: 6)
+                                    }
                                 }
                             }
                             .frame(height: 16)
