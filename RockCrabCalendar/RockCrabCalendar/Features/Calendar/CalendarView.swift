@@ -23,85 +23,123 @@ struct CalendarView: View {
     }()
     private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
     
-    var body: some View {
-        VStack {
-            VStack {
-                HStack {
-                    Button {
-                        viewModel.changeMonth(by: -1)
-                    } label: {
-                        Image(systemName: "chevron.left")
-                    }
-                    Spacer()
-                    Text(monthYearFormatter.string(from: viewModel.currentMonth))
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(.black)
-                    Spacer()
-                    Button {
-                        viewModel.changeMonth(by: 1)
-                    } label: {
-                        Image(systemName: "chevron.right")
-                    }
-                }
-                .padding()
-                .foregroundStyle(.black)
-                
-                // 요일 헤더
-                HStack {
-                    ForEach(daysOfWeek, id: \.self) { day in
-                        Text(day)
-                            .frame(maxWidth: .infinity)
-                            .font(.caption)
-                    }
-                }
-                .padding(.bottom, 8)
-                
-                // 날짜 그리드
-                LazyVGrid(columns: Array(repeating: GridItem(.adaptive(minimum: 44), spacing: 8), count: 7), spacing: 12) {
-                    ForEach(Array(viewModel.days.enumerated()), id: \.offset) { index, date in
-                        if let date = date {
-                            CalendarDayCell(
-                                date: date,
-                                isSelected: viewModel.isSelected(date),
-                                isInCurrentMonth: viewModel.isInCurrentMonth(date),
-                                eventColors: viewModel.eventColors(for: date)
-                            )
-                            .aspectRatio(1, contentMode: .fit)
-                            .frame(maxWidth: .infinity)
-                            .frame(minHeight: 48)
-                            .onTapGesture {
-                                viewModel.select(date: date)
-                            }
-                        } else {
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(Color.gray.opacity(0.05))
-                                .frame(maxWidth: .infinity)
-                                .aspectRatio(1, contentMode: .fit)
-                        }
-                    }
-                }
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            dragOffset = value.translation.width
-                        }
-                        .onEnded { value in
-                            if value.translation.width < -50 {
-                                viewModel.changeMonth(by: 1)
-                            } else if value.translation.width > 50 {
-                                viewModel.changeMonth(by: -1)
-                            }
-                            dragOffset = 0
-                        }
-                )
+var body: some View {
+    GeometryReader { geometry in
+        VStack(spacing: 10) {
+            dateSelectionView
+            dateHeaderView
+            dateGridView(height: geometry.size.height * 0.5)
+            Divider()
+            if !viewModel.scheduleItems(for: viewModel.selectedDate).isEmpty {
+                scheduleListView
+                Spacer()
+            } else {
+                Spacer()
+                Text("일정이 없습니다!")
+                    .pretendSemiBold(size: 18)
+                    .foregroundStyle(Color.RGB_168)
+                Spacer()
             }
-            .frame(maxHeight: .infinity, alignment: .top)
         }
         .background(.white)
-        .overlay(
-            RoundedRectangle(cornerRadius: 24)
-                .stroke(Color.calendarBackground.opacity(0.3), lineWidth: 2)
-        )
-        .padding(.horizontal, 10)
+    }
+}
+    
+    // MARK: 월 선택뷰
+    @ViewBuilder
+    private var dateSelectionView: some View {
+        HStack {
+            Button {
+                viewModel.changeMonth(by: -1)
+            } label: {
+                Image(systemName: "chevron.left")
+            }
+            Spacer()
+            Text(monthYearFormatter.string(from: viewModel.currentMonth))
+                .font(.system(size: 20, weight: .bold))
+                .foregroundColor(.black)
+            Spacer()
+            Button {
+                viewModel.changeMonth(by: 1)
+            } label: {
+                Image(systemName: "chevron.right")
+            }
+        }
+        .padding()
+        .foregroundStyle(.black)
+    }
+    
+    // MARK: 요일 헤더 뷰
+    @ViewBuilder
+    private var dateHeaderView: some View {
+        HStack {
+            ForEach(Array(daysOfWeek.enumerated()), id: \.offset) { index, day in
+                Text(day)
+                    .frame(maxWidth: .infinity)
+                    .foregroundColor(index == 0 ? Color.red : index == 6 ? Color.blue : .primary)
+                    .pretendBold(size: 16)
+            }
+        }
+        .padding(.bottom, 8)
+    }
+    
+// MARK: 요일 그리드 뷰
+private func dateGridView(height: CGFloat) -> some View {
+    VStack {
+        let numberOfWeeks = CGFloat(viewModel.numberOfWeeks)
+        let cellHeight = viewModel.cellHeight(for: height)
+
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 7), spacing: 8) {
+            ForEach(Array(viewModel.days.enumerated()), id: \.offset) { index, date in
+                CalendarDayCell(
+                    date: date,
+                    isSelected: viewModel.isSelected(date),
+                    isInCurrentMonth: viewModel.isInCurrentMonth(date),
+                    eventColors: viewModel.eventColors(for: date)
+                )
+                .frame(height: cellHeight)
+                .background(Color.white)
+                .onTapGesture {
+                    withAnimation {
+                        viewModel.select(date: date)
+                    }
+                }
+            }
+        }
+        .frame(height: cellHeight * numberOfWeeks)
+    }
+    .gesture(
+        DragGesture()
+            .onChanged { value in dragOffset = value.translation.width }
+            .onEnded { value in
+                if value.translation.width < -50 {
+                    viewModel.changeMonth(by: 1)
+                } else if value.translation.width > 50 {
+                    viewModel.changeMonth(by: -1)
+                }
+                dragOffset = 0
+            }
+    )
+}
+    
+    // MARK: 스케줄 리스트 뷰
+    @ViewBuilder
+    private var scheduleListView: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(viewModel.scheduleItems(for: viewModel.selectedDate), id: \.id) { item in
+                    HStack {
+                        Text(item.title)
+                            .font(.system(size: 14))
+                            .foregroundColor(.black)
+                    }
+                    .padding(.horizontal)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .top)
+            .padding(.vertical)
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+        }
+        .scrollIndicators(.hidden)
     }
 }

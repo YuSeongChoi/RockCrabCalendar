@@ -16,12 +16,12 @@ struct CalendarDayCell: View {
     var body: some View {
         GeometryReader { geometry in
             let rawSize = min(geometry.size.width, geometry.size.height)
-            let cellSize = isSelected ? rawSize * 1.05 : rawSize
+            let cellSize = isSelected ? rawSize * 1.025 : rawSize
+            
             ZStack {
                 if isSelected {
                     RoundedRectangle(cornerRadius: 5)
                         .fill(Color.pastelBlue.opacity(0.3))
-                        .frame(width: cellSize * 0.95, height: cellSize * 0.95)
                         .overlay(
                             RoundedRectangle(cornerRadius: 5)
                                 .stroke(Color.pastelBlue, lineWidth: 1.5)
@@ -39,6 +39,7 @@ struct CalendarDayCell: View {
                             .fontWeight(isSelected ? .bold : .regular)
                             .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.4))
                             .padding(.top, 4)
+                        
                         if !eventColors.isEmpty {
                             HStack(spacing: 4) {
                                 ForEach(0..<eventColors.count, id: \.self) { i in

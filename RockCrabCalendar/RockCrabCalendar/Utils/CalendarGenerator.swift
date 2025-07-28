@@ -11,7 +11,7 @@ struct CalendarGenerator {
     static func generateDaysInMonth(
         for date: Date,
         calendar: Calendar = .current
-    ) -> [Date?] {
+    ) -> [Date] {
         guard let monthInterval = calendar.dateInterval(of: .month, for: date) else {
             return []
         }

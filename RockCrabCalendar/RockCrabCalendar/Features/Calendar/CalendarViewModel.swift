@@ -12,15 +12,18 @@ final class CalendarViewModel: ObservableObject {
     @Published var currentMonth: Date = Date() {
         didSet { generateDays() }
     }
-    @Published var days: [Date?] = []
+    @Published var days: [Date] = []
     @Published var selectedDate: Date = Date()
     @Published var eventColorMap: [Date: Color] = [:]
+    @Published var allScheduleItems: [ScheduleItem] = []
 
     private let calendar = Calendar.current
 
     init() {
         generateDays()
         loadSampleEvents()
+        // TEMP: 임시
+        allScheduleItems = ScheduleItem.mockSchedules
     }
 
     func generateDays() {
@@ -53,6 +56,12 @@ final class CalendarViewModel: ObservableObject {
             Color.pastelMagenta
         ]))
     }
+    
+    func scheduleItems(for date: Date) -> [ScheduleItem] {
+        return allScheduleItems.filter {
+            calendar.isDate($0.date, inSameDayAs: date)
+        }
+    }
 
     // 유틸 메서드
     func isSelected(_ date: Date?) -> Bool {
@@ -78,5 +87,15 @@ final class CalendarViewModel: ObservableObject {
             case .siyo: return .pastelMing
             }
         }
+    }
+    
+    var numberOfWeeks: Int {
+        return (days.count + 6) / 7
+    }
+
+    func cellHeight(for totalHeight: CGFloat) -> CGFloat {
+        let minHeight: CGFloat = 240
+        let adjustedHeight = max(totalHeight, minHeight)
+        return adjustedHeight / CGFloat(numberOfWeeks)
     }
 }
