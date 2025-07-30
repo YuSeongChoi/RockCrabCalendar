@@ -7,16 +7,17 @@
 
 import Foundation
 
-enum QWERMember: String, CaseIterable {
-    case chodan, magenta, hina, siyo
-}
-
 struct ScheduleItem: Identifiable {
     let id = UUID()
+    /// 스케줄명
     let title: String
+    /// 날짜
     let date: Date
+    /// 시간
     let time: String
+    /// 장소
     let place: String
+    /// 참석멤버
     let members: [QWERMember]
 }
 

@@ -26,6 +26,7 @@ struct CalendarDayCell: View {
                             RoundedRectangle(cornerRadius: 5)
                                 .stroke(Color.pastelBlue, lineWidth: 1.5)
                         )
+                        .frame(width: geometry.size.width, height: geometry.size.height * 0.8)
                         .shadow(color: Color.pastelBlue.opacity(0.3), radius: 4, x: 0, y: 2)
                 }
 

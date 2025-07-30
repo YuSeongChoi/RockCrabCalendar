@@ -19,6 +19,7 @@
 		5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */; };
 		5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */; };
 		5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */; };
+		5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E86292E39D6A800DB8775 /* QWERMember.swift */; };
 		5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A982D7045FF00D90C0D /* TodoItem.swift */; };
 		5D6B4A9B2D7047F000D90C0D /* TodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */; };
 		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
@@ -61,6 +62,7 @@
 		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
 		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
+		5D5E86292E39D6A800DB8775 /* QWERMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERMember.swift; sourceTree = "<group>"; };
 		5D6B4A982D7045FF00D90C0D /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoManager.swift; sourceTree = "<group>"; };
 		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			children = (
 				5D6B4A982D7045FF00D90C0D /* TodoItem.swift */,
 				5D5E852C2E30B9D700DB8775 /* ScheduleItem.swift */,
+				5D5E86292E39D6A800DB8775 /* QWERMember.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				5D5E852D2E30B9D700DB8775 /* ScheduleItem.swift in Sources */,
 				5DEA6B962D9E4F3600E085EB /* TodoView.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
+				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

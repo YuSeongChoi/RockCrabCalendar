@@ -17,6 +17,7 @@ struct RockCrabCalendarApp: App {
                 CalendarView()
                     .preferredColorScheme(.light)
             }
+            .navigationViewStyle(.stack)
         }
     }
     

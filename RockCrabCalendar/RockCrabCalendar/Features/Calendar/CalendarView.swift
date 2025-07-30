@@ -23,27 +23,27 @@ struct CalendarView: View {
     }()
     private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
     
-var body: some View {
-    GeometryReader { geometry in
-        VStack(spacing: 10) {
-            dateSelectionView
-            dateHeaderView
-            dateGridView(height: geometry.size.height * 0.5)
-            Divider()
-            if !viewModel.scheduleItems(for: viewModel.selectedDate).isEmpty {
-                scheduleListView
-                Spacer()
-            } else {
-                Spacer()
-                Text("일정이 없습니다!")
-                    .pretendSemiBold(size: 18)
-                    .foregroundStyle(Color.RGB_168)
-                Spacer()
+    var body: some View {
+        GeometryReader { geometry in
+            VStack(spacing: 10) {
+                dateSelectionView
+                dateHeaderView
+                dateGridView(height: geometry.size.height * 0.5)
+                Divider()
+                if !viewModel.scheduleItems(for: viewModel.selectedDate).isEmpty {
+                    scheduleListView
+                    Spacer()
+                } else {
+                    Spacer()
+                    Text("일정이 없습니다!")
+                        .pretendSemiBold(size: 18)
+                        .foregroundStyle(Color.RGB_168)
+                    Spacer()
+                }
             }
+            .background(.white)
         }
-        .background(.white)
     }
-}
     
     // MARK: 월 선택뷰
     @ViewBuilder
@@ -83,44 +83,44 @@ var body: some View {
         .padding(.bottom, 8)
     }
     
-// MARK: 요일 그리드 뷰
-private func dateGridView(height: CGFloat) -> some View {
-    VStack {
-        let numberOfWeeks = CGFloat(viewModel.numberOfWeeks)
-        let cellHeight = viewModel.cellHeight(for: height)
-
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 7), spacing: 8) {
-            ForEach(Array(viewModel.days.enumerated()), id: \.offset) { index, date in
-                CalendarDayCell(
-                    date: date,
-                    isSelected: viewModel.isSelected(date),
-                    isInCurrentMonth: viewModel.isInCurrentMonth(date),
-                    eventColors: viewModel.eventColors(for: date)
-                )
-                .frame(height: cellHeight)
-                .background(Color.white)
-                .onTapGesture {
-                    withAnimation {
-                        viewModel.select(date: date)
+    // MARK: 요일 그리드 뷰
+    private func dateGridView(height: CGFloat) -> some View {
+        VStack {
+            let numberOfWeeks = CGFloat(viewModel.numberOfWeeks)
+            let cellHeight = viewModel.cellHeight(for: height)
+            
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 7), spacing: 8) {
+                ForEach(Array(viewModel.days.enumerated()), id: \.offset) { index, date in
+                    CalendarDayCell(
+                        date: date,
+                        isSelected: viewModel.isSelected(date),
+                        isInCurrentMonth: viewModel.isInCurrentMonth(date),
+                        eventColors: viewModel.eventColors(for: date)
+                    )
+                    .frame(height: cellHeight)
+                    .background(Color.white)
+                    .onTapGesture {
+                        withAnimation {
+                            viewModel.select(date: date)
+                        }
                     }
                 }
             }
+            .frame(height: cellHeight * numberOfWeeks)
         }
-        .frame(height: cellHeight * numberOfWeeks)
-    }
-    .gesture(
-        DragGesture()
-            .onChanged { value in dragOffset = value.translation.width }
-            .onEnded { value in
-                if value.translation.width < -50 {
-                    viewModel.changeMonth(by: 1)
-                } else if value.translation.width > 50 {
-                    viewModel.changeMonth(by: -1)
+        .gesture(
+            DragGesture()
+                .onChanged { value in dragOffset = value.translation.width }
+                .onEnded { value in
+                    if value.translation.width < -50 {
+                        viewModel.changeMonth(by: 1)
+                    } else if value.translation.width > 50 {
+                        viewModel.changeMonth(by: -1)
+                    }
+                    dragOffset = 0
                 }
-                dragOffset = 0
-            }
-    )
-}
+        )
+    }
     
     // MARK: 스케줄 리스트 뷰
     @ViewBuilder
@@ -130,22 +130,23 @@ private func dateGridView(height: CGFloat) -> some View {
                 ForEach(viewModel.scheduleItems(for: viewModel.selectedDate), id: \.id) { item in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(item.title)
-                            .font(.system(size: 16, weight: .semibold))
-
+                            .pretendSemiBold(size: 16)
+                        
                         HStack(spacing: 8) {
                             Label(item.time, systemImage: "clock")
-                            Label(item.place, systemImage: "house.lodge.circle.fill")
+                            Label(item.place, systemImage: "house.circle.fill")
                         }
-                        .font(.system(size: 13))
+                        .pretendReg(size: 13)
                         .foregroundColor(.gray)
-
+                        
                         if !item.members.isEmpty {
                             HStack(spacing: 4) {
                                 Image(systemName: item.members.count == 1 ? "person.fill" : "person.3.fill")
-                                    .foregroundColor(.blue)
+                                    .foregroundColor(.gray)
+                                
                                 ForEach(item.members, id: \.self) { member in
-                                    Text(member.rawValue.capitalized)
-                                        .font(.system(size: 13))
+                                    Text(member.name)
+                                        .pretendReg(size: 13)
                                         .padding(.horizontal, 8)
                                         .padding(.vertical, 4)
                                         .background(

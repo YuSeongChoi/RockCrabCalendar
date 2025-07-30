@@ -16,6 +16,7 @@ final class CalendarViewModel: ObservableObject {
     @Published var selectedDate: Date = Date()
     @Published var eventColorMap: [Date: Color] = [:]
     @Published var allScheduleItems: [ScheduleItem] = []
+    @Published var swipeSelection: Int = 1
 
     private let calendar = Calendar.current
 
