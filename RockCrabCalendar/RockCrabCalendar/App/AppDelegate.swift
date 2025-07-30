@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @MainActor
 final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject, Identifiable {
@@ -22,5 +23,10 @@ final class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject, Iden
             break
         }
         return configuration
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScheduleItem: Identifiable {
+struct ScheduleItem: Identifiable, Codable {
     let id = UUID()
     /// 스케줄명
     let title: String
