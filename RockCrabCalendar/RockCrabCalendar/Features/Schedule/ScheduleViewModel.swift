@@ -6,3 +6,11 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import Combine
+
+final class ScheduleViewModel: ObservableObject {
+    @Published var schedules: [ScheduleItem] = []
+    
+    
+}

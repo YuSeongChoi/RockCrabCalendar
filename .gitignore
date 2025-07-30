@@ -1,0 +1,20 @@
+# Firebase
+GoogleService-Info.plist
+./RockCrabCalendar/RockCrabCalendar/GoogleService-Info.plist
+
+# Xcode
+DerivedData/
+build/
+*.xcworkspace
+xcuserdata/
+*.xcuserstate
+
+# SwiftPM
+.swiftpm/
+.build/
+
+# Logs
+*.log
+
+# 기타 민감정보
+*.env
