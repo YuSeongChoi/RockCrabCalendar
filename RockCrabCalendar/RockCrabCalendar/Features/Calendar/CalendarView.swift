@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     @StateObject private var calendarVM = CalendarViewModel()
+    @StateObject private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     
     private let calendar = Calendar.current
@@ -26,7 +27,7 @@ struct CalendarView: View {
                 dateHeaderView
                 dateGridView(height: geometry.size.height * 0.5)
                 Divider()
-                if !calendarVM.scheduleItems(for: calendarVM.selectedDate).isEmpty {
+                if !scheduleVM.schedules.isEmpty {
                     scheduleListView
                     Spacer()
                 } else {
@@ -38,6 +39,9 @@ struct CalendarView: View {
                 }
             }
             .background(.white)
+        }
+        .onAppear {
+            scheduleVM.selectedDate = calendarVM.selectedDate
         }
     }
     
@@ -91,13 +95,14 @@ struct CalendarView: View {
                         date: date,
                         isSelected: calendarVM.isSelected(date),
                         isInCurrentMonth: calendarVM.isInCurrentMonth(date),
-                        eventColors: calendarVM.eventColors(for: date)
+                        eventColors: scheduleVM.eventColors(for: date)
                     )
                     .frame(height: cellHeight)
                     .background(Color.white)
                     .onTapGesture {
                         withAnimation {
                             calendarVM.select(date: date)
+                            scheduleVM.selectedDate = date
                         }
                     }
                 }
@@ -123,7 +128,7 @@ struct CalendarView: View {
     private var scheduleListView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
-                ForEach(calendarVM.scheduleItems(for: calendarVM.selectedDate), id: \.id) { item in
+                ForEach(scheduleVM.schedules, id: \.id) { item in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(item.title)
                             .pretendSemiBold(size: 16)

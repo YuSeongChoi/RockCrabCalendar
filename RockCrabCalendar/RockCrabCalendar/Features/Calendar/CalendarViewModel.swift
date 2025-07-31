@@ -15,16 +15,12 @@ final class CalendarViewModel: ObservableObject {
     @Published var days: [Date] = []
     @Published var selectedDate: Date = Date()
     @Published var eventColorMap: [Date: Color] = [:]
-    @Published var allScheduleItems: [ScheduleItem] = []
     @Published var swipeSelection: Int = 1
 
     private let calendar = Calendar.current
 
     init() {
         generateDays()
-        loadSampleEvents()
-        // TEMP: 임시
-        allScheduleItems = ScheduleItem.mockSchedules
     }
 
     func generateDays() {
@@ -42,27 +38,6 @@ final class CalendarViewModel: ObservableObject {
     }
 
     // 샘플 또는 실제 QWER/Todo 매핑 로직
-    func loadSampleEvents() {
-        let comps = calendar.dateComponents([.year, .month], from: currentMonth)
-        guard let first = calendar.date(from: comps) else { return }
-        // 예시로 첫 주일에 색 지정
-        let sampleDates = (0..<5).compactMap {
-            calendar.date(byAdding: .day, value: $0, to: first)
-        }
-        eventColorMap = Dictionary(uniqueKeysWithValues: zip(sampleDates, [
-            Color.pastelYellow,
-            Color.pastelMagenta,
-            Color.pastelBlue,
-            Color.pastelGreen,
-            Color.pastelMagenta
-        ]))
-    }
-    
-    func scheduleItems(for date: Date) -> [ScheduleItem] {
-        return allScheduleItems.filter {
-            calendar.isDate($0.date, inSameDayAs: date)
-        }
-    }
 
     // 유틸 메서드
     func isSelected(_ date: Date?) -> Bool {
@@ -76,7 +51,7 @@ final class CalendarViewModel: ObservableObject {
     }
 
     func eventColors(for date: Date) -> [Color] {
-        let items = ScheduleItem.mockSchedules.filter { Calendar.current.isDate($0.date, inSameDayAs: date) }
+        let items: [ScheduleItem] = [] // to be replaced by ScheduleViewModel
         let members = Set(items.flatMap { $0.members })
 
         return QWERMember.allCases.compactMap { member in
