@@ -42,6 +42,7 @@ struct CalendarView: View {
         }
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
+            scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
         }
     }
     
@@ -51,6 +52,7 @@ struct CalendarView: View {
         HStack {
             Button {
                 calendarVM.changeMonth(by: -1)
+                scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
             } label: {
                 Image(systemName: "chevron.left")
             }
@@ -61,6 +63,7 @@ struct CalendarView: View {
             Spacer()
             Button {
                 calendarVM.changeMonth(by: 1)
+                scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
             } label: {
                 Image(systemName: "chevron.right")
             }
