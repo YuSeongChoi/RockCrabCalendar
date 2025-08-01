@@ -61,10 +61,10 @@ final class CalendarViewModel: ObservableObject {
     
     func memberColor(_ member: QWERMember) -> Color {
         switch member {
-        case .chodan: return .pastelChodan
-        case .magenta: return .pastelMajenta
-        case .hina: return .pastelHina
-        case .siyo: return .pastelMing
+        case .Q: return .pastelChodan
+        case .W: return .pastelMajenta
+        case .E: return .pastelHina
+        case .R: return .pastelMing
         }
     }
     

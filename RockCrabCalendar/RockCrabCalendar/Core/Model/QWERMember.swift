@@ -8,30 +8,30 @@
 import SwiftUICore
 
 enum QWERMember: String, CaseIterable, Codable {
-    case chodan, magenta, hina, siyo
+    case Q, W, E, R
     
     var name: String {
         switch self {
-        case .chodan:
+        case .Q:
             return "쵸단"
-        case .magenta:
+        case .W:
             return "마젠타"
-        case .hina:
+        case .E:
             return "히나"
-        case .siyo:
+        case .R:
             return "시연"
         }
     }
     
     var color: Color {
         switch self {
-        case .chodan:
+        case .Q:
             return Color.pastelChodan
-        case .magenta:
+        case .W:
             return Color.pastelMagenta
-        case .hina:
+        case .E:
             return Color.pastelHina
-        case .siyo:
+        case .R:
             return Color.pastelMing
         }
     }
