@@ -53,6 +53,7 @@ struct CalendarView: View {
             Button {
                 calendarVM.changeMonth(by: -1)
                 scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
+                calendarVM.select(date: calendarVM.selectedDate)
             } label: {
                 Image(systemName: "chevron.left")
             }
@@ -64,6 +65,7 @@ struct CalendarView: View {
             Button {
                 calendarVM.changeMonth(by: 1)
                 scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
+                calendarVM.select(date: calendarVM.selectedDate)
             } label: {
                 Image(systemName: "chevron.right")
             }
@@ -131,14 +133,20 @@ struct CalendarView: View {
     private var scheduleListView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
-                ForEach(scheduleVM.schedules, id: \.id) { item in
+                ForEach(scheduleVM.schedules.filter {
+                    Calendar.current.isDate($0.date, inSameDayAs: scheduleVM.selectedDate)
+                }, id: \.id) { item in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(item.title)
                             .pretendSemiBold(size: 16)
                         
                         HStack(spacing: 8) {
-                            Label(item.time, systemImage: "clock")
-                            Label(item.place, systemImage: "house.circle.fill")
+                            if !item.time.isEmpty {
+                                Label(item.time, systemImage: "clock")
+                            }
+                            if !item.place.isEmpty {
+                                Label(item.place, systemImage: "house.circle.fill")
+                            }
                         }
                         .pretendReg(size: 13)
                         .foregroundColor(.gray)

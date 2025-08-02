@@ -110,7 +110,7 @@ extension ScheduleItem {
             members: [.W, .E, .R]
         ),
         ScheduleItem(
-            title: "엠카운트다운",
+            title: "M COUNTDOWN 사전녹화",
             date: simpleDateFormatter.date(from: "2025-06-19")!,
             time: "13:20",
             place: "CJ ENM",
@@ -205,6 +205,111 @@ extension ScheduleItem {
             date: simpleDateFormatter.date(from: "2025-07-27")!,
             time: "17:00",
             place: "",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "펜타포트 락 페스티벌 2025",
+            date: simpleDateFormatter.date(from: "2025-08-01")!,
+            time: "13:50",
+            place: "송도달빛축제공원",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "비트로드 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-08-02")!,
+            time: "14:00",
+            place: "",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "디어마이뮤즈 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-08-03")!,
+            time: "13:00",
+            place: "",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "울산 서머 페스티벌",
+            date: simpleDateFormatter.date(from: "2025-08-05")!,
+            time: "19:30",
+            place: "울산보조경기장 종합운동장",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "M COUNTDOWN in Boryeong",
+            date: simpleDateFormatter.date(from: "2025-08-07")!,
+            time: "18:00",
+            place: "대천해수욕장",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "케이팝스토어 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-08-09")!,
+            time: "14:00",
+            place: "",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "디어마이뮤주 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-08-10")!,
+            time: "13:00",
+            place: "",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "7rock prime 2025",
+            date: simpleDateFormatter.date(from: "2025-08-16")!,
+            time: "19:40",
+            place: "잠실실내체육관",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "K WORLD DREAM AWARDS",
+            date: simpleDateFormatter.date(from: "2025-08-21")!,
+            time: "",
+            place: "잠실실내체육관",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "THE HYPER DAY 2025 DAEGU",
+            date: simpleDateFormatter.date(from: "2025-08-30")!,
+            time: "12:30",
+            place: "대구스타디움 동편 메인광장",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "ASIA TOP ARTIST FESTIVAL",
+            date: simpleDateFormatter.date(from: "2025-09-28")!,
+            time: "",
+            place: "난지 한강공원",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR ROCKNATION SEOUL",
+            date: simpleDateFormatter.date(from: "2025-10-03")!,
+            time: "",
+            place: "올림픽 핸드볼 경기장",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR ROCKNATION SEOUL",
+            date: simpleDateFormatter.date(from: "2025-10-04")!,
+            time: "",
+            place: "올림픽 핸드볼 경기장",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR ROCKNATION SEOUL",
+            date: simpleDateFormatter.date(from: "2025-10-05")!,
+            time: "",
+            place: "올림픽 핸드볼 경기장",
+            members: [.Q, .W, .E, .R]
+        ),
+        ScheduleItem(
+            title: "MADLY MADLEY",
+            date: simpleDateFormatter.date(from: "2025-10-19")!,
+            time: "",
+            place: "파라다이스 시티",
             members: [.Q, .W, .E, .R]
         ),
     ]
