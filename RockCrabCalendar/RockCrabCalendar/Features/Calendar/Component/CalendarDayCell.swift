@@ -66,7 +66,8 @@ struct CalendarDayCell: View {
                         .frame(width: cellSize, height: cellSize)
                 }
             }
-            .frame(width: cellSize, height: cellSize * 1.18)
+            .frame(width: cellSize, height: cellSize * 1.08)
+            .background(Color(.secondarySystemBackground))
         }
     }
 

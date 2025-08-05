@@ -82,3 +82,29 @@ final class ScheduleViewModel: ObservableObject {
         }
     }
 }
+
+// MARK: - ScheduleViewModel Extensions (기능 추가)
+extension ScheduleViewModel {
+    /// 일정 타입 필터링용
+//    func schedules(for type: ScheduleType?) -> [ScheduleItem] {
+//        guard let type = type else { return schedules }
+//        return schedules.filter { $0.scheduleType == type }
+//    }
+    
+    ///  유저가 직접 추가할 수 있도록 하는 함수
+    func addSchedule(_ schedule: ScheduleItem) {
+        schedules.append(schedule)
+        uploadSchedules(schedules: [schedule])
+    }
+    
+    ///  현재 월에 해당하는 모든 스케줄 반환 (날짜 기준 필터링)
+    var monthlySchedules: [ScheduleItem] {
+        let calendar = Calendar.current
+        guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedDate)),
+              let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else { return [] }
+        
+        return schedules.filter {
+            $0.date >= startOfMonth && $0.date <= endOfMonth
+        }
+    }
+}

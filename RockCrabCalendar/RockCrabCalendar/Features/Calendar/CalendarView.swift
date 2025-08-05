@@ -23,23 +23,31 @@ struct CalendarView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 10) {
-                dateSelectionView
-                dateHeaderView
-                dateGridView(height: geometry.size.height * 0.5)
-                Divider()
-                if !scheduleVM.schedules.isEmpty {
-                    scheduleListView
+                VStack(spacing: 10) {
+                    dateSelectionView
+                    dateHeaderView
+                    dateGridView(height: geometry.size.height * 0.5)
+                    Divider()
+                }
+                .background(Color(.secondarySystemBackground))
+                
+                let selectedDateSchedules = scheduleVM.schedules.filter {
+                    Calendar.current.isDate($0.date, inSameDayAs: scheduleVM.selectedDate)
+                }
+
+                if !selectedDateSchedules.isEmpty {
+                    scheduleListView(schedules: selectedDateSchedules)
                     Spacer()
                 } else {
                     Spacer()
                     Text("일정이 없습니다!")
                         .pretendSemiBold(size: 18)
-                        .foregroundStyle(Color.RGB_168)
+                        .foregroundStyle(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .RGB_168 }))
                     Spacer()
                 }
             }
-            .background(.white)
         }
+        .background(Color(.systemBackground))
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
@@ -60,7 +68,7 @@ struct CalendarView: View {
             Spacer()
             Text(monthYearFormatter.string(from: calendarVM.currentMonth))
                 .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
             Spacer()
             Button {
                 calendarVM.changeMonth(by: 1)
@@ -71,7 +79,7 @@ struct CalendarView: View {
             }
         }
         .padding()
-        .foregroundStyle(.black)
+        .foregroundStyle(.primary)
     }
     
     // MARK: 요일 헤더 뷰
@@ -103,7 +111,6 @@ struct CalendarView: View {
                         eventColors: scheduleVM.eventColors(for: date)
                     )
                     .frame(height: cellHeight)
-                    .background(Color.white)
                     .onTapGesture {
                         withAnimation {
                             calendarVM.select(date: date)
@@ -129,13 +136,10 @@ struct CalendarView: View {
     }
     
     // MARK: 스케줄 리스트 뷰
-    @ViewBuilder
-    private var scheduleListView: some View {
+    private func scheduleListView(schedules: [ScheduleItem]) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
-                ForEach(scheduleVM.schedules.filter {
-                    Calendar.current.isDate($0.date, inSameDayAs: scheduleVM.selectedDate)
-                }, id: \.id) { item in
+                ForEach(schedules, id: \.id) { item in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(item.title)
                             .pretendSemiBold(size: 16)
@@ -171,7 +175,7 @@ struct CalendarView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(red: 248/255, green: 248/255, blue: 248/255))
+                    .background(Color(.secondarySystemBackground))
                     .cornerRadius(10)
                     .padding(.horizontal, 16)
                 }

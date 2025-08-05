@@ -15,7 +15,6 @@ struct RockCrabCalendarApp: App {
         WindowGroup {
             NavigationView {
                 CalendarView()
-                    .preferredColorScheme(.light)
             }
             .navigationViewStyle(.stack)
         }
@@ -32,7 +31,7 @@ struct RockCrabCalendarApp: App {
             let inset = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
             let indicator = appearance.backIndicatorImage.withAlignmentRectInsets(inset).withTintColor(.black, renderingMode: .alwaysOriginal)
             let transition = appearance.backIndicatorTransitionMaskImage.withAlignmentRectInsets(inset).withTintColor(.black, renderingMode: .alwaysOriginal)
-            appearance.setBackIndicatorImage(indicator, transitionMaskImage: transition)		
+            appearance.setBackIndicatorImage(indicator, transitionMaskImage: transition)
             return appearance
         }()
         let naviProxy = UINavigationBar.appearance(whenContainedInInstancesOf: [UINavigationController.self])
