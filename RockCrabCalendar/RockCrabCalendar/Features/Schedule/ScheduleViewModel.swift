@@ -12,11 +12,7 @@ import SwiftUI
 
 final class ScheduleViewModel: ObservableObject {
     @Published var schedules: [ScheduleItem] = []
-    @Published var selectedDate: Date = Date() {
-        didSet {
-            fetchMonthlySchedules(for: selectedDate)
-        }
-    }
+    @Published var selectedDate: Date = Date()
     
     private var db = Firestore.firestore()
     private var cancellables = Set<AnyCancellable>()
@@ -40,26 +36,20 @@ final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    func fetchMonthlySchedules(for monthDate: Date) {
-        let calendar = Calendar.current
-        guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: monthDate)),
-              let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else { return }
-        
+    func fetchAllSchedules() {
         db.collection("schedules")
-            .whereField("date", isGreaterThanOrEqualTo: Timestamp(date: startOfMonth.addMonth(n: -1)))
-            .whereField("date", isLessThan: Timestamp(date: calendar.date(byAdding: .day, value: 1, to: endOfMonth.addMonth(n: 1))!))
             .getDocuments { [weak self] snapshot, error in
                 if let error = error {
-                    print("🔥 월간 스케줄 가져오기 실패: \(error.localizedDescription)")
+                    print("🔥 전체 스케줄 가져오기 실패: \(error.localizedDescription)")
                     return
                 }
-                
+
                 do {
                     self?.schedules = try snapshot?.documents.compactMap {
                         try $0.data(as: ScheduleItem.self)
                     } ?? []
                 } catch {
-                    print("🔥 월간 스케줄 디코딩 실패: \(error.localizedDescription)")
+                    print("🔥 전체 스케줄 디코딩 실패: \(error.localizedDescription)")
                 }
             }
     }

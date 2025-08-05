@@ -50,36 +50,38 @@ struct CalendarView: View {
         .background(Color(.systemBackground))
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
-            scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
+            scheduleVM.fetchAllSchedules()
         }
     }
     
     // MARK: 월 선택뷰
     @ViewBuilder
     private var dateSelectionView: some View {
-        HStack {
-            Button {
-                calendarVM.changeMonth(by: -1)
-                scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
-                calendarVM.select(date: calendarVM.selectedDate)
-            } label: {
-                Image(systemName: "chevron.left")
+        VStack(spacing: 0) {
+            HStack {
+                Button {
+                    calendarVM.changeMonth(by: -1)
+                    calendarVM.select(date: calendarVM.selectedDate)
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+                Spacer()
+                Text(monthYearFormatter.string(from: calendarVM.currentMonth))
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.primary)
+                Spacer()
+                Button {
+                    calendarVM.changeMonth(by: 1)
+                    calendarVM.select(date: calendarVM.selectedDate)
+                } label: {
+                    Image(systemName: "chevron.right")
+                }
             }
-            Spacer()
-            Text(monthYearFormatter.string(from: calendarVM.currentMonth))
-                .font(.system(size: 20, weight: .bold))
-                .foregroundColor(.primary)
-            Spacer()
-            Button {
-                calendarVM.changeMonth(by: 1)
-                scheduleVM.fetchMonthlySchedules(for: calendarVM.currentMonth)
-                calendarVM.select(date: calendarVM.selectedDate)
-            } label: {
-                Image(systemName: "chevron.right")
-            }
+            .padding()
+            .foregroundStyle(.primary)
+            
+            Divider()
         }
-        .padding()
-        .foregroundStyle(.primary)
     }
     
     // MARK: 요일 헤더 뷰
