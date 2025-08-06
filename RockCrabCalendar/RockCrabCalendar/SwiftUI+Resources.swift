@@ -26,13 +26,3 @@ extension FontResource {
         .custom(self, size: size)
     }
 }
-
-extension Label where Title == Text, Icon == Image {
-    init(_ title: LocalizedStringKey, image: ImageResource) {
-        self.init {
-            return Text(title)
-        } icon: {
-            return Image(image)
-        }
-    }
-}

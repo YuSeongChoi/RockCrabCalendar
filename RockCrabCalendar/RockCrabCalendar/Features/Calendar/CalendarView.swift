@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @StateObject private var calendarVM = CalendarViewModel()
-    @StateObject private var scheduleVM = ScheduleViewModel()
+    private var calendarVM = CalendarViewModel()
+    private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     
     private let calendar = Calendar.current
@@ -61,7 +61,7 @@ struct CalendarView: View {
             HStack {
                 Button {
                     calendarVM.changeMonth(by: -1)
-                    calendarVM.select(date: calendarVM.selectedDate)
+//                    calendarVM.select(date: calendarVM.selectedDate)
                 } label: {
                     Image(systemName: "chevron.left")
                 }
@@ -72,7 +72,7 @@ struct CalendarView: View {
                 Spacer()
                 Button {
                     calendarVM.changeMonth(by: 1)
-                    calendarVM.select(date: calendarVM.selectedDate)
+//                    calendarVM.select(date: calendarVM.selectedDate)
                 } label: {
                     Image(systemName: "chevron.right")
                 }
@@ -138,6 +138,7 @@ struct CalendarView: View {
     }
     
     // MARK: 스케줄 리스트 뷰
+    @ViewBuilder
     private func scheduleListView(schedules: [ScheduleItem]) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
@@ -162,15 +163,17 @@ struct CalendarView: View {
                                 Image(systemName: item.members.count == 1 ? "person.fill" : "person.3.fill")
                                     .foregroundColor(.gray)
                                 
-                                ForEach(item.members, id: \.self) { member in
-                                    Text(member.name)
-                                        .pretendReg(size: 13)
-                                        .padding(.horizontal, 8)
-                                        .padding(.vertical, 4)
-                                        .background(
-                                            Capsule().fill(calendarVM.memberColor(member))
-                                        )
-                                        .foregroundColor(.black)
+                                HStack(spacing: 8) {
+                                    ForEach(item.members, id: \.self) { member in
+                                        Text(member.name)
+                                            .pretendReg(size: 13)
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 4)
+                                            .background(
+                                                Capsule().fill(scheduleVM.memberColor(member))
+                                            )
+                                            .foregroundColor(.black)
+                                    }
                                 }
                             }
                         }

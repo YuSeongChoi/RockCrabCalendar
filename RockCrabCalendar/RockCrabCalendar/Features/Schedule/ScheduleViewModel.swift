@@ -10,9 +10,10 @@ import FirebaseFirestore
 import Combine
 import SwiftUI
 
-final class ScheduleViewModel: ObservableObject {
-    @Published var schedules: [ScheduleItem] = []
-    @Published var selectedDate: Date = Date()
+@Observable
+final class ScheduleViewModel {
+    var schedules: [ScheduleItem] = []
+    var selectedDate: Date = Date()
     
     private var db = Firestore.firestore()
     private var cancellables = Set<AnyCancellable>()
@@ -37,6 +38,26 @@ final class ScheduleViewModel: ObservableObject {
     }
     
     func fetchAllSchedules() {
+        let cacheKey = "cachedSchedules"
+        let lastFetchKey = "lastScheduleFetchDate"
+        let now = Date()
+
+        // 캐시에서 먼저 불러오기
+        if let cachedData = UserDefaults.standard.data(forKey: cacheKey),
+           let cachedSchedules = try? JSONDecoder().decode([ScheduleItem].self, from: cachedData) {
+            self.schedules = cachedSchedules
+        }
+
+        // 마지막 fetch 시간이 24시간 이내면 Firestore 호출 안함
+        if let lastFetch = UserDefaults.standard.object(forKey: lastFetchKey) as? Date {
+            let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
+            if let hours = diff.hour, hours < 24 {
+                print("⏳ 캐시 유효 – Firestore fetch 생략")
+                return
+            }
+        }
+
+        // Firestore에서 최신 데이터 fetch
         db.collection("schedules")
             .getDocuments { [weak self] snapshot, error in
                 if let error = error {
@@ -45,9 +66,19 @@ final class ScheduleViewModel: ObservableObject {
                 }
 
                 do {
-                    self?.schedules = try snapshot?.documents.compactMap {
+                    let fetched = try snapshot?.documents.compactMap {
                         try $0.data(as: ScheduleItem.self)
                     } ?? []
+
+                    DispatchQueue.main.async {
+                        self?.schedules = fetched
+
+                        // 캐시 저장
+                        if let data = try? JSONEncoder().encode(fetched) {
+                            UserDefaults.standard.set(data, forKey: cacheKey)
+                            UserDefaults.standard.set(now, forKey: lastFetchKey)
+                        }
+                    }
                 } catch {
                     print("🔥 전체 스케줄 디코딩 실패: \(error.localizedDescription)")
                 }
@@ -63,7 +94,7 @@ final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    private func memberColor(_ member: QWERMember) -> Color {
+    func memberColor(_ member: QWERMember) -> Color {
         switch member {
         case .Q: return .pastelChodan
         case .W: return .pastelMajenta

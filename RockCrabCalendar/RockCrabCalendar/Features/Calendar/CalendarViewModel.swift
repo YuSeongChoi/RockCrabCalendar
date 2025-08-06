@@ -8,14 +8,15 @@
 import SwiftUI
 import Combine
 
-final class CalendarViewModel: ObservableObject {
-    @Published var currentMonth: Date = Date() {
+@Observable
+final class CalendarViewModel {
+    var currentMonth: Date = Date() {
         didSet { generateDays() }
     }
-    @Published var days: [Date] = []
-    @Published var selectedDate: Date = Date()
-    @Published var eventColorMap: [Date: Color] = [:]
-    @Published var swipeSelection: Int = 1
+    var days: [Date] = []
+    var selectedDate: Date = Date()
+    var eventColorMap: [Date: Color] = [:]
+    var swipeSelection: Int = 1
 
     private let calendar = Calendar.current
 
@@ -37,8 +38,6 @@ final class CalendarViewModel: ObservableObject {
         selectedDate = date
     }
 
-    // 샘플 또는 실제 QWER/Todo 매핑 로직
-
     // 유틸 메서드
     func isSelected(_ date: Date?) -> Bool {
         guard let d = date else { return false }
@@ -48,24 +47,6 @@ final class CalendarViewModel: ObservableObject {
     func isInCurrentMonth(_ date: Date?) -> Bool {
         guard let d = date else { return false }
         return calendar.isDate(d, equalTo: currentMonth, toGranularity: .month)
-    }
-
-    func eventColors(for date: Date) -> [Color] {
-        let items: [ScheduleItem] = [] // to be replaced by ScheduleViewModel
-        let members = Set(items.flatMap { $0.members })
-
-        return QWERMember.allCases.compactMap { member in
-            members.contains(member) ? memberColor(member) : nil
-        }
-    }
-    
-    func memberColor(_ member: QWERMember) -> Color {
-        switch member {
-        case .Q: return .pastelChodan
-        case .W: return .pastelMajenta
-        case .E: return .pastelHina
-        case .R: return .pastelMing
-        }
     }
     
     var numberOfWeeks: Int {
