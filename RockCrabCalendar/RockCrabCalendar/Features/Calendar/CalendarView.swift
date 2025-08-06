@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CalendarView: View {
-    private var calendarVM = CalendarViewModel()
-    private var scheduleVM = ScheduleViewModel()
+    @State private var calendarVM = CalendarViewModel()
+    @State private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     
     private let calendar = Calendar.current
