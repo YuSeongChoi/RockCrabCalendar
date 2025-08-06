@@ -67,7 +67,7 @@ struct CalendarDayCell: View {
                 }
             }
             .frame(width: cellSize, height: cellSize * 1.08)
-            .background(Color(.secondarySystemBackground))
+            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
         }
     }
 

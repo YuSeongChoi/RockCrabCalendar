@@ -29,7 +29,7 @@ struct CalendarView: View {
                     dateGridView(height: geometry.size.height * 0.5)
                     Divider()
                 }
-                .background(Color(.secondarySystemBackground))
+                .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
                 
                 let selectedDateSchedules = scheduleVM.schedules.filter {
                     Calendar.current.isDate($0.date, inSameDayAs: scheduleVM.selectedDate)
@@ -47,7 +47,7 @@ struct CalendarView: View {
                 }
             }
         }
-        .background(Color(.systemBackground))
+        .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchAllSchedules()
