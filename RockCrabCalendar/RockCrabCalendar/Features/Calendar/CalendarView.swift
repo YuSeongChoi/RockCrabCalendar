@@ -61,7 +61,6 @@ struct CalendarView: View {
             HStack {
                 Button {
                     calendarVM.changeMonth(by: -1)
-//                    calendarVM.select(date: calendarVM.selectedDate)
                 } label: {
                     Image(systemName: "chevron.left")
                 }
@@ -69,10 +68,25 @@ struct CalendarView: View {
                 Text(monthYearFormatter.string(from: calendarVM.currentMonth))
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.primary)
+                
+                Button("오늘") {
+                    calendarVM.select(date: Date())
+                    scheduleVM.selectedDate = Date()
+                    let today = Date()
+                    calendarVM.select(date: today)
+                    calendarVM.currentMonth = today.startOfMonth
+                    scheduleVM.selectedDate = today
+                }
+                .font(.system(size: 14, weight: .semibold))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(
+                    Capsule().fill(Color(UIColor.systemGray5))
+                )
+                .foregroundColor(.primary)
                 Spacer()
                 Button {
                     calendarVM.changeMonth(by: 1)
-//                    calendarVM.select(date: calendarVM.selectedDate)
                 } label: {
                     Image(systemName: "chevron.right")
                 }
