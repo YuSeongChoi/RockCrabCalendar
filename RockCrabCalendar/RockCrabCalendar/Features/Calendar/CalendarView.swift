@@ -19,6 +19,7 @@ struct CalendarView: View {
         return formatter
     }()
     private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
+    private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
     
     var body: some View {
         GeometryReader { geometry in
@@ -27,35 +28,41 @@ struct CalendarView: View {
                     dateSelectionView
                     // TODO: 신규 버튼기능
                     HStack {
-                        Button("오늘") {
+                        Button {
                             let today = Date()
                             calendarVM.select(date: today)
                             calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
                             scheduleVM.selectedDate = today
-                        }
-                        .font(.system(size: 14, weight: .semibold))
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(
-                            Capsule().fill(Color(UIColor.systemGray5))
-                        )
-                        .foregroundColor(.primary)
-                        Spacer()
-                        Button {
-                            scheduleVM.fetchAllSchedules(force: true)
                         } label: {
-                            Image(systemName: "arrow.clockwise")
+                            Label("오늘", systemImage: "clock.arrow.circlepath")
+                                .labelStyle(.titleAndIcon)
                                 .font(.system(size: 14, weight: .semibold))
-                                .padding(8)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
                                 .background(Capsule().fill(Color(UIColor.systemGray5)))
                                 .foregroundColor(.primary)
                         }
-                        
-                        Text(scheduleVM.lastSyncText)
-                            .pretendReg(size: 12)
-                            .foregroundStyle(.secondary)
+
+                        Spacer()
+
+                        Button {
+                            scheduleVM.fetchAllSchedules(force: true)
+                        } label: {
+                            Image(systemName: "arrow.clockwise.circle.fill")
+                                .font(.system(size: 18, weight: .semibold))
+                                .padding(6)
+                                .background(Capsule().fill(Color(UIColor.systemGray5)))
+                                .foregroundColor(.primary)
+                        }
                     }
                     .padding(.horizontal, 20)
+
+                    // 최근 동기화 캡션
+                    Text("최근 동기화 \(scheduleVM.lastSyncText)")
+                        .font(.caption2.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 20)
                     
                     dateHeaderView
                     dateGridView(height: geometry.size.height * 0.5)
@@ -72,9 +79,14 @@ struct CalendarView: View {
                     Spacer()
                 } else {
                     Spacer()
-                    Text("일정이 없습니다!")
-                        .pretendSemiBold(size: 18)
-                        .foregroundStyle(Color(UIColor { $0.userInterfaceStyle == .dark ? .white : .RGB_168 }))
+                    VStack(spacing: 8) {
+                        Image(systemName: "calendar.badge.exclamationmark")
+                            .font(.system(size: 24))
+                            .foregroundStyle(.tertiary)
+                        Text("일정이 없습니다")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                    }
                     Spacer()
                 }
             }
@@ -119,15 +131,20 @@ struct CalendarView: View {
     // MARK: 요일 헤더 뷰
     @ViewBuilder
     private var dateHeaderView: some View {
-        HStack {
+        LazyVGrid(columns: gridColumns, spacing: 8) {
             ForEach(Array(daysOfWeek.enumerated()), id: \.offset) { index, day in
+                let color: Color = {
+                    if index == 0 { return Color.red.opacity(0.85) }
+                    if index == 6 { return Color.blue.opacity(0.85) }
+                    return .secondary
+                }()
                 Text(day)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(index == 0 ? Color.red : index == 6 ? Color.blue : .primary)
-                    .pretendBold(size: 16)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundStyle(color)
             }
         }
-        .padding(.bottom, 8)
+        .padding(.horizontal, 20)
+        .padding(.bottom, 15)
     }
     
     // MARK: 요일 그리드 뷰
@@ -136,7 +153,7 @@ struct CalendarView: View {
             let numberOfWeeks = CGFloat(calendarVM.numberOfWeeks)
             let cellHeight = calendarVM.cellHeight(for: height)
             
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: 7), spacing: 8) {
+            LazyVGrid(columns: gridColumns, spacing: 8) {
                 ForEach(Array(calendarVM.days.enumerated()), id: \.offset) { index, date in
                     CalendarDayCell(
                         date: date,
@@ -153,6 +170,7 @@ struct CalendarView: View {
                     }
                 }
             }
+            .padding(.horizontal, 20)
             .frame(height: cellHeight * numberOfWeeks)
         }
         .highPriorityGesture(
