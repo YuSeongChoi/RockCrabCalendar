@@ -14,6 +14,7 @@ import SwiftUI
 final class ScheduleViewModel {
     var schedules: [ScheduleItem] = []
     var selectedDate: Date = Date()
+    var lastFetchedAt: Date? = nil
     
     private var db = Firestore.firestore()
     private var cancellables = Set<AnyCancellable>()
@@ -22,6 +23,22 @@ final class ScheduleViewModel {
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
+    
+    private let syncFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "ko_KR")
+        f.timeZone = TimeZone(identifier: "Asia/Seoul")
+        f.dateFormat = "yyyy년 MM월 dd일 HH:mm:ss"
+        return f
+    }()
+    
+    var lastSyncText: String {
+        if let d = lastFetchedAt {
+            return "동기화 날짜 : \(syncFormatter.string(from: d))"
+        } else {
+            return "동기화 날짜 : -"
+        }
+    }
     
     func uploadSchedules(schedules: [ScheduleItem]) {
         for schedule in schedules {
@@ -37,7 +54,7 @@ final class ScheduleViewModel {
         }
     }
     
-    func fetchAllSchedules() {
+    func fetchAllSchedules(force: Bool = false) {
         let cacheKey = "cachedSchedules"
         let lastFetchKey = "lastScheduleFetchDate"
         let now = Date()
@@ -50,9 +67,10 @@ final class ScheduleViewModel {
 
         // 마지막 fetch 시간이 24시간 이내면 Firestore 호출 안함
         if let lastFetch = UserDefaults.standard.object(forKey: lastFetchKey) as? Date {
+            self.lastFetchedAt = lastFetch
             let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
-            if let hours = diff.hour, hours < 24 {
-                print("⏳ 캐시 유효 – Firestore fetch 생략")
+            if !force, let hours = diff.hour, hours < 24 {
+                print("⏳ 캐시 유효 – Firestore fetch 생략 (force == false)")
                 return
             }
         }
@@ -72,6 +90,7 @@ final class ScheduleViewModel {
 
                     DispatchQueue.main.async {
                         self?.schedules = fetched
+                        self?.lastFetchedAt = now
 
                         // 캐시 저장
                         if let data = try? JSONEncoder().encode(fetched) {

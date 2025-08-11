@@ -15,8 +15,9 @@ final class CalendarViewModel {
     }
     var days: [Date] = []
     var selectedDate: Date = Date()
-    var eventColorMap: [Date: Color] = [:]
-    var swipeSelection: Int = 1
+    // TODO: remove if not used
+    // var eventColorMap: [Date: Color] = [:]
+    // var swipeSelection: Int = 1
 
     private let calendar = Calendar.current
 
@@ -39,14 +40,16 @@ final class CalendarViewModel {
     }
 
     // 유틸 메서드
-    func isSelected(_ date: Date?) -> Bool {
-        guard let d = date else { return false }
-        return calendar.isDate(d, inSameDayAs: selectedDate)
+    func isSelected(_ date: Date) -> Bool {
+        calendar.isDate(date, inSameDayAs: selectedDate)
     }
 
-    func isInCurrentMonth(_ date: Date?) -> Bool {
-        guard let d = date else { return false }
-        return calendar.isDate(d, equalTo: currentMonth, toGranularity: .month)
+    func isInCurrentMonth(_ date: Date) -> Bool {
+        calendar.isDate(date, equalTo: currentMonth, toGranularity: .month)
+    }
+    
+    func startOfMonth(for date: Date) -> Date {
+        calendar.date(from: calendar.dateComponents([.year, .month], from: date)) ?? date
     }
     
     var numberOfWeeks: Int {

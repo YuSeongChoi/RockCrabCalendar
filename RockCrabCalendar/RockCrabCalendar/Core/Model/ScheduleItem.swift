@@ -289,7 +289,7 @@ extension ScheduleItem {
             date: simpleDateFormatter.date(from: "2025-08-09")!,
             time: "14:00",
             place: "",
-            members: [.Q, .W, .E, .R],
+            members: [.W, .E, .R],
             category: .fanSign
         ),
         ScheduleItem(
@@ -297,7 +297,7 @@ extension ScheduleItem {
             date: simpleDateFormatter.date(from: "2025-08-10")!,
             time: "13:00",
             place: "",
-            members: [.Q, .W, .E, .R],
+            members: [.W, .E, .R],
             category: .fanSign
         ),
         ScheduleItem(

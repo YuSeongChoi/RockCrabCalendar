@@ -25,6 +25,38 @@ struct CalendarView: View {
             VStack(spacing: 10) {
                 VStack(spacing: 10) {
                     dateSelectionView
+                    // TODO: 신규 버튼기능
+                    HStack {
+                        Button("오늘") {
+                            let today = Date()
+                            calendarVM.select(date: today)
+                            calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
+                            scheduleVM.selectedDate = today
+                        }
+                        .font(.system(size: 14, weight: .semibold))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule().fill(Color(UIColor.systemGray5))
+                        )
+                        .foregroundColor(.primary)
+                        Spacer()
+                        Button {
+                            scheduleVM.fetchAllSchedules(force: true)
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                                .font(.system(size: 14, weight: .semibold))
+                                .padding(8)
+                                .background(Capsule().fill(Color(UIColor.systemGray5)))
+                                .foregroundColor(.primary)
+                        }
+                        
+                        Text(scheduleVM.lastSyncText)
+                            .pretendReg(size: 12)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.horizontal, 20)
+                    
                     dateHeaderView
                     dateGridView(height: geometry.size.height * 0.5)
                     Divider()
@@ -50,7 +82,7 @@ struct CalendarView: View {
         .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
-            scheduleVM.fetchAllSchedules()
+            scheduleVM.fetchAllSchedules(force: false)
         }
     }
     
@@ -65,25 +97,11 @@ struct CalendarView: View {
                     Image(systemName: "chevron.left")
                 }
                 Spacer()
+                
                 Text(monthYearFormatter.string(from: calendarVM.currentMonth))
                     .font(.system(size: 20, weight: .bold))
                     .foregroundColor(.primary)
                 
-                Button("오늘") {
-                    calendarVM.select(date: Date())
-                    scheduleVM.selectedDate = Date()
-                    let today = Date()
-                    calendarVM.select(date: today)
-                    calendarVM.currentMonth = today.startOfMonth
-                    scheduleVM.selectedDate = today
-                }
-                .font(.system(size: 14, weight: .semibold))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .background(
-                    Capsule().fill(Color(UIColor.systemGray5))
-                )
-                .foregroundColor(.primary)
                 Spacer()
                 Button {
                     calendarVM.changeMonth(by: 1)
@@ -137,7 +155,7 @@ struct CalendarView: View {
             }
             .frame(height: cellHeight * numberOfWeeks)
         }
-        .gesture(
+        .highPriorityGesture(
             DragGesture()
                 .onChanged { value in dragOffset = value.translation.width }
                 .onEnded { value in
