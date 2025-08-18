@@ -16,6 +16,11 @@ final class ScheduleViewModel {
     var selectedDate: Date = Date()
     var lastFetchedAt: Date? = nil
     
+    // MARK: - Category Filter State
+    private let categoryKey = "activeScheduleCategories"
+    var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
+    var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
+    
     private var db = Firestore.firestore()
     private var cancellables = Set<AnyCancellable>()
     private let dateFormatter: DateFormatter = {
@@ -37,6 +42,13 @@ final class ScheduleViewModel {
             return "동기화 날짜 : \(syncFormatter.string(from: d))"
         } else {
             return "동기화 날짜 : -"
+        }
+    }
+    
+    init() {
+        if let raw = UserDefaults.standard.array(forKey: categoryKey) as? [String] {
+            let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
+            if !decoded.isEmpty { self.activeCategories = Set(decoded) }
         }
     }
     
@@ -105,12 +117,46 @@ final class ScheduleViewModel {
     }
     
     func eventColors(for date: Date) -> [Color] {
-        let items = schedules.filter { Calendar.current.isDate($0.date, inSameDayAs: date) }
+        let items = schedules.filter {
+            Calendar.current.isDate($0.date, inSameDayAs: date) && passesCategory($0)
+        }
         let members = Set(items.flatMap { $0.members })
-        
+
         return QWERMember.allCases.compactMap { member in
             members.contains(member) ? memberColor(member) : nil
         }
+    }
+
+    func schedules(on date: Date? = nil) -> [ScheduleItem] {
+        let target = date ?? selectedDate
+        return schedules.filter {
+            Calendar.current.isDate($0.date, inSameDayAs: target) && passesCategory($0)
+        }
+    }
+    
+    private func persistCategories() {
+        let raw = activeCategories.map { $0.rawValue }
+        UserDefaults.standard.set(raw, forKey: categoryKey)
+    }
+
+    func toggleCategory(_ category: ScheduleCategory) {
+        if activeCategories.contains(category) { activeCategories.remove(category) }
+        else { activeCategories.insert(category) }
+        persistCategories()
+    }
+
+    func setAllCategories() {
+        activeCategories = Set(ScheduleCategory.allCases)
+        persistCategories()
+    }
+
+    func setCategories(_ categories: Set<ScheduleCategory>) {
+        activeCategories = categories.isEmpty ? Set(ScheduleCategory.allCases) : categories
+        persistCategories()
+    }
+
+    private func passesCategory(_ item: ScheduleItem) -> Bool {
+        activeCategories.contains(item.category)
     }
     
     func memberColor(_ member: QWERMember) -> Color {
@@ -142,9 +188,9 @@ extension ScheduleViewModel {
         let calendar = Calendar.current
         guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedDate)),
               let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else { return [] }
-        
+
         return schedules.filter {
-            $0.date >= startOfMonth && $0.date <= endOfMonth
+            $0.date >= startOfMonth && $0.date <= endOfMonth && passesCategory($0)
         }
     }
 }

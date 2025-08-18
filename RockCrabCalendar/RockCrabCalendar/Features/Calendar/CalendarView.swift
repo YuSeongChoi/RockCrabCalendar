@@ -11,6 +11,7 @@ struct CalendarView: View {
     @State private var calendarVM = CalendarViewModel()
     @State private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
+    @State private var showCategorySheet: Bool = false
     
     private let calendar = Calendar.current
     private let monthYearFormatter: DateFormatter = {
@@ -28,7 +29,8 @@ struct CalendarView: View {
                     dateSelectionView
                     calendarOptionView
                     dateHeaderView
-                    dateGridView(height: geometry.size.height * 0.5)
+                    dateGridView(availableWidth: geometry.size.width)
+                    
                     // 최근 동기화 캡션
                     Text("\(scheduleVM.lastSyncText)")
                         .font(.caption2.monospacedDigit())
@@ -39,9 +41,7 @@ struct CalendarView: View {
                 }
                 .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
                 
-                let selectedDateSchedules = scheduleVM.schedules.filter {
-                    Calendar.current.isDate($0.date, inSameDayAs: scheduleVM.selectedDate)
-                }
+                let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
                 if !selectedDateSchedules.isEmpty {
                     scheduleListView(schedules: selectedDateSchedules)
                 } else {
@@ -62,6 +62,14 @@ struct CalendarView: View {
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchAllSchedules(force: false)
+        }
+        .sheet(isPresented: $showCategorySheet) {
+            CategoryFilterSheet(
+                active: scheduleVM.activeCategories,
+                onApply: { selected in
+                    scheduleVM.setCategories(selected)
+                }
+            )
         }
     }
     
@@ -125,6 +133,15 @@ struct CalendarView: View {
                     .background(Capsule().fill(Color(UIColor.systemGray5)))
                     .foregroundColor(.primary)
             }
+            Button {
+                showCategorySheet = true
+            } label: {
+                Image(systemName: "line.3.horizontal.decrease.circle")
+                    .font(.system(size: 14, weight: .semibold))
+                    .padding(6)
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
         }
         .padding(.horizontal, 20)
     }
@@ -149,10 +166,25 @@ struct CalendarView: View {
     }
     
     // MARK: 요일 그리드 뷰
-    private func dateGridView(height: CGFloat) -> some View {
+    private func dateGridView(availableWidth: CGFloat) -> some View {
         VStack {
             let numberOfWeeks = CGFloat(calendarVM.numberOfWeeks)
-            let cellHeight = calendarVM.cellHeight(for: height)
+
+            // Layout constants used elsewhere in this view
+            let horizontalPadding: CGFloat = 20     // must match .padding(.horizontal, 20)
+            let interItemSpacing: CGFloat = 8       // must match LazyVGrid spacing
+            let columns: CGFloat = 7
+
+            // Compute cell width from the available width so the calendar never overflows vertically
+            let totalInteritem = interItemSpacing * (columns - 1)
+            let usableWidth = max(0, availableWidth - (horizontalPadding * 2) - totalInteritem)
+            let cellWidth = floor(usableWidth / columns)
+
+            // Slightly taller than width to leave room for the tiny event dots
+            let cellHeight = cellWidth * 1.05
+
+            // Total grid height = cell heights + inter-row spacings
+            let totalGridHeight = (cellHeight * numberOfWeeks) + (interItemSpacing * (numberOfWeeks - 1))
 
             LazyVGrid(columns: gridColumns, spacing: 8) {
                 ForEach(Array(calendarVM.days.enumerated()), id: \.offset) { _, date in
@@ -173,7 +205,7 @@ struct CalendarView: View {
                 }
             }
             .padding(.horizontal, 20)
-            .frame(height: cellHeight * numberOfWeeks)
+            .frame(height: totalGridHeight)
             .animation(.easeInOut(duration: 0.45), value: calendarVM.currentMonth)
         }
         .highPriorityGesture(
@@ -248,5 +280,68 @@ struct CalendarView: View {
             .transition(.opacity)
         }
         .scrollIndicators(.hidden)
+    }
+    
+    private struct CategoryFilterSheet: View {
+        @Environment(\.dismiss) private var dismiss
+        @State private var selected: Set<ScheduleCategory>
+        let onApply: (Set<ScheduleCategory>) -> Void
+
+        init(active: Set<ScheduleCategory>,
+             onApply: @escaping (Set<ScheduleCategory>) -> Void) {
+            _selected = State(initialValue: active)
+            self.onApply = onApply
+        }
+
+        var body: some View {
+            NavigationView {
+                List {
+                    Section {
+                        // 전체 선택 (토글)
+                        Button {
+                            if selected.count == ScheduleCategory.allCases.count {
+                                selected.removeAll()
+                            } else {
+                                selected = Set(ScheduleCategory.allCases)
+                            }
+                        } label: {
+                            HStack(spacing: 10) {
+                                let allSelected = selected.count == ScheduleCategory.allCases.count
+                                Image(systemName: allSelected ? "checkmark.circle.fill" : "circle")
+                                    .foregroundStyle(allSelected ? .blue : .secondary)
+                                Text("전체 선택")
+                                Spacer()
+                            }
+                        }
+                        
+                        ForEach(Array(ScheduleCategory.allCases), id: \.self) { cat in
+                            HStack(spacing: 10) {
+                                Image(systemName: selected.contains(cat) ? "checkmark.circle.fill" : "circle")
+                                    .foregroundStyle(selected.contains(cat) ? .blue : .secondary)
+                                Text(cat.rawValue)
+                                Spacer()
+                            }
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                if selected.contains(cat) { selected.remove(cat) }
+                                else { selected.insert(cat) }
+                            }
+                        }
+                    }
+                }
+                .pretendSemiBold(size: 16)
+                .foregroundStyle(.secondary)
+                .listStyle(.insetGrouped)
+                .navigationTitle("분류")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("적용") {
+                            onApply(selected)
+                            dismiss()
+                        }
+                    }
+                }
+            }
+        }
     }
 }

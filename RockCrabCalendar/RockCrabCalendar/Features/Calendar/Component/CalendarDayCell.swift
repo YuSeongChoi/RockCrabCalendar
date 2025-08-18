@@ -13,62 +13,75 @@ struct CalendarDayCell: View {
     let isInCurrentMonth: Bool
     let eventColors: [Color]
 
+    private let dotRowHeight: CGFloat = 14
+
     var body: some View {
-        GeometryReader { geometry in
-            let rawSize = min(geometry.size.width, geometry.size.height)
-            let cellSize = isSelected ? rawSize * 1.025 : rawSize
-            
-            ZStack {
+        GeometryReader { proxy in
+            let size = proxy.size
+            let dayRectCorner: CGFloat = 8
+            let isDark = UITraitCollection.current.userInterfaceStyle == .dark
+
+            ZStack(alignment: .top) {
+                // Selection background – trimmed at the bottom so it won't overlap the dot row
                 if isSelected {
-                    RoundedRectangle(cornerRadius: 5)
-                        .fill(Color.pastelBlue.opacity(0.3))
+                    RoundedRectangle(cornerRadius: dayRectCorner)
+                        .fill(Color.pastelBlue.opacity(0.22))
                         .overlay(
-                            RoundedRectangle(cornerRadius: 5)
+                            RoundedRectangle(cornerRadius: dayRectCorner)
                                 .stroke(Color.pastelBlue, lineWidth: 1.5)
                         )
-                        .frame(width: geometry.size.width, height: geometry.size.height * 0.8)
-                        .shadow(color: Color.pastelBlue.opacity(0.3), radius: 4, x: 0, y: 2)
+                        // cover the whole cell (day number + dots)
+                        .frame(width: size.width, height: size.height)
+                        // small inset so the stroke doesn’t touch grid bounds
+                        .padding(3)
+                        .shadow(color: Color.pastelBlue.opacity(0.2), radius: 3, x: 0, y: 1)
                 }
 
                 if let date = date {
                     let day = Calendar.current.component(.day, from: date)
                     let weekday = Calendar.current.component(.weekday, from: date)
 
-                    VStack(spacing: 10) {
+                    VStack(spacing: 0) {
+                        // Day number
                         Text("\(day)")
-                            .font(.system(size: isSelected ? 18 : 16))
-                            .fontWeight(isSelected ? .bold : .regular)
-                            .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.4))
-                            .padding(.top, 4)
-                        
-                        if !eventColors.isEmpty {
-                            HStack(spacing: 2) {
-                                ForEach(0..<eventColors.count, id: \.self) { i in
+                            .font(.system(size: 15, weight: isSelected ? .semibold : .regular))
+                            .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.35))
+                            .padding(.top, 6)
+
+                        // Fill remaining vertical space, then place dots at the very bottom
+                        Spacer(minLength: 0)
+
+                        // Dot row (max ~6)
+                        HStack(spacing: 3) {
+                            if isInCurrentMonth {
+                                ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
                                     ZStack {
                                         Circle()
-                                            .fill(Color(white: 0.85))
-                                            .frame(width: 7.5, height: 7.5)
+                                            .fill(Color(white: isDark ? 0.2 : 0.88))
+                                            .frame(width: 8, height: 8)
                                         Circle()
                                             .fill(eventColors[i])
                                             .frame(width: 6, height: 6)
                                     }
                                 }
                             }
-                            .frame(height: 16)
-                            .padding(.horizontal, 4)
-                        } else {
-                            Spacer().frame(height: 16)
                         }
+                        .frame(height: dotRowHeight)
+                        .padding(.bottom, 4)
                     }
-                    .frame(width: geometry.size.width, height: cellSize * 1.18)
+                    .frame(width: size.width, height: size.height, alignment: .top)
                 } else {
-                    RoundedRectangle(cornerRadius: 5)
-                        .fill(Color.gray.opacity(0.05))
-                        .frame(width: cellSize, height: cellSize)
+                    // Placeholder for empty cell (outside current grid)
+                    Color.clear
                 }
             }
-            .frame(width: cellSize, height: cellSize * 1.08)
-            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
+            .frame(width: size.width, height: size.height)
+            .background(
+                Color(UIColor {
+                    $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
+                })
+            )
+            .contentShape(Rectangle()) // make whole cell tappable
         }
     }
 

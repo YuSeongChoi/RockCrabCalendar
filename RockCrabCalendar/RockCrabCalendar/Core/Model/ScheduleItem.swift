@@ -51,14 +51,12 @@ struct ScheduleItem: Identifiable, Codable {
     }
 }
 
-extension ScheduleItem {
-    enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
-        case fanSign = "팬사인회"
-        case concert = "공연"
-        case award = "시상식"
-        case birthday = "생일"
-        case other = "기타"
-    }
+enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
+    case fanSign = "팬사인회"
+    case concert = "공연"
+    case award = "시상식"
+    case birthday = "생일"
+    case other = "기타"
 }
 
 extension ScheduleItem {
