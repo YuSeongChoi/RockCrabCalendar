@@ -23,49 +23,18 @@ struct CalendarView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 10) {
+            VStack(spacing: 0) {
                 VStack(spacing: 10) {
                     dateSelectionView
-                    // TODO: 신규 버튼기능
-                    HStack {
-                        Button {
-                            let today = Date()
-                            calendarVM.select(date: today)
-                            calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
-                            scheduleVM.selectedDate = today
-                        } label: {
-                            Label("오늘", systemImage: "clock.arrow.circlepath")
-                                .labelStyle(.titleAndIcon)
-                                .font(.system(size: 14, weight: .semibold))
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(Capsule().fill(Color(UIColor.systemGray5)))
-                                .foregroundColor(.primary)
-                        }
-
-                        Spacer()
-
-                        Button {
-                            scheduleVM.fetchAllSchedules(force: true)
-                        } label: {
-                            Image(systemName: "arrow.clockwise.circle.fill")
-                                .font(.system(size: 18, weight: .semibold))
-                                .padding(6)
-                                .background(Capsule().fill(Color(UIColor.systemGray5)))
-                                .foregroundColor(.primary)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-
-                    // 최근 동기화 캡션
-                    Text("최근 동기화 \(scheduleVM.lastSyncText)")
-                        .font(.caption2.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 20)
-                    
+                    calendarOptionView
                     dateHeaderView
                     dateGridView(height: geometry.size.height * 0.5)
+                    // 최근 동기화 캡션
+                    Text("\(scheduleVM.lastSyncText)")
+                        .font(.caption2.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.trailing, 4)
                     Divider()
                 }
                 .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
@@ -73,10 +42,8 @@ struct CalendarView: View {
                 let selectedDateSchedules = scheduleVM.schedules.filter {
                     Calendar.current.isDate($0.date, inSameDayAs: scheduleVM.selectedDate)
                 }
-
                 if !selectedDateSchedules.isEmpty {
                     scheduleListView(schedules: selectedDateSchedules)
-                    Spacer()
                 } else {
                     Spacer()
                     VStack(spacing: 8) {
@@ -128,6 +95,40 @@ struct CalendarView: View {
         }
     }
     
+    // MARK: 캘린더 옵션 뷰
+    @ViewBuilder
+    private var calendarOptionView: some View {
+        HStack {
+            Button {
+                let today = Date()
+                calendarVM.select(date: today)
+                calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
+                scheduleVM.selectedDate = today
+            } label: {
+                Label("오늘", systemImage: "clock.arrow.circlepath")
+                    .labelStyle(.titleAndIcon)
+                    .font(.system(size: 14, weight: .semibold))
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
+
+            Spacer()
+
+            Button {
+                scheduleVM.fetchAllSchedules(force: true)
+            } label: {
+                Image(systemName: "arrow.circlepath")
+                    .font(.system(size: 14, weight: .semibold))
+                    .padding(6)
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
+        }
+        .padding(.horizontal, 20)
+    }
+    
     // MARK: 요일 헤더 뷰
     @ViewBuilder
     private var dateHeaderView: some View {
@@ -152,9 +153,9 @@ struct CalendarView: View {
         VStack {
             let numberOfWeeks = CGFloat(calendarVM.numberOfWeeks)
             let cellHeight = calendarVM.cellHeight(for: height)
-            
+
             LazyVGrid(columns: gridColumns, spacing: 8) {
-                ForEach(Array(calendarVM.days.enumerated()), id: \.offset) { index, date in
+                ForEach(Array(calendarVM.days.enumerated()), id: \.offset) { _, date in
                     CalendarDayCell(
                         date: date,
                         isSelected: calendarVM.isSelected(date),
@@ -162,8 +163,9 @@ struct CalendarView: View {
                         eventColors: scheduleVM.eventColors(for: date)
                     )
                     .frame(height: cellHeight)
+                    .contentShape(Rectangle()) // 전체 셀 영역을 탭영역으로
                     .onTapGesture {
-                        withAnimation {
+                        withAnimation(.snappy(duration: 0.2)) {
                             calendarVM.select(date: date)
                             scheduleVM.selectedDate = date
                         }
@@ -172,17 +174,23 @@ struct CalendarView: View {
             }
             .padding(.horizontal, 20)
             .frame(height: cellHeight * numberOfWeeks)
+            .animation(.easeInOut(duration: 0.45), value: calendarVM.currentMonth)
         }
         .highPriorityGesture(
-            DragGesture()
-                .onChanged { value in dragOffset = value.translation.width }
+            DragGesture(minimumDistance: 10)
+                .onChanged { value in
+                    // 수평 스와이프만 인식 (수직 드래그는 무시)
+                    if abs(value.translation.height) < 40 { dragOffset = value.translation.width }
+                }
                 .onEnded { value in
-                    if value.translation.width < -50 {
+                    defer { dragOffset = 0 }
+                    guard abs(value.translation.height) < 40 else { return }
+                    let dx = value.translation.width
+                    if dx < -50 {
                         calendarVM.changeMonth(by: 1)
-                    } else if value.translation.width > 50 {
+                    } else if dx > 50 {
                         calendarVM.changeMonth(by: -1)
                     }
-                    dragOffset = 0
                 }
         )
     }

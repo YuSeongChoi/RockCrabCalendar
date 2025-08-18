@@ -42,7 +42,7 @@ struct CalendarDayCell: View {
                             .padding(.top, 4)
                         
                         if !eventColors.isEmpty {
-                            HStack(spacing: 4) {
+                            HStack(spacing: 2) {
                                 ForEach(0..<eventColors.count, id: \.self) { i in
                                     ZStack {
                                         Circle()
@@ -55,6 +55,7 @@ struct CalendarDayCell: View {
                                 }
                             }
                             .frame(height: 16)
+                            .padding(.horizontal, 4)
                         } else {
                             Spacer().frame(height: 16)
                         }
