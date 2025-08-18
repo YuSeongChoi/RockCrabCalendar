@@ -13,7 +13,10 @@ struct CalendarDayCell: View {
     let isInCurrentMonth: Bool
     let eventColors: [Color]
 
-    private let dotRowHeight: CGFloat = 14
+    private let dotSize: CGFloat = 6
+    private let dotBackgroundSize: CGFloat = 8
+    private var dotRowHeight: CGFloat { dotBackgroundSize + 6 } // auto-calculated from dot size + padding
+    private let dayAreaHeight: CGFloat = 22
 
     var body: some View {
         GeometryReader { proxy in
@@ -23,46 +26,42 @@ struct CalendarDayCell: View {
 
             ZStack(alignment: .top) {
                 // Selection background – trimmed at the bottom so it won't overlap the dot row
-                if isSelected {
-                    RoundedRectangle(cornerRadius: dayRectCorner)
-                        .fill(Color.pastelBlue.opacity(0.22))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: dayRectCorner)
-                                .stroke(Color.pastelBlue, lineWidth: 1.5)
-                        )
-                        // cover the whole cell (day number + dots)
-                        .frame(width: size.width, height: size.height)
-                        // small inset so the stroke doesn’t touch grid bounds
-                        .padding(3)
-                        .shadow(color: Color.pastelBlue.opacity(0.2), radius: 3, x: 0, y: 1)
-                }
+                RoundedRectangle(cornerRadius: dayRectCorner)
+                    .fill(Color.pastelBlue.opacity(0.22))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: dayRectCorner)
+                            .strokeBorder(Color.pastelBlue, lineWidth: 1.5)
+                    )
+                    .frame(width: size.width, height: size.height)
+                    .shadow(color: Color.pastelBlue.opacity(0.2), radius: 3, x: 0, y: 1)
+                    .opacity(isSelected ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.2), value: isSelected)
 
                 if let date = date {
                     let day = Calendar.current.component(.day, from: date)
                     let weekday = Calendar.current.component(.weekday, from: date)
 
                     VStack(spacing: 0) {
-                        // Day number
                         Text("\(day)")
-                            .font(.system(size: 15, weight: isSelected ? .semibold : .regular))
+                            .pretendSemiBold(size: 15)
+                            .monospacedDigit()
+                            .frame(height: dayAreaHeight, alignment: .top)
                             .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.35))
                             .padding(.top, 6)
 
-                        // Fill remaining vertical space, then place dots at the very bottom
-                        Spacer(minLength: 0)
+                        Spacer()
 
-                        // Dot row (max ~6)
                         HStack(spacing: 3) {
-                            if isInCurrentMonth {
-                                ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color(white: isDark ? 0.2 : 0.88))
-                                            .frame(width: 8, height: 8)
-                                        Circle()
-                                            .fill(eventColors[i])
-                                            .frame(width: 6, height: 6)
-                                    }
+                            ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
+                                ZStack {
+                                    Circle()
+                                        .fill(Color(white: isDark ? 0.2 : 0.88))
+                                        .opacity(isInCurrentMonth ? 1 : 0.55)
+                                        .frame(width: dotBackgroundSize, height: dotBackgroundSize)
+                                    Circle()
+                                        .fill(eventColors[i])
+                                        .opacity(isInCurrentMonth ? 1 : 0.5)
+                                        .frame(width: dotSize, height: dotSize)
                                 }
                             }
                         }
@@ -71,7 +70,6 @@ struct CalendarDayCell: View {
                     }
                     .frame(width: size.width, height: size.height, alignment: .top)
                 } else {
-                    // Placeholder for empty cell (outside current grid)
                     Color.clear
                 }
             }

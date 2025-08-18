@@ -161,7 +161,6 @@ struct CalendarView: View {
                     .foregroundStyle(color)
             }
         }
-        .padding(.horizontal, 20)
         .padding(.bottom, 15)
     }
     
@@ -171,13 +170,12 @@ struct CalendarView: View {
             let numberOfWeeks = CGFloat(calendarVM.numberOfWeeks)
 
             // Layout constants used elsewhere in this view
-            let horizontalPadding: CGFloat = 20     // must match .padding(.horizontal, 20)
             let interItemSpacing: CGFloat = 8       // must match LazyVGrid spacing
             let columns: CGFloat = 7
 
             // Compute cell width from the available width so the calendar never overflows vertically
             let totalInteritem = interItemSpacing * (columns - 1)
-            let usableWidth = max(0, availableWidth - (horizontalPadding * 2) - totalInteritem)
+            let usableWidth = max(0, availableWidth - totalInteritem)
             let cellWidth = floor(usableWidth / columns)
 
             // Slightly taller than width to leave room for the tiny event dots
@@ -195,7 +193,6 @@ struct CalendarView: View {
                         eventColors: scheduleVM.eventColors(for: date)
                     )
                     .frame(height: cellHeight)
-                    .contentShape(Rectangle()) // 전체 셀 영역을 탭영역으로
                     .onTapGesture {
                         withAnimation(.snappy(duration: 0.2)) {
                             calendarVM.select(date: date)
@@ -204,7 +201,6 @@ struct CalendarView: View {
                     }
                 }
             }
-            .padding(.horizontal, 20)
             .frame(height: totalGridHeight)
             .animation(.easeInOut(duration: 0.45), value: calendarVM.currentMonth)
         }
