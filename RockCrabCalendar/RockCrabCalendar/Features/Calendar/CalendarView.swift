@@ -169,22 +169,25 @@ struct CalendarView: View {
         VStack {
             let numberOfWeeks = CGFloat(calendarVM.numberOfWeeks)
 
-            // Layout constants used elsewhere in this view
-            let interItemSpacing: CGFloat = 8       // must match LazyVGrid spacing
+            // 셀 사이 간격 (LazyVGrid spacing과 동일해야 함)
+            let interItemSpacing: CGFloat = 8
+            // 열 개수 (요일: 7일)
             let columns: CGFloat = 7
 
-            // Compute cell width from the available width so the calendar never overflows vertically
+            // 전체 가로 간격의 합 = 간격 * (열 - 1)
             let totalInteritem = interItemSpacing * (columns - 1)
+            // 사용할 수 있는 실제 셀 영역 = 전체 너비 - 간격 합
             let usableWidth = max(0, availableWidth - totalInteritem)
+            // 셀 하나의 가로 폭 = usableWidth ÷ 열 개수 (내림하여 픽셀 깨짐 방지)
             let cellWidth = floor(usableWidth / columns)
 
-            // Slightly taller than width to leave room for the tiny event dots
+            // 셀 높이 = 셀 폭보다 약간 크게 (이벤트 점 표시 공간 확보)
             let cellHeight = cellWidth * 1.05
 
-            // Total grid height = cell heights + inter-row spacings
+            // 전체 그리드 높이 = (셀 높이 × 주 수) + (간격 × (주 수 - 1))
             let totalGridHeight = (cellHeight * numberOfWeeks) + (interItemSpacing * (numberOfWeeks - 1))
 
-            LazyVGrid(columns: gridColumns, spacing: 8) {
+            LazyVGrid(columns: gridColumns, spacing: interItemSpacing) {
                 ForEach(Array(calendarVM.days.enumerated()), id: \.offset) { _, date in
                     CalendarDayCell(
                         date: date,
@@ -202,7 +205,6 @@ struct CalendarView: View {
                 }
             }
             .frame(height: totalGridHeight)
-            .animation(.easeInOut(duration: 0.45), value: calendarVM.currentMonth)
         }
         .highPriorityGesture(
             DragGesture(minimumDistance: 10)
@@ -248,7 +250,7 @@ struct CalendarView: View {
                             HStack(spacing: 4) {
                                 Image(systemName: item.members.count == 1 ? "person.fill" : "person.3.fill")
                                     .foregroundColor(.gray)
-                                
+                                 
                                 HStack(spacing: 8) {
                                     ForEach(item.members, id: \.self) { member in
                                         Text(member.name)

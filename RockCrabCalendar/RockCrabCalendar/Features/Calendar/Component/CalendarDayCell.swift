@@ -25,7 +25,6 @@ struct CalendarDayCell: View {
             let isDark = UITraitCollection.current.userInterfaceStyle == .dark
 
             ZStack(alignment: .top) {
-                // Selection background – trimmed at the bottom so it won't overlap the dot row
                 RoundedRectangle(cornerRadius: dayRectCorner)
                     .fill(Color.pastelBlue.opacity(0.22))
                     .overlay(
@@ -79,7 +78,7 @@ struct CalendarDayCell: View {
                     $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
                 })
             )
-            .contentShape(Rectangle()) // make whole cell tappable
+            .contentShape(Rectangle())
         }
     }
 
