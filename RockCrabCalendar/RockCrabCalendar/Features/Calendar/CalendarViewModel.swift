@@ -49,7 +49,11 @@ final class CalendarViewModel {
     }
     
     func startOfMonth(for date: Date) -> Date {
-        calendar.date(from: calendar.dateComponents([.year, .month], from: date)) ?? date
+        return date.startOfMonth
+    }
+
+    func endOfMonth(for date: Date) -> Date {
+        return date.endOfMonth
     }
     
     var numberOfWeeks: Int {

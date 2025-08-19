@@ -12,12 +12,19 @@ struct CalendarView: View {
     @State private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
+    @State private var showMonthList: Bool = false
     
     private let calendar = Calendar.current
     private let monthYearFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 M월"
         return formatter
+    }()
+    private let dayLabelFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "ko_KR")
+        f.dateFormat = "M월 d일(E)"
+        return f
     }()
     private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
     private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
@@ -28,33 +35,41 @@ struct CalendarView: View {
                 VStack(spacing: 10) {
                     dateSelectionView
                     calendarOptionView
-                    dateHeaderView
-                    dateGridView(availableWidth: geometry.size.width)
-                    
-                    // 최근 동기화 캡션
-                    Text("\(scheduleVM.lastSyncText)")
-                        .font(.caption2.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 4)
-                    Divider()
+                    if showMonthList {
+                        monthListView()
+                    } else {
+                        dateHeaderView
+                        dateGridView(availableWidth: geometry.size.width)
+                        
+                        // 최근 동기화 캡션
+                        Text("\(scheduleVM.lastSyncText)")
+                            .font(.caption2.monospacedDigit())
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing, 4)
+                        Divider()
+                    }
                 }
                 .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
                 
-                let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
-                if !selectedDateSchedules.isEmpty {
-                    scheduleListView(schedules: selectedDateSchedules)
+                if showMonthList {
+                    EmptyView()
                 } else {
-                    Spacer()
-                    VStack(spacing: 8) {
-                        Image(systemName: "calendar.badge.exclamationmark")
-                            .font(.system(size: 24))
-                            .foregroundStyle(.tertiary)
-                        Text("일정이 없습니다")
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
+                    let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
+                    if !selectedDateSchedules.isEmpty {
+                        scheduleListView(schedules: selectedDateSchedules)
+                    } else {
+                        Spacer()
+                        VStack(spacing: 8) {
+                            Image(systemName: "calendar.badge.exclamationmark")
+                                .font(.system(size: 24))
+                                .foregroundStyle(.tertiary)
+                            Text("일정이 없습니다")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
                     }
-                    Spacer()
                 }
             }
         }
@@ -137,6 +152,17 @@ struct CalendarView: View {
                 showCategorySheet = true
             } label: {
                 Image(systemName: "line.3.horizontal.decrease.circle")
+                    .font(.system(size: 14, weight: .semibold))
+                    .padding(6)
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    showMonthList.toggle()
+                }
+            } label: {
+                Image(systemName: showMonthList ? "calendar" : "list.bullet.rectangle")
                     .font(.system(size: 14, weight: .semibold))
                     .padding(6)
                     .background(Capsule().fill(Color(UIColor.systemGray5)))
@@ -227,11 +253,16 @@ struct CalendarView: View {
     
     // MARK: 스케줄 리스트 뷰
     @ViewBuilder
-    private func scheduleListView(schedules: [ScheduleItem]) -> some View {
+    private func scheduleListView(schedules: [ScheduleItem], showDate: Bool = false) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
                 ForEach(schedules, id: \.id) { item in
                     VStack(alignment: .leading, spacing: 6) {
+                        if showDate {
+                            Text(dayLabelFormatter.string(from: item.date))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
                         Text(item.title)
                             .pretendSemiBold(size: 16)
                         
@@ -268,16 +299,43 @@ struct CalendarView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(.secondarySystemBackground))
+                    .background(Color(.secondarySystemBackground))  
                     .cornerRadius(10)
-                    .padding(.horizontal, 16)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .top)
-            .padding(.vertical)
             .transition(.opacity)
         }
         .scrollIndicators(.hidden)
+    }
+    
+    private func monthSchedulesForCurrentMonth() -> [ScheduleItem] {
+        let start = calendarVM.startOfMonth(for: calendarVM.currentMonth)
+        let end = calendarVM.endOfMonth(for: calendarVM.currentMonth)
+        return scheduleVM.schedules.filter { item in
+            item.date >= start && item.date <= end && scheduleVM.activeCategories.contains(item.category)
+        }.sorted { $0.date < $1.date }
+    }
+    
+    @ViewBuilder
+    private func monthListView() -> some View {
+        let monthItems = monthSchedulesForCurrentMonth()
+        if monthItems.isEmpty {
+            VStack(spacing: 8) {
+                Image(systemName: "calendar.badge.exclamationmark")
+                    .font(.system(size: 24))
+                    .foregroundStyle(.tertiary)
+                Text("이번 달 일정이 없습니다")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+        } else {
+            // 재사용: 기존 카드 스타일 리스트
+            scheduleListView(schedules: monthItems, showDate: true)
+                .transition(.opacity)
+        }
     }
     
     private struct CategoryFilterSheet: View {
