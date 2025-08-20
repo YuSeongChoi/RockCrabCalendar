@@ -58,6 +58,7 @@ struct CalendarView: View {
                     let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
                     if !selectedDateSchedules.isEmpty {
                         scheduleListView(schedules: selectedDateSchedules)
+                            .padding(.top, 12)
                     } else {
                         Spacer()
                         VStack(spacing: 8) {
@@ -253,60 +254,59 @@ struct CalendarView: View {
     
     // MARK: 스케줄 리스트 뷰
     @ViewBuilder
-    private func scheduleListView(schedules: [ScheduleItem], showDate: Bool = false) -> some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(schedules, id: \.id) { item in
-                    VStack(alignment: .leading, spacing: 6) {
-                        if showDate {
-                            Text(dayLabelFormatter.string(from: item.date))
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Text(item.title)
-                            .pretendSemiBold(size: 16)
-                        
-                        HStack(spacing: 8) {
-                            if !item.time.isEmpty {
-                                Label(item.time, systemImage: "clock")
-                            }
-                            if !item.place.isEmpty {
-                                Label(item.place, systemImage: "house.circle.fill")
-                            }
-                        }
-                        .pretendReg(size: 13)
-                        .foregroundColor(.gray)
-                        
-                        if !item.members.isEmpty {
-                            HStack(spacing: 4) {
-                                Image(systemName: item.members.count == 1 ? "person.fill" : "person.3.fill")
-                                    .foregroundColor(.gray)
-                                 
-                                HStack(spacing: 8) {
-                                    ForEach(item.members, id: \.self) { member in
-                                        Text(member.name)
-                                            .pretendReg(size: 13)
-                                            .padding(.horizontal, 8)
-                                            .padding(.vertical, 4)
-                                            .background(
-                                                Capsule().fill(scheduleVM.memberColor(member))
-                                            )
-                                            .foregroundColor(.black)
-                                    }
+    private func scheduleListView(schedules: [ScheduleItem], embedInScrollView: Bool = true) -> some View {
+        let content = VStack(alignment: .leading, spacing: 8) {
+            ForEach(schedules, id: \.id) { item in
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(item.title)
+                        .pretendSemiBold(size: 16)
+                    
+                    HStack(spacing: 8) {
+                        if !item.time.isEmpty { Label(item.time, systemImage: "clock") }
+                        if !item.place.isEmpty { Label(item.place, systemImage: "house.circle.fill") }
+                    }
+                    .pretendReg(size: 13)
+                    .foregroundColor(.gray)
+                    
+                    if !item.members.isEmpty {
+                        HStack(spacing: 4) {
+                            Image(systemName: item.members.count == 1 ? "person.fill" : "person.3.fill")
+                                .foregroundColor(.gray)
+                            HStack(spacing: 8) {
+                                ForEach(item.members, id: \.self) { member in
+                                    Text(member.name)
+                                        .pretendReg(size: 13)
+                                        .padding(.horizontal, 8)
+                                        .padding(.vertical, 4)
+                                        .background(
+                                            Capsule().fill(scheduleVM.memberColor(member))
+                                        )
+                                        .foregroundColor(.black)
                                 }
                             }
                         }
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(.secondarySystemBackground))  
-                    .cornerRadius(10)
                 }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(UIColor { trait in
+                            trait.userInterfaceStyle == .dark ? .systemGray5 : .secondarySystemBackground
+                        }))
+                )
+                .padding(.horizontal, 10)
             }
-            .frame(maxWidth: .infinity, alignment: .top)
-            .transition(.opacity)
         }
-        .scrollIndicators(.hidden)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .transition(.opacity)
+
+        if embedInScrollView {
+            ScrollView { content }
+                .scrollIndicators(.hidden)
+        } else {
+            content
+        }
     }
     
     private func monthSchedulesForCurrentMonth() -> [ScheduleItem] {
@@ -332,9 +332,29 @@ struct CalendarView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
         } else {
-            // 재사용: 기존 카드 스타일 리스트
-            scheduleListView(schedules: monthItems, showDate: true)
-                .transition(.opacity)
+            // 같은 날짜끼리 섹션으로 묶어서 표시
+            let grouped = Dictionary(grouping: monthItems) { item in
+                calendar.startOfDay(for: item.date)
+            }
+            let days = grouped.keys.sorted()
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(days, id: \.self) { day in
+                        Text(dayLabelFormatter.string(from: day))
+                            .pretendSemiBold(size: 16)
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 20)
+
+                        // 카드 리스트(스크롤뷰 없이 재사용)
+                        if let items = grouped[day] {
+                            scheduleListView(schedules: items, embedInScrollView: false)
+                        }
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+            .transition(.opacity)
         }
     }
     
