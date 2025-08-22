@@ -54,15 +54,26 @@ final class ScheduleViewModel {
     
     func uploadSchedules(schedules: [ScheduleItem]) {
         for schedule in schedules {
-            db.collection("schedules")
-                .document(schedule.id.uuidString)
-                .setData(schedule.asDictionary, merge: true) { error in
-                    if let error = error {
-                        print("🔥 업로드 실패: \(error.localizedDescription)")
-                    } else {
-                        print("✅ 업로드 성공 (업데이트 포함): \(schedule.title)")
+            let docRef = db.collection("schedules").document(schedule.id.uuidString)
+            docRef.getDocument { document, error in
+                if let document = document, document.exists {
+                    docRef.updateData(schedule.asDictionary) { error in
+                        if let error = error {
+                            print("🔥 업데이트 실패: \(error.localizedDescription)")
+                        } else {
+                            print("🔄 업데이트 성공: \(schedule.title)")
+                        }
+                    }
+                } else {
+                    docRef.setData(schedule.asDictionary) { error in
+                        if let error = error {
+                            print("🔥 업로드 실패: \(error.localizedDescription)")
+                        } else {
+                            print("✅ 새로 업로드 성공: \(schedule.title)")
+                        }
                     }
                 }
+            }
         }
     }
     

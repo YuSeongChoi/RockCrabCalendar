@@ -311,8 +311,16 @@ extension ScheduleItem {
             date: simpleDateFormatter.date(from: "2025-08-21")!,
             time: "",
             place: "잠실실내체육관",
-            members: [.Q, .W, .E, .R],
+            members: [.W, .E, .R],
             category: .award
+        ),
+        ScheduleItem(
+            title: "디어마이뮤즈 팬사인회 (특별공연)",
+            date: simpleDateFormatter.date(from: "2025-08-23")!,
+            time: "19:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
         ),
         ScheduleItem(
             title: "THE HYPER DAY 2025 DAEGU",
