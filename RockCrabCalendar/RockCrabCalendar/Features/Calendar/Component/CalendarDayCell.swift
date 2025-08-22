@@ -46,8 +46,7 @@ struct CalendarDayCell: View {
                             if isToday {
                                 // 라이트/다크 모두 가시성 좋은 오늘 배경 색
                                 let base = Color(UIColor { trait in
-//                                    trait.userInterfaceStyle == .dark ? UIColor(Color.pastelMagenta.opacity(0.5)) : UIColor(Color.pastelChodan.opacity(0.5))
-                                    UIColor(Color.pastelHina.opacity(0.8))
+                                    trait.userInterfaceStyle == .dark ? UIColor(.white) : UIColor(.gray)
                                 })
                                 Circle()
                                     .fill(base.opacity(0.28))
@@ -55,7 +54,7 @@ struct CalendarDayCell: View {
                                         Circle().stroke(base.opacity(0.6), lineWidth: 1)
                                     )
                                     .frame(width: 24, height: 24)
-                                    .padding(.top, 2)
+                                    .padding(.top, 1)
                             }
                             Text("\(day)")
                                 .pretendSemiBold(size: 15)
