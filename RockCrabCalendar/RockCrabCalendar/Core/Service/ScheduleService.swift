@@ -12,38 +12,30 @@ final class ScheduleService {
     private let db = Firestore.firestore()
     private let collection = "schedules"
     
-    // MARK: - Add Schedule
+    // MARK: - 일정 추가
     func addSchedule(_ item: ScheduleItem) async throws {
-        try db.collection(collection)
+        try await db.collection(collection)
             .document(item.id.uuidString)
             .setData(from: item)
     }
     
-    // MARK: - Fetch All Schedules
+    // MARK: - 모든 일정 가져오기
     func fetchSchedules() async throws -> [ScheduleItem] {
         let snapshot = try await db.collection(collection).getDocuments()
         return snapshot.documents.compactMap { document in
             try? document.data(as: ScheduleItem.self)
         }
     }
-    
-    // MARK: - Fetech Schedules for Specific Date
-    func fetchSchedules(for date: Date) async throws -> [ScheduleItem] {
-        let allSchedules = try await fetchSchedules()
-        return allSchedules.filter { Calendar.current.isDate($0.date, inSameDayAs: date) }
-    }
-    
-    // MARK: - Delete Schedule
-    func deleteSchedule(_ item: ScheduleItem) async throws {
-        try await db.collection(collection)
-            .document(item.id.uuidString)
-            .delete()
-    }
-    
-    // MARK: - Update Schedule
-    func updateSchedule(_ item: ScheduleItem) async throws {
-        try db.collection(collection)
-            .document(item.id.uuidString)
-            .setData(from: item)
+
+    /// 여러 일정을 한 번에 업서트(추가 또는 업데이트)합니다.
+    /// - Parameter payloads: (docId, data) 쌍의 배열. data는 일정의 딕셔너리 형태입니다.
+    func upsertBatch(_ payloads: [(docId: String, data: [String: Any])]) async throws {
+        guard !payloads.isEmpty else { return }
+        let batch = db.batch()
+        for p in payloads {
+            let ref = db.collection(collection).document(p.docId)
+            batch.setData(p.data, forDocument: ref, merge: true)
+        }
+        try await batch.commit()
     }
 }

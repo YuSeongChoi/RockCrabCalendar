@@ -22,7 +22,7 @@ final class ScheduleViewModel {
     var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
-    private var db = Firestore.firestore()
+    private let service: ScheduleService
     private var cancellables = Set<AnyCancellable>()
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -66,7 +66,8 @@ final class ScheduleViewModel {
         return "rc_" + String(hex.prefix(20))
     }
     
-    init() {
+    init(service: ScheduleService = ScheduleService()) {
+        self.service = service
         if let raw = UserDefaults.standard.array(forKey: categoryKey) as? [String] {
             let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
             if !decoded.isEmpty { self.activeCategories = Set(decoded) }
@@ -75,26 +76,18 @@ final class ScheduleViewModel {
     
     func uploadSchedules(schedules: [ScheduleItem]) {
         guard !schedules.isEmpty else { return }
-        let collection = db.collection("schedules")
-        let chunkSize = 400 // Firestore batch 제한(500) 대비 안전 여유
-        var index = 0
-        while index < schedules.count {
-            let end = min(index + chunkSize, schedules.count)
-            let slice = schedules[index..<end]
-            let batch = db.batch()
-            for s in slice {
-                let docId = stableDocumentID(for: s)
-                let ref = collection.document(docId)
-                batch.setData(s.asDictionary, forDocument: ref, merge: true)
+        let payloads: [(docId: String, data: [String: Any])] = schedules.map { s in
+            let docId = stableDocumentID(for: s)
+            return (docId, s.asDictionary)
+        }
+        
+        Task {
+            do {
+                try await service.upsertBatch(payloads)
+                print("✅ 업서트 배치 성공: \(payloads.count)건")
+            } catch {
+                print("🔥 업서트 배치 실패: \(error.localizedDescription)")
             }
-            batch.commit { error in
-                if let error = error {
-                    print("🔥 업서트 배치 실패(\(index)-\(end)): \(error.localizedDescription)")
-                } else {
-                    print("✅ 업서트 배치 성공: \(index)-\(end)")
-                }
-            }
-            index = end
         }
     }
     
@@ -103,49 +96,37 @@ final class ScheduleViewModel {
         let lastFetchKey = "lastScheduleFetchDate"
         let now = Date()
 
-        // 캐시에서 먼저 불러오기
+        // 1) Cache-first
         if let cachedData = UserDefaults.standard.data(forKey: cacheKey),
            let cachedSchedules = try? JSONDecoder().decode([ScheduleItem].self, from: cachedData) {
             self.schedules = cachedSchedules
         }
 
-        // 마지막 fetch 시간이 24시간 이내면 Firestore 호출 안함
         if let lastFetch = UserDefaults.standard.object(forKey: lastFetchKey) as? Date {
             self.lastFetchedAt = lastFetch
             let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
             if !force, let hours = diff.hour, hours < 24 {
-                print("⏳ 캐시 유효 – Firestore fetch 생략 (force == false)")
+                print("⏳ 캐시 유효 – Service fetch 생략 (force == false)")
                 return
             }
         }
 
-        // Firestore에서 최신 데이터 fetch
-        db.collection("schedules")
-            .getDocuments { [weak self] snapshot, error in
-                if let error = error {
-                    print("🔥 전체 스케줄 가져오기 실패: \(error.localizedDescription)")
-                    return
-                }
-
-                do {
-                    let fetched = try snapshot?.documents.compactMap {
-                        try $0.data(as: ScheduleItem.self)
-                    } ?? []
-
-                    DispatchQueue.main.async {
-                        self?.schedules = fetched
-                        self?.lastFetchedAt = now
-
-                        // 캐시 저장
-                        if let data = try? JSONEncoder().encode(fetched) {
-                            UserDefaults.standard.set(data, forKey: cacheKey)
-                            UserDefaults.standard.set(now, forKey: lastFetchKey)
-                        }
+        // 2) Network
+        Task { [weak self] in
+            do {
+                let fetched = try await self?.service.fetchSchedules() ?? []
+                await MainActor.run {
+                    self?.schedules = fetched
+                    self?.lastFetchedAt = now
+                    if let data = try? JSONEncoder().encode(fetched) {
+                        UserDefaults.standard.set(data, forKey: cacheKey)
+                        UserDefaults.standard.set(now, forKey: lastFetchKey)
                     }
-                } catch {
-                    print("🔥 전체 스케줄 디코딩 실패: \(error.localizedDescription)")
                 }
+            } catch {
+                print("🔥 전체 스케줄 가져오기 실패: \(error.localizedDescription)")
             }
+        }
     }
     
     func eventColors(for date: Date) -> [Color] {

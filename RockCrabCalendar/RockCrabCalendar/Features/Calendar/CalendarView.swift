@@ -33,6 +33,9 @@ struct CalendarView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 VStack(spacing: 10) {
+                    Button("ACtion") {
+                        scheduleVM.uploadSchedules(schedules: ScheduleItem.schedules)
+                    }
                     dateSelectionView
                     calendarOptionView
                     if showMonthList {
