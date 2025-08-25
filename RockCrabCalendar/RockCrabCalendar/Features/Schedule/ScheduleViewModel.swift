@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import Combine
 import SwiftUI
+import CryptoKit
 
 @Observable
 final class ScheduleViewModel {
@@ -45,6 +46,26 @@ final class ScheduleViewModel {
         }
     }
     
+    private func stableDocumentID(for s: ScheduleItem) -> String {
+        // 날짜는 yyyy-MM-dd 로 고정
+        let dateKey = dateFormatter.string(from: s.date)
+        // 제목/장소는 소문자 + 트리밍 + 내부 공백을 단일 공백으로 정규화
+        func norm(_ str: String) -> String {
+            str
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
+                .lowercased()
+        }
+        let titleKey = norm(s.title)
+        let placeKey = norm(s.place)
+        let catKey = s.category.rawValue.lowercased()
+        let raw = "\(dateKey)|\(titleKey)|\(placeKey)|\(catKey)"
+        // SHA256 해시 → 앞 20자(80bit)만 사용해서 짧고 충돌 가능성 낮게
+        let digest = SHA256.hash(data: Data(raw.utf8))
+        let hex = digest.map { String(format: "%02x", $0) }.joined()
+        return "rc_" + String(hex.prefix(20))
+    }
+    
     init() {
         if let raw = UserDefaults.standard.array(forKey: categoryKey) as? [String] {
             let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
@@ -53,27 +74,27 @@ final class ScheduleViewModel {
     }
     
     func uploadSchedules(schedules: [ScheduleItem]) {
-        for schedule in schedules {
-            let docRef = db.collection("schedules").document(schedule.id.uuidString)
-            docRef.getDocument { document, error in
-                if let document = document, document.exists {
-                    docRef.updateData(schedule.asDictionary) { error in
-                        if let error = error {
-                            print("🔥 업데이트 실패: \(error.localizedDescription)")
-                        } else {
-                            print("🔄 업데이트 성공: \(schedule.title)")
-                        }
-                    }
+        guard !schedules.isEmpty else { return }
+        let collection = db.collection("schedules")
+        let chunkSize = 400 // Firestore batch 제한(500) 대비 안전 여유
+        var index = 0
+        while index < schedules.count {
+            let end = min(index + chunkSize, schedules.count)
+            let slice = schedules[index..<end]
+            let batch = db.batch()
+            for s in slice {
+                let docId = stableDocumentID(for: s)
+                let ref = collection.document(docId)
+                batch.setData(s.asDictionary, forDocument: ref, merge: true)
+            }
+            batch.commit { error in
+                if let error = error {
+                    print("🔥 업서트 배치 실패(\(index)-\(end)): \(error.localizedDescription)")
                 } else {
-                    docRef.setData(schedule.asDictionary) { error in
-                        if let error = error {
-                            print("🔥 업로드 실패: \(error.localizedDescription)")
-                        } else {
-                            print("✅ 새로 업로드 성공: \(schedule.title)")
-                        }
-                    }
+                    print("✅ 업서트 배치 성공: \(index)-\(end)")
                 }
             }
+            index = end
         }
     }
     
@@ -173,7 +194,7 @@ final class ScheduleViewModel {
     func memberColor(_ member: QWERMember) -> Color {
         switch member {
         case .Q: return .pastelChodan
-        case .W: return .pastelMajenta
+        case .W: return .pastelMagenta
         case .E: return .pastelHina
         case .R: return .pastelMing
         }

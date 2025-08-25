@@ -26,13 +26,13 @@ struct CalendarDayCell: View {
 
             ZStack(alignment: .top) {
                 RoundedRectangle(cornerRadius: dayRectCorner)
-                    .fill(Color.pastelBlue.opacity(0.22))
+                    .fill(Color.pastelHina.opacity(0.22))
                     .overlay(
                         RoundedRectangle(cornerRadius: dayRectCorner)
-                            .strokeBorder(Color.pastelBlue, lineWidth: 1.5)
+                            .strokeBorder(Color.pastelHina, lineWidth: 1.5)
                     )
                     .frame(width: size.width, height: size.height)
-                    .shadow(color: Color.pastelBlue.opacity(0.2), radius: 3, x: 0, y: 1)
+                    .shadow(color: Color.pastelHina.opacity(0.2), radius: 3, x: 0, y: 1)
                     .opacity(isSelected ? 1 : 0)
                     .animation(.easeInOut(duration: 0.2), value: isSelected)
 

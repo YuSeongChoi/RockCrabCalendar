@@ -83,6 +83,22 @@ extension ScheduleItem {
     
     static let schedules: [ScheduleItem] = [
         ScheduleItem(
+            title: "히나 생일 생일",
+            date: simpleDateFormatter.date(from: "2025-01-30")!,
+            time: "",
+            place: "",
+            members: [.E],
+            category: .birthday
+        ),
+        ScheduleItem(
+            title: "시연 생일",
+            date: simpleDateFormatter.date(from: "2025-05-16")!,
+            time: "",
+            place: "",
+            members: [.R],
+            category: .birthday
+        ),
+        ScheduleItem(
             title: "위버스콘",
             date: simpleDateFormatter.date(from: "2025-06-01")!,
             time: "14:50",
@@ -299,12 +315,36 @@ extension ScheduleItem {
             category: .fanSign
         ),
         ScheduleItem(
+            title: "KBO 삼성라이온즈 시구",
+            date: simpleDateFormatter.date(from: "2025-08-12")!,
+            time: "",
+            place: "대구 삼성라이온즈파크",
+            members: [.W],
+            category: .other
+        ),
+        ScheduleItem(
+            title: "비트로드 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-08-16")!,
+            time: "15:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
+        ),
+        ScheduleItem(
             title: "7rock prime 2025",
             date: simpleDateFormatter.date(from: "2025-08-16")!,
             time: "19:40",
             place: "잠실실내체육관",
             members: [.Q, .W, .E, .R],
             category: .concert
+        ),
+        ScheduleItem(
+            title: "디어마이뮤즈 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-08-17")!,
+            time: "13:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
         ),
         ScheduleItem(
             title: "K WORLD DREAM AWARDS",
@@ -321,14 +361,6 @@ extension ScheduleItem {
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
-        ),
-        ScheduleItem(
-            title: "THE HYPER DAY 2025 DAEGU",
-            date: simpleDateFormatter.date(from: "2025-08-30")!,
-            time: "12:30",
-            place: "대구스타디움 동편 메인광장",
-            members: [.Q, .W, .E, .R],
-            category: .concert
         ),
         ScheduleItem(
             title: "ASIA TOP ARTIST FESTIVAL",
@@ -363,10 +395,154 @@ extension ScheduleItem {
             category: .concert
         ),
         ScheduleItem(
+            title: "THE HYPER DAY 2025 DAEGU",
+            date: simpleDateFormatter.date(from: "2025-10-11")!,
+            time: "12:00",
+            place: "대구스타디움 동편 메인광장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
             title: "MADLY MADLEY",
             date: simpleDateFormatter.date(from: "2025-10-19")!,
             time: "",
             place: "파라다이스 시티",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR BROOKLYN",
+            date: simpleDateFormatter.date(from: "2025-10-31")!,
+            time: "",
+            place: "Music Hall of Williamsburg",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "쵸단 생일",
+            date: simpleDateFormatter.date(from: "2025-11-01")!,
+            time: "",
+            place: "",
+            members: [.Q],
+            category: .birthday
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR ATLANTA",
+            date: simpleDateFormatter.date(from: "2025-11-02")!,
+            time: "",
+            place: "Terminal West",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR BERWYN",
+            date: simpleDateFormatter.date(from: "2025-11-05")!,
+            time: "",
+            place: "Distro Music Hall",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR MINNEAPOLIS",
+            date: simpleDateFormatter.date(from: "2025-11-07")!,
+            time: "",
+            place: "The Lyric at Skyway Theatre",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR FORT WORTH",
+            date: simpleDateFormatter.date(from: "2025-11-11")!,
+            time: "",
+            place: "Ridglea Theater",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR HOUSTON",
+            date: simpleDateFormatter.date(from: "2025-11-12")!,
+            time: "",
+            place: "Warehouse Live",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR SAN FRANCISCO",
+            date: simpleDateFormatter.date(from: "2025-11-14")!,
+            time: "",
+            place: "Cowell Theater",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR LOS ANGELES",
+            date: simpleDateFormatter.date(from: "2025-11-16")!,
+            time: "",
+            place: "Vermont Hollywood",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR MACAU",
+            date: simpleDateFormatter.date(from: "2026-01-03")!,
+            time: "",
+            place: "The Londoner Theatre",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR KUALA LUMPUR",
+            date: simpleDateFormatter.date(from: "2026-01-17")!,
+            time: "",
+            place: "Zepp Kuala Lumpur",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR HONG KONG",
+            date: simpleDateFormatter.date(from: "2026-02-08")!,
+            time: "",
+            place: "AsiaWorld-Expo, Runway 11",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR TAIPEI",
+            date: simpleDateFormatter.date(from: "2026-02-14")!,
+            time: "",
+            place: "TICC",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR FUKUOKA",
+            date: simpleDateFormatter.date(from: "2026-02-19")!,
+            time: "",
+            place: "Zepp Fukuoka",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR OSAKA",
+            date: simpleDateFormatter.date(from: "2026-02-20")!,
+            time: "",
+            place: "Zepp Osaka Bayside",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR TOKYO",
+            date: simpleDateFormatter.date(from: "2026-02-22")!,
+            time: "",
+            place: "Zepp DiverCity",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "WORLD TOUR SINGAPORE",
+            date: simpleDateFormatter.date(from: "2026-02-28")!,
+            time: "",
+            place: "The Theatre at Mediacorp",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
