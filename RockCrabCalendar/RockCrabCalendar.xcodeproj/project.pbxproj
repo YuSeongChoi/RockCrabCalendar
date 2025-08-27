@@ -28,7 +28,7 @@
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
 		5D7FC9C52E5ED7F100B5EDCA /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */; };
 		5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */; };
-		5D7FC9CE2E5EDA7F00B5EDCA /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */; };
+		5D7FC9E12E5EE56D00B5EDCA /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -75,7 +75,7 @@
 		5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
 		5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeFetcher.swift; sourceTree = "<group>"; };
-		5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -204,7 +204,7 @@
 		5D7FC9CC2E5EDA6100B5EDCA /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */,
+				5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -377,7 +377,7 @@
 				5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */,
 				5DE024642CA3DC2500472395 /* Lato-BoldItalic.ttf in Resources */,
 				5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */,
-				5D7FC9CE2E5EDA7F00B5EDCA /* Secrets.xcconfig in Resources */,
+				5D7FC9E12E5EE56D00B5EDCA /* Secrets.xcconfig in Resources */,
 				5DE0245B2CA3DC2500472395 /* Lato-Thin.ttf in Resources */,
 				5DE0245E2CA3DC2500472395 /* Pretendard-Regular.otf in Resources */,
 				5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */,
@@ -433,7 +433,6 @@
 /* Begin XCBuildConfiguration section */
 		5DE0243E2CA3D7A000472395 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -497,7 +496,6 @@
 		};
 		5DE0243F2CA3D7A000472395 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
