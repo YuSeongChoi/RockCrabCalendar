@@ -3,6 +3,7 @@ GoogleService-Info.plist
 ./RockCrabCalendar/RockCrabCalendar/GoogleService-Info.plist
 Config/Secrets.xcconfig
 ./RockCrabCalendar/RockCrabCalendar/Config/*.xcconfig
+**/Config/*.xcconfig
 
 # Xcode
 DerivedData/
