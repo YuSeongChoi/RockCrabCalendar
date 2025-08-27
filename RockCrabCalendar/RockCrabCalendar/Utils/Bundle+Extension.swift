@@ -14,4 +14,11 @@ extension Bundle {
         }
         return key
     }
+    
+    var QWERChannelID: String {
+        guard let id = infoDictionary?["QWERChannelID"] as? String else {
+            fatalError("❌ Info.plist에 QWER 채널 ID가 없습니다.")
+        }
+        return id
+    }
 }
