@@ -33,9 +33,6 @@ struct CalendarView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 VStack(spacing: 10) {
-                    Button("ACtion") {
-                        scheduleVM.uploadSchedules(schedules: ScheduleItem.schedules)
-                    }
                     dateSelectionView
                     calendarOptionView
                     if showMonthList {
@@ -127,53 +124,53 @@ struct CalendarView: View {
     private var calendarOptionView: some View {
         HStack {
             Button {
+                showCategorySheet = true
+            } label: {
+                Label("필터", systemImage: "line.3.horizontal.decrease.circle")
+                    .labelStyle(.titleAndIcon)
+                    .pretendSemiBold(size: 14)
+                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
+            Spacer()
+            Button {
                 let today = Date()
                 calendarVM.select(date: today)
                 calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
                 scheduleVM.selectedDate = today
             } label: {
-                Label("오늘", systemImage: "clock.arrow.circlepath")
-                    .labelStyle(.titleAndIcon)
-                    .font(.system(size: 14, weight: .semibold))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
+                Text("오늘")
+                    .pretendSemiBold(size: 14)
+                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
                     .background(Capsule().fill(Color(UIColor.systemGray5)))
                     .foregroundColor(.primary)
             }
-
+            
             Spacer()
-
-            Button {
-                scheduleVM.fetchAllSchedules(force: true)
-            } label: {
-                Image(systemName: "arrow.circlepath")
-                    .font(.system(size: 14, weight: .semibold))
-                    .padding(6)
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
-                    .foregroundColor(.primary)
-            }
-            Button {
-                showCategorySheet = true
-            } label: {
-                Image(systemName: "line.3.horizontal.decrease.circle")
-                    .font(.system(size: 14, weight: .semibold))
-                    .padding(6)
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
-                    .foregroundColor(.primary)
-            }
             Button {
                 withAnimation(.easeInOut(duration: 0.25)) {
                     showMonthList.toggle()
                 }
             } label: {
                 Image(systemName: showMonthList ? "calendar" : "list.bullet.rectangle")
-                    .font(.system(size: 14, weight: .semibold))
+                    .pretendSemiBold(size: 14)
+                    .padding(6)
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
+
+            Button {
+                scheduleVM.fetchAllSchedules(force: true)
+            } label: {
+                Image(systemName: "arrow.circlepath")
+                    .pretendSemiBold(size: 14)
                     .padding(6)
                     .background(Capsule().fill(Color(UIColor.systemGray5)))
                     .foregroundColor(.primary)
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 12)
     }
     
     // MARK: 요일 헤더 뷰

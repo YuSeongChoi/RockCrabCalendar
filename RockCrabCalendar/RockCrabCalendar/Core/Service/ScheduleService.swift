@@ -14,7 +14,7 @@ final class ScheduleService {
     
     // MARK: - 일정 추가
     func addSchedule(_ item: ScheduleItem) async throws {
-        try await db.collection(collection)
+        try db.collection(collection)
             .document(item.id.uuidString)
             .setData(from: item)
     }

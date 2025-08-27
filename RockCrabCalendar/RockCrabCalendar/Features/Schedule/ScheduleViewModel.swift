@@ -13,23 +13,31 @@ import CryptoKit
 
 @Observable
 final class ScheduleViewModel {
+    // 현재 로드된 모든 스케줄
     var schedules: [ScheduleItem] = []
+    // 사용자가 선택한 날짜 (기본값: 오늘)
     var selectedDate: Date = Date()
+    // 마지막으로 동기화한 시각
     var lastFetchedAt: Date? = nil
     
-    // MARK: - Category Filter State
+    // MARK: - 카테고리 필터 상태
+    // 카테고리 상태를 UserDefaults에 저장하기 위한 키
     private let categoryKey = "activeScheduleCategories"
+    // 현재 활성화된 카테고리 집합 (기본: 전체)
     var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
+    // 모든 카테고리가 선택되어 있는지 여부
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
     private let service: ScheduleService
     private var cancellables = Set<AnyCancellable>()
+    // 서버 저장용 날짜 포맷터
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
     
+    // 동기화 시간 표시용 포맷터
     private let syncFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "ko_KR")
@@ -38,6 +46,7 @@ final class ScheduleViewModel {
         return f
     }()
     
+    // 마지막 동기화 시간을 문자열로 반환
     var lastSyncText: String {
         if let d = lastFetchedAt {
             return "동기화 날짜 : \(syncFormatter.string(from: d))"
@@ -46,6 +55,7 @@ final class ScheduleViewModel {
         }
     }
     
+    // Firestore 문서 ID를 안정적으로 생성 (날짜+제목+장소+카테고리 기반 해시)
     private func stableDocumentID(for s: ScheduleItem) -> String {
         // 날짜는 yyyy-MM-dd 로 고정
         let dateKey = dateFormatter.string(from: s.date)
@@ -74,6 +84,7 @@ final class ScheduleViewModel {
         }
     }
     
+    // 여러 스케줄을 Firestore에 업서트
     func uploadSchedules(schedules: [ScheduleItem]) {
         guard !schedules.isEmpty else { return }
         let payloads: [(docId: String, data: [String: Any])] = schedules.map { s in
@@ -91,6 +102,7 @@ final class ScheduleViewModel {
         }
     }
     
+    // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)
     func fetchAllSchedules(force: Bool = false) {
         let cacheKey = "cachedSchedules"
         let lastFetchKey = "lastScheduleFetchDate"
@@ -129,6 +141,7 @@ final class ScheduleViewModel {
         }
     }
     
+    // 특정 날짜에 해당하는 스케줄들의 멤버 색상 반환
     func eventColors(for date: Date) -> [Color] {
         let items = schedules.filter {
             Calendar.current.isDate($0.date, inSameDayAs: date) && passesCategory($0)
@@ -140,6 +153,7 @@ final class ScheduleViewModel {
         }
     }
 
+    // 특정 날짜(또는 선택된 날짜)의 스케줄 반환
     func schedules(on date: Date? = nil) -> [ScheduleItem] {
         let target = date ?? selectedDate
         return schedules.filter {
@@ -147,6 +161,7 @@ final class ScheduleViewModel {
         }
     }
     
+    // 카테고리 선택/토글/저장
     private func persistCategories() {
         let raw = activeCategories.map { $0.rawValue }
         UserDefaults.standard.set(raw, forKey: categoryKey)
@@ -172,6 +187,7 @@ final class ScheduleViewModel {
         activeCategories.contains(item.category)
     }
     
+    // 멤버별 대표 파스텔 색상
     func memberColor(_ member: QWERMember) -> Color {
         switch member {
         case .Q: return .pastelChodan
@@ -190,13 +206,13 @@ extension ScheduleViewModel {
 //        return schedules.filter { $0.scheduleType == type }
 //    }
     
-    ///  유저가 직접 추가할 수 있도록 하는 함수
+    // 유저가 직접 스케줄 추가
     func addSchedule(_ schedule: ScheduleItem) {
         schedules.append(schedule)
         uploadSchedules(schedules: [schedule])
     }
     
-    ///  현재 월에 해당하는 모든 스케줄 반환 (날짜 기준 필터링)
+    // 현재 월의 모든 스케줄 반환
     var monthlySchedules: [ScheduleItem] {
         let calendar = Calendar.current
         guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedDate)),
