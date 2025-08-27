@@ -1,7 +1,7 @@
 # Firebase
 GoogleService-Info.plist
 ./RockCrabCalendar/RockCrabCalendar/GoogleService-Info.plist
-./RockCrabCalendar/RockCrabCalendar/Config/*.xcconfig
+./RockCrabCalendar/RockCrabCalendar/Config
 
 # Xcode
 DerivedData/
