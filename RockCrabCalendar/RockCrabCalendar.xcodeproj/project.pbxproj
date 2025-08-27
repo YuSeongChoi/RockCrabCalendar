@@ -23,8 +23,12 @@
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
 		5D68DCFE2E39EF5C00A69D92 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68DCFD2E39EF5C00A69D92 /* ScheduleViewModel.swift */; };
 		5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A982D7045FF00D90C0D /* TodoItem.swift */; };
-		5D6B4A9B2D7047F000D90C0D /* TodoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */; };
 		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
+		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
+		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
+		5D7FC9C52E5ED7F100B5EDCA /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */; };
+		5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */; };
+		5D7FC9CE2E5EDA7F00B5EDCA /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -48,7 +52,6 @@
 		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
 		5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246C2CA3DC4A00472395 /* RswiftLibrary */; };
 		5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246E2CA3DC4A00472395 /* rswift */; };
-		5DEA6B962D9E4F3600E085EB /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEA6B952D9E4F3600E085EB /* TodoView.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -67,9 +70,12 @@
 		5D5E86292E39D6A800DB8775 /* QWERMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERMember.swift; sourceTree = "<group>"; };
 		5D68DCFD2E39EF5C00A69D92 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D6B4A982D7045FF00D90C0D /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
-		5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoManager.swift; sourceTree = "<group>"; };
 		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
+		5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
+		5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeFetcher.swift; sourceTree = "<group>"; };
+		5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -93,7 +99,6 @@
 		5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
 		5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
-		5DEA6B952D9E4F3600E085EB /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
 				5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
 				5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */,
@@ -116,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */,
+				5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -124,18 +131,9 @@
 			isa = PBXGroup;
 			children = (
 				5D5E857E2E31F6C200DB8775 /* Service */,
-				5D5E85372E30BA0600DB8775 /* Manager */,
 				5D6B4A972D7045F600D90C0D /* Model */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		5D5E85372E30BA0600DB8775 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				5D6B4A9A2D7047F000D90C0D /* TodoManager.swift */,
-			);
-			path = Manager;
 			sourceTree = "<group>";
 		};
 		5D5E853C2E30BA1100DB8775 /* Utils */ = {
@@ -152,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				5D5E854C2E30BA4700DB8775 /* Calendar */,
-				5D5E854D2E30BA4C00DB8775 /* Todo */,
 				5D5E854E2E30BA5300DB8775 /* Schedule */,
 			);
 			path = Features;
@@ -168,14 +165,6 @@
 			path = Calendar;
 			sourceTree = "<group>";
 		};
-		5D5E854D2E30BA4C00DB8775 /* Todo */ = {
-			isa = PBXGroup;
-			children = (
-				5DEA6B952D9E4F3600E085EB /* TodoView.swift */,
-			);
-			path = Todo;
-			sourceTree = "<group>";
-		};
 		5D5E854E2E30BA5300DB8775 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */,
+				5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -206,8 +196,17 @@
 				5D6B4A982D7045FF00D90C0D /* TodoItem.swift */,
 				5D5E852C2E30B9D700DB8775 /* ScheduleItem.swift */,
 				5D5E86292E39D6A800DB8775 /* QWERMember.swift */,
+				5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5D7FC9CC2E5EDA6100B5EDCA /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		5DE024282CA3D79E00472395 = {
@@ -229,6 +228,7 @@
 		5DE024332CA3D79E00472395 /* RockCrabCalendar */ = {
 			isa = PBXGroup;
 			children = (
+				5D7FC9CC2E5EDA6100B5EDCA /* Config */,
 				5D7FC95A2E555DB600B5EDCA /* Info.plist */,
 				5DE024432CA3DA4600472395 /* App */,
 				5D5E85302E30B9F800DB8775 /* Core */,
@@ -318,6 +318,7 @@
 				5DE0246E2CA3DC4A00472395 /* rswift */,
 				5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */,
 				5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */,
+				5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -350,6 +351,7 @@
 			packageReferences = (
 				5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */,
 				5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 5DE024322CA3D79E00472395 /* Products */;
 			projectDirPath = "";
@@ -375,6 +377,7 @@
 				5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */,
 				5DE024642CA3DC2500472395 /* Lato-BoldItalic.ttf in Resources */,
 				5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */,
+				5D7FC9CE2E5EDA7F00B5EDCA /* Secrets.xcconfig in Resources */,
 				5DE0245B2CA3DC2500472395 /* Lato-Thin.ttf in Resources */,
 				5DE0245E2CA3DC2500472395 /* Pretendard-Regular.otf in Resources */,
 				5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */,
@@ -397,8 +400,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */,
+				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
-				5D6B4A9B2D7047F000D90C0D /* TodoManager.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
@@ -406,12 +409,13 @@
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
+				5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
 				5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */,
 				5D5E852D2E30B9D700DB8775 /* ScheduleItem.swift in Sources */,
 				5D68DCFE2E39EF5C00A69D92 /* ScheduleViewModel.swift in Sources */,
-				5DEA6B962D9E4F3600E085EB /* TodoView.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
+				5D7FC9C52E5ED7F100B5EDCA /* YouTubeVideo.swift in Sources */,
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
 			);
@@ -429,6 +433,7 @@
 /* Begin XCBuildConfiguration section */
 		5DE0243E2CA3D7A000472395 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -492,6 +497,7 @@
 		};
 		5DE0243F2CA3D7A000472395 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D7FC9CD2E5EDA7F00B5EDCA /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -657,6 +663,14 @@
 				minimumVersion = 12.0.0;
 			};
 		};
+		5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 		5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mac-cain13/R.swift";
@@ -677,6 +691,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 		5DE0246C2CA3DC4A00472395 /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
