@@ -160,6 +160,15 @@ struct CalendarView: View {
                     .foregroundColor(.primary)
             }
 
+            // Add NavigationLink to YouTubeTestView
+            NavigationLink(destination: YouTubeTestView()) {
+                Image(systemName: "play.rectangle")
+                    .pretendSemiBold(size: 14)
+                    .padding(6)
+                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .foregroundColor(.primary)
+            }
+
             Button {
                 scheduleVM.fetchAllSchedules(force: true)
             } label: {
@@ -418,6 +427,39 @@ struct CalendarView: View {
                     }
                 }
             }
+        }
+    }
+}
+
+// MARK: - YouTubeTestView
+private struct YouTubeTestView: View {
+    @State private var ytFetcher = YouTubeFetcher()
+
+    var body: some View {
+        List(ytFetcher.videos, id: \.id) { video in
+            VStack(alignment: .leading, spacing: 8) {
+                AsyncImage(url: video.thumbnailURL) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(height: 100)
+                .clipped()
+
+                Text(video.title)
+                    .font(.headline)
+
+                Text(video.publisedAt.formatted())
+                    .font(.caption)
+                    .foregroundStyle(.gray)
+            }
+            .padding(.vertical, 8)
+        }
+        .navigationTitle("QWER 유튜브")
+        .onAppear {
+            ytFetcher.fetchLatestVideos()
         }
     }
 }

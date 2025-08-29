@@ -8,9 +8,9 @@
 
 import Foundation
 
-@MainActor
-class YouTubeFetcher: ObservableObject {
-    @Published var videos: [YouTubeVideo] = []
+@Observable
+class YouTubeFetcher {
+    var videos: [YouTubeVideo] = []
 
     private let apiKey = Bundle.main.youtubeAPIKey
     private let channelId = Bundle.main.QWERChannelID
