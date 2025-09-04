@@ -52,6 +52,12 @@
 		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
 		5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246C2CA3DC4A00472395 /* RswiftLibrary */; };
 		5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246E2CA3DC4A00472395 /* rswift */; };
+		5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */; };
+		5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211522E65666B00E465E8 /* ServerConfig.swift */; };
+		5DE2115D2E657F0200E465E8 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115C2E657F0200E465E8 /* HTTPClient.swift */; };
+		5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */; };
+		5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211622E6583F100E465E8 /* WindowOverlayView.swift */; };
+		5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +105,12 @@
 		5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
 		5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestProtocol.swift; sourceTree = "<group>"; };
+		5DE211522E65666B00E465E8 /* ServerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConfig.swift; sourceTree = "<group>"; };
+		5DE2115C2E657F0200E465E8 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAlertHostingView.swift; sourceTree = "<group>"; };
+		5DE211622E6583F100E465E8 /* WindowOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOverlayView.swift; sourceTree = "<group>"; };
+		5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -130,6 +142,7 @@
 		5D5E85302E30B9F800DB8775 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				5DE211192E655BF900E465E8 /* Network */,
 				5D5E857E2E31F6C200DB8775 /* Service */,
 				5D6B4A972D7045F600D90C0D /* Model */,
 			);
@@ -251,9 +264,12 @@
 		5DE024432CA3DA4600472395 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				5DE211752E697C6E00E465E8 /* Alert */,
+				5DE211722E697C5500E465E8 /* Indicator */,
 				5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */,
 				5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */,
 				5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */,
+				5DE211522E65666B00E465E8 /* ServerConfig.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -294,6 +310,32 @@
 				5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		5DE211192E655BF900E465E8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */,
+				5DE2115C2E657F0200E465E8 /* HTTPClient.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5DE211722E697C5500E465E8 /* Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */,
+			);
+			path = Indicator;
+			sourceTree = "<group>";
+		};
+		5DE211752E697C6E00E465E8 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */,
+				5DE211622E6583F100E465E8 /* WindowOverlayView.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,11 +447,17 @@
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
+				5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */,
+				5DE2115D2E657F0200E465E8 /* HTTPClient.swift in Sources */,
+				5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */,
 				5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */,
+				5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
 				5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */,
+				5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */,
+				5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
 				5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */,
 				5D5E852D2E30B9D700DB8775 /* ScheduleItem.swift in Sources */,

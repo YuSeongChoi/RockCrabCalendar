@@ -13,10 +13,18 @@ struct RockCrabCalendarApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                CalendarView()
+            ZStack {
+                if appDelegate.showIndicator {
+                    LoadingIndicatorView()
+                }
+                WindowAlertHostingView()
+                
+                NavigationView {
+                    CalendarView()
+                }
+                .navigationViewStyle(.stack)
             }
-            .navigationViewStyle(.stack)
+            .environmentObject(appDelegate)
         }
     }
     
