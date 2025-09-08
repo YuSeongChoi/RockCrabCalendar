@@ -16,7 +16,7 @@ let ServerConstant: ServerConfiguration = {
 }()
 
 let API_KEY = Bundle.main.youtubeAPIKey
-let CHANNEL_ID = Bundle.main.QWERChannelID
+let CHANNEL_ID = Bundle.main.qwerChannelID
 
 struct ServerConfiguration: Hashable, Sendable {
     var baseURL: String

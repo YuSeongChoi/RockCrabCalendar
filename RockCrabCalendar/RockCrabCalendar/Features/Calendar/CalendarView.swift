@@ -459,7 +459,27 @@ private struct YouTubeTestView: View {
         }
         .navigationTitle("QWER 유튜브")
         .onAppear {
-            ytFetcher.fetchLatestVideos()
+//            ytFetcher.fetchLatestVideos()
+        }
+        .task {
+            do {
+                try await test()
+            } catch {
+                
+            }
+        }
+    }
+    
+    private func test() async throws {
+        do {
+            let _ = try await HTTPRequestList.ChannelListRequest(key: API_KEY, channelId: CHANNEL_ID)
+                .buildDataRequest()
+                .serializingData(automaticallyCancelling: true)
+                .result
+                .mapError{ $0.underlyingError ?? $0 }
+                .get()
+        } catch {
+            
         }
     }
 }

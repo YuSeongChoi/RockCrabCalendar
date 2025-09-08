@@ -19,7 +19,7 @@ struct RockCrabCalendarApp: App {
                 }
                 WindowAlertHostingView()
                 
-                NavigationView {
+                NavigationStack {
                     CalendarView()
                 }
                 .navigationViewStyle(.stack)

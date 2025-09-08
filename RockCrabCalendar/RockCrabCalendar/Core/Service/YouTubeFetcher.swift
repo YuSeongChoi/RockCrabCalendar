@@ -13,7 +13,7 @@ class YouTubeFetcher {
     var videos: [YouTubeVideo] = []
 
     private let apiKey = Bundle.main.youtubeAPIKey
-    private let channelId = Bundle.main.QWERChannelID
+    private let channelId = Bundle.main.qwerChannelID
 
     func fetchLatestVideos(maxResults: Int = 5) {
         let urlString = """

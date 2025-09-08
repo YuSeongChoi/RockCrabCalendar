@@ -28,7 +28,6 @@
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
 		5D7FC9C52E5ED7F100B5EDCA /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */; };
 		5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */; };
-		5D7FC9E12E5EE56D00B5EDCA /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -58,6 +57,8 @@
 		5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */; };
 		5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211622E6583F100E465E8 /* WindowOverlayView.swift */; };
 		5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */; };
+		5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211862E698AE200E465E8 /* HTTPRequestList.swift */; };
+		5DE211B62E6EB87F00E465E8 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,7 @@
 		5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAlertHostingView.swift; sourceTree = "<group>"; };
 		5DE211622E6583F100E465E8 /* WindowOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOverlayView.swift; sourceTree = "<group>"; };
 		5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
+		5DE211862E698AE200E465E8 /* HTTPRequestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestList.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -244,9 +246,9 @@
 				5D7FC9CC2E5EDA6100B5EDCA /* Config */,
 				5D7FC95A2E555DB600B5EDCA /* Info.plist */,
 				5DE024432CA3DA4600472395 /* App */,
+				5D5E854B2E30BA3B00DB8775 /* Features */,
 				5D5E85302E30B9F800DB8775 /* Core */,
 				5D5E853C2E30BA1100DB8775 /* Utils */,
-				5D5E854B2E30BA3B00DB8775 /* Features */,
 				5DE024442CA3DA5900472395 /* Resources */,
 				62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */,
 			);
@@ -317,6 +319,7 @@
 			children = (
 				5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */,
 				5DE2115C2E657F0200E465E8 /* HTTPClient.swift */,
+				5DE211812E698ABF00E465E8 /* RequestList */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -336,6 +339,14 @@
 				5DE211622E6583F100E465E8 /* WindowOverlayView.swift */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		5DE211812E698ABF00E465E8 /* RequestList */ = {
+			isa = PBXGroup;
+			children = (
+				5DE211862E698AE200E465E8 /* HTTPRequestList.swift */,
+			);
+			path = RequestList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,7 +430,7 @@
 				5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */,
 				5DE024642CA3DC2500472395 /* Lato-BoldItalic.ttf in Resources */,
 				5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */,
-				5D7FC9E12E5EE56D00B5EDCA /* Secrets.xcconfig in Resources */,
+				5DE211B62E6EB87F00E465E8 /* Secrets.xcconfig in Resources */,
 				5DE0245B2CA3DC2500472395 /* Lato-Thin.ttf in Resources */,
 				5DE0245E2CA3DC2500472395 /* Pretendard-Regular.otf in Resources */,
 				5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */,
@@ -452,6 +463,7 @@
 				5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */,
 				5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */,
 				5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */,
+				5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
@@ -481,6 +493,7 @@
 /* Begin XCBuildConfiguration section */
 		5DE0243E2CA3D7A000472395 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -544,6 +557,7 @@
 		};
 		5DE0243F2CA3D7A000472395 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
