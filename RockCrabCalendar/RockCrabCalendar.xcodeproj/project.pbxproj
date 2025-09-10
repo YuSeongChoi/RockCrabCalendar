@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,12 +22,9 @@
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
 		5D68DCFE2E39EF5C00A69D92 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68DCFD2E39EF5C00A69D92 /* ScheduleViewModel.swift */; };
-		5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4A982D7045FF00D90C0D /* TodoItem.swift */; };
 		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
-		5D7FC9C52E5ED7F100B5EDCA /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */; };
-		5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -59,8 +56,31 @@
 		5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */; };
 		5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211862E698AE200E465E8 /* HTTPRequestList.swift */; };
 		5DE211B62E6EB87F00E465E8 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */; };
+		5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */; };
+		5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */; };
+		5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */; };
+		5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */; };
+		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
+		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5DE2121A2E6FC0F400E465E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DE024292CA3D79E00472395 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DE024302CA3D79E00472395;
+			remoteInfo = RockCrabCalendar;
+		};
+		5DE212282E6FC10B00E465E8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DE024292CA3D79E00472395 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DE024302CA3D79E00472395;
+			remoteInfo = RockCrabCalendar;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Resources.swift"; sourceTree = "<group>"; };
@@ -76,12 +96,9 @@
 		5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		5D5E86292E39D6A800DB8775 /* QWERMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERMember.swift; sourceTree = "<group>"; };
 		5D68DCFD2E39EF5C00A69D92 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
-		5D6B4A982D7045FF00D90C0D /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
-		5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
-		5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeFetcher.swift; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
@@ -113,8 +130,40 @@
 		5DE211622E6583F100E465E8 /* WindowOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOverlayView.swift; sourceTree = "<group>"; };
 		5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		5DE211862E698AE200E465E8 /* HTTPRequestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestList.swift; sourceTree = "<group>"; };
+		5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeSearchListDTO.swift; sourceTree = "<group>"; };
+		5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+YouTube.swift"; sourceTree = "<group>"; };
+		5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
+		5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeSearchMapper.swift; sourceTree = "<group>"; };
+		5DE212142E6FC0F400E465E8 /* RockCrabCalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockCrabCalendarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockCrabCalendarUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
+		5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5DE212442E6FC1A600E465E8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RockCrabCalendarUITests.swift,
+				RockCrabCalendarUITestsLaunchTests.swift,
+			);
+			target = 5DE212232E6FC10B00E465E8 /* RockCrabCalendarUnitTests */;
+		};
+		5DE212452E6FC1A600E465E8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RockCrabCalendarUITests.swift,
+				RockCrabCalendarUITestsLaunchTests.swift,
+			);
+			target = 5DE212132E6FC0F400E465E8 /* RockCrabCalendarUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		5DE212252E6FC10B00E465E8 /* RockCrabCalendarUnitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = RockCrabCalendarUnitTests; sourceTree = "<group>"; };
+		5DE212412E6FC1A600E465E8 /* RockCrabCalendarUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (5DE212442E6FC1A600E465E8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 5DE212452E6FC1A600E465E8 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = RockCrabCalendarUITests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5DE0242E2CA3D79E00472395 /* Frameworks */ = {
@@ -129,6 +178,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5DE212112E6FC0F400E465E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DE212212E6FC10B00E465E8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -137,6 +200,7 @@
 			children = (
 				5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */,
 				5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */,
+				5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -166,6 +230,8 @@
 			children = (
 				5D5E854C2E30BA4700DB8775 /* Calendar */,
 				5D5E854E2E30BA5300DB8775 /* Schedule */,
+				5DE2125C2E6FC89500E465E8 /* YouTube */,
+				5DE211ED2E6FBB8000E465E8 /* Model */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -192,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */,
-				5D7FC9C82E5ED81300B5EDCA /* YouTubeFetcher.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -208,10 +273,9 @@
 		5D6B4A972D7045F600D90C0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5D6B4A982D7045FF00D90C0D /* TodoItem.swift */,
+				5DE211E52E6FB26A00E465E8 /* DTO */,
 				5D5E852C2E30B9D700DB8775 /* ScheduleItem.swift */,
 				5D5E86292E39D6A800DB8775 /* QWERMember.swift */,
-				5D7FC9C42E5ED7F100B5EDCA /* YouTubeVideo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -228,6 +292,8 @@
 			isa = PBXGroup;
 			children = (
 				5DE024332CA3D79E00472395 /* RockCrabCalendar */,
+				5DE212252E6FC10B00E465E8 /* RockCrabCalendarUnitTests */,
+				5DE212412E6FC1A600E465E8 /* RockCrabCalendarUITests */,
 				5DE024322CA3D79E00472395 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -236,6 +302,8 @@
 			isa = PBXGroup;
 			children = (
 				5DE024312CA3D79E00472395 /* RockCrabCalendar.app */,
+				5DE212142E6FC0F400E465E8 /* RockCrabCalendarUITests.xctest */,
+				5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -349,6 +417,32 @@
 			path = RequestList;
 			sourceTree = "<group>";
 		};
+		5DE211E52E6FB26A00E465E8 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		5DE211ED2E6FBB8000E465E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */,
+				5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5DE2125C2E6FC89500E465E8 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */,
+				5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */,
+			);
+			path = YouTube;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -377,6 +471,50 @@
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5DE212132E6FC0F400E465E8 /* RockCrabCalendarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DE2121C2E6FC0F400E465E8 /* Build configuration list for PBXNativeTarget "RockCrabCalendarUITests" */;
+			buildPhases = (
+				5DE212102E6FC0F400E465E8 /* Sources */,
+				5DE212112E6FC0F400E465E8 /* Frameworks */,
+				5DE212122E6FC0F400E465E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5DE2121B2E6FC0F400E465E8 /* PBXTargetDependency */,
+			);
+			name = RockCrabCalendarUITests;
+			packageProductDependencies = (
+			);
+			productName = RockCrabCalendarUITests;
+			productReference = 5DE212142E6FC0F400E465E8 /* RockCrabCalendarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5DE212232E6FC10B00E465E8 /* RockCrabCalendarUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5DE2122A2E6FC10B00E465E8 /* Build configuration list for PBXNativeTarget "RockCrabCalendarUnitTests" */;
+			buildPhases = (
+				5DE212202E6FC10B00E465E8 /* Sources */,
+				5DE212212E6FC10B00E465E8 /* Frameworks */,
+				5DE212222E6FC10B00E465E8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5DE212292E6FC10B00E465E8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5DE212252E6FC10B00E465E8 /* RockCrabCalendarUnitTests */,
+				5DE212412E6FC1A600E465E8 /* RockCrabCalendarUITests */,
+			);
+			name = RockCrabCalendarUnitTests;
+			packageProductDependencies = (
+			);
+			productName = RockCrabCalendarUnitTests;
+			productReference = 5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -384,11 +522,19 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					5DE024302CA3D79E00472395 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					5DE212132E6FC0F400E465E8 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 5DE024302CA3D79E00472395;
+					};
+					5DE212232E6FC10B00E465E8 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 5DE024302CA3D79E00472395;
 					};
 				};
 			};
@@ -411,6 +557,8 @@
 			projectRoot = "";
 			targets = (
 				5DE024302CA3D79E00472395 /* RockCrabCalendar */,
+				5DE212232E6FC10B00E465E8 /* RockCrabCalendarUnitTests */,
+				5DE212132E6FC0F400E465E8 /* RockCrabCalendarUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -445,6 +593,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5DE212122E6FC0F400E465E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DE212222E6FC10B00E465E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -453,21 +615,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */,
+				5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */,
 				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
+				5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
 				5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */,
 				5DE2115D2E657F0200E465E8 /* HTTPClient.swift in Sources */,
 				5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */,
-				5D6B4A992D7045FF00D90C0D /* TodoItem.swift in Sources */,
 				5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */,
+				5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */,
+				5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */,
 				5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */,
+				5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
-				5D7FC9C92E5ED81300B5EDCA /* YouTubeFetcher.swift in Sources */,
 				5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */,
 				5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
@@ -475,9 +640,23 @@
 				5D5E852D2E30B9D700DB8775 /* ScheduleItem.swift in Sources */,
 				5D68DCFE2E39EF5C00A69D92 /* ScheduleViewModel.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
-				5D7FC9C52E5ED7F100B5EDCA /* YouTubeVideo.swift in Sources */,
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
+				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DE212102E6FC0F400E465E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DE212202E6FC10B00E465E8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,6 +666,16 @@
 		5DE024712CA3DC5E00472395 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 5DE024702CA3DC5E00472395 /* RswiftGenerateInternalResources */;
+		};
+		5DE2121B2E6FC0F400E465E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DE024302CA3D79E00472395 /* RockCrabCalendar */;
+			targetProxy = 5DE2121A2E6FC0F400E465E8 /* PBXContainerItemProxy */;
+		};
+		5DE212292E6FC10B00E465E8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DE024302CA3D79E00472395 /* RockCrabCalendar */;
+			targetProxy = 5DE212282E6FC10B00E465E8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -691,6 +880,86 @@
 			};
 			name = Release;
 		};
+		5DE2121D2E6FC0F400E465E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RockCrabCalendar;
+			};
+			name = Debug;
+		};
+		5DE2121E2E6FC0F400E465E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RockCrabCalendar;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5DE2122B2E6FC10B00E465E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendarUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RockCrabCalendar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RockCrabCalendar";
+			};
+			name = Debug;
+		};
+		5DE2122C2E6FC10B00E465E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendarUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RockCrabCalendar.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RockCrabCalendar";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -708,6 +977,24 @@
 			buildConfigurations = (
 				5DE024412CA3D7A000472395 /* Debug */,
 				5DE024422CA3D7A000472395 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DE2121C2E6FC0F400E465E8 /* Build configuration list for PBXNativeTarget "RockCrabCalendarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DE2121D2E6FC0F400E465E8 /* Debug */,
+				5DE2121E2E6FC0F400E465E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5DE2122A2E6FC10B00E465E8 /* Build configuration list for PBXNativeTarget "RockCrabCalendarUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5DE2122B2E6FC10B00E465E8 /* Debug */,
+				5DE2122C2E6FC10B00E465E8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

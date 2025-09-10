@@ -18,11 +18,12 @@ extension HTTPRequestList {
         var validation: DataRequest.Validation? { nil }
         let key: String
         let channelId: String
+        let maxResults: Int
+        let pageToken: String?
 
         // Fixed params
         let part = "snippet"
         let order = "date"
-        let maxResults = 10        // <- 복수형!
         let type = "video"
 
         // GET 쿼리로 붙일 파라미터 (빈 값 방지 + 정규화)

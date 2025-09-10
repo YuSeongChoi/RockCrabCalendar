@@ -26,9 +26,4 @@ extension Bundle {
     var qwerChannelID: String {
         value(for: "QWERChannelID")
     }
-    
-    /// 만약 서버 BaseURL 같은 게 필요하다면
-    var serverBaseURL: String {
-        value(for: "ServerBaseURL")
-    }
 }

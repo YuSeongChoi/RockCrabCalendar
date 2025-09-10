@@ -161,7 +161,7 @@ struct CalendarView: View {
             }
 
             // Add NavigationLink to YouTubeTestView
-            NavigationLink(destination: YouTubeTestView()) {
+            NavigationLink(destination: YouTubeListView()) {
                 Image(systemName: "play.rectangle")
                     .pretendSemiBold(size: 14)
                     .padding(6)
@@ -427,59 +427,6 @@ struct CalendarView: View {
                     }
                 }
             }
-        }
-    }
-}
-
-// MARK: - YouTubeTestView
-private struct YouTubeTestView: View {
-    @State private var ytFetcher = YouTubeFetcher()
-
-    var body: some View {
-        List(ytFetcher.videos, id: \.id) { video in
-            VStack(alignment: .leading, spacing: 8) {
-                AsyncImage(url: video.thumbnailURL) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(height: 100)
-                .clipped()
-
-                Text(video.title)
-                    .font(.headline)
-
-                Text(video.publisedAt.formatted())
-                    .font(.caption)
-                    .foregroundStyle(.gray)
-            }
-            .padding(.vertical, 8)
-        }
-        .navigationTitle("QWER 유튜브")
-        .onAppear {
-//            ytFetcher.fetchLatestVideos()
-        }
-        .task {
-            do {
-                try await test()
-            } catch {
-                
-            }
-        }
-    }
-    
-    private func test() async throws {
-        do {
-            let _ = try await HTTPRequestList.ChannelListRequest(key: API_KEY, channelId: CHANNEL_ID)
-                .buildDataRequest()
-                .serializingData(automaticallyCancelling: true)
-                .result
-                .mapError{ $0.underlyingError ?? $0 }
-                .get()
-        } catch {
-            
         }
     }
 }
