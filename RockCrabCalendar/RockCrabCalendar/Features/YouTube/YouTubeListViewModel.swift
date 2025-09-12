@@ -47,7 +47,10 @@ final class YouTubeListViewModel {
         do {
             let result = try await requestYoutubeList(pageToken: nil)
             await MainActor.run {
-                
+                self.youtubeList = result.videos
+                self.nextPageToken = result.nextPageToken
+                self.hasMore = (result.nextPageToken != nil)
+                self.lastSyncedAt = Date()
             }
         } catch {
             print(#function, error.localizedDescription)

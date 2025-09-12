@@ -379,7 +379,7 @@ struct CalendarView: View {
         }
 
         var body: some View {
-            NavigationView {
+            NavigationStack {
                 List {
                     Section {
                         // 전체 선택 (토글)
