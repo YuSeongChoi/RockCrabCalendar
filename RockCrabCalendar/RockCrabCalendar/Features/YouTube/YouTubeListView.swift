@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct YouTubeListView: View {
+    @Environment(\.colorScheme) private var scheme
     @State private var viewModel = YouTubeListViewModel()
     
     // 표시용 날짜 포매터
@@ -56,8 +57,10 @@ struct YouTubeListView: View {
                         }
 
                         ForEach(viewModel.youtubeList, id: \.self) { video in
-                            YouTubeVideoRow(video: video, dateFormatter: dateFormatter)
-                                .padding(.horizontal)
+//                            YouTubeVideoRow(video: video, dateFormatter: dateFormatter)
+//                                .padding(.horizontal)
+                            // TODO: 썸네일 넣기
+                            YouTubeVideoCard(video: video, dateFormatter: dateFormatter, channelAvatarURL: nil)
                         }
 
                         // 페이징 센티넬: 리스트의 맨 아래 도달 시 한 번만 트리거
@@ -76,9 +79,16 @@ struct YouTubeListView: View {
                 }
             }
         }
-        .toolbarBackground(Color(uiColor: .systemBackground), for: .navigationBar)
+        .toolbarBackground(
+            scheme == .dark
+            ? Color.black.opacity(0.9)
+            : Color.white, // 필요하면 시스템 색도 가능: Color(.systemBackground)
+            for: .navigationBar
+        )
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarColorScheme(scheme == .dark ? .dark : .light, for: .navigationBar)
         .navigationTitle("QWER 영상")
+        .toolbarRole(.editor)
         .refreshable {
             viewModel.refresh()
         }
@@ -148,5 +158,123 @@ struct YouTubeVideoRow: View {
             Spacer()
         }
         .contentShape(Rectangle()) // 터치 영역 넓게
+    }
+}
+
+struct YouTubeVideoCard: View {
+    let video: YouTubeVideo
+    let dateFormatter: DateFormatter
+    /// channles.list로 얻은 채널 아바타 URL을 주입할 수 있도록 옵셔널
+    var channelAvatarURL: URL? = nil
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            // 1) 큰 썸네일 (16:9, 가로 꽉차게)
+            AsyncImage(url: video.thumbnailURL) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(16/9, contentMode: .fit)
+                case .failure:
+                    ZStack {
+                        Rectangle().fill(.gray.opacity(0.15))
+                        Image(systemName: "photo")
+                            .imageScale(.large)
+                            .foregroundStyle(.secondary)
+                    }
+                case .empty:
+                    ZStack {
+                        Rectangle().fill(.gray.opacity(0.08))
+                        ProgressView()
+                    }
+                    .aspectRatio(16/9, contentMode: .fit)
+                @unknown default:
+                    Rectangle().fill(.gray.opacity(0.1)).aspectRatio(16/9, contentMode: .fit)
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .clipped()
+//            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            
+            // 2) 채널 아바타 + 제목/베타 정보
+            HStack(alignment: .top, spacing: 12) {
+                ChannelAvatar(title: video.channelTitle, url: channelAvatarURL)
+                    .frame(width: 36, height: 36)
+                
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(video.title)
+                        .pretendBold(size: 16)
+                        .foregroundStyle(.primary)
+                        .lineLimit(2)
+                    
+                    HStack(spacing: 6) {
+                        Text(video.channelTitle)
+                        if let date = video.publishedAt {
+                            Text("• \(dateFormatter.string(from: date))")
+                        }
+                    }
+                    .pretendReg(size: 13)
+                    .foregroundStyle(.secondary)
+                    
+                    if !video.description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Text(video.description)
+                            .pretendReg(size: 12)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
+                }
+                Spacer()
+            }
+        }
+//        .padding(.vertical, 8)
+        .contentShape(Rectangle()) // 터치 영역 넓게
+    }
+}
+
+/// 채널 아바타: URL 있으면 로드, 없으면 이니셜 플레이스홀더
+private struct ChannelAvatar: View {
+    let title: String
+    let url: URL?
+    
+    var body: some View {
+        Group {
+            if let url {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFill()
+                    case .failure(let error):
+                        placeholder
+                    case .empty:
+                        ZStack {
+                            Circle().fill(.gray.opacity(0.12))
+                            ProgressView().scaleEffect(0.7)
+                        }
+                    @unknown default:
+                        placeholder
+                    }
+                }
+            } else {
+                placeholder
+            }
+        }
+        .clipShape(Circle())
+    }
+    
+    private var placeholder: some View {
+        ZStack {
+            Circle().fill(.gray.opacity(0.15))
+            Text(initials(from: title))
+                .pretendBold(size: 12)
+                .foregroundStyle(.secondary)
+        }
+    }
+    
+    private func initials(from title: String) -> String {
+        let comps = title.split(separator: " ")
+        let first = comps.first?.prefix(1) ?? "?"
+        let second = comps.dropFirst().first?.prefix(1) ?? ""
+        return String(first + second)
     }
 }
