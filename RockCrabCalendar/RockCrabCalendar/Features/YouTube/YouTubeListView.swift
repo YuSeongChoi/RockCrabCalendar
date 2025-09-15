@@ -59,8 +59,13 @@ struct YouTubeListView: View {
                         ForEach(viewModel.youtubeList, id: \.self) { video in
 //                            YouTubeVideoRow(video: video, dateFormatter: dateFormatter)
 //                                .padding(.horizontal)
-                            // TODO: 썸네일 넣기
-                            YouTubeVideoCard(video: video, dateFormatter: dateFormatter, channelAvatarURL: nil)
+                            
+                            YouTubeVideoCard(
+                                video: video,
+                                dateFormatter: dateFormatter,
+                                channelThumbnailURL: viewModel.channelThumnailURL
+                            )
+                            .padding(.vertical, 8)
                         }
 
                         // 페이징 센티넬: 리스트의 맨 아래 도달 시 한 번만 트리거
@@ -94,6 +99,11 @@ struct YouTubeListView: View {
         }
         .task {
             viewModel.loadIfNeeded() // 최초 진입 (캐시→백그라운드 최신화)
+            do {
+                try await viewModel.requestChannelInfo()
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
 }
@@ -164,8 +174,7 @@ struct YouTubeVideoRow: View {
 struct YouTubeVideoCard: View {
     let video: YouTubeVideo
     let dateFormatter: DateFormatter
-    /// channles.list로 얻은 채널 아바타 URL을 주입할 수 있도록 옵셔널
-    var channelAvatarURL: URL? = nil
+    var channelThumbnailURL: URL? = nil
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -175,31 +184,40 @@ struct YouTubeVideoCard: View {
                 case .success(let image):
                     image
                         .resizable()
-                        .aspectRatio(16/9, contentMode: .fit)
+                        .scaledToFill()                     // 가로폭을 꽉 채우고 필요시 크롭
+                        .frame(maxWidth: .infinity)
+                        .aspectRatio(16/9, contentMode: .fill)
+                        .clipped()                          // 넘치는 영역 잘라내기
+                        .transition(.opacity.combined(with: .scale))
                 case .failure:
-                    ZStack {
-                        Rectangle().fill(.gray.opacity(0.15))
-                        Image(systemName: "photo")
-                            .imageScale(.large)
-                            .foregroundStyle(.secondary)
-                    }
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.15))
+                        .overlay(
+                            Image(systemName: "photo")
+                                .imageScale(.large)
+                                .foregroundStyle(.secondary)
+                        )
+                        .aspectRatio(16/9, contentMode: .fill)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
                 case .empty:
-                    ZStack {
-                        Rectangle().fill(.gray.opacity(0.08))
-                        ProgressView()
-                    }
-                    .aspectRatio(16/9, contentMode: .fit)
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.12))
+                        .overlay(ProgressView())
+                        .aspectRatio(16/9, contentMode: .fill)
+                        .frame(maxWidth: .infinity)
+                        .clipped()
                 @unknown default:
-                    Rectangle().fill(.gray.opacity(0.1)).aspectRatio(16/9, contentMode: .fit)
+                    Rectangle().fill(Color.black)
+                        .aspectRatio(16/9, contentMode: .fit)
                 }
             }
             .frame(maxWidth: .infinity)
-            .clipped()
-//            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            // .clipped()  // 잘라내지 않음: 원본 비율 유지
             
             // 2) 채널 아바타 + 제목/베타 정보
             HStack(alignment: .top, spacing: 12) {
-                ChannelAvatar(title: video.channelTitle, url: channelAvatarURL)
+                ChannelAvatar(title: video.channelTitle, url: channelThumbnailURL)
                     .frame(width: 36, height: 36)
                 
                 VStack(alignment: .leading, spacing: 6) {
@@ -259,6 +277,7 @@ private struct ChannelAvatar: View {
                 placeholder
             }
         }
+        .frame(width: 36, height: 36)
         .clipShape(Circle())
     }
     

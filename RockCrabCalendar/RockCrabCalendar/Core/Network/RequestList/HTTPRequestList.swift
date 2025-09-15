@@ -41,4 +41,24 @@ extension HTTPRequestList {
         // 반드시 queryString로!
         var encoding: ParameterEncoding { URLEncoding.queryString }
     }
+    
+    // MARK: 채널 정보 조회
+    struct ChannelInfoRequest: DataRequestFormProtocol, Encodable {
+        var path: String { "channels" }
+        var method: HTTPMethod { .get }
+        var validation: DataRequest.Validation? { nil }
+        let key: String = API_KEY
+        let part: String = "snippet"
+        let forHandle: String = "QWER_Band_official"
+        
+        var parameters: Parameters? {
+            return [
+                "key" : key,
+                "part" : part,
+                "forHandle": forHandle
+            ]
+        }
+        
+        var encoding: ParameterEncoding { URLEncoding.queryString }
+    }
 }

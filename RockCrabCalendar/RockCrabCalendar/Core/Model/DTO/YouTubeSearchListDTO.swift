@@ -8,7 +8,7 @@
 import Foundation
 
 
-// 최상위 응답
+/// 유튜브 리스트 목록
 public struct YouTubeSearchListDTO: Codable {
     public let kind: String
     public let etag: String
@@ -24,7 +24,7 @@ public struct PageInfoDTO: Codable {
     public let resultsPerPage: Int
 }
 
-// 개별 아이템
+/// 개별 아이템
 public struct YouTubeSearchItemDTO: Codable {
     public let kind: String
     public let etag: String
@@ -39,7 +39,7 @@ public struct YouTubeSearchIdDTO: Codable {
     public let channelId: String?
 }
 
-// 메타 정보
+/// 메타 정보
 public struct YouTubeSnippetDTO: Codable {
     public let publishedAt: String // 날짜는 문자열로 받고 매퍼에서 Date로 변환
     public let channelId: String

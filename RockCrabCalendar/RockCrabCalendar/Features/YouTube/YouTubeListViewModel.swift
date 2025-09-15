@@ -14,6 +14,7 @@ final class YouTubeListViewModel {
     private(set)var isLoading: Bool = false             // 최초/추가 로딩
     private(set)var isRefreshing: Bool = false          // 리프레시 로딩
     private(set)var lastSyncedAt: Date? = nil           // 마지막 동기화 시작 (UI 표시용)
+    private(set)var channelThumnailURL: URL? = nil      // 채널 썸네일 URL (동글안 이미지용)
     
     // MARK: - 페이징 상태
     private var nextPageToken: String?      // 다음 페이지 토큰
@@ -114,6 +115,24 @@ final class YouTubeListViewModel {
         // DTO -> Domain 매핑 (비디오만 필터)
         let mapped = YouTubeSearchMapper.map(dto)
         return (mapped.videos, mapped.nextPageToken)
+    }
+    
+    func requestChannelInfo() async throws {
+        let dto = try await HTTPRequestList.ChannelInfoRequest()
+            .buildDataRequest()
+            .serializingDecodable(YouTubeChannelDTO.self, automaticallyCancelling: true)
+            .result
+            .mapError{ $0.underlyingError ?? $0 }
+            .get()
+        
+        let urlString =
+        dto.items.first?.snippet.thumbnails.default?.url ??
+        dto.items.first?.snippet.thumbnails.medium?.url ??
+        dto.items.first?.snippet.thumbnails.high?.url
+        
+        await MainActor.run {
+            self.channelThumnailURL = urlString.flatMap(URL.init(string:))
+        }
     }
     
     // MARK: - MainActor 상태 변경 헬퍼
