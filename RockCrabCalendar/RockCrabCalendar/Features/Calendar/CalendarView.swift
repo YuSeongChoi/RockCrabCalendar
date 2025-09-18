@@ -160,14 +160,14 @@ struct CalendarView: View {
                     .foregroundColor(.primary)
             }
 
-            // Add NavigationLink to YouTubeTestView
-            NavigationLink(destination: YouTubeListView()) {
-                Image(systemName: "play.rectangle")
-                    .pretendSemiBold(size: 14)
-                    .padding(6)
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
-                    .foregroundColor(.primary)
-            }
+            // MARK: 유튜브 리스트 뷰 (추후)
+//            NavigationLink(destination: YouTubeListView()) {
+//                Image(systemName: "play.rectangle")
+//                    .pretendSemiBold(size: 14)
+//                    .padding(6)
+//                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+//                    .foregroundColor(.primary)
+//            }
 
             Button {
                 scheduleVM.fetchAllSchedules(force: true)

@@ -57,15 +57,11 @@ struct YouTubeListView: View {
                         }
 
                         ForEach(viewModel.youtubeList, id: \.self) { video in
-//                            YouTubeVideoRow(video: video, dateFormatter: dateFormatter)
-//                                .padding(.horizontal)
-                            
                             YouTubeVideoCard(
                                 video: video,
                                 dateFormatter: dateFormatter,
                                 channelThumbnailURL: viewModel.channelThumnailURL
                             )
-                            .padding(.vertical, 8)
                         }
 
                         // 페이징 센티넬: 리스트의 맨 아래 도달 시 한 번만 트리거
@@ -117,60 +113,6 @@ extension YouTubeListViewModel {
     }
 }
 
-struct YouTubeVideoRow: View {
-    let video: YouTubeVideo
-    let dateFormatter: DateFormatter
-    
-    var body: some View {
-        let thumbWidth = UIScreen.main.bounds.width * 0.25 // TODO: 필요 시 GeometryReader로 셀 가용 폭의 1/4로 개선
-        HStack(alignment: .top, spacing: 12) {
-            AsyncImage(url: video.thumbnailURL) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable() // 스케일은 아래 aspectRatio에서 처리
-                case .failure:
-                    Rectangle()
-                        .fill(.gray.opacity(0.2))
-                        .overlay(Image(systemName: "video.slash").foregroundStyle(.secondary))
-                case .empty:
-                    Rectangle()
-                        .fill(.gray.opacity(0.15))
-                        .overlay(ProgressView().scaleEffect(0.8))
-                @unknown default:
-                    Rectangle().fill(.gray.opacity(0.15))
-                }
-            }
-            .aspectRatio(16.0/9.0, contentMode: .fill) // 16:9 비율 고정
-            .frame(width: thumbWidth)                  // 화면 너비의 1/4로 고정
-            .clipped()                                 // 넘치는 영역 잘라내기
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            
-            VStack(alignment: .leading, spacing: 6) {
-                Text(video.title)
-                    .pretendBold(size: 16)
-                    .lineLimit(2)
-                
-                if let date = video.publishedAt {
-                    Text(dateFormatter.string(from: date))
-                        .pretendReg(size: 14)
-                        .foregroundStyle(.secondary)
-                }
-                
-                if !video.description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    Text(video.description)
-                        .pretendReg(size: 11)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(2)
-                }
-            }
-            
-            Spacer()
-        }
-        .contentShape(Rectangle()) // 터치 영역 넓게
-    }
-}
-
 struct YouTubeVideoCard: View {
     let video: YouTubeVideo
     let dateFormatter: DateFormatter
@@ -186,9 +128,10 @@ struct YouTubeVideoCard: View {
                         .resizable()
                         .scaledToFill()                     // 가로폭을 꽉 채우고 필요시 크롭
                         .frame(maxWidth: .infinity)
-                        .aspectRatio(16/9, contentMode: .fill)
-                        .clipped()                          // 넘치는 영역 잘라내기
-                        .transition(.opacity.combined(with: .scale))
+                        .scaledToFill()
+//                        .aspectRatio(16/9, contentMode: .fill)
+//                        .clipped()                          // 넘치는 영역 잘라내기
+//                        .transition(.opacity.combined(with: .scale))
                 case .failure:
                     Rectangle()
                         .fill(Color.gray.opacity(0.15))
@@ -213,7 +156,6 @@ struct YouTubeVideoCard: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            // .clipped()  // 잘라내지 않음: 원본 비율 유지
             
             // 2) 채널 아바타 + 제목/베타 정보
             HStack(alignment: .top, spacing: 12) {
@@ -245,7 +187,7 @@ struct YouTubeVideoCard: View {
                 Spacer()
             }
         }
-//        .padding(.vertical, 8)
+        .padding(.horizontal, 8)
         .contentShape(Rectangle()) // 터치 영역 넓게
     }
 }
@@ -261,7 +203,9 @@ private struct ChannelAvatar: View {
                 AsyncImage(url: url) { phase in
                     switch phase {
                     case .success(let image):
-                        image.resizable().scaledToFill()
+                        image
+                            .resizable()
+                            .scaledToFill()
                     case .failure(let error):
                         placeholder
                     case .empty:

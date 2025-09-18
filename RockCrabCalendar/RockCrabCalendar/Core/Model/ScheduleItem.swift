@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseCore
+import FirebaseFirestore
 
 struct ScheduleItem: Identifiable, Codable {
     let id: UUID
@@ -39,14 +40,22 @@ struct ScheduleItem: Identifiable, Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.title = try container.decode(String.self, forKey: .title)
-        self.date = try container.decode(Date.self, forKey: .date)
-        self.time = try container.decode(String.self, forKey: .time)
-        self.place = try container.decode(String.self, forKey: .place)
-        
-        let rawMembers = try container.decode([String].self, forKey: .members)
+
+        // Accept Firestore Timestamp or Date
+        if let ts = try? container.decode(Timestamp.self, forKey: .date) {
+            self.date = ts.dateValue()
+        } else {
+            self.date = try container.decode(Date.self, forKey: .date)
+        }
+
+        self.time = (try? container.decode(String.self, forKey: .time)) ?? ""
+        self.place = (try? container.decode(String.self, forKey: .place)) ?? ""
+
+        let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
         self.members = rawMembers.compactMap { QWERMember(rawValue: $0) }
-        self.category = ScheduleCategory(rawValue: try container.decode(String.self, forKey: .category)) ?? .other
-        // Generate UUID locally since Firestore doc ID is not being used
+        self.category = ScheduleCategory(rawValue: (try? container.decode(String.self, forKey: .category)) ?? "") ?? .other
+
+        // NOTE: If you later adopt Firestore documentID, inject it externally instead of generating here.
         self.id = UUID()
     }
 }
@@ -70,6 +79,9 @@ extension ScheduleItem {
             "category": category.rawValue
         ]
     }
+
+    var displayTime: String { time.isEmpty ? "시간 미정" : time }
+    var displayPlace: String { place.isEmpty ? "장소 미정" : place }
 }
 
 extension ScheduleItem {
@@ -83,7 +95,7 @@ extension ScheduleItem {
     
     static let schedules: [ScheduleItem] = [
         ScheduleItem(
-            title: "히나 생일 생일",
+            title: "히나 생일",
             date: simpleDateFormatter.date(from: "2025-01-30")!,
             time: "",
             place: "",
@@ -363,6 +375,22 @@ extension ScheduleItem {
             category: .fanSign
         ),
         ScheduleItem(
+            title: "부산 INTERNATIONAL ROCK FESTIVAL",
+            date: simpleDateFormatter.date(from: "2025-09-26")!,
+            time: "15:10",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
+            title: "PMPS SEASON2 FINALS 축하공연",
+            date: simpleDateFormatter.date(from: "2025-09-27")!,
+            time: "13:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        ScheduleItem(
             title: "ASIA TOP ARTIST FESTIVAL",
             date: simpleDateFormatter.date(from: "2025-09-28")!,
             time: "",
@@ -481,6 +509,14 @@ extension ScheduleItem {
             place: "Vermont Hollywood",
             members: [.Q, .W, .E, .R],
             category: .concert
+        ),
+        ScheduleItem(
+            title: "ASIA ARTIST AWARDS 2025",
+            date: simpleDateFormatter.date(from: "2025-12-06")!,
+            time: "",
+            place: "대만 가오슝 내셔널 스타디움",
+            members: [.Q, .W, .E, .R],
+            category: .award
         ),
         ScheduleItem(
             title: "WORLD TOUR MACAU",
