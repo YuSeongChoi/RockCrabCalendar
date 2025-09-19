@@ -26,6 +26,7 @@
 		5D7FB74C2E78010900BE9B18 /* YouTubeChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
+		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -47,8 +48,6 @@
 		5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */; };
 		5DE024692CA3DC2500472395 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */; };
 		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
-		5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246C2CA3DC4A00472395 /* RswiftLibrary */; };
-		5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DE0246E2CA3DC4A00472395 /* rswift */; };
 		5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */; };
 		5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211522E65666B00E465E8 /* ServerConfig.swift */; };
 		5DE2115D2E657F0200E465E8 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115C2E657F0200E465E8 /* HTTPClient.swift */; };
@@ -172,10 +171,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */,
 				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
-				5DE0246D2CA3DC4A00472395 /* RswiftLibrary in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
-				5DE0246F2CA3DC4A00472395 /* rswift in Frameworks */,
 				5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -290,12 +288,20 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		5DDE85EB2E7BEF7400643DB5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5DE024282CA3D79E00472395 = {
 			isa = PBXGroup;
 			children = (
 				5DE024332CA3D79E00472395 /* RockCrabCalendar */,
 				5DE212252E6FC10B00E465E8 /* RockCrabCalendarUnitTests */,
 				5DE212412E6FC1A600E465E8 /* RockCrabCalendarUITests */,
+				5DDE85EB2E7BEF7400643DB5 /* Frameworks */,
 				5DE024322CA3D79E00472395 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -460,15 +466,15 @@
 			buildRules = (
 			);
 			dependencies = (
-				5DE024712CA3DC5E00472395 /* PBXTargetDependency */,
+				5DDE86172E7BFFB500643DB5 /* PBXTargetDependency */,
 			);
 			name = RockCrabCalendar;
 			packageProductDependencies = (
-				5DE0246C2CA3DC4A00472395 /* RswiftLibrary */,
-				5DE0246E2CA3DC4A00472395 /* rswift */,
 				5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */,
 				5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */,
 				5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */,
+				5DDE85EF2E7BF02A00643DB5 /* rswift */,
+				5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -505,6 +511,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5DDE86082E7BF29B00643DB5 /* PBXTargetDependency */,
 				5DE212292E6FC10B00E465E8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -667,9 +674,13 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5DE024712CA3DC5E00472395 /* PBXTargetDependency */ = {
+		5DDE86082E7BF29B00643DB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 5DE024702CA3DC5E00472395 /* RswiftGenerateInternalResources */;
+			productRef = 5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */;
+		};
+		5DDE86172E7BFFB500643DB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5DDE86162E7BFFB500643DB5 /* RswiftGenerateInternalResources */;
 		};
 		5DE2121B2E6FC0F400E465E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -819,6 +830,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RockCrabCalendar/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -859,6 +871,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RockCrabCalendar/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -1048,18 +1061,24 @@
 			package = 5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		5DE0246C2CA3DC4A00472395 /* RswiftLibrary */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
-			productName = RswiftLibrary;
-		};
-		5DE0246E2CA3DC4A00472395 /* rswift */ = {
+		5DDE85EF2E7BF02A00643DB5 /* rswift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
 			productName = rswift;
 		};
-		5DE024702CA3DC5E00472395 /* RswiftGenerateInternalResources */ = {
+		5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
+			productName = RswiftLibrary;
+		};
+		5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
+			productName = "plugin:RswiftGenerateInternalResources";
+		};
+		5DDE86162E7BFFB500643DB5 /* RswiftGenerateInternalResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
 		};
 /* End XCSwiftPackageProductDependency section */
