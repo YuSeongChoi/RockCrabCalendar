@@ -431,6 +431,14 @@ extension ScheduleItem {
             category: .concert
         ),
         ScheduleItem(
+            title: "데뷔 2주년",
+            date: simpleDateFormatter.date(from: "2025-10-18")!,
+            time: "",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .other
+        ),
+        ScheduleItem(
             title: "MADLY MADLEY",
             date: simpleDateFormatter.date(from: "2025-10-19")!,
             time: "",

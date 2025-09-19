@@ -55,7 +55,6 @@
 		5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211622E6583F100E465E8 /* WindowOverlayView.swift */; };
 		5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */; };
 		5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211862E698AE200E465E8 /* HTTPRequestList.swift */; };
-		5DE211B62E6EB87F00E465E8 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */; };
 		5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */; };
 		5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */; };
 		5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */; };
@@ -588,7 +587,6 @@
 				5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */,
 				5DE024642CA3DC2500472395 /* Lato-BoldItalic.ttf in Resources */,
 				5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */,
-				5DE211B62E6EB87F00E465E8 /* Secrets.xcconfig in Resources */,
 				5DE0245B2CA3DC2500472395 /* Lato-Thin.ttf in Resources */,
 				5DE0245E2CA3DC2500472395 /* Pretendard-Regular.otf in Resources */,
 				5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */,

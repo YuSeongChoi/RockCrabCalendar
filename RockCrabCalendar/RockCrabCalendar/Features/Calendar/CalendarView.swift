@@ -130,7 +130,7 @@ struct CalendarView: View {
                     .labelStyle(.titleAndIcon)
                     .pretendSemiBold(size: 14)
                     .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
                     .foregroundColor(.primary)
             }
             Spacer()
@@ -143,7 +143,7 @@ struct CalendarView: View {
                 Text("오늘")
                     .pretendSemiBold(size: 14)
                     .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
                     .foregroundColor(.primary)
             }
             
@@ -156,7 +156,7 @@ struct CalendarView: View {
                 Image(systemName: showMonthList ? "calendar" : "list.bullet.rectangle")
                     .pretendSemiBold(size: 14)
                     .padding(6)
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
                     .foregroundColor(.primary)
             }
 
@@ -175,7 +175,7 @@ struct CalendarView: View {
                 Image(systemName: "arrow.circlepath")
                     .pretendSemiBold(size: 14)
                     .padding(6)
-                    .background(Capsule().fill(Color(UIColor.systemGray5)))
+                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
                     .foregroundColor(.primary)
             }
         }
@@ -303,7 +303,7 @@ struct CalendarView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color(UIColor { trait in
-                            trait.userInterfaceStyle == .dark ? .systemGray5 : .secondarySystemBackground
+                            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
                         }))
                 )
                 .padding(.horizontal, 10)
@@ -414,21 +414,57 @@ struct CalendarView: View {
                                 else { selected.insert(cat) }
                             }
                         }
+                    } header: {
+                        HStack {
+                            Text("분류 선택")
+                            Spacer()
+                        }
+                        .pretendSemiBold(size: 20)
+                        .foregroundStyle(.primary)
                     }
+                    .headerProminence(.increased)
                 }
                 .pretendSemiBold(size: 16)
                 .foregroundStyle(.secondary)
                 .listStyle(.insetGrouped)
-                .navigationTitle("분류")
+                .scrollContentBackground(.hidden)
+                .background(Color(UIColor { trait in
+                    trait.userInterfaceStyle == .dark ? .black : .systemGroupedBackground
+                }))
+                .listRowBackground(Color(UIColor { trait in
+                    trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
+                }))
+                .navigationTitle("필터")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("적용") {
+                        Button {
                             onApply(selected)
                             dismiss()
+                        } label: {
+                            Text("적용")
+                                .pretendSemiBold(size: 15)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 7.5)
+                                .foregroundStyle(.black)
+                                .background(
+                                    Capsule().fill(
+                                        Color(UIColor { trait in
+                                            trait.userInterfaceStyle == .dark ? .white : .secondarySystemBackground
+                                        })
+                                    )
+                                )
                         }
                     }
                 }
+                .toolbarBackground(Color(UIColor { trait in
+                    trait.userInterfaceStyle == .dark ? .black : .white
+                }), for: .navigationBar)
+                .toolbarBackground(.visible, for: .navigationBar)
+                .navigationBarTitleDisplayMode(.inline)
             }
+            .background(Color(UIColor { trait in
+                trait.userInterfaceStyle == .dark ? .black : .white
+            }))
         }
     }
 }
