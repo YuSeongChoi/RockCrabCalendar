@@ -271,8 +271,10 @@ struct CalendarView: View {
                         .pretendSemiBold(size: 16)
                     
                     HStack(spacing: 8) {
-                        if !item.time.isEmpty { Label(item.time, systemImage: "clock") }
-                        if !item.place.isEmpty { Label(item.place, systemImage: "house.circle.fill") }
+                        Label(item.displayTime, systemImage: "clock")
+                        Label(item.displayPlace, systemImage: "house.circle.fill")
+//                        if !item.time.isEmpty { Label(item.time, systemImage: "clock") }
+//                        if !item.place.isEmpty { Label(item.place, systemImage: "house.circle.fill") }
                     }
                     .pretendReg(size: 13)
                     .foregroundColor(.gray)

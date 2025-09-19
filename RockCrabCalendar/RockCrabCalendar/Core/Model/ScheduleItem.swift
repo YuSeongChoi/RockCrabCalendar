@@ -401,7 +401,7 @@ extension ScheduleItem {
         ScheduleItem(
             title: "WORLD TOUR ROCKNATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-03")!,
-            time: "",
+            time: "17:00",
             place: "올림픽 핸드볼 경기장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -409,7 +409,7 @@ extension ScheduleItem {
         ScheduleItem(
             title: "WORLD TOUR ROCKNATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-04")!,
-            time: "",
+            time: "17:00",
             place: "올림픽 핸드볼 경기장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -417,7 +417,7 @@ extension ScheduleItem {
         ScheduleItem(
             title: "WORLD TOUR ROCKNATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-05")!,
-            time: "",
+            time: "17:00",
             place: "올림픽 핸드볼 경기장",
             members: [.Q, .W, .E, .R],
             category: .concert
