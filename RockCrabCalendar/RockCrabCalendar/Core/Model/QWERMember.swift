@@ -5,7 +5,7 @@
 //  Created by YuSeongChoi on 7/30/25.
 //
 
-import SwiftUICore
+import SwiftUI
 
 enum QWERMember: String, CaseIterable, Codable {
     case Q, W, E, R

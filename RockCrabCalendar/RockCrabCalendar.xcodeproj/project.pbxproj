@@ -61,6 +61,7 @@
 		5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */; };
 		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
 		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
+		5DF37E2C2E811C7F00A9FC11 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85EF2E7BF02A00643DB5 /* rswift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -170,6 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DF37E2C2E811C7F00A9FC11 /* rswift in Frameworks */,
 				5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */,
 				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
@@ -465,7 +467,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				5DDE86172E7BFFB500643DB5 /* PBXTargetDependency */,
+				5DF37E632E81283300A9FC11 /* PBXTargetDependency */,
 			);
 			name = RockCrabCalendar;
 			packageProductDependencies = (
@@ -532,7 +534,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1640;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					5DE024302CA3D79E00472395 = {
 						CreatedOnToolsVersion = 15.0;
@@ -676,10 +678,6 @@
 			isa = PBXTargetDependency;
 			productRef = 5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */;
 		};
-		5DDE86172E7BFFB500643DB5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 5DDE86162E7BFFB500643DB5 /* RswiftGenerateInternalResources */;
-		};
 		5DE2121B2E6FC0F400E465E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5DE024302CA3D79E00472395 /* RockCrabCalendar */;
@@ -689,6 +687,10 @@
 			isa = PBXTargetDependency;
 			target = 5DE024302CA3D79E00472395 /* RockCrabCalendar */;
 			targetProxy = 5DE212282E6FC10B00E465E8 /* PBXContainerItemProxy */;
+		};
+		5DF37E632E81283300A9FC11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5DF37E622E81283300A9FC11 /* RswiftGenerateInternalResources */;
 		};
 /* End PBXTargetDependency section */
 
@@ -752,6 +754,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -809,6 +812,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -824,8 +828,10 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RockCrabCalendar/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -865,8 +871,10 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RockCrabCalendar/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1074,7 +1082,7 @@
 			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
 		};
-		5DDE86162E7BFFB500643DB5 /* RswiftGenerateInternalResources */ = {
+		5DF37E622E81283300A9FC11 /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
