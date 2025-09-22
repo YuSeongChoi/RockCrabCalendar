@@ -61,7 +61,6 @@
 		5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */; };
 		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
 		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
-		5DF37E2C2E811C7F00A9FC11 /* rswift in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85EF2E7BF02A00643DB5 /* rswift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -171,7 +170,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DF37E2C2E811C7F00A9FC11 /* rswift in Frameworks */,
 				5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */,
 				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
@@ -467,14 +465,13 @@
 			buildRules = (
 			);
 			dependencies = (
-				5DF37E632E81283300A9FC11 /* PBXTargetDependency */,
+				5D43243C2E8142B10026E23E /* PBXTargetDependency */,
 			);
 			name = RockCrabCalendar;
 			packageProductDependencies = (
 				5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */,
 				5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */,
 				5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */,
-				5DDE85EF2E7BF02A00643DB5 /* rswift */,
 				5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */,
 			);
 			productName = RockTurtleCalendar;
@@ -674,6 +671,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5D43243C2E8142B10026E23E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 5D43243B2E8142B10026E23E /* RswiftGenerateInternalResources */;
+		};
 		5DDE86082E7BF29B00643DB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */;
@@ -687,10 +688,6 @@
 			isa = PBXTargetDependency;
 			target = 5DE024302CA3D79E00472395 /* RockCrabCalendar */;
 			targetProxy = 5DE212282E6FC10B00E465E8 /* PBXContainerItemProxy */;
-		};
-		5DF37E632E81283300A9FC11 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 5DF37E622E81283300A9FC11 /* RswiftGenerateInternalResources */;
 		};
 /* End PBXTargetDependency section */
 
@@ -831,7 +828,8 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RockCrabCalendar/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -874,7 +872,8 @@
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RockCrabCalendar/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -1052,6 +1051,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5D43243B2E8142B10026E23E /* RswiftGenerateInternalResources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
+			productName = "plugin:RswiftGenerateInternalResources";
+		};
 		5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1067,11 +1071,6 @@
 			package = 5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
-		5DDE85EF2E7BF02A00643DB5 /* rswift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
-			productName = rswift;
-		};
 		5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
@@ -1079,12 +1078,6 @@
 		};
 		5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
-			productName = "plugin:RswiftGenerateInternalResources";
-		};
-		5DF37E622E81283300A9FC11 /* RswiftGenerateInternalResources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
 			productName = "plugin:RswiftGenerateInternalResources";
 		};
 /* End XCSwiftPackageProductDependency section */
