@@ -7,10 +7,11 @@
 ---
 
 ## 📸 스크린샷
-
-![달력 뷰](./path/to/screenshot1.png)  
-![필터 뷰](./path/to/screenshot2.png)  
-![일정 확인 뷰](./path/to/screenshot3.png)
+<p align="center">
+  <img src="RockCrabCalendar/media/calendar.png" alt="달력 메인 화면" width="250" height="auto"/>
+  <img src="RockCrabCalendar/media/calendar_filter.png" alt="필터 화면" width="250" height="auto"/>
+  <img src="RockCrabCalendar/media/schedule_list.png" alt="월별 스케줄 화면" width="250" height="auto"/>
+</p>
 
 ---
 
