@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct CalendarDayCell: View {
     let date: Date?
@@ -23,6 +24,7 @@ struct CalendarDayCell: View {
             let size = proxy.size
             let dayRectCorner: CGFloat = 8
             let isDark = UITraitCollection.current.userInterfaceStyle == .dark
+            let isPad = UIDevice.current.userInterfaceIdiom == .pad
 
             ZStack(alignment: .top) {
                 RoundedRectangle(cornerRadius: dayRectCorner)
@@ -64,24 +66,47 @@ struct CalendarDayCell: View {
                                 .padding(.top, 3)
                         }
 
-                        Spacer()
-
-                        HStack(spacing: 3) {
-                            ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
-                                ZStack {
-                                    Circle()
-                                        .fill(Color(white: isDark ? 0.2 : 0.88))
-                                        .opacity(isInCurrentMonth ? 1 : 0.55)
-                                        .frame(width: dotBackgroundSize, height: dotBackgroundSize)
-                                    Circle()
-                                        .fill(eventColors[i])
-                                        .opacity(isInCurrentMonth ? 1 : 0.5)
-                                        .frame(width: dotSize, height: dotSize)
+                        if isPad {
+                            // iPad 등 큰 셀: 날짜 바로 아래에 점들 표시
+                            HStack(spacing: 3) {
+                                ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color(white: isDark ? 0.2 : 0.88))
+                                            .opacity(isInCurrentMonth ? 1 : 0.55)
+                                            .frame(width: dotBackgroundSize, height: dotBackgroundSize)
+                                        Circle()
+                                            .fill(eventColors[i])
+                                            .opacity(isInCurrentMonth ? 1 : 0.5)
+                                            .frame(width: dotSize, height: dotSize)
+                                    }
                                 }
                             }
+                            .frame(height: dotRowHeight)
+                            .padding(.top, 4)
+
+                            Spacer(minLength: 0)
+                        } else {
+                            // iPhone 등 작은 셀: 기존처럼 하단 배치 유지
+                            Spacer(minLength: 0)
+
+                            HStack(spacing: 3) {
+                                ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
+                                    ZStack {
+                                        Circle()
+                                            .fill(Color(white: isDark ? 0.2 : 0.88))
+                                            .opacity(isInCurrentMonth ? 1 : 0.55)
+                                            .frame(width: dotBackgroundSize, height: dotBackgroundSize)
+                                        Circle()
+                                            .fill(eventColors[i])
+                                            .opacity(isInCurrentMonth ? 1 : 0.5)
+                                            .frame(width: dotSize, height: dotSize)
+                                    }
+                                }
+                            }
+                            .frame(height: dotRowHeight)
+                            .padding(.bottom, 4)
                         }
-                        .frame(height: dotRowHeight)
-                        .padding(.bottom, 4)
                     }
                     .frame(width: size.width, height: size.height, alignment: .top)
                 } else {
@@ -106,3 +131,4 @@ struct CalendarDayCell: View {
         }
     }
 }
+

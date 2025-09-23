@@ -443,16 +443,6 @@ struct CalendarView: View {
                         } label: {
                             Text("적용")
                                 .pretendSemiBold(size: 15)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 7.5)
-                                .foregroundStyle(.black)
-                                .background(
-                                    Capsule().fill(
-                                        Color(UIColor { trait in
-                                            trait.userInterfaceStyle == .dark ? .white : .secondarySystemBackground
-                                        })
-                                    )
-                                )
                         }
                     }
                 }
