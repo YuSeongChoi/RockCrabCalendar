@@ -61,6 +61,7 @@
 		5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */; };
 		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
 		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
+		5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -138,6 +139,7 @@
 		5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockCrabCalendarUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
 		5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
+		5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterSheet.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */,
+				5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -648,6 +651,7 @@
 				5D5E852D2E30B9D700DB8775 /* ScheduleItem.swift in Sources */,
 				5D68DCFE2E39EF5C00A69D92 /* ScheduleViewModel.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
+				5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */,
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,

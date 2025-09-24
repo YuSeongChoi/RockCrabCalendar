@@ -12,7 +12,7 @@ struct CalendarView: View {
     @State private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
-    @State private var showMonthList: Bool = false
+    @State private var viewType: ViewType = .calendar
     
     private let calendar = Calendar.current
     private let monthYearFormatter: DateFormatter = {
@@ -31,46 +31,71 @@ struct CalendarView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
-                VStack(spacing: 10) {
-                    dateSelectionView
-                    calendarOptionView
-                    if showMonthList {
-                        monthListView()
-                    } else {
-                        dateHeaderView
-                        dateGridView(availableWidth: geometry.size.width)
+            ZStack {
+                VStack(spacing: 0) {
+                    VStack(spacing: 10) {
+                        dateSelectionView
+                        calendarOptionView
                         
-                        // 최근 동기화 캡션
-                        Text("\(scheduleVM.lastSyncText)")
-                            .font(.caption2.monospacedDigit())
-                            .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.trailing, 4)
-                        Divider()
+                        switch viewType {
+                        case .calendar:
+                            VStack(spacing: 10) {
+                                dateHeaderView
+                                dateGridView(availableWidth: geometry.size.width)
+                                
+                                // 최근 동기화 캡션
+                                Text("\(scheduleVM.lastSyncText)")
+                                    .font(.caption2.monospacedDigit())
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .padding(.trailing, 4)
+                                Divider()
+                            }
+                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
+                            
+                            let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
+                            if !selectedDateSchedules.isEmpty {
+                                scheduleListView(schedules: selectedDateSchedules)
+                                    .padding(.top, 12)
+                            } else {
+                                Spacer()
+                                VStack(spacing: 8) {
+                                    Image(systemName: "calendar.badge.exclamationmark")
+                                        .font(.system(size: 24))
+                                        .foregroundStyle(.tertiary)
+                                    Text("일정이 없습니다")
+                                        .font(.callout)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                            }
+                        case .list:
+                            VStack(spacing: 10) {
+                                monthListView()
+                            }
+                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
+                        }
                     }
                 }
-                .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
                 
-                if showMonthList {
-                    EmptyView()
-                } else {
-                    let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
-                    if !selectedDateSchedules.isEmpty {
-                        scheduleListView(schedules: selectedDateSchedules)
-                            .padding(.top, 12)
-                    } else {
+                VStack {
+                    Spacer()
+                    HStack {
                         Spacer()
-                        VStack(spacing: 8) {
-                            Image(systemName: "calendar.badge.exclamationmark")
-                                .font(.system(size: 24))
-                                .foregroundStyle(.tertiary)
-                            Text("일정이 없습니다")
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
+                        
+                        Button {
+                            // TODO: TODO
+                        } label: {
+                            Image(systemName: "plus.circle")
+                                .renderingMode(.template)
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(Color.secondary)
+                                .shadow(radius: 4)
                         }
-                        Spacer()
                     }
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 10)
                 }
             }
         }
@@ -148,26 +173,28 @@ struct CalendarView: View {
             }
             
             Spacer()
-            Button {
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    showMonthList.toggle()
+            
+            Group {
+                switch viewType {
+                case .calendar:
+                    Button {
+                        viewType = .list
+                    } label: {
+                        Image(systemName: "list.bullet")
+                    }
+                case .list:
+                    Button {
+                        viewType = .calendar
+                    } label: {
+                        Image(systemName: "calendar")
+                    }
                 }
-            } label: {
-                Image(systemName: showMonthList ? "calendar" : "list.bullet.rectangle")
-                    .pretendSemiBold(size: 14)
-                    .padding(6)
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
-                    .foregroundColor(.primary)
             }
-
-            // MARK: 유튜브 리스트 뷰 (추후)
-//            NavigationLink(destination: YouTubeListView()) {
-//                Image(systemName: "play.rectangle")
-//                    .pretendSemiBold(size: 14)
-//                    .padding(6)
-//                    .background(Capsule().fill(Color(UIColor.systemGray5)))
-//                    .foregroundColor(.primary)
-//            }
+            .pretendSemiBold(size: 14)
+            .padding(6)
+            .animation(.easeInOut(duration: 0.25), value: viewType)
+            .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
+            .foregroundColor(.primary)
 
             Button {
                 scheduleVM.fetchAllSchedules(force: true)
@@ -273,8 +300,6 @@ struct CalendarView: View {
                     HStack(spacing: 8) {
                         Label(item.displayTime, systemImage: "clock")
                         Label(item.displayPlace, systemImage: "house.circle.fill")
-//                        if !item.time.isEmpty { Label(item.time, systemImage: "clock") }
-//                        if !item.place.isEmpty { Label(item.place, systemImage: "house.circle.fill") }
                     }
                     .pretendReg(size: 13)
                     .foregroundColor(.gray)
@@ -368,93 +393,14 @@ struct CalendarView: View {
             .transition(.opacity)
         }
     }
-    
-    private struct CategoryFilterSheet: View {
-        @Environment(\.dismiss) private var dismiss
-        @State private var selected: Set<ScheduleCategory>
-        let onApply: (Set<ScheduleCategory>) -> Void
+}
 
-        init(active: Set<ScheduleCategory>,
-             onApply: @escaping (Set<ScheduleCategory>) -> Void) {
-            _selected = State(initialValue: active)
-            self.onApply = onApply
-        }
-
-        var body: some View {
-            NavigationStack {
-                List {
-                    Section {
-                        // 전체 선택 (토글)
-                        Button {
-                            if selected.count == ScheduleCategory.allCases.count {
-                                selected.removeAll()
-                            } else {
-                                selected = Set(ScheduleCategory.allCases)
-                            }
-                        } label: {
-                            HStack(spacing: 10) {
-                                let allSelected = selected.count == ScheduleCategory.allCases.count
-                                Image(systemName: allSelected ? "checkmark.circle.fill" : "circle")
-                                    .foregroundStyle(allSelected ? .blue : .secondary)
-                                Text("전체 선택")
-                                Spacer()
-                            }
-                        }
-                        
-                        ForEach(Array(ScheduleCategory.allCases), id: \.self) { cat in
-                            HStack(spacing: 10) {
-                                Image(systemName: selected.contains(cat) ? "checkmark.circle.fill" : "circle")
-                                    .foregroundStyle(selected.contains(cat) ? .blue : .secondary)
-                                Text(cat.rawValue)
-                                Spacer()
-                            }
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                if selected.contains(cat) { selected.remove(cat) }
-                                else { selected.insert(cat) }
-                            }
-                        }
-                    } header: {
-                        HStack {
-                            Text("분류 선택")
-                            Spacer()
-                        }
-                        .pretendSemiBold(size: 20)
-                        .foregroundStyle(.primary)
-                    }
-                    .headerProminence(.increased)
-                }
-                .pretendSemiBold(size: 16)
-                .foregroundStyle(.secondary)
-                .listStyle(.insetGrouped)
-                .scrollContentBackground(.hidden)
-                .background(Color(UIColor { trait in
-                    trait.userInterfaceStyle == .dark ? .black : .systemGroupedBackground
-                }))
-                .listRowBackground(Color(UIColor { trait in
-                    trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
-                }))
-                .navigationTitle("필터")
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            onApply(selected)
-                            dismiss()
-                        } label: {
-                            Text("적용")
-                                .pretendSemiBold(size: 15)
-                        }
-                    }
-                }
-                .toolbarBackground(Color(UIColor { trait in
-                    trait.userInterfaceStyle == .dark ? .black : .white
-                }), for: .navigationBar)
-                .toolbarBackground(.visible, for: .navigationBar)
-                .navigationBarTitleDisplayMode(.inline)
-            }
-            .background(Color(UIColor { trait in
-                trait.userInterfaceStyle == .dark ? .black : .white
-            }))
-        }
+extension CalendarView {
+    enum ViewType {
+        /// 달력
+        case calendar
+        /// 리스트
+        case list
     }
 }
+
