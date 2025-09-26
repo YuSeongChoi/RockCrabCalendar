@@ -26,6 +26,7 @@
 		5D7FB74C2E78010900BE9B18 /* YouTubeChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
+		5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B120B2E86510D0014649C /* ScheduleEditView.swift */; };
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
@@ -101,6 +102,7 @@
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		5D8B120B2E86510D0014649C /* ScheduleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				5D68DCFD2E39EF5C00A69D92 /* ScheduleViewModel.swift */,
+				5D8B120B2E86510D0014649C /* ScheduleEditView.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
+				5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

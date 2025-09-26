@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CategoryFilterSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     @State private var selected: Set<ScheduleCategory>
     let onApply: (Set<ScheduleCategory>) -> Void
 
@@ -74,6 +75,15 @@ struct CategoryFilterSheet: View {
             }))
             .navigationTitle("필터")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(closeButtonColor)
+                    }
+                }
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         onApply(selected)
@@ -93,5 +103,16 @@ struct CategoryFilterSheet: View {
         .background(Color(UIColor { trait in
             trait.userInterfaceStyle == .dark ? .black : .white
         }))
+    }
+    
+    private var closeButtonColor: Color {
+        switch colorScheme {
+        case .light:
+            return Color.black  // 밝은 모드에서는 검은색 또는 어두운 계열
+        case .dark:
+            return Color.white  // 다크 모드에서는 흰색 또는 밝은 계열
+        @unknown default:
+            return Color.primary
+        }
     }
 }

@@ -12,6 +12,7 @@ struct CalendarView: View {
     @State private var scheduleVM = ScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
+    @State private var addScheduleSheet: Bool = false
     @State private var viewType: ViewType = .calendar
     
     private let calendar = Calendar.current
@@ -32,13 +33,13 @@ struct CalendarView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                VStack(spacing: 0) {
-                    VStack(spacing: 10) {
-                        dateSelectionView
-                        calendarOptionView
-                        
-                        switch viewType {
-                        case .calendar:
+                VStack(spacing: 10) {
+                    dateSelectionView
+                    calendarOptionView
+                    
+                    switch viewType {
+                    case .calendar:
+                        VStack(spacing: 0) {
                             VStack(spacing: 10) {
                                 dateHeaderView
                                 dateGridView(availableWidth: geometry.size.width)
@@ -51,30 +52,31 @@ struct CalendarView: View {
                                     .padding(.trailing, 4)
                                 Divider()
                             }
-                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
                             
-                            let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
-                            if !selectedDateSchedules.isEmpty {
-                                scheduleListView(schedules: selectedDateSchedules)
-                                    .padding(.top, 12)
-                            } else {
-                                Spacer()
-                                VStack(spacing: 8) {
-                                    Image(systemName: "calendar.badge.exclamationmark")
-                                        .font(.system(size: 24))
-                                        .foregroundStyle(.tertiary)
-                                    Text("일정이 없습니다")
-                                        .font(.callout)
-                                        .foregroundStyle(.secondary)
+                            ZStack {
+                                let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
+                                if !selectedDateSchedules.isEmpty {
+                                    scheduleListView(schedules: selectedDateSchedules)
+                                        .padding(.top, 12)
+                                } else {
+                                    Spacer()
+                                    VStack(spacing: 8) {
+                                        Image(systemName: "calendar.badge.exclamationmark")
+                                            .font(.system(size: 24))
+                                            .foregroundStyle(.tertiary)
+                                        Text("일정이 없습니다")
+                                            .font(.callout)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
                                 }
-                                Spacer()
                             }
-                        case .list:
-                            VStack(spacing: 10) {
-                                monthListView()
-                            }
-                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
                         }
+                        
+                    case .list:
+                        monthListView()
                     }
                 }
                 
@@ -82,24 +84,24 @@ struct CalendarView: View {
                     Spacer()
                     HStack {
                         Spacer()
-                        
                         Button {
-                            // TODO: TODO
+                            addScheduleSheet.toggle()
                         } label: {
                             Image(systemName: "plus.circle")
                                 .renderingMode(.template)
                                 .resizable()
-                                .frame(width: 40, height: 40)
-                                .foregroundStyle(Color.secondary)
-                                .shadow(radius: 4)
+                                .frame(width: 30, height: 30)
+                                .foregroundStyle(Color(UIColor {
+                                    $0.userInterfaceStyle == .dark ? .RGB_173 : .black
+                                }))
                         }
                     }
                     .padding(.trailing, 20)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 15)
                 }
             }
         }
-        .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
+        .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchAllSchedules(force: false)
@@ -111,6 +113,9 @@ struct CalendarView: View {
                     scheduleVM.setCategories(selected)
                 }
             )
+        }
+        .sheet(isPresented: $addScheduleSheet) {
+            ScheduleEditView(viewModel: scheduleVM)
         }
     }
     
@@ -403,4 +408,3 @@ extension CalendarView {
         case list
     }
 }
-
