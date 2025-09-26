@@ -12,9 +12,9 @@ import SwiftUI
 import CryptoKit
 
 @Observable
-final class ScheduleViewModel {
+final class QWERScheduleViewModel {
     // 현재 로드된 모든 스케줄
-    var schedules: [ScheduleItem] = []
+    var schedules: [QWERScheduleItem] = []
     // 사용자가 선택한 날짜 (기본값: 오늘)
     var selectedDate: Date = Date()
     // 마지막으로 동기화한 시각
@@ -56,7 +56,7 @@ final class ScheduleViewModel {
     }
     
     // Firestore 문서 ID를 안정적으로 생성 (날짜+제목+장소+카테고리 기반 해시)
-    private func stableDocumentID(for s: ScheduleItem) -> String {
+    private func stableDocumentID(for s: QWERScheduleItem) -> String {
         // 날짜는 yyyy-MM-dd 로 고정
         let dateKey = dateFormatter.string(from: s.date)
         // 제목/장소는 소문자 + 트리밍 + 내부 공백을 단일 공백으로 정규화
@@ -85,7 +85,7 @@ final class ScheduleViewModel {
     }
     
     // 여러 스케줄을 Firestore에 업서트
-    func uploadSchedules(schedules: [ScheduleItem]) {
+    func uploadSchedules(schedules: [QWERScheduleItem]) {
         guard !schedules.isEmpty else { return }
         let payloads: [(docId: String, data: [String: Any])] = schedules.map { s in
             let docId = stableDocumentID(for: s)
@@ -110,7 +110,7 @@ final class ScheduleViewModel {
 
         // 1) Cache-first
         if let cachedData = UserDefaults.standard.data(forKey: cacheKey),
-           let cachedSchedules = try? JSONDecoder().decode([ScheduleItem].self, from: cachedData) {
+           let cachedSchedules = try? JSONDecoder().decode([QWERScheduleItem].self, from: cachedData) {
             self.schedules = cachedSchedules
         }
 
@@ -154,7 +154,7 @@ final class ScheduleViewModel {
     }
 
     // 특정 날짜(또는 선택된 날짜)의 스케줄 반환
-    func schedules(on date: Date? = nil) -> [ScheduleItem] {
+    func schedules(on date: Date? = nil) -> [QWERScheduleItem] {
         let target = date ?? selectedDate
         return schedules.filter {
             Calendar.current.isDate($0.date, inSameDayAs: target) && passesCategory($0)
@@ -183,7 +183,7 @@ final class ScheduleViewModel {
         persistCategories()
     }
 
-    private func passesCategory(_ item: ScheduleItem) -> Bool {
+    private func passesCategory(_ item: QWERScheduleItem) -> Bool {
         activeCategories.contains(item.category)
     }
     
@@ -199,7 +199,7 @@ final class ScheduleViewModel {
 }
 
 // MARK: - ScheduleViewModel Extensions (기능 추가)
-extension ScheduleViewModel {
+extension QWERScheduleViewModel {
     /// 일정 타입 필터링용
 //    func schedules(for type: ScheduleType?) -> [ScheduleItem] {
 //        guard let type = type else { return schedules }
@@ -207,13 +207,13 @@ extension ScheduleViewModel {
 //    }
     
     // 유저가 직접 스케줄 추가
-    func addSchedule(_ schedule: ScheduleItem) {
+    func addSchedule(_ schedule: QWERScheduleItem) {
         schedules.append(schedule)
         uploadSchedules(schedules: [schedule])
     }
     
     // 현재 월의 모든 스케줄 반환
-    var monthlySchedules: [ScheduleItem] {
+    var monthlySchedules: [QWERScheduleItem] {
         let calendar = Calendar.current
         guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedDate)),
               let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else { return [] }

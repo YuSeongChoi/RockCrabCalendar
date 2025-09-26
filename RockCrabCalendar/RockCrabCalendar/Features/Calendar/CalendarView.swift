@@ -9,10 +9,11 @@ import SwiftUI
 
 struct CalendarView: View {
     @State private var calendarVM = CalendarViewModel()
-    @State private var scheduleVM = ScheduleViewModel()
+    @State private var scheduleVM = QWERScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
     @State private var addScheduleSheet: Bool = false
+    @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
     
     private let calendar = Calendar.current
@@ -80,24 +81,70 @@ struct CalendarView: View {
                     }
                 }
                 
+                if isFabExpanded {
+                    Color.black.opacity(0.001)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                        }
+                }
+                
+                // Floating Action Button with options
                 VStack {
                     Spacer()
                     HStack {
                         Spacer()
-                        Button {
-                            addScheduleSheet.toggle()
-                        } label: {
-                            Image(systemName: "plus.circle")
-                                .renderingMode(.template)
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundStyle(Color(UIColor {
-                                    $0.userInterfaceStyle == .dark ? .RGB_173 : .black
-                                }))
+                        VStack(alignment: .trailing, spacing: 10) {
+                            if isFabExpanded {
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                                    addScheduleSheet = true
+                                } label: {
+                                    Label("QWER 스케줄", systemImage: "person.3.fill")
+                                        .labelStyle(.titleAndIcon)
+                                        .pretendSemiBold(size: 14)
+                                        .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                                        .background(
+                                            Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
+                                        )
+                                        .foregroundColor(.primary)
+                                }
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                                    addScheduleSheet = true
+                                } label: {
+                                    Label("개인 스케줄", systemImage: "person.fill")
+                                        .labelStyle(.titleAndIcon)
+                                        .pretendSemiBold(size: 14)
+                                        .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                                        .background(
+                                            Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
+                                        )
+                                        .foregroundColor(.primary)
+                                }
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
+                            }
+
+                            Button {
+                                withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
+                                    isFabExpanded.toggle()
+                                }
+                            } label: {
+                                Image(systemName: isFabExpanded ? "xmark.circle" : "plus.circle")
+                                    .renderingMode(.template)
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .foregroundStyle(Color(UIColor {
+                                        $0.userInterfaceStyle == .dark ? .RGB_173 : .black
+                                    }))
+                            }
                         }
                     }
                     .padding(.trailing, 20)
                     .padding(.bottom, 15)
+                    .animation(.spring(response: 0.25, dampingFraction: 0.9), value: isFabExpanded)
                 }
             }
         }
@@ -115,7 +162,7 @@ struct CalendarView: View {
             )
         }
         .sheet(isPresented: $addScheduleSheet) {
-            ScheduleEditView(viewModel: scheduleVM)
+            ScheduleEditView()
         }
     }
     
@@ -295,7 +342,7 @@ struct CalendarView: View {
     
     // MARK: 스케줄 리스트 뷰
     @ViewBuilder
-    private func scheduleListView(schedules: [ScheduleItem], embedInScrollView: Bool = true) -> some View {
+    private func scheduleListView(schedules: [QWERScheduleItem], embedInScrollView: Bool = true) -> some View {
         let content = VStack(alignment: .leading, spacing: 8) {
             ForEach(schedules, id: \.id) { item in
                 VStack(alignment: .leading, spacing: 8) {
@@ -350,7 +397,7 @@ struct CalendarView: View {
         }
     }
     
-    private func monthSchedulesForCurrentMonth() -> [ScheduleItem] {
+    private func monthSchedulesForCurrentMonth() -> [QWERScheduleItem] {
         let start = calendarVM.startOfMonth(for: calendarVM.currentMonth)
         let end = calendarVM.endOfMonth(for: calendarVM.currentMonth)
         return scheduleVM.schedules.filter { item in

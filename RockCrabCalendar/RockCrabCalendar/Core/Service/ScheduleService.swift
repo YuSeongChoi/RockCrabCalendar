@@ -13,17 +13,17 @@ final class ScheduleService {
     private let collection = "schedules"
     
     // MARK: - 일정 추가
-    func addSchedule(_ item: ScheduleItem) async throws {
+    func addSchedule(_ item: QWERScheduleItem) async throws {
         try db.collection(collection)
             .document(item.id.uuidString)
             .setData(from: item)
     }
     
     // MARK: - 모든 일정 가져오기
-    func fetchSchedules() async throws -> [ScheduleItem] {
+    func fetchSchedules() async throws -> [QWERScheduleItem] {
         let snapshot = try await db.collection(collection).getDocuments()
         return snapshot.documents.compactMap { document in
-            try? document.data(as: ScheduleItem.self)
+            try? document.data(as: QWERScheduleItem.self)
         }
     }
 
