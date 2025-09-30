@@ -24,9 +24,9 @@ protocol ScheduleServiceProtocol {
     associatedtype Schedule: SchedulableItem
     
     /// 스케줄 생성
-    func addSchedule(_ schedule: Schedule)
+    func saveSchedule(_ schedule: Schedule)
     /// 스케줄 수정
-    func updateSchedule(_ schedules: [Schedule])
+    func updateSchedule(_ schedule: Schedule)
     /// 스케줄 삭제
     func deleteSchedule(_ schedule: Schedule)
     /// 스케줄 읽기(FireStore or UserDefaults)

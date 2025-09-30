@@ -58,12 +58,12 @@ final class QWERScheduleViewModel {
     
     // 일정 추가
     func addSchedule(_ item: QWERScheduleItem) {
-        service.addSchedule(item)
+        service.saveSchedule(item)
     }
     
     // 일정 업데이트
-    func updateSchedule(schedules: [QWERScheduleItem]) {
-        service.updateSchedule(schedules)
+    func updateSchedule(schedule: QWERScheduleItem) {
+        service.updateSchedule(schedule)
     }
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)

@@ -23,7 +23,7 @@ final class QWERScheduleService: ScheduleServiceProtocol {
     }()
     
     /// 일정 추가
-    func addSchedule(_ item: Schedule) {
+    func saveSchedule(_ item: Schedule) {
         let data = item.asDictionary
         db.collection(collection)
             .document(item.id.uuidString)
@@ -36,10 +36,24 @@ final class QWERScheduleService: ScheduleServiceProtocol {
             }
     }
     
-    /// 일정 업데이트
+    func updateSchedule(_ schedule: Schedule) {
+        let docId = stableDocumentID(for: schedule)
+        let data = schedule.asDictionary
+        db.collection(collection)
+            .document(docId)
+            .setData(data, merge: true) { error in
+                if let error = error {
+                    print("🔥 QWER 단일 업데이트 실패: \(error.localizedDescription)")
+                } else {
+                    print("✅ QWER 단일 업데이트 성공: \(schedule.id)")
+                }
+            }
+    }
+    
+    /// 여러 일정 한번에 업데이트/추가 (배치 방식)
     func updateSchedule(_ schedules: [Schedule]) {
         guard !schedules.isEmpty else { return }
-        
+
         let payloads: [(docId: String, data: [String: Any])] = schedules.map { s in
             let docId = stableDocumentID(for: s)
             return (docId, s.asDictionary)
@@ -75,23 +89,11 @@ final class QWERScheduleService: ScheduleServiceProtocol {
             try? document.data(as: Schedule.self)
         }
     }
-
-    /// 여러 일정을 한 번에 업서트(추가 또는 업데이트)합니다.
-    /// - Parameter payloads: (docId, data) 쌍의 배열. data는 일정의 딕셔너리 형태입니다.
-    func upsertBatch(_ payloads: [(docId: String, data: [String: Any])]) async throws {
-        guard !payloads.isEmpty else { return }
-        let batch = db.batch()
-        for p in payloads {
-            let ref = db.collection(collection).document(p.docId)
-            batch.setData(p.data, forDocument: ref, merge: true)
-        }
-        try await batch.commit()
-    }
 }
 
 extension QWERScheduleService {
     // Firestore 문서 ID를 안정적으로 생성 (날짜+제목+장소+카테고리 기반 해시)
-    private func stableDocumentID(for s: QWERScheduleItem) -> String {
+    private func stableDocumentID(for s: Schedule) -> String {
         // 날짜는 yyyy-MM-dd 로 고정
         let dateKey = dateFormatter.string(from: s.date)
         // 제목/장소는 소문자 + 트리밍 + 내부 공백을 단일 공백으로 정규화
@@ -109,5 +111,17 @@ extension QWERScheduleService {
         let digest = SHA256.hash(data: Data(raw.utf8))
         let hex = digest.map { String(format: "%02x", $0) }.joined()
         return "rc_" + String(hex.prefix(20))
+    }
+    
+    /// 여러 일정을 한 번에 업서트(추가 또는 업데이트)합니다.
+    /// - Parameter payloads: (docId, data) 쌍의 배열. data는 일정의 딕셔너리 형태입니다.
+    private func upsertBatch(_ payloads: [(docId: String, data: [String: Any])]) async throws {
+        guard !payloads.isEmpty else { return }
+        let batch = db.batch()
+        for p in payloads {
+            let ref = db.collection(collection).document(p.docId)
+            batch.setData(p.data, forDocument: ref, merge: true)
+        }
+        try await batch.commit()
     }
 }
