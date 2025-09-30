@@ -28,14 +28,7 @@ final class QWERScheduleViewModel {
     // 모든 카테고리가 선택되어 있는지 여부
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
-    private let service: ScheduleService
-    private var cancellables = Set<AnyCancellable>()
-    // 서버 저장용 날짜 포맷터
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
+    private let service: QWERScheduleService
     
     // 동기화 시간 표시용 포맷터
     private let syncFormatter: DateFormatter = {
@@ -55,28 +48,7 @@ final class QWERScheduleViewModel {
         }
     }
     
-    // Firestore 문서 ID를 안정적으로 생성 (날짜+제목+장소+카테고리 기반 해시)
-    private func stableDocumentID(for s: QWERScheduleItem) -> String {
-        // 날짜는 yyyy-MM-dd 로 고정
-        let dateKey = dateFormatter.string(from: s.date)
-        // 제목/장소는 소문자 + 트리밍 + 내부 공백을 단일 공백으로 정규화
-        func norm(_ str: String) -> String {
-            str
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .replacingOccurrences(of: "\\s+", with: " ", options: .regularExpression)
-                .lowercased()
-        }
-        let titleKey = norm(s.title)
-        let placeKey = norm(s.place)
-        let catKey = s.category.rawValue.lowercased()
-        let raw = "\(dateKey)|\(titleKey)|\(placeKey)|\(catKey)"
-        // SHA256 해시 → 앞 20자(80bit)만 사용해서 짧고 충돌 가능성 낮게
-        let digest = SHA256.hash(data: Data(raw.utf8))
-        let hex = digest.map { String(format: "%02x", $0) }.joined()
-        return "rc_" + String(hex.prefix(20))
-    }
-    
-    init(service: ScheduleService = ScheduleService()) {
+    init(service: QWERScheduleService = QWERScheduleService()) {
         self.service = service
         if let raw = UserDefaults.standard.array(forKey: categoryKey) as? [String] {
             let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
@@ -84,22 +56,14 @@ final class QWERScheduleViewModel {
         }
     }
     
-    // 여러 스케줄을 Firestore에 업서트
-    func uploadSchedules(schedules: [QWERScheduleItem]) {
-        guard !schedules.isEmpty else { return }
-        let payloads: [(docId: String, data: [String: Any])] = schedules.map { s in
-            let docId = stableDocumentID(for: s)
-            return (docId, s.asDictionary)
-        }
-        
-        Task {
-            do {
-                try await service.upsertBatch(payloads)
-                print("✅ 업서트 배치 성공: \(payloads.count)건")
-            } catch {
-                print("🔥 업서트 배치 실패: \(error.localizedDescription)")
-            }
-        }
+    // 일정 추가
+    func addSchedule(_ item: QWERScheduleItem) {
+        service.addSchedule(item)
+    }
+    
+    // 일정 업데이트
+    func updateSchedule(schedules: [QWERScheduleItem]) {
+        service.updateSchedule(schedules)
     }
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)
@@ -124,23 +88,25 @@ final class QWERScheduleViewModel {
         }
 
         // 2) Network
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
+            guard let self else { return }
             do {
-                let fetched = try await self?.service.fetchSchedules() ?? []
-                await MainActor.run {
-                    self?.schedules = fetched
-                    self?.lastFetchedAt = now
-                    if let data = try? JSONEncoder().encode(fetched) {
-                        UserDefaults.standard.set(data, forKey: cacheKey)
-                        UserDefaults.standard.set(now, forKey: lastFetchKey)
-                    }
+                let fetched = try await self.service.fetchSchedule()
+                self.schedules = fetched
+                self.lastFetchedAt = now
+                if let data = try? JSONEncoder().encode(fetched) {
+                    UserDefaults.standard.set(data, forKey: cacheKey)
+                    UserDefaults.standard.set(now, forKey: lastFetchKey)
                 }
             } catch {
                 print("🔥 전체 스케줄 가져오기 실패: \(error.localizedDescription)")
             }
         }
     }
-    
+}
+
+// MARK: - 멤버들 색상관련
+extension QWERScheduleViewModel {
     // 특정 날짜에 해당하는 스케줄들의 멤버 색상 반환
     func eventColors(for date: Date) -> [Color] {
         let items = schedules.filter {
@@ -160,12 +126,6 @@ final class QWERScheduleViewModel {
             Calendar.current.isDate($0.date, inSameDayAs: target) && passesCategory($0)
         }
     }
-    
-    // 카테고리 선택/토글/저장
-    private func persistCategories() {
-        let raw = activeCategories.map { $0.rawValue }
-        UserDefaults.standard.set(raw, forKey: categoryKey)
-    }
 
     func toggleCategory(_ category: ScheduleCategory) {
         if activeCategories.contains(category) { activeCategories.remove(category) }
@@ -182,6 +142,12 @@ final class QWERScheduleViewModel {
         activeCategories = categories.isEmpty ? Set(ScheduleCategory.allCases) : categories
         persistCategories()
     }
+    
+    // 카테고리 선택/토글/저장
+    private func persistCategories() {
+        let raw = activeCategories.map { $0.rawValue }
+        UserDefaults.standard.set(raw, forKey: categoryKey)
+    }
 
     private func passesCategory(_ item: QWERScheduleItem) -> Bool {
         activeCategories.contains(item.category)
@@ -194,32 +160,6 @@ final class QWERScheduleViewModel {
         case .W: return .pastelMagenta
         case .E: return .pastelHina
         case .R: return .pastelMing
-        }
-    }
-}
-
-// MARK: - ScheduleViewModel Extensions (기능 추가)
-extension QWERScheduleViewModel {
-    /// 일정 타입 필터링용
-//    func schedules(for type: ScheduleType?) -> [ScheduleItem] {
-//        guard let type = type else { return schedules }
-//        return schedules.filter { $0.scheduleType == type }
-//    }
-    
-    // 유저가 직접 스케줄 추가
-    func addSchedule(_ schedule: QWERScheduleItem) {
-        schedules.append(schedule)
-        uploadSchedules(schedules: [schedule])
-    }
-    
-    // 현재 월의 모든 스케줄 반환
-    var monthlySchedules: [QWERScheduleItem] {
-        let calendar = Calendar.current
-        guard let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: selectedDate)),
-              let endOfMonth = calendar.date(byAdding: DateComponents(month: 1, day: -1), to: startOfMonth) else { return [] }
-
-        return schedules.filter {
-            $0.date >= startOfMonth && $0.date <= endOfMonth && passesCategory($0)
         }
     }
 }

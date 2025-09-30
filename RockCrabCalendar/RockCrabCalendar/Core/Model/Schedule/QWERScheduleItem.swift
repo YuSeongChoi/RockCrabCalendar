@@ -1,5 +1,5 @@
 //
-//  ScheduleItem.swift
+//  QWERScheduleItem.swift
 //  RockCrabCalendar
 //
 //  Created by YuSeongChoi on 7/23/25.
@@ -9,19 +9,19 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-struct QWERScheduleItem: Identifiable, Codable {
-    let id: UUID
+struct QWERScheduleItem: SchedulableItem, Identifiable, Codable {
+    var id: UUID
     /// 스케줄명
-    let title: String
+    var title: String
     /// 날짜
-    let date: Date
+    var date: Date
     /// 시간
-    let time: String
+    var time: String
     /// 장소
-    let place: String
+    var place: String
     /// 참석멤버
-    let members: [QWERMember]
-    let category: ScheduleCategory
+    var members: [QWERMember]
+    var category: ScheduleCategory
     
     init(id: UUID = UUID(), title: String, date: Date, time: String, place: String, members: [QWERMember], category: ScheduleCategory) {
         self.id = id
@@ -84,6 +84,7 @@ extension QWERScheduleItem {
     var displayPlace: String { place.isEmpty ? "장소 미정" : place }
 }
 
+// MARK: - QWER 스케줄 모음
 extension QWERScheduleItem {
     static var simpleDateFormatter: DateFormatter {
         let formatter = DateFormatter()

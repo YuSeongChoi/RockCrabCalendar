@@ -17,7 +17,7 @@
 		5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */; };
 		5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */; };
 		5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */; };
-		5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */; };
+		5D5E85802E31F6CE00DB8775 /* QWERScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */; };
 		5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E86292E39D6A800DB8775 /* QWERMember.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
@@ -27,8 +27,9 @@
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
 		5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B120B2E86510D0014649C /* ScheduleEditView.swift */; };
-		5D8B121D2E8658800014649C /* UserScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B121C2E8658800014649C /* UserScheduleItem.swift */; };
-		5D8B121E2E8658800014649C /* UserScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B121C2E8658800014649C /* UserScheduleItem.swift */; };
+		5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12392E867A1E0014649C /* UserScheduleItem.swift */; };
+		5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12412E867A400014649C /* SchedulableProtocol.swift */; };
+		5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12582E8A4AD30014649C /* UserScheduleService.swift */; };
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
@@ -96,7 +97,7 @@
 		5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
 		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
 		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
+		5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleService.swift; sourceTree = "<group>"; };
 		5D5E86292E39D6A800DB8775 /* QWERMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERMember.swift; sourceTree = "<group>"; };
 		5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -105,7 +106,9 @@
 		5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5D8B120B2E86510D0014649C /* ScheduleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditView.swift; sourceTree = "<group>"; };
-		5D8B121C2E8658800014649C /* UserScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleItem.swift; sourceTree = "<group>"; };
+		5D8B12392E867A1E0014649C /* UserScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleItem.swift; sourceTree = "<group>"; };
+		5D8B12412E867A400014649C /* SchedulableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulableProtocol.swift; sourceTree = "<group>"; };
+		5D8B12582E8A4AD30014649C /* UserScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleService.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -255,8 +258,8 @@
 		5D5E854E2E30BA5300DB8775 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */,
 				5D8B120B2E86510D0014649C /* ScheduleEditView.swift */,
+				5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -264,7 +267,8 @@
 		5D5E857E2E31F6C200DB8775 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				5D5E857F2E31F6CE00DB8775 /* ScheduleService.swift */,
+				5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */,
+				5D8B12582E8A4AD30014649C /* UserScheduleService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -281,10 +285,9 @@
 		5D6B4A972D7045F600D90C0D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5D8B124B2E867A510014649C /* Schedule */,
 				5DE211E52E6FB26A00E465E8 /* DTO */,
-				5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */,
 				5D5E86292E39D6A800DB8775 /* QWERMember.swift */,
-				5D8B121C2E8658800014649C /* UserScheduleItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -295,6 +298,16 @@
 				5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */,
 			);
 			path = Config;
+			sourceTree = "<group>";
+		};
+		5D8B124B2E867A510014649C /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				5D8B12412E867A400014649C /* SchedulableProtocol.swift */,
+				5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */,
+				5D8B12392E867A1E0014649C /* UserScheduleItem.swift */,
+			);
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 		5DDE85EB2E7BEF7400643DB5 /* Frameworks */ = {
@@ -631,6 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */,
 				5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */,
 				5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */,
 				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
@@ -646,7 +660,7 @@
 				5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */,
 				5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */,
 				5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */,
-				5D8B121E2E8658800014649C /* UserScheduleItem.swift in Sources */,
+				5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */,
 				5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */,
 				5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
@@ -655,10 +669,11 @@
 				5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */,
 				5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
-				5D5E85802E31F6CE00DB8775 /* ScheduleService.swift in Sources */,
+				5D5E85802E31F6CE00DB8775 /* QWERScheduleService.swift in Sources */,
 				5D5E852D2E30B9D700DB8775 /* QWERScheduleItem.swift in Sources */,
 				5D68DCFE2E39EF5C00A69D92 /* QWERScheduleViewModel.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
+				5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */,
 				5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */,
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
@@ -678,7 +693,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D8B121D2E8658800014649C /* UserScheduleItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

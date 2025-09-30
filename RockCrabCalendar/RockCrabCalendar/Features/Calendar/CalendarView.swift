@@ -89,63 +89,7 @@ struct CalendarView: View {
                         }
                 }
                 
-                // Floating Action Button with options
-                VStack {
-                    Spacer()
-                    HStack {
-                        Spacer()
-                        VStack(alignment: .trailing, spacing: 10) {
-                            if isFabExpanded {
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                                    addScheduleSheet = true
-                                } label: {
-                                    Label("QWER 스케줄", systemImage: "person.3.fill")
-                                        .labelStyle(.titleAndIcon)
-                                        .pretendSemiBold(size: 14)
-                                        .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                                        .background(
-                                            Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
-                                        )
-                                        .foregroundColor(.primary)
-                                }
-                                .transition(.move(edge: .bottom).combined(with: .opacity))
-
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                                    addScheduleSheet = true
-                                } label: {
-                                    Label("개인 스케줄", systemImage: "person.fill")
-                                        .labelStyle(.titleAndIcon)
-                                        .pretendSemiBold(size: 14)
-                                        .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                                        .background(
-                                            Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
-                                        )
-                                        .foregroundColor(.primary)
-                                }
-                                .transition(.move(edge: .bottom).combined(with: .opacity))
-                            }
-
-                            Button {
-                                withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
-                                    isFabExpanded.toggle()
-                                }
-                            } label: {
-                                Image(systemName: isFabExpanded ? "xmark.circle" : "plus.circle")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .frame(width: 30, height: 30)
-                                    .foregroundStyle(Color(UIColor {
-                                        $0.userInterfaceStyle == .dark ? .RGB_173 : .black
-                                    }))
-                            }
-                        }
-                    }
-                    .padding(.trailing, 20)
-                    .padding(.bottom, 15)
-                    .animation(.spring(response: 0.25, dampingFraction: 0.9), value: isFabExpanded)
-                }
+                scheduleFloatingButton
             }
         }
         .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
@@ -443,6 +387,67 @@ struct CalendarView: View {
             }
             .scrollIndicators(.hidden)
             .transition(.opacity)
+        }
+    }
+    
+    // MARK: Floating Button View
+    @ViewBuilder
+    private var scheduleFloatingButton: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                VStack(alignment: .trailing, spacing: 10) {
+                    if isFabExpanded {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                            addScheduleSheet = true
+                        } label: {
+                            Label("QWER 스케줄", systemImage: "person.3.fill")
+                                .labelStyle(.titleAndIcon)
+                                .pretendSemiBold(size: 14)
+                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                                .background(
+                                    Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
+                                )
+                                .foregroundColor(.primary)
+                        }
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                            addScheduleSheet = true
+                        } label: {
+                            Label("개인 스케줄", systemImage: "person.fill")
+                                .labelStyle(.titleAndIcon)
+                                .pretendSemiBold(size: 14)
+                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                                .background(
+                                    Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
+                                )
+                                .foregroundColor(.primary)
+                        }
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+
+                    Button {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
+                            isFabExpanded.toggle()
+                        }
+                    } label: {
+                        Image(systemName: isFabExpanded ? "xmark.circle" : "plus.circle")
+                            .renderingMode(.template)
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundStyle(Color(UIColor {
+                                $0.userInterfaceStyle == .dark ? .RGB_173 : .black
+                            }))
+                    }
+                }
+            }
+            .padding(.trailing, 20)
+            .padding(.bottom, 15)
+            .animation(.spring(response: 0.25, dampingFraction: 0.9), value: isFabExpanded)
         }
     }
 }

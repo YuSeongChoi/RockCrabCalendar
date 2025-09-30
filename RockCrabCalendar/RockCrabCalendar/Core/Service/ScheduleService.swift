@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-final class ScheduleService {
+final class QWERScheduleService {
     private let db = Firestore.firestore()
     private let collection = "schedules"
     
