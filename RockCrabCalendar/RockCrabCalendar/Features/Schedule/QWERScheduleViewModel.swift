@@ -30,21 +30,31 @@ final class QWERScheduleViewModel {
     
     private let service: QWERScheduleService
     
-    // 동기화 시간 표시용 포맷터
-    private let syncFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "ko_KR")
-        f.timeZone = TimeZone(identifier: "Asia/Seoul")
-        f.dateFormat = "yyyy년 MM월 dd일 HH:mm:ss"
-        return f
-    }()
-    
-    // 마지막 동기화 시간을 문자열로 반환
-    var lastSyncText: String {
-        if let d = lastFetchedAt {
-            return "동기화 날짜 : \(syncFormatter.string(from: d))"
+    // MARK: - Local (in-memory) partial updates
+    private func upsertLocalInMemory(_ item: QWERScheduleItem) {
+        if let idx = schedules.firstIndex(where: { $0.id == item.id }) {
+            schedules[idx] = item
         } else {
-            return "동기화 날짜 : -"
+            schedules.append(item)
+        }
+    }
+
+    private func removeLocalInMemory(_ item: QWERScheduleItem) {
+        if let idx = schedules.firstIndex(where: { $0.id == item.id }) {
+            schedules.remove(at: idx)
+        } else {
+            // Fallback: field-based match in case of legacy ids
+            let cal = Calendar.current
+            if let idx = schedules.firstIndex(where: { s in
+                s.title == item.title &&
+                s.time == item.time &&
+                s.place == item.place &&
+                cal.isDate(s.date, inSameDayAs: item.date) &&
+                s.members == item.members &&
+                s.category == item.category
+            }) {
+                schedules.remove(at: idx)
+            }
         }
     }
     
@@ -54,6 +64,25 @@ final class QWERScheduleViewModel {
             let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
             if !decoded.isEmpty { self.activeCategories = Set(decoded) }
         }
+    }
+    
+    // MARK: - Local-only mutations (no fetch)
+    func addLocal(_ item: QWERScheduleItem) {
+        service.saveLocalSchedule(item)
+        upsertLocalInMemory(item)
+        NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+    }
+
+    func updateLocal(_ item: QWERScheduleItem) {
+        service.updateLocalSchedule(item)
+        upsertLocalInMemory(item)
+        NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+    }
+
+    func deleteLocal(_ item: QWERScheduleItem) {
+        service.deleteLocalSchedule(item)
+        removeLocalInMemory(item)
+        NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
     }
     
     // 일정 추가

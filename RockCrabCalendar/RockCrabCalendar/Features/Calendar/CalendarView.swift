@@ -32,6 +32,22 @@ struct CalendarView: View {
         f.dateFormat = "M월 d일(E)"
         return f
     }()
+    
+    private let lastSyncFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "ko_KR")
+        f.dateFormat = "yyyy.MM.dd HH:mm"
+        return f
+    }()
+
+    private var lastSyncText: String {
+        if let dt = scheduleVM.lastFetchedAt {
+            return "최근 동기화: \(lastSyncFormatter.string(from: dt))"
+        } else {
+            return "최근 동기화 기록 없음"
+        }
+    }
+    
     private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
     private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
     
@@ -51,7 +67,7 @@ struct CalendarView: View {
                                     dateGridView(availableWidth: geometry.size.width)
                                     
                                     // 최근 동기화 캡션
-                                    Text("\(scheduleVM.lastSyncText)")
+                                    Text(lastSyncText)
                                         .font(.caption2.monospacedDigit())
                                         .foregroundStyle(.secondary)
                                         .frame(maxWidth: .infinity, alignment: .trailing)
@@ -129,8 +145,9 @@ struct CalendarView: View {
         }
         .onChange(of: addScheduleSheet) { _, newValue in
             if newValue == false {
-                scheduleVM.fetchAllSchedules(force: true)
-                userVM.fetchAllSchedules()
+                // 부분 갱신이 이미 반영되므로 전체 강제 fetch는 피합니다
+                scheduleVM.fetchAllSchedules(force: false)
+                // userVM은 로컬 변경 시 바로 schedules에 반영되므로 fetch 생략 가능
             }
         }
         .navigationDestination(item: Binding(
@@ -140,8 +157,15 @@ struct CalendarView: View {
             ScheduleEditView(mode: mode, defaultDate: scheduleVM.selectedDate)
         }
         .onReceive(NotificationCenter.default.publisher(for: .schedulesDidChange)) { _ in
-            scheduleVM.fetchAllSchedules(force: true)
-            userVM.fetchAllSchedules()
+            // 전체 변경 신호가 온 경우에만 캐시 우선으로 가볍게 갱신
+            scheduleVM.fetchAllSchedules(force: false)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .qwerLocalDidChange)) { _ in
+            // 로컬 QWER 변경은 네트워크 fetch 없이 현재 메모리 모델로 즉시 반영
+            // QWERScheduleViewModel는 별도 fetch 없이 schedules를 유지하고 있으므로 추가 작업 불필요
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .userSchedulesDidChange)) { _ in
+            // 사용자 일정은 서비스에서 메모리로 즉시 반영되도록 되어 있으므로 추가 fetch 불필요
         }
     }
     
@@ -729,24 +753,3 @@ extension CalendarView {
         case list
     }
 }
-
-extension ScheduleEditView.Mode: Identifiable {
-    var id: String {
-        switch self {
-        case .create(let k): return "create_\(k == .qwer ? "qwer" : "user")"
-        case .editQWER(let item): return "qwer_\(item.id.uuidString)"
-        case .editUser(let item): return "user_\(item.id.uuidString)"
-        }
-    }
-}
-
-extension ScheduleEditView.Mode: Hashable {
-    static func == (lhs: ScheduleEditView.Mode, rhs: ScheduleEditView.Mode) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-

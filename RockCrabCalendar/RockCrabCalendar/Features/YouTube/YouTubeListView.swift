@@ -128,7 +128,7 @@ struct YouTubeVideoCard: View {
                         .resizable()
                         .scaledToFill()                     // 가로폭을 꽉 채우고 필요시 크롭
                         .frame(maxWidth: .infinity)
-                        .scaledToFill()
+//                        .scaledToFill()
 //                        .aspectRatio(16/9, contentMode: .fill)
 //                        .clipped()                          // 넘치는 영역 잘라내기
 //                        .transition(.opacity.combined(with: .scale))
@@ -206,7 +206,7 @@ private struct ChannelAvatar: View {
                         image
                             .resizable()
                             .scaledToFill()
-                    case .failure(let error):
+                    case .failure:
                         placeholder
                     case .empty:
                         ZStack {
@@ -241,3 +241,4 @@ private struct ChannelAvatar: View {
         return String(first + second)
     }
 }
+

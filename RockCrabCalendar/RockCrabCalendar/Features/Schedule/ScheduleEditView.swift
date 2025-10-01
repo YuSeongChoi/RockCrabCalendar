@@ -177,12 +177,6 @@ struct ScheduleEditView: View {
             .navigationTitle(titleText)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { dismiss() } label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(closeButtonColor)
-                    }
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: save) {
                         Text("저장")
@@ -190,6 +184,7 @@ struct ScheduleEditView: View {
                     }
                     .disabled(title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
+                
                 ToolbarItem(placement: .bottomBar) {
                     if case .editQWER = mode {
                         Button(role: .destructive) {
@@ -216,17 +211,7 @@ struct ScheduleEditView: View {
                 Text("Firestore에 올라간 QWER 일정은 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제할 수 있어요.")
             }
         }
-    }
-
-    private var closeButtonColor: Color {
-        switch colorScheme {
-        case .light:
-            return .black
-        case .dark:
-            return .white
-        @unknown default:
-            return .primary
-        }
+        .environment(\.locale, Locale(identifier: "ko_KR"))
     }
     
     private var titleText: String {
@@ -303,8 +288,21 @@ private extension ScheduleEditView {
             let service = UserScheduleService()
             service.updateSchedule(updated)
         }
-        // Notify listeners to refresh
-        NotificationCenter.default.post(name: .schedulesDidChange, object: nil)
+
+        switch mode {
+        case .create(let k):
+            switch k {
+            case .qwer:
+                NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+            case .user:
+                NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
+            }
+        case .editQWER:
+            NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+        case .editUser:
+            NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
+        }
+        
         dismiss()
     }
     
@@ -319,9 +317,35 @@ private extension ScheduleEditView {
         case .create:
             break
         }
-        // Notify listeners to refresh
-        NotificationCenter.default.post(name: .schedulesDidChange, object: nil)
+        // Notify listeners to refresh (granular)
+        switch mode {
+        case .editQWER:
+            NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+        case .editUser:
+            NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
+        case .create:
+            break
+        }
         dismiss()
     }
 }
 
+extension ScheduleEditView.Mode: Identifiable {
+    var id: String {
+        switch self {
+        case .create(let k): return "create_\(k == .qwer ? "qwer" : "user")"
+        case .editQWER(let item): return "qwer_\(item.id.uuidString)"
+        case .editUser(let item): return "user_\(item.id.uuidString)"
+        }
+    }
+}
+
+extension ScheduleEditView.Mode: Hashable {
+    static func == (lhs: ScheduleEditView.Mode, rhs: ScheduleEditView.Mode) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

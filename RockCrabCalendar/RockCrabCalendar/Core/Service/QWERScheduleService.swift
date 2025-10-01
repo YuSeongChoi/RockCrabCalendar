@@ -46,6 +46,12 @@ final class QWERScheduleService: ScheduleServiceProtocol {
         for item in arr { localMap[item.id] = item }
     }
     
+    /// 로컬(UserDefaults)에 저장된 사용자 추가 QWER 일정만 반환합니다.
+    func fetchLocalOnly() -> [Schedule] {
+        loadLocal()
+        return Array(localMap.values)
+    }
+    
     /// 이 일정이 로컬(UserDefaults)에 저장된 사용자 추가 QWER 일정인지 확인합니다.
     /// - Returns: 로컬 일정이면 true, 아니면 false
     func isLocalSchedule(_ item: Schedule) -> Bool {
