@@ -11,6 +11,7 @@ import Combine
 import SwiftUI
 import CryptoKit
 
+@MainActor
 @Observable
 final class QWERScheduleViewModel {
     // 현재 로드된 모든 스케줄
@@ -29,6 +30,18 @@ final class QWERScheduleViewModel {
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
     private let service: QWERScheduleService
+    private var cancellables = Set<AnyCancellable>()
+    private let instanceID = UUID()
+
+    enum LocalOp: String { case add, update, delete }
+
+    struct LocalChangeEvent {
+        let sourceID: UUID
+        let op: LocalOp
+        let item: QWERScheduleItem
+    }
+
+    static let localChangeSubject = PassthroughSubject<LocalChangeEvent, Never>()
     
     // MARK: - Local (in-memory) partial updates
     private func upsertLocalInMemory(_ item: QWERScheduleItem) {
@@ -37,6 +50,7 @@ final class QWERScheduleViewModel {
         } else {
             schedules.append(item)
         }
+        fetchAllSchedules(force: true)
     }
 
     private func removeLocalInMemory(_ item: QWERScheduleItem) {
@@ -56,6 +70,7 @@ final class QWERScheduleViewModel {
                 schedules.remove(at: idx)
             }
         }
+        fetchAllSchedules(force: true)
     }
     
     init(service: QWERScheduleService = QWERScheduleService()) {
@@ -64,25 +79,42 @@ final class QWERScheduleViewModel {
             let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
             if !decoded.isEmpty { self.activeCategories = Set(decoded) }
         }
+        // Observe local schedule changes coming from other instances
+        QWERScheduleViewModel.localChangeSubject
+            .filter { [weak self] event in
+                guard let self else { return false }
+                return event.sourceID != self.instanceID
+            }
+            .receive(on: RunLoop.main)
+            .sink { [weak self] event in
+                guard let self else { return }
+                switch event.op {
+                case .add, .update:
+                    self.upsertLocalInMemory(event.item)
+                case .delete:
+                    self.removeLocalInMemory(event.item)
+                }
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Local-only mutations (no fetch)
     func addLocal(_ item: QWERScheduleItem) {
         service.saveLocalSchedule(item)
         upsertLocalInMemory(item)
-        NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+        QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .add, item: item))
     }
 
     func updateLocal(_ item: QWERScheduleItem) {
         service.updateLocalSchedule(item)
         upsertLocalInMemory(item)
-        NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+        QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .update, item: item))
     }
 
     func deleteLocal(_ item: QWERScheduleItem) {
         service.deleteLocalSchedule(item)
         removeLocalInMemory(item)
-        NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
+        QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .delete, item: item))
     }
     
     // 일정 추가
@@ -192,3 +224,4 @@ extension QWERScheduleViewModel {
         }
     }
 }
+

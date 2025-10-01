@@ -25,6 +25,8 @@ struct ScheduleEditView: View {
     // MARK: - Inputs
     let mode: Mode
     let defaultDate: Date
+    let qwerVM: QWERScheduleViewModel
+    let userVM: UserScheduleViewModel
 
     private var kind: Kind {
         switch mode {
@@ -56,13 +58,15 @@ struct ScheduleEditView: View {
     @State private var showNonDeletableAlert: Bool = false
 
     // MARK: - Init
-    init(kind: Kind, defaultDate: Date = Date()) {
-        self.init(mode: .create(kind), defaultDate: defaultDate)
+    init(kind: Kind, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
+        self.init(mode: .create(kind), defaultDate: defaultDate, qwerVM: qwerVM, userVM: userVM)
     }
     
-    init(mode: Mode, defaultDate: Date = Date()) {
+    init(mode: Mode, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
         self.mode = mode
         self.defaultDate = defaultDate
+        self.qwerVM = qwerVM
+        self.userVM = userVM
         switch mode {
         case .create:
             _date = State(initialValue: defaultDate)
@@ -133,8 +137,10 @@ struct ScheduleEditView: View {
                             )) {
                                 HStack(spacing: 8) {
                                     Circle()
-                                        .fill(member.color)
+                                        .strokeBorder(Color.gray.opacity(0.4), lineWidth: 1)
+                                        .background(Circle().fill(member.color))
                                         .frame(width: 10, height: 10)
+                                    
                                     Text(member.name)
                                 }
                             }
@@ -247,8 +253,7 @@ private extension ScheduleEditView {
                     members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
                     category: category
                 )
-                let service = QWERScheduleService()
-                service.saveLocalSchedule(item)
+                qwerVM.addLocal(item)
             case .user:
                 let item = UserScheduleItem(
                     title: title.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -259,8 +264,7 @@ private extension ScheduleEditView {
                     repeatType: isRepeat ? repeatType : nil,
                     repeatEndDate: isRepeat ? repeatEndDate : nil
                 )
-                let service = UserScheduleService()
-                service.saveSchedule(item)
+                userVM.add(item)
             }
         case .editQWER(let original):
             let updated = QWERScheduleItem(
@@ -272,8 +276,7 @@ private extension ScheduleEditView {
                 members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
                 category: category
             )
-            let service = QWERScheduleService()
-            service.updateLocalSchedule(updated)
+            qwerVM.updateLocal(updated)
         case .editUser(let original):
             let updated = UserScheduleItem(
                 id: original.id,
@@ -285,22 +288,7 @@ private extension ScheduleEditView {
                 repeatType: isRepeat ? repeatType : nil,
                 repeatEndDate: isRepeat ? repeatEndDate : nil
             )
-            let service = UserScheduleService()
-            service.updateSchedule(updated)
-        }
-
-        switch mode {
-        case .create(let k):
-            switch k {
-            case .qwer:
-                NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
-            case .user:
-                NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
-            }
-        case .editQWER:
-            NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
-        case .editUser:
-            NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
+            userVM.update(updated)
         }
         
         dismiss()
@@ -309,23 +297,13 @@ private extension ScheduleEditView {
     func deleteItem() {
         switch mode {
         case .editQWER(let original):
-            let service = QWERScheduleService()
-            service.deleteLocalSchedule(original)
+            qwerVM.deleteLocal(original)
         case .editUser(let original):
-            let service = UserScheduleService()
-            service.deleteSchedule(original)
+            userVM.delete(original)
         case .create:
             break
         }
-        // Notify listeners to refresh (granular)
-        switch mode {
-        case .editQWER:
-            NotificationCenter.default.post(name: .qwerLocalDidChange, object: nil)
-        case .editUser:
-            NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
-        case .create:
-            break
-        }
+        
         dismiss()
     }
 }
@@ -349,3 +327,4 @@ extension ScheduleEditView.Mode: Hashable {
         hasher.combine(id)
     }
 }
+

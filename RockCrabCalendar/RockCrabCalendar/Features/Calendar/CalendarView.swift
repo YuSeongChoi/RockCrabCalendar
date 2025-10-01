@@ -141,7 +141,7 @@ struct CalendarView: View {
             )
         }
         .sheet(isPresented: $addScheduleSheet) {
-            ScheduleEditView(kind: addKind, defaultDate: scheduleVM.selectedDate)
+            ScheduleEditView(kind: addKind, defaultDate: scheduleVM.selectedDate, qwerVM: scheduleVM, userVM: userVM)
         }
         .onChange(of: addScheduleSheet) { _, newValue in
             if newValue == false {
@@ -154,7 +154,7 @@ struct CalendarView: View {
             get: { editTarget },
             set: { editTarget = $0 }
         )) { mode in
-            ScheduleEditView(mode: mode, defaultDate: scheduleVM.selectedDate)
+            ScheduleEditView(mode: mode, defaultDate: scheduleVM.selectedDate, qwerVM: scheduleVM, userVM: userVM)
         }
         .onReceive(NotificationCenter.default.publisher(for: .schedulesDidChange)) { _ in
             // 전체 변경 신호가 온 경우에만 캐시 우선으로 가볍게 갱신
