@@ -6,3 +6,46 @@
 //
 
 import Foundation
+
+@Observable
+final class UserScheduleViewModel: ObservableObject {
+    var schedules: [UserScheduleItem] = []
+    
+    private let service: UserScheduleService
+    
+    init(service: UserScheduleService = UserScheduleService()) {
+        self.service = service
+        self.schedules = service.schedules
+    }
+    
+    func fetchAllSchedules() {
+        Task {
+            do {
+                let fetched = try await service.fetchSchedule()
+                schedules = fetched
+            } catch {
+                print("⚠️ 사용자 일정 fetch 실패:", error.localizedDescription)
+            }
+        }
+    }
+    
+    func add(_ item: UserScheduleItem) {
+        service.saveSchedule(item)
+        schedules = service.schedules
+    }
+    
+    func update(_ item: UserScheduleItem) {
+        service.updateSchedule(item)
+        schedules = service.schedules
+    }
+    
+    func delete(_ item: UserScheduleItem) {
+        service.deleteSchedule(item)
+        schedules = service.schedules
+    }
+    
+    func save(_ item: UserScheduleItem) {
+        service.saveSchedule(item)
+        schedules = service.schedules
+    }
+}

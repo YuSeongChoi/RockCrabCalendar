@@ -15,12 +15,127 @@ final class QWERScheduleService: ScheduleServiceProtocol {
     private let db = Firestore.firestore()
     private let collection = "schedules"
     
+    // Local (UserDefaults) storage for user-added QWER schedules
+    private let localKey = "localQWERSchedules"
+    private var localMap: [UUID: Schedule] = [:]
+    
     // 서버 저장용 날짜 포맷터
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
+    
+    // MARK: - Local Persistence (UserDefaults)
+    private func persistLocal() {
+        let values = Array(localMap.values)
+        do {
+            let data = try JSONEncoder().encode(values)
+            UserDefaults.standard.set(data, forKey: localKey)
+        } catch {
+            print("🔥 QWER Local 저장 실패: \(error.localizedDescription)")
+        }
+    }
+
+    private func loadLocal() {
+        guard let data = UserDefaults.standard.data(forKey: localKey),
+              let arr = try? JSONDecoder().decode([Schedule].self, from: data) else {
+            return
+        }
+        localMap.removeAll()
+        for item in arr { localMap[item.id] = item }
+    }
+    
+    /// 이 일정이 로컬(UserDefaults)에 저장된 사용자 추가 QWER 일정인지 확인합니다.
+    /// - Returns: 로컬 일정이면 true, 아니면 false
+    func isLocalSchedule(_ item: Schedule) -> Bool {
+        loadLocal()
+        if localMap[item.id] != nil { return true }
+        // Fallback: field-based match for legacy entries where id wasn't persisted
+        let cal = Calendar.current
+        return localMap.values.contains(where: { s in
+            s.title == item.title &&
+            s.time == item.time &&
+            s.place == item.place &&
+            cal.isDate(s.date, inSameDayAs: item.date) &&
+            s.members == item.members &&
+            s.category == item.category
+        })
+    }
+
+    /// 사용자 직접 추가용 (Firestore 업로드 없이 로컬에만 저장)
+    func saveLocalSchedule(_ item: Schedule) {
+        loadLocal()
+        localMap[item.id] = item
+        persistLocal()
+    }
+
+    /// 로컬 QWER 일정 업데이트
+    func updateLocalSchedule(_ item: Schedule) {
+        loadLocal()
+        var didUpdate = false
+
+        // 1) ID 기반 업데이트
+        if localMap[item.id] != nil {
+            localMap[item.id] = item
+            didUpdate = true
+        } else {
+            // 2) ID가 다를 수 있는 레거시 데이터 대비: 필드 기반으로 기존 항목 탐색 후 교체
+            let cal = Calendar.current
+            if let key = localMap.first(where: { _, s in
+                s.title == item.title &&
+                s.time == item.time &&
+                s.place == item.place &&
+                cal.isDate(s.date, inSameDayAs: item.date) &&
+                s.members == item.members &&
+                s.category == item.category
+            })?.key {
+                localMap.removeValue(forKey: key)
+                localMap[item.id] = item
+                didUpdate = true
+                #if DEBUG
+                print("🔄 QWER Local: ID 미일치로 필드기반 업데이트 수행 (title:\(item.title))")
+                #endif
+            }
+        }
+
+        if !didUpdate {
+            // 3) 기존 항목을 찾지 못한 경우: 신규 저장으로 처리
+            localMap[item.id] = item
+            #if DEBUG
+            print("➕ QWER Local: 기존 항목을 찾지 못해 새로 저장 (title:\(item.title))")
+            #endif
+        }
+
+        persistLocal()
+    }
+
+    /// 로컬 QWER 일정 삭제
+    func deleteLocalSchedule(_ item: Schedule) {
+        loadLocal()
+        let removedByID = localMap.removeValue(forKey: item.id) != nil
+        if !removedByID {
+            let cal = Calendar.current
+            if let key = localMap.first(where: { _, s in
+                s.title == item.title &&
+                s.time == item.time &&
+                s.place == item.place &&
+                cal.isDate(s.date, inSameDayAs: item.date) &&
+                s.members == item.members &&
+                s.category == item.category
+            })?.key {
+                localMap.removeValue(forKey: key)
+                #if DEBUG
+                print("🗑️ QWER Local: ID 미일치로 필드기반 삭제 수행 (title:\(item.title))")
+                #endif
+            } else {
+                #if DEBUG
+                print("⚠️ QWER Local: 삭제 대상 미발견 (id: \(item.id))")
+                #endif
+            }
+        }
+        persistLocal()
+    }
     
     /// 일정 추가
     func saveSchedule(_ item: Schedule) {
@@ -71,23 +186,46 @@ final class QWERScheduleService: ScheduleServiceProtocol {
     
     /// 일정 삭제
     func deleteSchedule(_ schedule: Schedule) {
-        db.collection(collection)
-            .document(schedule.id.uuidString)
-            .delete { error in
-                if let error = error {
-                    print("🔥 삭제 실패: \(error.localizedDescription)")
-                } else {
-                    print("🗑️ 삭제 성공: \(schedule.id)")
-                }
+        let idUUID = schedule.id.uuidString
+        let idStable = stableDocumentID(for: schedule)
+        let col = db.collection(collection)
+
+        // Try delete by UUID-based id
+        col.document(idUUID).delete { error in
+            if let error = error {
+                print("🔥 삭제 실패 (uuid id): \(idUUID) - \(error.localizedDescription)")
+            } else {
+                print("🗑️ 삭제 성공 (uuid id): \(idUUID)")
             }
+        }
+
+        // Also try delete by stable hash id (in case the document was saved with stable ID)
+        col.document(idStable).delete { error in
+            if let error = error {
+                print("🔥 삭제 실패 (stable id): \(idStable) - \(error.localizedDescription)")
+            } else {
+                print("🗑️ 삭제 성공 (stable id): \(idStable)")
+            }
+        }
     }
     
     /// 일정 가져오기
     func fetchSchedule() async throws -> [Schedule] {
+        // 1) Remote (official) schedules from Firestore
         let snapshot = try await db.collection(collection).getDocuments()
-        return snapshot.documents.compactMap { document in
+        let remote: [Schedule] = snapshot.documents.compactMap { document in
             try? document.data(as: Schedule.self)
         }
+
+        // 2) Local (user-added) schedules from UserDefaults
+        loadLocal()
+        let locals = Array(localMap.values)
+
+        // 3) Merge (remote first, then local). If id duplicates, keep first occurrence.
+        var merged: [UUID: Schedule] = [:]
+        for r in remote { merged[r.id] = r }
+        for l in locals { merged[l.id] = l }
+        return Array(merged.values)
     }
 }
 

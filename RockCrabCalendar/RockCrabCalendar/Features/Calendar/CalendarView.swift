@@ -10,11 +10,15 @@ import SwiftUI
 struct CalendarView: View {
     @State private var calendarVM = CalendarViewModel()
     @State private var scheduleVM = QWERScheduleViewModel()
+    @State private var userVM = UserScheduleViewModel()
     @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
     @State private var addScheduleSheet: Bool = false
+    @State private var addKind: ScheduleEditView.Kind = .qwer
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
+
+    @State private var editTarget: ScheduleEditView.Mode? = nil
     
     private let calendar = Calendar.current
     private let monthYearFormatter: DateFormatter = {
@@ -32,70 +36,85 @@ struct CalendarView: View {
     private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                VStack(spacing: 10) {
-                    dateSelectionView
-                    calendarOptionView
-                    
-                    switch viewType {
-                    case .calendar:
-                        VStack(spacing: 0) {
-                            VStack(spacing: 10) {
-                                dateHeaderView
-                                dateGridView(availableWidth: geometry.size.width)
+        NavigationStack {
+            GeometryReader { geometry in
+                ZStack {
+                    VStack(spacing: 10) {
+                        dateSelectionView
+                        calendarOptionView
+                        
+                        switch viewType {
+                        case .calendar:
+                            VStack(spacing: 0) {
+                                VStack(spacing: 10) {
+                                    dateHeaderView
+                                    dateGridView(availableWidth: geometry.size.width)
+                                    
+                                    // 최근 동기화 캡션
+                                    Text("\(scheduleVM.lastSyncText)")
+                                        .font(.caption2.monospacedDigit())
+                                        .foregroundStyle(.secondary)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .padding(.trailing, 4)
+                                    Divider()
+                                }
                                 
-                                // 최근 동기화 캡션
-                                Text("\(scheduleVM.lastSyncText)")
-                                    .font(.caption2.monospacedDigit())
-                                    .foregroundStyle(.secondary)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .padding(.trailing, 4)
-                                Divider()
+                                ZStack {
+                                    let selectedQWER = scheduleVM.schedules(on: scheduleVM.selectedDate)
+                                    let selectedUser = userSchedules(on: scheduleVM.selectedDate)
+                                    if !selectedQWER.isEmpty || !selectedUser.isEmpty {
+                                        ScrollView {
+                                            VStack(spacing: 16) {
+                                                if !selectedQWER.isEmpty {
+                                                    scheduleListView(schedules: selectedQWER, embedInScrollView: false)
+                                                        .padding(.top, 12)
+                                                }
+                                                if !selectedUser.isEmpty {
+                                                    userScheduleListView(schedules: selectedUser, embedInScrollView: false)
+                                                        .padding(.top, selectedQWER.isEmpty ? 12 : 0)
+                                                }
+                                            }
+                                        }
+                                        .scrollIndicators(.hidden)
+                                    } else {
+                                        Spacer()
+                                        VStack(spacing: 8) {
+                                            Image(systemName: "calendar.badge.exclamationmark")
+                                                .font(.system(size: 24))
+                                                .foregroundStyle(.tertiary)
+                                            Text("일정이 없습니다")
+                                                .font(.callout)
+                                                .foregroundStyle(.secondary)
+                                        }
+                                        Spacer()
+                                    }
+                                }
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
                             }
                             
-                            ZStack {
-                                let selectedDateSchedules = scheduleVM.schedules(on: scheduleVM.selectedDate)
-                                if !selectedDateSchedules.isEmpty {
-                                    scheduleListView(schedules: selectedDateSchedules)
-                                        .padding(.top, 12)
-                                } else {
-                                    Spacer()
-                                    VStack(spacing: 8) {
-                                        Image(systemName: "calendar.badge.exclamationmark")
-                                            .font(.system(size: 24))
-                                            .foregroundStyle(.tertiary)
-                                        Text("일정이 없습니다")
-                                            .font(.callout)
-                                            .foregroundStyle(.secondary)
-                                    }
-                                    Spacer()
-                                }
-                            }
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
+                        case .list:
+                            monthListView()
                         }
-                        
-                    case .list:
-                        monthListView()
                     }
+                    
+                    if isFabExpanded {
+                        Color.black.opacity(0.001)
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                            }
+                    }
+                    
+                    scheduleFloatingButton
                 }
-                
-                if isFabExpanded {
-                    Color.black.opacity(0.001)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                        }
-                }
-                
-                scheduleFloatingButton
             }
         }
         .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchAllSchedules(force: false)
+            userVM.fetchAllSchedules()
         }
         .sheet(isPresented: $showCategorySheet) {
             CategoryFilterSheet(
@@ -106,7 +125,23 @@ struct CalendarView: View {
             )
         }
         .sheet(isPresented: $addScheduleSheet) {
-            ScheduleEditView()
+            ScheduleEditView(kind: addKind, defaultDate: scheduleVM.selectedDate)
+        }
+        .onChange(of: addScheduleSheet) { _, newValue in
+            if newValue == false {
+                scheduleVM.fetchAllSchedules(force: true)
+                userVM.fetchAllSchedules()
+            }
+        }
+        .navigationDestination(item: Binding(
+            get: { editTarget },
+            set: { editTarget = $0 }
+        )) { mode in
+            ScheduleEditView(mode: mode, defaultDate: scheduleVM.selectedDate)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .schedulesDidChange)) { _ in
+            scheduleVM.fetchAllSchedules(force: true)
+            userVM.fetchAllSchedules()
         }
     }
     
@@ -194,6 +229,7 @@ struct CalendarView: View {
 
             Button {
                 scheduleVM.fetchAllSchedules(force: true)
+                userVM.fetchAllSchedules()
             } label: {
                 Image(systemName: "arrow.circlepath")
                     .pretendSemiBold(size: 14)
@@ -252,7 +288,7 @@ struct CalendarView: View {
                         date: date,
                         isSelected: calendarVM.isSelected(date),
                         isInCurrentMonth: calendarVM.isInCurrentMonth(date),
-                        eventColors: scheduleVM.eventColors(for: date)
+                        eventColors: combinedEventColors(for: date)
                     )
                     .frame(height: cellHeight)
                     .onTapGesture {
@@ -263,25 +299,195 @@ struct CalendarView: View {
                     }
                 }
             }
+            .offset(x: dragOffset)
             .frame(height: totalGridHeight)
         }
         .highPriorityGesture(
-            DragGesture(minimumDistance: 10)
+            DragGesture(minimumDistance: 5)
                 .onChanged { value in
-                    // 수평 스와이프만 인식 (수직 드래그는 무시)
-                    if abs(value.translation.height) < 40 { dragOffset = value.translation.width }
+                    let dx = value.translation.width
+                    let dy = value.translation.height
+                    // 수평 스와이프 우선 (수직 드래그는 무시)
+                    guard abs(dx) > abs(dy) else { return }
+                    dragOffset = dx
                 }
                 .onEnded { value in
-                    defer { dragOffset = 0 }
-                    guard abs(value.translation.height) < 40 else { return }
                     let dx = value.translation.width
-                    if dx < -50 {
-                        calendarVM.changeMonth(by: 1)
-                    } else if dx > 50 {
-                        calendarVM.changeMonth(by: -1)
+                    let predicted = value.predictedEndTranslation.width
+                    let final = dx + (predicted - dx) * 0.35
+                    let threshold: CGFloat = 80
+
+                    if final <= -threshold {
+                        // 다음 달로 이동 (왼쪽으로 슬라이드 아웃/인)
+                        withAnimation(.linear(duration: 0.20)) {
+                            dragOffset = -availableWidth
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.20) {
+                            calendarVM.changeMonth(by: 1)
+                            dragOffset = availableWidth
+                            withAnimation(.linear(duration: 0.20)) {
+                                dragOffset = 0
+                            }
+                        }
+                    } else if final >= threshold {
+                        // 이전 달로 이동 (오른쪽으로 슬라이드 아웃/인)
+                        withAnimation(.linear(duration: 0.20)) {
+                            dragOffset = availableWidth
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.20) {
+                            calendarVM.changeMonth(by: -1)
+                            dragOffset = -availableWidth
+                            withAnimation(.linear(duration: 0.20)) {
+                                dragOffset = 0
+                            }
+                        }
+                    } else {
+                        // 임계값 미만: 원위치로 부드럽게 복귀 (선형)
+                        withAnimation(.linear(duration: 0.18)) {
+                            dragOffset = 0
+                        }
                     }
                 }
         )
+    }
+    
+    private func combinedEventColors(for date: Date) -> [Color] {
+        var colors = scheduleVM.eventColors(for: date)
+        if userHasEvent(on: date) {
+            colors.append(.purple)
+        }
+        return colors
+    }
+    
+    // MARK: - User Schedule Repeat Helpers
+    private func userHasEvent(on date: Date) -> Bool {
+        return userVM.schedules.contains { occursOnDate($0, on: date) }
+    }
+
+    private func userSchedules(on date: Date) -> [UserScheduleItem] {
+        userVM.schedules.compactMap { item in
+            occursOnDate(item, on: date) ? UserScheduleItem(
+                id: item.id,
+                title: item.title,
+                date: Calendar.current.startOfDay(for: date),
+                time: item.time,
+                place: item.place,
+                isRepeat: item.isRepeat,
+                repeatType: item.repeatType,
+                repeatEndDate: item.repeatEndDate
+            ) : nil
+        }
+    }
+
+    private func occursOnDate(_ item: UserScheduleItem, on target: Date) -> Bool {
+        let cal = Calendar.current
+        let start = cal.startOfDay(for: item.date)
+        let t = cal.startOfDay(for: target)
+
+        // Non-repeating
+        if !item.isRepeat || item.repeatType == .none {
+            return cal.isDate(start, inSameDayAs: t)
+        }
+
+        // Respect end date if provided
+        if let end = item.repeatEndDate, t > cal.startOfDay(for: end) { return false }
+        if t < start { return false }
+
+        switch item.repeatType ?? .none {
+        case .none:
+            return cal.isDate(start, inSameDayAs: t)
+        case .week:
+            let days = cal.dateComponents([.day], from: start, to: t).day ?? 0
+            return days >= 0 && days % 7 == 0
+        case .month:
+            let comps = cal.dateComponents([.year, .month, .day], from: start)
+            let tComps = cal.dateComponents([.year, .month, .day], from: t)
+            guard let diffMonths = cal.dateComponents([.month], from: start, to: t).month, diffMonths >= 0 else { return false }
+            // Same day-of-month is considered a match
+            return comps.day == tComps.day
+        case .year:
+            let comps = cal.dateComponents([.month, .day], from: start)
+            let tComps = cal.dateComponents([.month, .day], from: t)
+            guard let diffYears = cal.dateComponents([.year], from: start, to: t).year, diffYears >= 0 else { return false }
+            return comps.month == tComps.month && comps.day == tComps.day
+        }
+    }
+
+    private func generateOccurrences(for item: UserScheduleItem, in range: DateInterval) -> [UserScheduleItem] {
+        let cal = Calendar.current
+        let rangeStart = cal.startOfDay(for: range.start)
+        let rangeEnd = cal.startOfDay(for: range.end)
+
+        // Non-repeating: include only if inside range
+        if !item.isRepeat || item.repeatType == .none {
+            let d = cal.startOfDay(for: item.date)
+            guard d >= rangeStart && d <= rangeEnd else { return [] }
+            return [UserScheduleItem(
+                id: item.id,
+                title: item.title,
+                date: d,
+                time: item.time,
+                place: item.place,
+                isRepeat: item.isRepeat,
+                repeatType: item.repeatType,
+                repeatEndDate: item.repeatEndDate
+            )]
+        }
+
+        // Repeating: iterate occurrences
+        var occurrences: [UserScheduleItem] = []
+        var current = cal.startOfDay(for: item.date)
+        let effectiveEnd = min(rangeEnd, cal.startOfDay(for: item.repeatEndDate ?? range.end))
+
+        // Fast-forward to the first occurrence on/after rangeStart
+        switch item.repeatType ?? .none {
+        case .week:
+            if current < rangeStart {
+                if let days = cal.dateComponents([.day], from: current, to: rangeStart).day {
+                    let remainder = days % 7
+                    let advance = remainder == 0 ? 0 : (7 - remainder)
+                    current = cal.date(byAdding: .day, value: days + advance, to: current) ?? current
+                }
+            }
+        case .month, .year, .none:
+            // We'll increment in the loop
+            while current < rangeStart {
+                guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
+                current = next
+            }
+        }
+
+        while current <= effectiveEnd {
+            if current >= rangeStart {
+                occurrences.append(UserScheduleItem(
+                    id: item.id,
+                    title: item.title,
+                    date: current,
+                    time: item.time,
+                    place: item.place,
+                    isRepeat: item.isRepeat,
+                    repeatType: item.repeatType,
+                    repeatEndDate: item.repeatEndDate
+                ))
+            }
+            guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
+            current = next
+        }
+
+        return occurrences
+    }
+
+    private func nextOccurrenceDate(from date: Date, type: UserScheduleItem.RepeatType, calendar cal: Calendar) -> Date? {
+        switch type {
+        case .none:
+            return nil
+        case .week:
+            return cal.date(byAdding: .day, value: 7, to: date)
+        case .month:
+            return cal.date(byAdding: .month, value: 1, to: date)
+        case .year:
+            return cal.date(byAdding: .year, value: 1, to: date)
+        }
     }
     
     // MARK: 스케줄 리스트 뷰
@@ -328,6 +534,55 @@ struct CalendarView: View {
                         }))
                 )
                 .padding(.horizontal, 10)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    editTarget = .editQWER(item)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .top)
+        .transition(.opacity)
+
+        if embedInScrollView {
+            ScrollView { content }
+                .scrollIndicators(.hidden)
+        } else {
+            content
+        }
+    }
+    
+    @ViewBuilder
+    private func userScheduleListView(schedules: [UserScheduleItem], embedInScrollView: Bool = true) -> some View {
+        let content = VStack(alignment: .leading, spacing: 8) {
+            ForEach(schedules, id: \.id) { item in
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "person.fill")
+                            .foregroundStyle(.purple)
+                        Text(item.title)
+                            .pretendSemiBold(size: 16)
+                    }
+
+                    HStack(spacing: 8) {
+                        Label(item.time.isEmpty ? "시간 미정" : item.time, systemImage: "clock")
+                        Label(item.place.isEmpty ? "장소 미정" : item.place, systemImage: "house.circle.fill")
+                    }
+                    .pretendReg(size: 13)
+                    .foregroundColor(.gray)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(UIColor { trait in
+                            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
+                        }))
+                )
+                .padding(.horizontal, 10)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    editTarget = .editUser(item)
+                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .top)
@@ -349,10 +604,22 @@ struct CalendarView: View {
         }.sorted { $0.date < $1.date }
     }
     
+    private func monthUserSchedulesForCurrentMonth() -> [UserScheduleItem] {
+        let start = calendarVM.startOfMonth(for: calendarVM.currentMonth)
+        let end = calendarVM.endOfMonth(for: calendarVM.currentMonth)
+        let interval = DateInterval(start: start, end: end)
+        var result: [UserScheduleItem] = []
+        for item in userVM.schedules {
+            result.append(contentsOf: generateOccurrences(for: item, in: interval))
+        }
+        return result.sorted { $0.date < $1.date }
+    }
+    
     @ViewBuilder
     private func monthListView() -> some View {
-        let monthItems = monthSchedulesForCurrentMonth()
-        if monthItems.isEmpty {
+        let qwerMonth = monthSchedulesForCurrentMonth()
+        let userMonth = monthUserSchedulesForCurrentMonth()
+        if qwerMonth.isEmpty && userMonth.isEmpty {
             VStack(spacing: 8) {
                 Image(systemName: "calendar.badge.exclamationmark")
                     .font(.system(size: 24))
@@ -364,11 +631,9 @@ struct CalendarView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
         } else {
-            // 같은 날짜끼리 섹션으로 묶어서 표시
-            let grouped = Dictionary(grouping: monthItems) { item in
-                calendar.startOfDay(for: item.date)
-            }
-            let days = grouped.keys.sorted()
+            let groupedQ = Dictionary(grouping: qwerMonth) { calendar.startOfDay(for: $0.date) }
+            let groupedU = Dictionary(grouping: userMonth) { calendar.startOfDay(for: $0.date) }
+            let days = Set(groupedQ.keys).union(groupedU.keys).sorted()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
@@ -378,9 +643,11 @@ struct CalendarView: View {
                             .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
 
-                        // 카드 리스트(스크롤뷰 없이 재사용)
-                        if let items = grouped[day] {
-                            scheduleListView(schedules: items, embedInScrollView: false)
+                        if let qItems = groupedQ[day] {
+                            scheduleListView(schedules: qItems, embedInScrollView: false)
+                        }
+                        if let uItems = groupedU[day] {
+                            userScheduleListView(schedules: uItems, embedInScrollView: false)
                         }
                     }
                 }
@@ -401,6 +668,7 @@ struct CalendarView: View {
                     if isFabExpanded {
                         Button {
                             withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                            addKind = .qwer
                             addScheduleSheet = true
                         } label: {
                             Label("QWER 스케줄", systemImage: "person.3.fill")
@@ -416,6 +684,7 @@ struct CalendarView: View {
 
                         Button {
                             withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                            addKind = .user
                             addScheduleSheet = true
                         } label: {
                             Label("개인 스케줄", systemImage: "person.fill")
@@ -460,3 +729,24 @@ extension CalendarView {
         case list
     }
 }
+
+extension ScheduleEditView.Mode: Identifiable {
+    var id: String {
+        switch self {
+        case .create(let k): return "create_\(k == .qwer ? "qwer" : "user")"
+        case .editQWER(let item): return "qwer_\(item.id.uuidString)"
+        case .editUser(let item): return "user_\(item.id.uuidString)"
+        }
+    }
+}
+
+extension ScheduleEditView.Mode: Hashable {
+    static func == (lhs: ScheduleEditView.Mode, rhs: ScheduleEditView.Mode) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+

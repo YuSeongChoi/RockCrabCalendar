@@ -34,11 +34,19 @@ struct QWERScheduleItem: SchedulableItem, Identifiable, Codable {
     }
     
     enum CodingKeys: String, CodingKey {
-        case title, date, time, place, members, category
+        case id
+        case title
+        case date
+        case time
+        case place
+        case members
+        case category
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        // Decode id if present (local UserDefaults), otherwise generate (Firestore docs won't have id field)
+        self.id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
         self.title = try container.decode(String.self, forKey: .title)
 
         // Accept Firestore Timestamp or Date
@@ -54,9 +62,6 @@ struct QWERScheduleItem: SchedulableItem, Identifiable, Codable {
         let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
         self.members = rawMembers.compactMap { QWERMember(rawValue: $0) }
         self.category = ScheduleCategory(rawValue: (try? container.decode(String.self, forKey: .category)) ?? "") ?? .other
-
-        // NOTE: If you later adopt Firestore documentID, inject it externally instead of generating here.
-        self.id = UUID()
     }
 }
 
@@ -593,3 +598,4 @@ extension QWERScheduleItem {
         ),
     ]
 }
+
