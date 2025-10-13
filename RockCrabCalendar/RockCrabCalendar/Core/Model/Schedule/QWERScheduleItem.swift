@@ -429,12 +429,20 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
-            title: "THE HYPER DAY 2025 DAEGU",
-            date: simpleDateFormatter.date(from: "2025-10-11")!,
-            time: "12:00",
-            place: "대구스타디움 동편 메인광장",
+            title: "Beyond the Discord LP 판매",
+            date: simpleDateFormatter.date(from: "2025-10-13")!,
+            time: "11:00",
+            place: "웰컴레코즈",
             members: [.Q, .W, .E, .R],
-            category: .concert
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "2주년 팝업 BORN2ROCK",
+            date: simpleDateFormatter.date(from: "2025-10-17")!,
+            time: "네이버 예약",
+            place: "무신사 스토어 성수 @대림창고",
+            members: [.Q, .W, .E, .R],
+            category: .other
         ),
         QWERScheduleItem(
             title: "데뷔 2주년",
@@ -451,6 +459,14 @@ extension QWERScheduleItem {
             place: "파라다이스 시티",
             members: [.Q, .W, .E, .R],
             category: .concert
+        ),
+        QWERScheduleItem(
+            title: "Beyond the Discord LP 판매(JP)",
+            date: simpleDateFormatter.date(from: "2025-10-22")!,
+            time: "11:00",
+            place: "후쿠오카, 오사카, 도쿄",
+            members: [.Q, .W, .E, .R],
+            category: .other
         ),
         QWERScheduleItem(
             title: "WORLD TOUR BROOKLYN",

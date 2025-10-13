@@ -143,18 +143,35 @@ final class QWERScheduleService: ScheduleServiceProtocol {
         persistLocal()
     }
     
-    /// 일정 추가
-    func saveSchedule(_ item: Schedule) {
-        let data = item.asDictionary
-        db.collection(collection)
-            .document(item.id.uuidString)
-            .setData(data) { error in
-                if let error = error {
-                    print("🔥 스케줄 등록 실패: \(error.localizedDescription)")
-                } else {
-                    print("✅ 스케줄 등록 성공")
+    /// 일정 추가 또는 업데이트 (동일 ID 문서가 있으면 update, 없으면 add)
+    func saveSchedule(_ schedule: Schedule) {
+        let docId = stableDocumentID(for: schedule)
+        let data = schedule.asDictionary
+        let docRef = db.collection(collection).document(docId)
+        
+        docRef.getDocument { [weak self] snapshot, error in
+            guard let self else { return }
+            
+            if let error = error {
+                print("⚠️ 문서 확인 실패: \(error.localizedDescription)")
+                return
+            }
+            
+            if let snapshot = snapshot, snapshot.exists {
+                // 이미 존재하면 업데이트
+                self.updateSchedule(schedule)
+                print("🔄 기존 스케줄 발견 → 업데이트 수행: \(schedule.id)")
+            } else {
+                // 존재하지 않으면 신규 추가
+                docRef.setData(data) { error in
+                    if let error = error {
+                        print("🔥 스케줄 신규 등록 실패: \(error.localizedDescription)")
+                    } else {
+                        print("✅ 스케줄 신규 등록 성공: \(schedule.id)")
+                    }
                 }
             }
+        }
     }
     
     func updateSchedule(_ schedule: Schedule) {
