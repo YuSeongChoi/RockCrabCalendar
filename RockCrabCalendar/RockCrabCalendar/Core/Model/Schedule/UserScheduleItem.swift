@@ -23,6 +23,8 @@ struct UserScheduleItem: SchedulableItem, Identifiable, Codable {
     var repeatType: RepeatType?
     /// 반복 끝나는 날짜
     var repeatEndDate: Date?
+    /// 일정 색상 HEX
+    var colorHex: String
     
     init(
         id: UUID = UUID(),
@@ -32,7 +34,8 @@ struct UserScheduleItem: SchedulableItem, Identifiable, Codable {
         place: String,
         isRepeat: Bool = false,
         repeatType: RepeatType? = nil,
-        repeatEndDate: Date? = nil
+        repeatEndDate: Date? = nil,
+        colorHex: String = "#A78BFA"
     ) {
         self.id = id
         self.title = title
@@ -42,6 +45,7 @@ struct UserScheduleItem: SchedulableItem, Identifiable, Codable {
         self.isRepeat = isRepeat
         self.repeatType = repeatType
         self.repeatEndDate = repeatEndDate
+        self.colorHex = colorHex
     }
 }
 

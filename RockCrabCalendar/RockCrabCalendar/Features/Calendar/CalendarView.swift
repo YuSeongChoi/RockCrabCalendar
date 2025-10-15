@@ -141,7 +141,22 @@ struct CalendarView: View {
             )
         }
         .sheet(isPresented: $addScheduleSheet) {
-            ScheduleEditView(kind: addKind, defaultDate: scheduleVM.selectedDate, qwerVM: scheduleVM, userVM: userVM)
+            if addKind == .user {
+                ScheduleEditView(
+                    kind: .user,
+                    defaultDate: scheduleVM.selectedDate,
+                    qwerVM: scheduleVM,
+                    userVM: userVM,
+                    defaultColor: userVM.schedules.last?.colorHex != nil ? Color(hex: userVM.schedules.last!.colorHex) : .purple
+                )
+            } else {
+                ScheduleEditView(
+                    kind: .qwer,
+                    defaultDate: scheduleVM.selectedDate,
+                    qwerVM: scheduleVM,
+                    userVM: userVM
+                )
+            }
         }
         .onChange(of: addScheduleSheet) { _, newValue in
             if newValue == false {
@@ -154,7 +169,19 @@ struct CalendarView: View {
             get: { editTarget },
             set: { editTarget = $0 }
         )) { mode in
-            ScheduleEditView(mode: mode, defaultDate: scheduleVM.selectedDate, qwerVM: scheduleVM, userVM: userVM)
+            ScheduleEditView(
+                mode: mode,
+                defaultDate: scheduleVM.selectedDate,
+                qwerVM: scheduleVM,
+                userVM: userVM,
+                defaultColor: {
+                    if case .editUser(let item) = mode {
+                        return Color(hex: item.colorHex)
+                    } else {
+                        return .purple
+                    }
+                }()
+            )
         }
         .onReceive(NotificationCenter.default.publisher(for: .schedulesDidChange)) { _ in
             // 전체 변경 신호가 온 경우에만 캐시 우선으로 가볍게 갱신
@@ -377,9 +404,8 @@ struct CalendarView: View {
     
     private func combinedEventColors(for date: Date) -> [Color] {
         var colors = scheduleVM.eventColors(for: date)
-        if userHasEvent(on: date) {
-            colors.append(.purple)
-        }
+        let items = userVM.schedules.filter { occursOnDate($0, on: date) }
+        colors.append(contentsOf: items.map { Color(hex: $0.colorHex) })
         return colors
     }
     
@@ -581,8 +607,6 @@ struct CalendarView: View {
             ForEach(schedules, id: \.id) { item in
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 6) {
-                        Image(systemName: "person.fill")
-                            .foregroundStyle(.purple)
                         Text(item.title)
                             .pretendSemiBold(size: 16)
                     }
@@ -605,7 +629,12 @@ struct CalendarView: View {
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    editTarget = .editUser(item)
+                    // Ensure we open the editor with the latest item from the view model (in case it was updated)
+                    if let latest = userVM.schedules.first(where: { $0.id == item.id }) {
+                        editTarget = .editUser(latest)
+                    } else {
+                        editTarget = .editUser(item)
+                    }
                 }
             }
         }

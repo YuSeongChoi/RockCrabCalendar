@@ -53,25 +53,31 @@ struct ScheduleEditView: View {
     @State private var isRepeat: Bool = false
     @State private var repeatType: UserScheduleItem.RepeatType = .none
     @State private var repeatEndDate: Date = Date()
+    @State private var selectedColor: Color = .purple
     
     // Deletion alert state
     @State private var showNonDeletableAlert: Bool = false
 
     // MARK: - Init
-    init(kind: Kind, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
+    init(kind: Kind, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel, defaultColor: Color = .purple) {
         self.init(mode: .create(kind), defaultDate: defaultDate, qwerVM: qwerVM, userVM: userVM)
+        if kind == .user {
+            _selectedColor = State(initialValue: defaultColor)
+        }
     }
     
-    init(mode: Mode, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
+    init(mode: Mode, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel, defaultColor: Color = .purple) {
         self.mode = mode
         self.defaultDate = defaultDate
         self.qwerVM = qwerVM
         self.userVM = userVM
+        print("LCK mode : \(mode)")
         switch mode {
         case .create:
             _date = State(initialValue: defaultDate)
             self.originalQWER = nil
             self.originalUser = nil
+            
         case .editQWER(let item):
             _title = State(initialValue: item.title)
             _date = State(initialValue: item.date)
@@ -81,6 +87,7 @@ struct ScheduleEditView: View {
             _category = State(initialValue: item.category)
             self.originalQWER = item
             self.originalUser = nil
+            
         case .editUser(let item):
             _title = State(initialValue: item.title)
             _date = State(initialValue: item.date)
@@ -89,6 +96,8 @@ struct ScheduleEditView: View {
             _isRepeat = State(initialValue: item.isRepeat)
             _repeatType = State(initialValue: item.repeatType ?? .none)
             _repeatEndDate = State(initialValue: item.repeatEndDate ?? defaultDate)
+            _selectedColor = State(initialValue: Color(hex: item.colorHex))
+            print("LCK init item color : \(item.colorHex)")
             self.originalQWER = nil
             self.originalUser = item
         }
@@ -165,6 +174,9 @@ struct ScheduleEditView: View {
                             }
                             DatePicker("반복 종료", selection: $repeatEndDate, displayedComponents: .date)
                         }
+                    }
+                    Section("색상") {
+                        ColorPicker("색상 선택", selection: $selectedColor, supportsOpacity: false)
                     }
                 }
             }
@@ -254,6 +266,7 @@ private extension ScheduleEditView {
                     category: category
                 )
                 qwerVM.addLocal(item)
+                
             case .user:
                 let item = UserScheduleItem(
                     title: title.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -262,10 +275,12 @@ private extension ScheduleEditView {
                     place: place.trimmingCharacters(in: .whitespacesAndNewlines),
                     isRepeat: isRepeat,
                     repeatType: isRepeat ? repeatType : nil,
-                    repeatEndDate: isRepeat ? repeatEndDate : nil
+                    repeatEndDate: isRepeat ? repeatEndDate : nil,
+                    colorHex: selectedColor.toHexString()
                 )
                 userVM.add(item)
             }
+            
         case .editQWER(let original):
             let updated = QWERScheduleItem(
                 id: original.id,
@@ -277,6 +292,7 @@ private extension ScheduleEditView {
                 category: category
             )
             qwerVM.updateLocal(updated)
+            
         case .editUser(let original):
             let updated = UserScheduleItem(
                 id: original.id,
@@ -286,8 +302,10 @@ private extension ScheduleEditView {
                 place: place.trimmingCharacters(in: .whitespacesAndNewlines),
                 isRepeat: isRepeat,
                 repeatType: isRepeat ? repeatType : nil,
-                repeatEndDate: isRepeat ? repeatEndDate : nil
+                repeatEndDate: isRepeat ? repeatEndDate : nil,
+                colorHex: selectedColor.toHexString()
             )
+            print("LCK save update : \(selectedColor.toHexString())")
             userVM.update(updated)
         }
         
@@ -328,3 +346,31 @@ extension ScheduleEditView.Mode: Hashable {
     }
 }
 
+
+// MARK: - Color <-> Hex Extension
+import UIKit
+extension Color {
+    init(hex: String) {
+        let hex = hex.replacingOccurrences(of: "#", with: "")
+        let scanner = Scanner(string: hex)
+        var rgb: UInt64 = 0
+        scanner.scanHexInt64(&rgb)
+        let r = Double((rgb >> 16) & 0xFF) / 255.0
+        let g = Double((rgb >> 8) & 0xFF) / 255.0
+        let b = Double(rgb & 0xFF) / 255.0
+        self.init(red: r, green: g, blue: b)
+    }
+
+    func toHexString() -> String {
+        let uiColor = UIColor(self)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        return String(format: "#%02X%02X%02X",
+                      Int(red * 255),
+                      Int(green * 255),
+                      Int(blue * 255))
+    }
+}
