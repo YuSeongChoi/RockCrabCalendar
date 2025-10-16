@@ -67,9 +67,9 @@ struct CalendarDayCell: View {
                         }
 
                         if isPad {
-                            // iPad 등 큰 셀: 날짜 바로 아래에 점들 표시
+                            // iPad 등 큰 셀: 날짜 바로 아래에 점들 표시 (최대 5개)
                             HStack(spacing: 3) {
-                                ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
+                                ForEach(0..<min(eventColors.count, 5), id: \.self) { i in
                                     ZStack {
                                         Circle()
                                             .fill(Color(white: isDark ? 0.2 : 0.88))
@@ -87,11 +87,11 @@ struct CalendarDayCell: View {
 
                             Spacer(minLength: 0)
                         } else {
-                            // iPhone 등 작은 셀: 기존처럼 하단 배치 유지
+                            // iPhone 등 작은 셀: 기존처럼 하단 배치 유지 (최대 5개)
                             Spacer(minLength: 0)
 
                             HStack(spacing: 3) {
-                                ForEach(0..<min(eventColors.count, 6), id: \.self) { i in
+                                ForEach(0..<min(eventColors.count, 5), id: \.self) { i in
                                     ZStack {
                                         Circle()
                                             .fill(Color(white: isDark ? 0.2 : 0.88))
