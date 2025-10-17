@@ -32,25 +32,21 @@ final class UserScheduleViewModel {
     func add(_ item: UserScheduleItem) {
         service.saveSchedule(item)
         schedules = service.schedules.sorted(by: scheduleSortRule)
-        NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
     }
     
     func update(_ item: UserScheduleItem) {
         service.updateSchedule(item)
         schedules = service.schedules.sorted(by: scheduleSortRule)
-        NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
     }
     
     func delete(_ item: UserScheduleItem) {
         service.deleteSchedule(item)
         schedules = service.schedules.sorted(by: scheduleSortRule)
-        NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
     }
     
     func save(_ item: UserScheduleItem) {
         service.saveSchedule(item)
         schedules = service.schedules.sorted(by: scheduleSortRule)
-        NotificationCenter.default.post(name: .userSchedulesDidChange, object: nil)
     }
     
     private func scheduleSortRule(_ a: UserScheduleItem, _ b: UserScheduleItem) -> Bool {

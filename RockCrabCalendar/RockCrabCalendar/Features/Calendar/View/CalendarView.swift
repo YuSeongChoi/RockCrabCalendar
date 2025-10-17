@@ -183,17 +183,6 @@ struct CalendarView: View {
                 }()
             )
         }
-        .onReceive(NotificationCenter.default.publisher(for: .schedulesDidChange)) { _ in
-            // 전체 변경 신호가 온 경우에만 캐시 우선으로 가볍게 갱신
-            scheduleVM.fetchAllSchedules(force: false)
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .qwerLocalDidChange)) { _ in
-            // 로컬 QWER 변경은 네트워크 fetch 없이 현재 메모리 모델로 즉시 반영
-            // QWERScheduleViewModel는 별도 fetch 없이 schedules를 유지하고 있으므로 추가 작업 불필요
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .userSchedulesDidChange)) { _ in
-            // 사용자 일정은 서비스에서 메모리로 즉시 반영되도록 되어 있으므로 추가 fetch 불필요
-        }
     }
     
     // MARK: 월 선택뷰

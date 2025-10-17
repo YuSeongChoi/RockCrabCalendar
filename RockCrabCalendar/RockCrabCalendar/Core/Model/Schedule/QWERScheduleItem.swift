@@ -9,7 +9,7 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
-struct QWERScheduleItem: SchedulableItem, Identifiable, Codable {
+struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     var id: UUID
     /// 스케줄명
     var title: String

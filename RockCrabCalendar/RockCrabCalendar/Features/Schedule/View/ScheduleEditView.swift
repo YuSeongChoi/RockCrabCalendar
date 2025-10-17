@@ -71,7 +71,7 @@ struct ScheduleEditView: View {
         self.defaultDate = defaultDate
         self.qwerVM = qwerVM
         self.userVM = userVM
-        print("LCK mode : \(mode)")
+        
         switch mode {
         case .create:
             _date = State(initialValue: defaultDate)
@@ -97,7 +97,6 @@ struct ScheduleEditView: View {
             _repeatType = State(initialValue: item.repeatType ?? .none)
             _repeatEndDate = State(initialValue: item.repeatEndDate ?? defaultDate)
             _selectedColor = State(initialValue: Color(hex: item.colorHex))
-            print("LCK init item color : \(item.colorHex)")
             self.originalQWER = nil
             self.originalUser = item
         }
@@ -305,7 +304,6 @@ private extension ScheduleEditView {
                 repeatEndDate: isRepeat ? repeatEndDate : nil,
                 colorHex: selectedColor.toHexString()
             )
-            print("LCK save update : \(selectedColor.toHexString())")
             userVM.update(updated)
         }
         
