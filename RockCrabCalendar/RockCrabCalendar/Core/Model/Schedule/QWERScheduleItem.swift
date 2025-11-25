@@ -470,8 +470,8 @@ extension QWERScheduleItem {
         ),
         QWERScheduleItem(
             title: "WORLD TOUR BROOKLYN",
-            date: simpleDateFormatter.date(from: "2025-10-31")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-01")!,
+            time: "09:00",
             place: "Music Hall of Williamsburg",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -486,56 +486,56 @@ extension QWERScheduleItem {
         ),
         QWERScheduleItem(
             title: "WORLD TOUR ATLANTA",
-            date: simpleDateFormatter.date(from: "2025-11-02")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-03")!,
+            time: "10:00",
             place: "Terminal West",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR BERWYN",
-            date: simpleDateFormatter.date(from: "2025-11-05")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-06")!,
+            time: "11:00",
             place: "Distro Music Hall",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR MINNEAPOLIS",
-            date: simpleDateFormatter.date(from: "2025-11-07")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-08")!,
+            time: "11:00",
             place: "The Lyric at Skyway Theatre",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR FORT WORTH",
-            date: simpleDateFormatter.date(from: "2025-11-11")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-12")!,
+            time: "11:00",
             place: "Ridglea Theater",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR HOUSTON",
-            date: simpleDateFormatter.date(from: "2025-11-12")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-13")!,
+            time: "11:00",
             place: "Warehouse Live",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR SAN FRANCISCO",
-            date: simpleDateFormatter.date(from: "2025-11-14")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-15")!,
+            time: "13:00",
             place: "Cowell Theater",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR LOS ANGELES",
-            date: simpleDateFormatter.date(from: "2025-11-16")!,
-            time: "",
+            date: simpleDateFormatter.date(from: "2025-11-17")!,
+            time: "13:00",
             place: "Vermont Hollywood",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -547,6 +547,14 @@ extension QWERScheduleItem {
             place: "대만 가오슝 내셔널 스타디움",
             members: [.Q, .W, .E, .R],
             category: .award
+        ),
+        QWERScheduleItem(
+            title: "우리은행 QWER Special Stage",
+            date: simpleDateFormatter.date(from: "2025-12-13")!,
+            time: "",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .concert
         ),
         QWERScheduleItem(
             title: "WORLD TOUR MACAU",
@@ -575,6 +583,14 @@ extension QWERScheduleItem {
         QWERScheduleItem(
             title: "WORLD TOUR TAIPEI",
             date: simpleDateFormatter.date(from: "2026-02-14")!,
+            time: "",
+            place: "TICC",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "WORLD TOUR TAIPEI",
+            date: simpleDateFormatter.date(from: "2026-02-15")!,
             time: "",
             place: "TICC",
             members: [.Q, .W, .E, .R],

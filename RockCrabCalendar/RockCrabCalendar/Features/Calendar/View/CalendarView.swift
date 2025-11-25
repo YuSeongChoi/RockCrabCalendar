@@ -17,7 +17,7 @@ struct CalendarView: View {
     @State private var addKind: ScheduleEditView.Kind = .qwer
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
-
+    
     @State private var editTarget: ScheduleEditView.Mode? = nil
     
     private let calendar = Calendar.current
@@ -39,7 +39,7 @@ struct CalendarView: View {
         f.dateFormat = "yyyy.MM.dd HH:mm"
         return f
     }()
-
+    
     private var lastSyncText: String {
         if let dt = scheduleVM.lastFetchedAt {
             return "최근 동기화: \(lastSyncFormatter.string(from: dt))"
@@ -266,7 +266,7 @@ struct CalendarView: View {
             .animation(.easeInOut(duration: 0.25), value: viewType)
             .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
             .foregroundColor(.primary)
-
+            
             Button {
                 scheduleVM.fetchAllSchedules(force: true)
                 userVM.fetchAllSchedules()
@@ -303,25 +303,25 @@ struct CalendarView: View {
     private func dateGridView(availableWidth: CGFloat) -> some View {
         VStack {
             let numberOfWeeks = CGFloat(calendarVM.numberOfWeeks)
-
+            
             // 셀 사이 간격 (LazyVGrid spacing과 동일해야 함)
             let interItemSpacing: CGFloat = 8
             // 열 개수 (요일: 7일)
             let columns: CGFloat = 7
-
+            
             // 전체 가로 간격의 합 = 간격 * (열 - 1)
             let totalInteritem = interItemSpacing * (columns - 1)
             // 사용할 수 있는 실제 셀 영역 = 전체 너비 - 간격 합
             let usableWidth = max(0, availableWidth - totalInteritem)
             // 셀 하나의 가로 폭 = usableWidth ÷ 열 개수 (내림하여 픽셀 깨짐 방지)
             let cellWidth = floor(usableWidth / columns)
-
+            
             // 셀 높이 = 셀 폭보다 약간 크게 (이벤트 점 표시 공간 확보)
             let cellHeight = cellWidth * 1.05
-
+            
             // 전체 그리드 높이 = (셀 높이 × 주 수) + (간격 × (주 수 - 1))
             let totalGridHeight = (cellHeight * numberOfWeeks) + (interItemSpacing * (numberOfWeeks - 1))
-
+            
             LazyVGrid(columns: gridColumns, spacing: interItemSpacing) {
                 ForEach(Array(calendarVM.days.enumerated()), id: \.offset) { _, date in
                     CalendarDayCell(
@@ -356,7 +356,7 @@ struct CalendarView: View {
                     let predicted = value.predictedEndTranslation.width
                     let final = dx + (predicted - dx) * 0.35
                     let threshold: CGFloat = 80
-
+                    
                     if final <= -threshold {
                         // 다음 달로 이동 (왼쪽으로 슬라이드 아웃/인)
                         withAnimation(.linear(duration: 0.20)) {
@@ -402,7 +402,7 @@ struct CalendarView: View {
     private func userHasEvent(on date: Date) -> Bool {
         return userVM.schedules.contains { occursOnDate($0, on: date) }
     }
-
+    
     private func userSchedules(on date: Date) -> [UserScheduleItem] {
         userVM.schedules.compactMap { item in
             occursOnDate(item, on: date) ? UserScheduleItem(
@@ -417,21 +417,21 @@ struct CalendarView: View {
             ) : nil
         }
     }
-
+    
     private func occursOnDate(_ item: UserScheduleItem, on target: Date) -> Bool {
         let cal = Calendar.current
         let start = cal.startOfDay(for: item.date)
         let t = cal.startOfDay(for: target)
-
+        
         // Non-repeating
-        if !item.isRepeat || item.repeatType == .none {
+        if !item.isRepeat || item.repeatType == Optional.none {
             return cal.isDate(start, inSameDayAs: t)
         }
-
+        
         // Respect end date if provided
         if let end = item.repeatEndDate, t > cal.startOfDay(for: end) { return false }
         if t < start { return false }
-
+        
         switch item.repeatType ?? .none {
         case .none:
             return cal.isDate(start, inSameDayAs: t)
@@ -451,12 +451,12 @@ struct CalendarView: View {
             return comps.month == tComps.month && comps.day == tComps.day
         }
     }
-
+    
     private func generateOccurrences(for item: UserScheduleItem, in range: DateInterval) -> [UserScheduleItem] {
         let cal = Calendar.current
         let rangeStart = cal.startOfDay(for: range.start)
         let rangeEnd = cal.startOfDay(for: range.end)
-
+        
         // Non-repeating: include only if inside range
         if !item.isRepeat || item.repeatType == .none {
             let d = cal.startOfDay(for: item.date)
@@ -472,12 +472,12 @@ struct CalendarView: View {
                 repeatEndDate: item.repeatEndDate
             )]
         }
-
+        
         // Repeating: iterate occurrences
         var occurrences: [UserScheduleItem] = []
         var current = cal.startOfDay(for: item.date)
         let effectiveEnd = min(rangeEnd, cal.startOfDay(for: item.repeatEndDate ?? range.end))
-
+        
         // Fast-forward to the first occurrence on/after rangeStart
         switch item.repeatType ?? .none {
         case .week:
@@ -495,7 +495,7 @@ struct CalendarView: View {
                 current = next
             }
         }
-
+        
         while current <= effectiveEnd {
             if current >= rangeStart {
                 occurrences.append(UserScheduleItem(
@@ -512,10 +512,10 @@ struct CalendarView: View {
             guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
             current = next
         }
-
+        
         return occurrences
     }
-
+    
     private func nextOccurrenceDate(from date: Date, type: UserScheduleItem.RepeatType, calendar cal: Calendar) -> Date? {
         switch type {
         case .none:
@@ -579,9 +579,9 @@ struct CalendarView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .top)
-        .transition(.opacity)
-
+            .frame(maxWidth: .infinity, alignment: .top)
+            .transition(.opacity)
+        
         if embedInScrollView {
             ScrollView { content }
                 .scrollIndicators(.hidden)
@@ -599,7 +599,7 @@ struct CalendarView: View {
                         Text(item.title)
                             .pretendSemiBold(size: 16)
                     }
-
+                    
                     HStack(spacing: 8) {
                         Label(item.time.isEmpty ? "시간 미정" : item.time, systemImage: "clock")
                         Label(item.place.isEmpty ? "장소 미정" : item.place, systemImage: "house.circle.fill")
@@ -627,9 +627,9 @@ struct CalendarView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .top)
-        .transition(.opacity)
-
+            .frame(maxWidth: .infinity, alignment: .top)
+            .transition(.opacity)
+        
         if embedInScrollView {
             ScrollView { content }
                 .scrollIndicators(.hidden)
@@ -676,7 +676,7 @@ struct CalendarView: View {
             let groupedQ = Dictionary(grouping: qwerMonth) { calendar.startOfDay(for: $0.date) }
             let groupedU = Dictionary(grouping: userMonth) { calendar.startOfDay(for: $0.date) }
             let days = Set(groupedQ.keys).union(groupedU.keys).sorted()
-
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(days, id: \.self) { day in
@@ -684,7 +684,7 @@ struct CalendarView: View {
                             .pretendSemiBold(size: 16)
                             .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
-
+                        
                         if let qItems = groupedQ[day] {
                             scheduleListView(schedules: qItems, embedInScrollView: false)
                         }
@@ -723,7 +723,7 @@ struct CalendarView: View {
                                 .foregroundColor(.primary)
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
-
+                        
                         Button {
                             withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
                             addKind = .user
@@ -740,7 +740,7 @@ struct CalendarView: View {
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                     }
-
+                    
                     Button {
                         withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
                             isFabExpanded.toggle()
