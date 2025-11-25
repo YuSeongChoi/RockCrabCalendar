@@ -11,6 +11,9 @@
   <img src="RockCrabCalendar/media/calendar.png" alt="달력 메인 화면" width="250" height="auto"/>
   <img src="RockCrabCalendar/media/calendar_filter.png" alt="필터 화면" width="250" height="auto"/>
   <img src="RockCrabCalendar/media/schedule_list.png" alt="월별 스케줄 화면" width="250" height="auto"/>
+  <img src="RockCrabCalendar/media/schedule_qwer.png" alt="커스텀 스케줄 관리부터" width="250" height="auto"/>
+  <img src="RockCrabCalendar/media/schedule_private.png" alt="개인 스케줄 관리까지" width="250" height="auto"/>
+  
 </p>
 
 ---
