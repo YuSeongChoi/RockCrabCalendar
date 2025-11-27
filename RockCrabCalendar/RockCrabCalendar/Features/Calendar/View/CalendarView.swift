@@ -8,30 +8,12 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @State private var calendarVM = CalendarViewModel()
-    @State private var scheduleVM = QWERScheduleViewModel()
-    @State private var userVM = UserScheduleViewModel()
+    var calendarVM = CalendarViewModel()
+    var scheduleVM: QWERScheduleViewModel
+    var userVM: UserScheduleViewModel
+    
     @State private var dragOffset: CGFloat = 0
-    @State private var showCategorySheet: Bool = false
-    @State private var addScheduleSheet: Bool = false
-    @State private var addKind: ScheduleEditView.Kind = .qwer
-    @State private var isFabExpanded: Bool = false
-    @State private var viewType: ViewType = .calendar
-    
     @State private var editTarget: ScheduleEditView.Mode? = nil
-    
-    private let calendar = Calendar.current
-    private let monthYearFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 M월"
-        return formatter
-    }()
-    private let dayLabelFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "ko_KR")
-        f.dateFormat = "M월 d일(E)"
-        return f
-    }()
     
     private let lastSyncFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -39,7 +21,6 @@ struct CalendarView: View {
         f.dateFormat = "yyyy.MM.dd HH:mm"
         return f
     }()
-    
     private var lastSyncText: String {
         if let dt = scheduleVM.lastFetchedAt {
             return "최근 동기화: \(lastSyncFormatter.string(from: dt))"
@@ -52,117 +33,53 @@ struct CalendarView: View {
     private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
     
     var body: some View {
-        NavigationStack {
-            GeometryReader { geometry in
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                VStack(spacing: 10) {
+                    dateHeaderView
+                    dateGridView(availableWidth: geometry.size.width)
+                    
+                    // 최근 동기화 캡션
+                    Text(lastSyncText)
+                        .font(.caption2.monospacedDigit())
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.trailing, 4)
+                    Divider()
+                }
+                
                 ZStack {
-                    VStack(spacing: 10) {
-                        dateSelectionView
-                        calendarOptionView
-                        
-                        switch viewType {
-                        case .calendar:
-                            VStack(spacing: 0) {
-                                VStack(spacing: 10) {
-                                    dateHeaderView
-                                    dateGridView(availableWidth: geometry.size.width)
-                                    
-                                    // 최근 동기화 캡션
-                                    Text(lastSyncText)
-                                        .font(.caption2.monospacedDigit())
-                                        .foregroundStyle(.secondary)
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .padding(.trailing, 4)
-                                    Divider()
+                    let selectedQWER = scheduleVM.schedules(on: scheduleVM.selectedDate)
+                    let selectedUser = userSchedules(on: scheduleVM.selectedDate)
+                    if !selectedQWER.isEmpty || !selectedUser.isEmpty {
+                        ScrollView {
+                            VStack(spacing: 16) {
+                                if !selectedQWER.isEmpty {
+                                    scheduleListView(schedules: selectedQWER, embedInScrollView: false)
+                                        .padding(.top, 12)
                                 }
-                                
-                                ZStack {
-                                    let selectedQWER = scheduleVM.schedules(on: scheduleVM.selectedDate)
-                                    let selectedUser = userSchedules(on: scheduleVM.selectedDate)
-                                    if !selectedQWER.isEmpty || !selectedUser.isEmpty {
-                                        ScrollView {
-                                            VStack(spacing: 16) {
-                                                if !selectedQWER.isEmpty {
-                                                    scheduleListView(schedules: selectedQWER, embedInScrollView: false)
-                                                        .padding(.top, 12)
-                                                }
-                                                if !selectedUser.isEmpty {
-                                                    userScheduleListView(schedules: selectedUser, embedInScrollView: false)
-                                                        .padding(.top, selectedQWER.isEmpty ? 12 : 0)
-                                                }
-                                            }
-                                        }
-                                        .scrollIndicators(.hidden)
-                                    } else {
-                                        Spacer()
-                                        VStack(spacing: 8) {
-                                            Image(systemName: "calendar.badge.exclamationmark")
-                                                .font(.system(size: 24))
-                                                .foregroundStyle(.tertiary)
-                                            Text("일정이 없습니다")
-                                                .font(.callout)
-                                                .foregroundStyle(.secondary)
-                                        }
-                                        Spacer()
-                                    }
+                                if !selectedUser.isEmpty {
+                                    userScheduleListView(schedules: selectedUser, embedInScrollView: false)
+                                        .padding(.top, selectedQWER.isEmpty ? 12 : 0)
                                 }
-                                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                                .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
                             }
-                            
-                        case .list:
-                            monthListView()
                         }
+                        .scrollIndicators(.hidden)
+                    } else {
+                        Spacer()
+                        VStack(spacing: 8) {
+                            Image(systemName: "calendar.badge.exclamationmark")
+                                .font(.system(size: 24))
+                                .foregroundStyle(.tertiary)
+                            Text("일정이 없습니다")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
                     }
-                    
-                    if isFabExpanded {
-                        Color.black.opacity(0.001)
-                            .ignoresSafeArea()
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                            }
-                    }
-                    
-                    scheduleFloatingButton
                 }
-            }
-        }
-        .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
-        .onAppear {
-            scheduleVM.selectedDate = calendarVM.selectedDate
-            scheduleVM.fetchAllSchedules(force: false)
-            userVM.fetchAllSchedules()
-        }
-        .sheet(isPresented: $showCategorySheet) {
-            CategoryFilterSheet(
-                active: scheduleVM.activeCategories,
-                onApply: { selected in
-                    scheduleVM.setCategories(selected)
-                }
-            )
-        }
-        .sheet(isPresented: $addScheduleSheet) {
-            if addKind == .user {
-                ScheduleEditView(
-                    kind: .user,
-                    defaultDate: scheduleVM.selectedDate,
-                    qwerVM: scheduleVM,
-                    userVM: userVM,
-                    defaultColor: userVM.schedules.last?.colorHex != nil ? Color(hex: userVM.schedules.last!.colorHex) : .purple
-                )
-            } else {
-                ScheduleEditView(
-                    kind: .qwer,
-                    defaultDate: scheduleVM.selectedDate,
-                    qwerVM: scheduleVM,
-                    userVM: userVM
-                )
-            }
-        }
-        .onChange(of: addScheduleSheet) { _, newValue in
-            if newValue == false {
-                // 부분 갱신이 이미 반영되므로 전체 강제 fetch는 피합니다
-                scheduleVM.fetchAllSchedules(force: false)
-                // userVM은 로컬 변경 시 바로 schedules에 반영되므로 fetch 생략 가능
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
             }
         }
         .navigationDestination(item: Binding(
@@ -183,102 +100,6 @@ struct CalendarView: View {
                 }()
             )
         }
-    }
-    
-    // MARK: 월 선택뷰
-    @ViewBuilder
-    private var dateSelectionView: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Button {
-                    calendarVM.changeMonth(by: -1)
-                } label: {
-                    Image(systemName: "chevron.left")
-                }
-                Spacer()
-                
-                Text(monthYearFormatter.string(from: calendarVM.currentMonth))
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.primary)
-                
-                Spacer()
-                Button {
-                    calendarVM.changeMonth(by: 1)
-                } label: {
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .padding()
-            .foregroundStyle(.primary)
-            
-            Divider()
-        }
-    }
-    
-    // MARK: 캘린더 옵션 뷰
-    @ViewBuilder
-    private var calendarOptionView: some View {
-        HStack {
-            Button {
-                showCategorySheet = true
-            } label: {
-                Label("필터", systemImage: "line.3.horizontal.decrease.circle")
-                    .labelStyle(.titleAndIcon)
-                    .pretendSemiBold(size: 14)
-                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
-                    .foregroundColor(.primary)
-            }
-            Spacer()
-            Button {
-                let today = Date()
-                calendarVM.select(date: today)
-                calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
-                scheduleVM.selectedDate = today
-            } label: {
-                Text("오늘")
-                    .pretendSemiBold(size: 14)
-                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
-                    .foregroundColor(.primary)
-            }
-            
-            Spacer()
-            
-            Group {
-                switch viewType {
-                case .calendar:
-                    Button {
-                        viewType = .list
-                    } label: {
-                        Image(systemName: "list.bullet")
-                    }
-                case .list:
-                    Button {
-                        viewType = .calendar
-                    } label: {
-                        Image(systemName: "calendar")
-                    }
-                }
-            }
-            .pretendSemiBold(size: 14)
-            .padding(6)
-            .animation(.easeInOut(duration: 0.25), value: viewType)
-            .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
-            .foregroundColor(.primary)
-            
-            Button {
-                scheduleVM.fetchAllSchedules(force: true)
-                userVM.fetchAllSchedules()
-            } label: {
-                Image(systemName: "arrow.circlepath")
-                    .pretendSemiBold(size: 14)
-                    .padding(6)
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
-                    .foregroundColor(.primary)
-            }
-        }
-        .padding(.horizontal, 12)
     }
     
     // MARK: 요일 헤더 뷰
@@ -398,11 +219,6 @@ struct CalendarView: View {
         return colors
     }
     
-    // MARK: - User Schedule Repeat Helpers
-    private func userHasEvent(on date: Date) -> Bool {
-        return userVM.schedules.contains { occursOnDate($0, on: date) }
-    }
-    
     private func userSchedules(on date: Date) -> [UserScheduleItem] {
         userVM.schedules.compactMap { item in
             occursOnDate(item, on: date) ? UserScheduleItem(
@@ -449,83 +265,6 @@ struct CalendarView: View {
             let tComps = cal.dateComponents([.month, .day], from: t)
             guard let diffYears = cal.dateComponents([.year], from: start, to: t).year, diffYears >= 0 else { return false }
             return comps.month == tComps.month && comps.day == tComps.day
-        }
-    }
-    
-    private func generateOccurrences(for item: UserScheduleItem, in range: DateInterval) -> [UserScheduleItem] {
-        let cal = Calendar.current
-        let rangeStart = cal.startOfDay(for: range.start)
-        let rangeEnd = cal.startOfDay(for: range.end)
-        
-        // Non-repeating: include only if inside range
-        if !item.isRepeat || item.repeatType == .none {
-            let d = cal.startOfDay(for: item.date)
-            guard d >= rangeStart && d <= rangeEnd else { return [] }
-            return [UserScheduleItem(
-                id: item.id,
-                title: item.title,
-                date: d,
-                time: item.time,
-                place: item.place,
-                isRepeat: item.isRepeat,
-                repeatType: item.repeatType,
-                repeatEndDate: item.repeatEndDate
-            )]
-        }
-        
-        // Repeating: iterate occurrences
-        var occurrences: [UserScheduleItem] = []
-        var current = cal.startOfDay(for: item.date)
-        let effectiveEnd = min(rangeEnd, cal.startOfDay(for: item.repeatEndDate ?? range.end))
-        
-        // Fast-forward to the first occurrence on/after rangeStart
-        switch item.repeatType ?? .none {
-        case .week:
-            if current < rangeStart {
-                if let days = cal.dateComponents([.day], from: current, to: rangeStart).day {
-                    let remainder = days % 7
-                    let advance = remainder == 0 ? 0 : (7 - remainder)
-                    current = cal.date(byAdding: .day, value: days + advance, to: current) ?? current
-                }
-            }
-        case .month, .year, .none:
-            // We'll increment in the loop
-            while current < rangeStart {
-                guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
-                current = next
-            }
-        }
-        
-        while current <= effectiveEnd {
-            if current >= rangeStart {
-                occurrences.append(UserScheduleItem(
-                    id: item.id,
-                    title: item.title,
-                    date: current,
-                    time: item.time,
-                    place: item.place,
-                    isRepeat: item.isRepeat,
-                    repeatType: item.repeatType,
-                    repeatEndDate: item.repeatEndDate
-                ))
-            }
-            guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
-            current = next
-        }
-        
-        return occurrences
-    }
-    
-    private func nextOccurrenceDate(from date: Date, type: UserScheduleItem.RepeatType, calendar cal: Calendar) -> Date? {
-        switch type {
-        case .none:
-            return nil
-        case .week:
-            return cal.date(byAdding: .day, value: 7, to: date)
-        case .month:
-            return cal.date(byAdding: .month, value: 1, to: date)
-        case .year:
-            return cal.date(byAdding: .year, value: 1, to: date)
         }
     }
     
@@ -636,138 +375,5 @@ struct CalendarView: View {
         } else {
             content
         }
-    }
-    
-    private func monthSchedulesForCurrentMonth() -> [QWERScheduleItem] {
-        let start = calendarVM.startOfMonth(for: calendarVM.currentMonth)
-        let end = calendarVM.endOfMonth(for: calendarVM.currentMonth)
-        return scheduleVM.schedules.filter { item in
-            item.date >= start && item.date <= end && scheduleVM.activeCategories.contains(item.category)
-        }.sorted { $0.date < $1.date }
-    }
-    
-    private func monthUserSchedulesForCurrentMonth() -> [UserScheduleItem] {
-        let start = calendarVM.startOfMonth(for: calendarVM.currentMonth)
-        let end = calendarVM.endOfMonth(for: calendarVM.currentMonth)
-        let interval = DateInterval(start: start, end: end)
-        var result: [UserScheduleItem] = []
-        for item in userVM.schedules {
-            result.append(contentsOf: generateOccurrences(for: item, in: interval))
-        }
-        return result.sorted { $0.date < $1.date }
-    }
-    
-    @ViewBuilder
-    private func monthListView() -> some View {
-        let qwerMonth = monthSchedulesForCurrentMonth()
-        let userMonth = monthUserSchedulesForCurrentMonth()
-        if qwerMonth.isEmpty && userMonth.isEmpty {
-            VStack(spacing: 8) {
-                Image(systemName: "calendar.badge.exclamationmark")
-                    .font(.system(size: 24))
-                    .foregroundStyle(.tertiary)
-                Text("이번 달 일정이 없습니다")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-        } else {
-            let groupedQ = Dictionary(grouping: qwerMonth) { calendar.startOfDay(for: $0.date) }
-            let groupedU = Dictionary(grouping: userMonth) { calendar.startOfDay(for: $0.date) }
-            let days = Set(groupedQ.keys).union(groupedU.keys).sorted()
-            
-            ScrollView {
-                VStack(alignment: .leading, spacing: 12) {
-                    ForEach(days, id: \.self) { day in
-                        Text(dayLabelFormatter.string(from: day))
-                            .pretendSemiBold(size: 16)
-                            .foregroundStyle(.secondary)
-                            .padding(.horizontal, 20)
-                        
-                        if let qItems = groupedQ[day] {
-                            scheduleListView(schedules: qItems, embedInScrollView: false)
-                        }
-                        if let uItems = groupedU[day] {
-                            userScheduleListView(schedules: uItems, embedInScrollView: false)
-                        }
-                    }
-                }
-            }
-            .scrollIndicators(.hidden)
-            .transition(.opacity)
-        }
-    }
-    
-    // MARK: Floating Button View
-    @ViewBuilder
-    private var scheduleFloatingButton: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                VStack(alignment: .trailing, spacing: 10) {
-                    if isFabExpanded {
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                            addKind = .qwer
-                            addScheduleSheet = true
-                        } label: {
-                            Label("QWER 스케줄", systemImage: "person.3.fill")
-                                .labelStyle(.titleAndIcon)
-                                .pretendSemiBold(size: 14)
-                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                                .background(
-                                    Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
-                                )
-                                .foregroundColor(.primary)
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                            addKind = .user
-                            addScheduleSheet = true
-                        } label: {
-                            Label("개인 스케줄", systemImage: "person.fill")
-                                .labelStyle(.titleAndIcon)
-                                .pretendSemiBold(size: 14)
-                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                                .background(
-                                    Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
-                                )
-                                .foregroundColor(.primary)
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
-                    
-                    Button {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
-                            isFabExpanded.toggle()
-                        }
-                    } label: {
-                        Image(systemName: isFabExpanded ? "xmark.circle" : "plus.circle")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(Color(UIColor {
-                                $0.userInterfaceStyle == .dark ? .RGB_173 : .black
-                            }))
-                    }
-                }
-            }
-            .padding(.trailing, 20)
-            .padding(.bottom, 15)
-            .animation(.spring(response: 0.25, dampingFraction: 0.9), value: isFabExpanded)
-        }
-    }
-}
-
-extension CalendarView {
-    enum ViewType {
-        /// 달력
-        case calendar
-        /// 리스트
-        case list
     }
 }

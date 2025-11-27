@@ -11,7 +11,6 @@ import Combine
 import SwiftUI
 import CryptoKit
 
-@MainActor
 @Observable
 final class QWERScheduleViewModel {
     // 현재 로드된 모든 스케줄
@@ -224,4 +223,3 @@ extension QWERScheduleViewModel {
         }
     }
 }
-

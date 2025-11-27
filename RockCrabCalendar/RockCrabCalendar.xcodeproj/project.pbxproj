@@ -13,6 +13,7 @@
 		5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */; };
 		5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */; };
 		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
+		5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */; };
 		5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */; };
 		5D261D2A2EA204F8004DEE6B /* ScheduleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */; };
 		5D5E852D2E30B9D700DB8775 /* QWERScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */; };
@@ -32,7 +33,6 @@
 		5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12392E867A1E0014649C /* UserScheduleItem.swift */; };
 		5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12412E867A400014649C /* SchedulableProtocol.swift */; };
 		5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12582E8A4AD30014649C /* UserScheduleService.swift */; };
-		5DA75B3A2EA22D8000AA1F74 /* ScheduleCardUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA75B392EA22D8000AA1F74 /* ScheduleCardUserView.swift */; };
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
@@ -69,6 +69,7 @@
 		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
 		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
 		5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */; };
+		5DFA41BD2ED81770008BE45C /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +97,7 @@
 		5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleServiceProtocol.swift; sourceTree = "<group>"; };
 		5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleItem.swift; sourceTree = "<group>"; };
@@ -114,7 +116,6 @@
 		5D8B12392E867A1E0014649C /* UserScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleItem.swift; sourceTree = "<group>"; };
 		5D8B12412E867A400014649C /* SchedulableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulableProtocol.swift; sourceTree = "<group>"; };
 		5D8B12582E8A4AD30014649C /* UserScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleService.swift; sourceTree = "<group>"; };
-		5DA75B392EA22D8000AA1F74 /* ScheduleCardUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCardUserView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -154,6 +155,7 @@
 		5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
 		5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
 		5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterSheet.swift; sourceTree = "<group>"; };
+		5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -220,9 +222,18 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		5D05B7C72ED6E0BB004C5AD3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		5D261CFF2EA20428004DEE6B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */,
 				5D8B120B2E86510D0014649C /* ScheduleEditView.swift */,
 			);
 			path = View;
@@ -249,7 +260,6 @@
 			isa = PBXGroup;
 			children = (
 				5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */,
-				5DA75B392EA22D8000AA1F74 /* ScheduleCardUserView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -301,10 +311,10 @@
 		5D5E854B2E30BA3B00DB8775 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				5D05B7C72ED6E0BB004C5AD3 /* Home */,
 				5D5E854C2E30BA4700DB8775 /* Calendar */,
 				5D5E854E2E30BA5300DB8775 /* Schedule */,
 				5DE2125C2E6FC89500E465E8 /* YouTube */,
-				5DE211ED2E6FBB8000E465E8 /* Model */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -535,6 +545,7 @@
 			children = (
 				5D261D1C2EA20467004DEE6B /* View */,
 				5D261D162EA2045E004DEE6B /* ViewModel */,
+				5DE211ED2E6FBB8000E465E8 /* Model */,
 			);
 			path = YouTube;
 			sourceTree = "<group>";
@@ -709,7 +720,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DA75B3A2EA22D8000AA1F74 /* ScheduleCardUserView.swift in Sources */,
 				5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */,
 				5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */,
 				5D261D2A2EA204F8004DEE6B /* ScheduleServiceProtocol.swift in Sources */,
@@ -719,6 +729,7 @@
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
+				5DFA41BD2ED81770008BE45C /* ScheduleListView.swift in Sources */,
 				5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
 				5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */,
@@ -746,6 +757,7 @@
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
+				5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */,
 				5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

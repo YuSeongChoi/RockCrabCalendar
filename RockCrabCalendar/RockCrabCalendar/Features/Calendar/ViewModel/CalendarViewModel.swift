@@ -15,9 +15,6 @@ final class CalendarViewModel {
     }
     var days: [Date] = []
     var selectedDate: Date = Date()
-    // TODO: remove if not used
-    // var eventColorMap: [Date: Color] = [:]
-    // var swipeSelection: Int = 1
 
     private let calendar = Calendar.current
 
