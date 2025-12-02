@@ -226,10 +226,14 @@ struct CalendarView: View {
                 title: item.title,
                 date: Calendar.current.startOfDay(for: date),
                 time: item.time,
+                isAllDay: item.isAllDay,
+                startTime: item.startTime,
+                endTime: item.endTime,
                 place: item.place,
                 isRepeat: item.isRepeat,
                 repeatType: item.repeatType,
-                repeatEndDate: item.repeatEndDate
+                repeatEndDate: item.repeatEndDate,
+                colorHex: item.colorHex
             ) : nil
         }
     }
@@ -340,8 +344,8 @@ struct CalendarView: View {
                     }
                     
                     HStack(spacing: 8) {
-                        Label(item.time.isEmpty ? "시간 미정" : item.time, systemImage: "clock")
-                        Label(item.place.isEmpty ? "장소 미정" : item.place, systemImage: "house.circle.fill")
+                        Label(item.displayTime, systemImage: "clock")
+                        Label(item.displayPlace, systemImage: "house.circle.fill")
                     }
                     .pretendReg(size: 13)
                     .foregroundColor(.gray)

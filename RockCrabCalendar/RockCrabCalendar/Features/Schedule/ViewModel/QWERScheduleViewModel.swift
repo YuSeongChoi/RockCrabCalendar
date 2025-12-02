@@ -60,7 +60,7 @@ final class QWERScheduleViewModel {
             let cal = Calendar.current
             if let idx = schedules.firstIndex(where: { s in
                 s.title == item.title &&
-                s.time == item.time &&
+//                s.time == item.time &&
                 s.place == item.place &&
                 cal.isDate(s.date, inSameDayAs: item.date) &&
                 s.members == item.members &&

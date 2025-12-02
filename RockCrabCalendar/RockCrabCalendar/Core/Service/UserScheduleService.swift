@@ -45,7 +45,7 @@ final class UserScheduleService: ScheduleServiceProtocol {
             let cal = Calendar.current
             if let key = scheduleMap.first(where: { _, s in
                 s.title == schedule.title &&
-                s.time == schedule.time &&
+//                s.time == schedule.time &&
                 s.place == schedule.place &&
                 cal.isDate(s.date, inSameDayAs: schedule.date)
             })?.key {
@@ -92,7 +92,7 @@ final class UserScheduleService: ScheduleServiceProtocol {
             let cal = Calendar.current
             if let key = scheduleMap.first(where: { _, s in
                 s.title == schedule.title &&
-                s.time == schedule.time &&
+//                s.time == schedule.time &&
                 s.place == schedule.place &&
                 cal.isDate(s.date, inSameDayAs: schedule.date)
             })?.key {

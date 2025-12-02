@@ -15,34 +15,70 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     var title: String
     /// 날짜
     var date: Date
-    /// 시간
+    /// 시간 (legacy, deprecated)
+    @available(*, deprecated, message: "Use isAllDay/startTime/endTime instead")
     var time: String
+    /// 하루종일 여부
+    var isAllDay: Bool
+    /// 시작시간
+    var startTime: Date?
+    /// 종료시간
+    var endTime: Date?
     /// 장소
     var place: String
     /// 참석멤버
     var members: [QWERMember]
     var category: ScheduleCategory
-    
-    init(id: UUID = UUID(), title: String, date: Date, time: String, place: String, members: [QWERMember], category: ScheduleCategory) {
+
+    init(
+        id: UUID = UUID(),
+        title: String,
+        date: Date,
+        time: String = "",
+        isAllDay: Bool = true,
+        startTime: Date? = nil,
+        endTime: Date? = nil,
+        place: String,
+        members: [QWERMember],
+        category: ScheduleCategory
+    ) {
         self.id = id
         self.title = title
         self.date = date
         self.time = time
+        self.isAllDay = isAllDay
+        self.startTime = startTime
+        self.endTime = endTime
         self.place = place
         self.members = members
         self.category = category
+
+        // Legacy migration: if time exists -> convert
+        if !time.isEmpty && startTime == nil {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            formatter.locale = Locale(identifier: "ko_KR")
+            if let parsed = formatter.date(from: time) {
+                self.startTime = parsed
+//                self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
+                self.isAllDay = false
+            }
+        }
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case title
         case date
-        case time
+        case time          // legacy keep
+        case isAllDay
+        case startTime
+        case endTime
         case place
         case members
         case category
     }
-    
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Decode id if present (local UserDefaults), otherwise generate (Firestore docs won't have id field)
@@ -57,6 +93,23 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         }
 
         self.time = (try? container.decode(String.self, forKey: .time)) ?? ""
+
+        self.isAllDay = (try? container.decode(Bool.self, forKey: .isAllDay)) ?? true
+        self.startTime = try? container.decode(Date.self, forKey: .startTime)
+        self.endTime = try? container.decode(Date.self, forKey: .endTime)
+
+        // Migrate legacy
+        if !self.time.isEmpty && self.startTime == nil {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            formatter.locale = Locale(identifier: "ko_KR")
+            if let parsed = formatter.date(from: time) {
+                self.startTime = parsed
+                self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
+                self.isAllDay = false
+            }
+        }
+
         self.place = (try? container.decode(String.self, forKey: .place)) ?? ""
 
         let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
@@ -75,17 +128,37 @@ enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
 
 extension QWERScheduleItem {
     var asDictionary: [String: Any] {
-        return [
+        var dict: [String: Any] = [
             "title": title,
             "date": Timestamp(date: date),
-            "time": time,
             "place": place,
             "members": members.map { $0.rawValue },
-            "category": category.rawValue
+            "category": category.rawValue,
+            "isAllDay": isAllDay
         ]
+
+        if let startTime = startTime {
+            dict["startTime"] = Timestamp(date: startTime)
+        }
+        if let endTime = endTime {
+            dict["endTime"] = Timestamp(date: endTime)
+        }
+
+        dict["time"] = time // keep until post-launch cleanup
+        return dict
     }
 
-    var displayTime: String { time.isEmpty ? "시간 미정" : time }
+    var displayTime: String {
+        if isAllDay { return "하루종일" }
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm"
+        if let s = startTime, let e = endTime {
+            return "\(f.string(from: s)) ~ \(f.string(from: e))"
+        } else if let s = startTime {
+            return "\(f.string(from: s))"
+        }
+        return time.isEmpty ? "시간 미정" : time
+    }
     var displayPlace: String { place.isEmpty ? "장소 미정" : place }
 }
 
@@ -94,6 +167,14 @@ extension QWERScheduleItem {
     static var simpleDateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        return formatter
+    }
+
+    static var simpleTimeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
@@ -120,6 +201,8 @@ extension QWERScheduleItem {
             title: "위버스콘",
             date: simpleDateFormatter.date(from: "2025-06-01")!,
             time: "14:50",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:50"),
             place: "인스파이어 아레나",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -136,6 +219,8 @@ extension QWERScheduleItem {
             title: "난네온불 쇼케이스",
             date: simpleDateFormatter.date(from: "2025-06-09")!,
             time: "19:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "19:00"),
             place: "예스24 원더로크홀",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -144,6 +229,8 @@ extension QWERScheduleItem {
             title: "부산 원아시아 페스티벌",
             date: simpleDateFormatter.date(from: "2025-06-12")!,
             time: "18:30",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "18:30"),
             place: "BEXCO 제 1전시장",
             members: [.W, .E, .R],
             category: .concert
@@ -152,6 +239,8 @@ extension QWERScheduleItem {
             title: "뷰티풀 민트 라이프",
             date: simpleDateFormatter.date(from: "2025-06-13")!,
             time: "18:20",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "18:20"),
             place: "올림픽공원",
             members: [.W, .E, .R],
             category: .concert
@@ -168,6 +257,8 @@ extension QWERScheduleItem {
             title: "M COUNTDOWN 사전녹화",
             date: simpleDateFormatter.date(from: "2025-06-19")!,
             time: "13:20",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:20"),
             place: "CJ ENM",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -176,6 +267,8 @@ extension QWERScheduleItem {
             title: "서울가요대상",
             date: simpleDateFormatter.date(from: "2025-06-21")!,
             time: "18:30",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "18:30"),
             place: "인스파이어 아레나",
             members: [.Q, .W, .E, .R],
             category: .award
@@ -184,6 +277,8 @@ extension QWERScheduleItem {
             title: "아노블리어 팝업",
             date: simpleDateFormatter.date(from: "2025-06-27")!,
             time: "19:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "19:00"),
             place: "서울 성동구 상원1길 5 1층",
             members: [.W],
             category: .other
@@ -192,6 +287,8 @@ extension QWERScheduleItem {
             title: "위버스 팬사인회",
             date: simpleDateFormatter.date(from: "2025-06-28")!,
             time: "20:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "20:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -200,6 +297,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-06-29")!,
             time: "18:30",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "18:30"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -208,6 +307,8 @@ extension QWERScheduleItem {
             title: "더현대닷컴 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-05")!,
             time: "15:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "15:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -216,6 +317,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-06")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -224,6 +327,8 @@ extension QWERScheduleItem {
             title: "비트로드 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-12")!,
             time: "14:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -232,6 +337,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-13")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -240,6 +347,8 @@ extension QWERScheduleItem {
             title: "캐리비안베이 워터뮤직풀파티",
             date: simpleDateFormatter.date(from: "2025-07-19")!,
             time: "14:30",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:30"),
             place: "캐리비안 베이",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -248,6 +357,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-19")!,
             time: "18:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "18:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -256,6 +367,8 @@ extension QWERScheduleItem {
             title: "마이스타굿즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-20")!,
             time: "14:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -264,6 +377,8 @@ extension QWERScheduleItem {
             title: "비트로드 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-26")!,
             time: "14:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -272,6 +387,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-07-27")!,
             time: "17:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "17:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -280,6 +397,8 @@ extension QWERScheduleItem {
             title: "펜타포트 락 페스티벌 2025",
             date: simpleDateFormatter.date(from: "2025-08-01")!,
             time: "13:50",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:50"),
             place: "송도달빛축제공원",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -288,6 +407,8 @@ extension QWERScheduleItem {
             title: "비트로드 팬사인회",
             date: simpleDateFormatter.date(from: "2025-08-02")!,
             time: "14:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -296,6 +417,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-08-03")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -304,6 +427,8 @@ extension QWERScheduleItem {
             title: "울산 서머 페스티벌",
             date: simpleDateFormatter.date(from: "2025-08-05")!,
             time: "19:30",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "19:30"),
             place: "울산보조경기장 종합운동장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -312,6 +437,8 @@ extension QWERScheduleItem {
             title: "M COUNTDOWN in Boryeong",
             date: simpleDateFormatter.date(from: "2025-08-07")!,
             time: "18:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "18:00"),
             place: "대천해수욕장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -320,6 +447,8 @@ extension QWERScheduleItem {
             title: "케이팝스토어 팬사인회",
             date: simpleDateFormatter.date(from: "2025-08-09")!,
             time: "14:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "14:00"),
             place: "",
             members: [.W, .E, .R],
             category: .fanSign
@@ -328,6 +457,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-08-10")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "",
             members: [.W, .E, .R],
             category: .fanSign
@@ -344,6 +475,8 @@ extension QWERScheduleItem {
             title: "비트로드 팬사인회",
             date: simpleDateFormatter.date(from: "2025-08-16")!,
             time: "15:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "15:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -352,6 +485,8 @@ extension QWERScheduleItem {
             title: "7rock prime 2025",
             date: simpleDateFormatter.date(from: "2025-08-16")!,
             time: "19:40",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "19:40"),
             place: "잠실실내체육관",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -360,6 +495,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회",
             date: simpleDateFormatter.date(from: "2025-08-17")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -376,6 +513,8 @@ extension QWERScheduleItem {
             title: "디어마이뮤즈 팬사인회 (특별공연)",
             date: simpleDateFormatter.date(from: "2025-08-23")!,
             time: "19:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "19:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .fanSign
@@ -384,6 +523,8 @@ extension QWERScheduleItem {
             title: "부산 INTERNATIONAL ROCK FESTIVAL",
             date: simpleDateFormatter.date(from: "2025-09-26")!,
             time: "15:10",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "15:10"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -392,6 +533,8 @@ extension QWERScheduleItem {
             title: "PMPS SEASON2 FINALS 축하공연",
             date: simpleDateFormatter.date(from: "2025-09-27")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -408,6 +551,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR ROCKNATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-03")!,
             time: "17:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "17:00"),
             place: "올림픽 핸드볼 경기장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -416,6 +561,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR ROCKNATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-04")!,
             time: "17:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "17:00"),
             place: "올림픽 핸드볼 경기장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -424,6 +571,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR ROCKNATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-05")!,
             time: "17:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "17:00"),
             place: "올림픽 핸드볼 경기장",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -432,6 +581,8 @@ extension QWERScheduleItem {
             title: "Beyond the Discord LP 판매",
             date: simpleDateFormatter.date(from: "2025-10-13")!,
             time: "11:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "11:00"),
             place: "웰컴레코즈",
             members: [.Q, .W, .E, .R],
             category: .other
@@ -464,6 +615,8 @@ extension QWERScheduleItem {
             title: "Beyond the Discord LP 판매(JP)",
             date: simpleDateFormatter.date(from: "2025-10-22")!,
             time: "11:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "11:00"),
             place: "후쿠오카, 오사카, 도쿄",
             members: [.Q, .W, .E, .R],
             category: .other
@@ -472,6 +625,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR BROOKLYN",
             date: simpleDateFormatter.date(from: "2025-11-01")!,
             time: "09:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "09:00"),
             place: "Music Hall of Williamsburg",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -488,6 +643,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR ATLANTA",
             date: simpleDateFormatter.date(from: "2025-11-03")!,
             time: "10:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "10:00"),
             place: "Terminal West",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -496,6 +653,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR BERWYN",
             date: simpleDateFormatter.date(from: "2025-11-06")!,
             time: "11:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "11:00"),
             place: "Distro Music Hall",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -504,6 +663,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR MINNEAPOLIS",
             date: simpleDateFormatter.date(from: "2025-11-08")!,
             time: "11:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "11:00"),
             place: "The Lyric at Skyway Theatre",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -512,6 +673,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR FORT WORTH",
             date: simpleDateFormatter.date(from: "2025-11-12")!,
             time: "11:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "11:00"),
             place: "Ridglea Theater",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -520,6 +683,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR HOUSTON",
             date: simpleDateFormatter.date(from: "2025-11-13")!,
             time: "11:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "11:00"),
             place: "Warehouse Live",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -528,6 +693,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR SAN FRANCISCO",
             date: simpleDateFormatter.date(from: "2025-11-15")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "Cowell Theater",
             members: [.Q, .W, .E, .R],
             category: .concert
@@ -536,6 +703,8 @@ extension QWERScheduleItem {
             title: "WORLD TOUR LOS ANGELES",
             date: simpleDateFormatter.date(from: "2025-11-17")!,
             time: "13:00",
+            isAllDay: false,
+            startTime: simpleTimeFormatter.date(from: "13:00"),
             place: "Vermont Hollywood",
             members: [.Q, .W, .E, .R],
             category: .concert

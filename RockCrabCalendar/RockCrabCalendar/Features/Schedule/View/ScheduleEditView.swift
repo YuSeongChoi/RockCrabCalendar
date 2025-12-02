@@ -41,6 +41,9 @@ struct ScheduleEditView: View {
     @State private var date: Date
     @State private var time: String = ""
     @State private var place: String = ""
+    @State private var isAllDay: Bool = true
+    @State private var startTime: Date? = nil
+    @State private var endTime: Date? = nil
 
     private let originalQWER: QWERScheduleItem?
     private let originalUser: UserScheduleItem?
@@ -77,6 +80,9 @@ struct ScheduleEditView: View {
             _date = State(initialValue: defaultDate)
             self.originalQWER = nil
             self.originalUser = nil
+            _isAllDay = State(initialValue: true)
+            _startTime = State(initialValue: nil)
+            _endTime = State(initialValue: nil)
             
         case .editQWER(let item):
             _title = State(initialValue: item.title)
@@ -85,6 +91,9 @@ struct ScheduleEditView: View {
             _place = State(initialValue: item.place)
             _selectedMembers = State(initialValue: Set(item.members))
             _category = State(initialValue: item.category)
+            _isAllDay = State(initialValue: item.isAllDay)
+            _startTime = State(initialValue: item.startTime)
+            _endTime = State(initialValue: item.endTime)
             self.originalQWER = item
             self.originalUser = nil
             
@@ -97,6 +106,9 @@ struct ScheduleEditView: View {
             _repeatType = State(initialValue: item.repeatType ?? .none)
             _repeatEndDate = State(initialValue: item.repeatEndDate ?? defaultDate)
             _selectedColor = State(initialValue: Color(hex: item.colorHex))
+            _isAllDay = State(initialValue: item.isAllDay)
+            _startTime = State(initialValue: item.startTime)
+            _endTime = State(initialValue: item.endTime)
             self.originalQWER = nil
             self.originalUser = item
         }
@@ -108,8 +120,39 @@ struct ScheduleEditView: View {
                 Section("기본 정보") {
                     TextField("제목", text: $title)
                     DatePicker("날짜", selection: $date, displayedComponents: .date)
-                    TextField("시간 (예: 18:30)", text: $time)
+                    Toggle("하루종일", isOn: $isAllDay)
+
+                    if !isAllDay {
+                        if !isAllDay {
+                            DatePicker(
+                                "시작 시간",
+                                selection: Binding(
+                                    get: { startTime ?? Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date)! },
+                                    set: { startTime = $0 }
+                                ),
+                                displayedComponents: .hourAndMinute
+                            )
+
+                            DatePicker(
+                                "종료 시간",
+                                selection: Binding(
+                                    get: { endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)! },
+                                    set: { endTime = $0 }
+                                ),
+                                displayedComponents: .hourAndMinute
+                            )
+                        }
+                    }
                     TextField("장소", text: $place)
+                }
+                .onChange(of: isAllDay) { _, newValue in
+                    if newValue {
+                        startTime = nil
+                        endTime = nil
+                    } else {
+                        startTime = startTime ?? Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date)!
+                        endTime = endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)!
+                    }
                 }
 
                 switch kind {
@@ -260,6 +303,9 @@ private extension ScheduleEditView {
                     title: title.trimmingCharacters(in: .whitespacesAndNewlines),
                     date: date,
                     time: time.trimmingCharacters(in: .whitespacesAndNewlines),
+                    isAllDay: isAllDay,
+                    startTime: isAllDay ? nil : startTime,
+                    endTime: isAllDay ? nil : endTime,
                     place: place.trimmingCharacters(in: .whitespacesAndNewlines),
                     members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
                     category: category
@@ -271,6 +317,9 @@ private extension ScheduleEditView {
                     title: title.trimmingCharacters(in: .whitespacesAndNewlines),
                     date: date,
                     time: time.trimmingCharacters(in: .whitespacesAndNewlines),
+                    isAllDay: isAllDay,
+                    startTime: isAllDay ? nil : startTime,
+                    endTime: isAllDay ? nil : endTime,
                     place: place.trimmingCharacters(in: .whitespacesAndNewlines),
                     isRepeat: isRepeat,
                     repeatType: isRepeat ? repeatType : nil,
@@ -286,6 +335,9 @@ private extension ScheduleEditView {
                 title: title.trimmingCharacters(in: .whitespacesAndNewlines),
                 date: date,
                 time: time.trimmingCharacters(in: .whitespacesAndNewlines),
+                isAllDay: isAllDay,
+                startTime: isAllDay ? nil : startTime,
+                endTime: isAllDay ? nil : endTime,
                 place: place.trimmingCharacters(in: .whitespacesAndNewlines),
                 members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
                 category: category
@@ -298,6 +350,9 @@ private extension ScheduleEditView {
                 title: title.trimmingCharacters(in: .whitespacesAndNewlines),
                 date: date,
                 time: time.trimmingCharacters(in: .whitespacesAndNewlines),
+                isAllDay: isAllDay,
+                startTime: isAllDay ? nil : startTime,
+                endTime: isAllDay ? nil : endTime,
                 place: place.trimmingCharacters(in: .whitespacesAndNewlines),
                 isRepeat: isRepeat,
                 repeatType: isRepeat ? repeatType : nil,
