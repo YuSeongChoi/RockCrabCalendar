@@ -14,6 +14,7 @@
 		5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */; };
 		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
 		5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */; };
+		5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1121A72EE152EA00588095 /* NotificationManager.swift */; };
 		5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */; };
 		5D261D2A2EA204F8004DEE6B /* ScheduleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */; };
 		5D5E852D2E30B9D700DB8775 /* QWERScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */; };
@@ -98,6 +99,7 @@
 		5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
+		5D1121A72EE152EA00588095 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleServiceProtocol.swift; sourceTree = "<group>"; };
 		5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleItem.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				5D261D252EA204A9004DEE6B /* Protocol */,
 				5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */,
 				5D8B12582E8A4AD30014649C /* UserScheduleService.swift */,
+				5D1121A72EE152EA00588095 /* NotificationManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */,
 				5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */,
 				5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */,
+				5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,

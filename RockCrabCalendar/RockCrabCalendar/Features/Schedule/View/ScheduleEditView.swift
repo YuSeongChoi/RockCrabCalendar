@@ -44,6 +44,7 @@ struct ScheduleEditView: View {
     @State private var isAllDay: Bool = true
     @State private var startTime: Date? = nil
     @State private var endTime: Date? = nil
+    @State private var shouldNotify: Bool = false
 
     private let originalQWER: QWERScheduleItem?
     private let originalUser: UserScheduleItem?
@@ -62,14 +63,26 @@ struct ScheduleEditView: View {
     @State private var showNonDeletableAlert: Bool = false
 
     // MARK: - Init
-    init(kind: Kind, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel, defaultColor: Color = .purple) {
+    init(
+        kind: Kind,
+        defaultDate: Date = Date(),
+        qwerVM: QWERScheduleViewModel,
+        userVM: UserScheduleViewModel,
+        defaultColor: Color = .purple
+    ) {
         self.init(mode: .create(kind), defaultDate: defaultDate, qwerVM: qwerVM, userVM: userVM)
         if kind == .user {
             _selectedColor = State(initialValue: defaultColor)
         }
     }
     
-    init(mode: Mode, defaultDate: Date = Date(), qwerVM: QWERScheduleViewModel, userVM: UserScheduleViewModel, defaultColor: Color = .purple) {
+    init(
+        mode: Mode,
+        defaultDate: Date = Date(),
+        qwerVM: QWERScheduleViewModel,
+        userVM: UserScheduleViewModel,
+        defaultColor: Color = .purple
+    ) {
         self.mode = mode
         self.defaultDate = defaultDate
         self.qwerVM = qwerVM
@@ -83,6 +96,7 @@ struct ScheduleEditView: View {
             _isAllDay = State(initialValue: true)
             _startTime = State(initialValue: nil)
             _endTime = State(initialValue: nil)
+            _shouldNotify = State(initialValue: false)
             
         case .editQWER(let item):
             _title = State(initialValue: item.title)
@@ -94,6 +108,7 @@ struct ScheduleEditView: View {
             _isAllDay = State(initialValue: item.isAllDay)
             _startTime = State(initialValue: item.startTime)
             _endTime = State(initialValue: item.endTime)
+            _shouldNotify = State(initialValue: item.shouldNotify)
             self.originalQWER = item
             self.originalUser = nil
             
@@ -109,6 +124,7 @@ struct ScheduleEditView: View {
             _isAllDay = State(initialValue: item.isAllDay)
             _startTime = State(initialValue: item.startTime)
             _endTime = State(initialValue: item.endTime)
+            _shouldNotify = State(initialValue: item.shouldNotify)
             self.originalQWER = nil
             self.originalUser = item
         }
@@ -123,26 +139,27 @@ struct ScheduleEditView: View {
                     Toggle("하루종일", isOn: $isAllDay)
 
                     if !isAllDay {
-                        if !isAllDay {
-                            DatePicker(
-                                "시작 시간",
-                                selection: Binding(
-                                    get: { startTime ?? Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date)! },
-                                    set: { startTime = $0 }
-                                ),
-                                displayedComponents: .hourAndMinute
-                            )
+                        DatePicker(
+                            "시작 시간",
+                            selection: Binding(
+                                get: { startTime ?? Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date)! },
+                                set: { startTime = $0 }
+                            ),
+                            displayedComponents: .hourAndMinute
+                        )
 
-                            DatePicker(
-                                "종료 시간",
-                                selection: Binding(
-                                    get: { endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)! },
-                                    set: { endTime = $0 }
-                                ),
-                                displayedComponents: .hourAndMinute
-                            )
-                        }
+                        DatePicker(
+                            "종료 시간",
+                            selection: Binding(
+                                get: { endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)! },
+                                set: { endTime = $0 }
+                            ),
+                            displayedComponents: .hourAndMinute
+                        )
+                        
+                        Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
                     }
+                    
                     TextField("장소", text: $place)
                 }
                 .onChange(of: isAllDay) { _, newValue in
@@ -307,11 +324,14 @@ private extension ScheduleEditView {
                     startTime: isAllDay ? nil : startTime,
                     endTime: isAllDay ? nil : endTime,
                     place: place.trimmingCharacters(in: .whitespacesAndNewlines),
+                    shouldNotify: shouldNotify,
                     members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
                     category: category
                 )
                 qwerVM.addLocal(item)
-                
+                if item.shouldNotify {
+                    NotificationManager.shared.schedule(for: item)
+                }
             case .user:
                 let item = UserScheduleItem(
                     title: title.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -321,14 +341,17 @@ private extension ScheduleEditView {
                     startTime: isAllDay ? nil : startTime,
                     endTime: isAllDay ? nil : endTime,
                     place: place.trimmingCharacters(in: .whitespacesAndNewlines),
+                    shouldNotify: shouldNotify,
                     isRepeat: isRepeat,
                     repeatType: isRepeat ? repeatType : nil,
                     repeatEndDate: isRepeat ? repeatEndDate : nil,
                     colorHex: selectedColor.toHexString()
                 )
                 userVM.add(item)
+                if item.shouldNotify {
+                    NotificationManager.shared.schedule(for: item)
+                }
             }
-            
         case .editQWER(let original):
             let updated = QWERScheduleItem(
                 id: original.id,
@@ -339,11 +362,16 @@ private extension ScheduleEditView {
                 startTime: isAllDay ? nil : startTime,
                 endTime: isAllDay ? nil : endTime,
                 place: place.trimmingCharacters(in: .whitespacesAndNewlines),
+                shouldNotify: shouldNotify,
                 members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
                 category: category
             )
             qwerVM.updateLocal(updated)
-            
+            if updated.shouldNotify {
+                NotificationManager.shared.schedule(for: updated)
+            } else {
+                NotificationManager.shared.cancel(for: updated)
+            }
         case .editUser(let original):
             let updated = UserScheduleItem(
                 id: original.id,
@@ -354,22 +382,30 @@ private extension ScheduleEditView {
                 startTime: isAllDay ? nil : startTime,
                 endTime: isAllDay ? nil : endTime,
                 place: place.trimmingCharacters(in: .whitespacesAndNewlines),
+                shouldNotify: shouldNotify,
                 isRepeat: isRepeat,
                 repeatType: isRepeat ? repeatType : nil,
                 repeatEndDate: isRepeat ? repeatEndDate : nil,
                 colorHex: selectedColor.toHexString()
             )
             userVM.update(updated)
+            if updated.shouldNotify {
+                NotificationManager.shared.schedule(for: updated)
+            } else {
+                NotificationManager.shared.cancel(for: updated)
+            }
         }
-        
+
         dismiss()
     }
     
     func deleteItem() {
         switch mode {
         case .editQWER(let original):
+            NotificationManager.shared.cancel(for: original)
             qwerVM.deleteLocal(original)
         case .editUser(let original):
+            NotificationManager.shared.cancel(for: original)
             userVM.delete(original)
         case .create:
             break

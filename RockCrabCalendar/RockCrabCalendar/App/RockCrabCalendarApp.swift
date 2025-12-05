@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 @main
 struct RockCrabCalendarApp: App {
@@ -65,6 +66,18 @@ struct RockCrabCalendarApp: App {
             try RockTurtleCalendarFont.register()
         } catch {
             print(error.localizedDescription)
+        }
+        
+        requestNotificationPermission()
+    }
+    
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                print("알림 권한 요청 실패 : \(error.localizedDescription)")
+            } else {
+                print("알림 권한 요청 결과 : \(granted ? "허용된" : "거부됨")")
+            }
         }
     }
 }

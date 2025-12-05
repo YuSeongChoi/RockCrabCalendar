@@ -24,6 +24,8 @@ struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     var endTime: Date?
     /// 장소
     var place: String
+    /// 알람여부
+    var shouldNotify: Bool
     /// 반복 여부
     var isRepeat: Bool
     /// 반복 종류
@@ -42,6 +44,7 @@ struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         startTime: Date? = nil,
         endTime: Date? = nil,
         place: String,
+        shouldNotify: Bool = false,
         isRepeat: Bool = false,
         repeatType: RepeatType? = nil,
         repeatEndDate: Date? = nil,
@@ -55,6 +58,7 @@ struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.startTime = startTime
         self.endTime = endTime
         self.place = place
+        self.shouldNotify = shouldNotify
         self.isRepeat = isRepeat
         self.repeatType = repeatType
         self.repeatEndDate = repeatEndDate

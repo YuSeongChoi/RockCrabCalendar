@@ -26,6 +26,8 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     var endTime: Date?
     /// 장소
     var place: String
+    /// 알람여부
+    var shouldNotify: Bool
     /// 참석멤버
     var members: [QWERMember]
     var category: ScheduleCategory
@@ -39,6 +41,7 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         startTime: Date? = nil,
         endTime: Date? = nil,
         place: String,
+        shouldNotify: Bool = false,
         members: [QWERMember],
         category: ScheduleCategory
     ) {
@@ -50,6 +53,7 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.startTime = startTime
         self.endTime = endTime
         self.place = place
+        self.shouldNotify = shouldNotify
         self.members = members
         self.category = category
 
@@ -75,6 +79,7 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         case startTime
         case endTime
         case place
+        case shouldNotify
         case members
         case category
     }
@@ -111,6 +116,7 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         }
 
         self.place = (try? container.decode(String.self, forKey: .place)) ?? ""
+        self.shouldNotify = (try? container.decode(Bool.self, forKey: .shouldNotify)) ?? false
 
         let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
         self.members = rawMembers.compactMap { QWERMember(rawValue: $0) }

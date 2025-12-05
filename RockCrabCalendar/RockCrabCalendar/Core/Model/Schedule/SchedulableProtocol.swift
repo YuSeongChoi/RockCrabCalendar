@@ -24,4 +24,6 @@ protocol SchedulableItemProtocol: Identifiable, Codable {
     var endTime: Date? { get set }
     /// 장소
     var place: String { get set }
+    /// 알람여부
+    var shouldNotify: Bool { get }
 }
