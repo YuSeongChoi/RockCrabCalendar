@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */; };
 		5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */; };
 		5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */; };
 		5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */; };
@@ -92,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Resources.swift"; sourceTree = "<group>"; };
 		5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarResources.swift; sourceTree = "<group>"; };
 		5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Extension.swift"; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
 				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
 				5D029BD82CA3E1670090B4D1 /* Extensions */,
+				5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -743,6 +746,7 @@
 				5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */,
 				5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */,
 				5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */,
+				5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */,
 				5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */,
 				5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */,
 				5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */,
