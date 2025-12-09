@@ -290,7 +290,7 @@ struct ScheduleEditView: View {
         }
         .environment(\.locale, Locale(identifier: "ko_KR"))
         .onAppear {
-            AnalyticsHelper.logEvent(eventName: "일정 추가/수정 화면 진입", parameters: [:])
+            AnalyticsHelper.logEvent(eventName: "일정_추가/수정_화면", parameters: [:])
         }
     }
     

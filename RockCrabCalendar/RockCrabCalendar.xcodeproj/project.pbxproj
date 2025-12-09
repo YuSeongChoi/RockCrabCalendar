@@ -307,8 +307,8 @@
 			children = (
 				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
 				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
-				5D029BD82CA3E1670090B4D1 /* Extensions */,
 				5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */,
+				5D029BD82CA3E1670090B4D1 /* Extensions */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
