@@ -58,7 +58,7 @@ struct HomeMainView: View {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchAllSchedules(force: false)
             userVM.fetchAllSchedules()
-            AnalyticsHelper.logEvent(eventName: "메인화면", parameters: [:])
+            AnalyticsHelper.logEvent(eventName: "main_screen", parameters: ["label":"메인화면"])
         }
         .sheet(isPresented: $showCategorySheet) {
             CategoryFilterSheet(
