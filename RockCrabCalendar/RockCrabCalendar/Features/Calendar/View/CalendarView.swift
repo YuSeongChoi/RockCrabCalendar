@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
-    var calendarVM = CalendarViewModel()
+    var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
     

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */; };
+		5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */; };
+		5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */; };
 		5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */; };
 		5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */; };
 		5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */; };
@@ -194,6 +196,8 @@
 			files = (
 				5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */,
 				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
+				5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
+				5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
 				5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */,
 			);
@@ -578,6 +582,8 @@
 				5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */,
 				5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */,
 				5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */,
+				5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */,
+				5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -1014,6 +1020,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "RELEASE $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1169,6 +1176,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+		5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsIdentitySupport;
+		};
 		5D43243B2E8142B10026E23E /* RswiftGenerateInternalResources */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
