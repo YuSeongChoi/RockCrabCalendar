@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserScheduleService: ScheduleServiceProtocol {
+actor UserScheduleService: ScheduleServiceProtocol {
     typealias Schedule = UserScheduleItem
     
     private let userDefaultKey = "userSchedules"
@@ -15,7 +15,7 @@ final class UserScheduleService: ScheduleServiceProtocol {
     // Dictionary 기반 저장
     private var scheduleMap: [UUID: Schedule] = [:]
     // 외부에는 배열 형태로 제공
-    var schedules: [Schedule] {
+    private var schedules: [Schedule] {
         return Array(scheduleMap.values)
     }
     

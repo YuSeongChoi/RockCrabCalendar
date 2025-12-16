@@ -41,6 +41,8 @@ final class QWERScheduleViewModel {
     }
 
     static let localChangeSubject = PassthroughSubject<LocalChangeEvent, Never>()
+    private var isFetching = false
+    private let cacheTTLHours: Int = 24
     
     // MARK: - Local (in-memory) partial updates
     private func upsertLocalInMemory(_ item: QWERScheduleItem) {
@@ -142,6 +144,10 @@ final class QWERScheduleViewModel {
         let lastFetchKey = "lastScheduleFetchDate"
         let now = Date()
 
+        if isFetching {
+            return
+        }
+
         // 1) Cache-first
         if let cachedData = UserDefaults.standard.data(forKey: cacheKey),
            let cachedSchedules = try? JSONDecoder().decode([QWERScheduleItem].self, from: cachedData) {
@@ -151,7 +157,7 @@ final class QWERScheduleViewModel {
         if let lastFetch = UserDefaults.standard.object(forKey: lastFetchKey) as? Date {
             self.lastFetchedAt = lastFetch
             let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
-            if !force, let hours = diff.hour, hours < 24 {
+            if !force, let hours = diff.hour, hours < cacheTTLHours {
                 print("⏳ 캐시 유효 – Service fetch 생략 (force == false)")
                 return
             }
@@ -160,6 +166,8 @@ final class QWERScheduleViewModel {
         // 2) Network
         Task { @MainActor [weak self] in
             guard let self else { return }
+            isFetching = true
+            defer { isFetching = false }
             do {
                 let fetched = try await self.service.fetchSchedule()
                 self.schedules = fetched

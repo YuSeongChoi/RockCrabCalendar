@@ -15,14 +15,14 @@ final class UserScheduleViewModel {
     
     init(service: UserScheduleService = UserScheduleService()) {
         self.service = service
-        self.schedules = service.schedules
+        self.schedules = []
     }
     
     func fetchAllSchedules() {
         Task { @MainActor in
             do {
                 let fetched = try await service.fetchSchedule()
-                schedules = fetched
+                schedules = fetched.sorted(by: scheduleSortRule)
                 await migrateLegacyTimesIfNeeded()
             } catch {
                 print("⚠️ 사용자 일정 fetch 실패:", error.localizedDescription)
@@ -34,7 +34,8 @@ final class UserScheduleViewModel {
         Task { @MainActor in
             do {
                 try await service.saveSchedule(item)
-                schedules = service.schedules.sorted(by: scheduleSortRule)
+                let fetched = try await service.fetchSchedule()
+                schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 print("⚠️ 사용자 일정 저장 실패:", error.localizedDescription)
             }
@@ -45,7 +46,8 @@ final class UserScheduleViewModel {
         Task { @MainActor in
             do {
                 try await service.updateSchedule(item)
-                schedules = service.schedules.sorted(by: scheduleSortRule)
+                let fetched = try await service.fetchSchedule()
+                schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 print("⚠️ 사용자 일정 업데이트 실패:", error.localizedDescription)
             }
@@ -56,7 +58,8 @@ final class UserScheduleViewModel {
         Task { @MainActor in
             do {
                 try await service.deleteSchedule(item)
-                schedules = service.schedules.sorted(by: scheduleSortRule)
+                let fetched = try await service.fetchSchedule()
+                schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 print("⚠️ 사용자 일정 삭제 실패:", error.localizedDescription)
             }
@@ -67,7 +70,8 @@ final class UserScheduleViewModel {
         Task { @MainActor in
             do {
                 try await service.saveSchedule(item)
-                schedules = service.schedules.sorted(by: scheduleSortRule)
+                let fetched = try await service.fetchSchedule()
+                schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 print("⚠️ 사용자 일정 저장 실패:", error.localizedDescription)
             }
@@ -137,7 +141,9 @@ extension UserScheduleViewModel {
         for updated in updatedItems {
             try? await service.updateSchedule(updated)
         }
-        schedules = service.schedules.sorted(by: scheduleSortRule)
+        if let refreshed = try? await service.fetchSchedule() {
+            schedules = refreshed.sorted(by: scheduleSortRule)
+        }
 
         UserDefaults.standard.set(true, forKey: key)
     }
