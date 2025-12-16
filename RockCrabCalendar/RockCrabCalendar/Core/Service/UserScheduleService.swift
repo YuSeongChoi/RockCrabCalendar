@@ -25,14 +25,14 @@ final class UserScheduleService: ScheduleServiceProtocol {
     }
     
     // MARK: - CRUD
-    func saveSchedule(_ schedule: Schedule) {
+    func saveSchedule(_ schedule: Schedule) async throws {
         // 항상 최신 상태를 로드한 뒤 저장 (다중 인스턴스 대비)
         loadFromUserDefaults()
         scheduleMap[schedule.id] = schedule
         saveToUserDefaults()
     }
     
-    func updateSchedule(_ schedule: Schedule) {
+    func updateSchedule(_ schedule: Schedule) async throws {
         // 항상 최신 상태를 로드한 뒤 업데이트 (다중 인스턴스 대비)
         loadFromUserDefaults()
 
@@ -70,7 +70,7 @@ final class UserScheduleService: ScheduleServiceProtocol {
     }
     
     /// 전체 저장
-    func updateSchedule(_ schedules: [Schedule]) {
+    func updateSchedule(_ schedules: [Schedule]) async throws {
         // 항상 최신 상태를 로드한 뒤 일괄 업데이트 (다중 인스턴스 대비)
         loadFromUserDefaults()
         for s in schedules {
@@ -79,7 +79,7 @@ final class UserScheduleService: ScheduleServiceProtocol {
         saveToUserDefaults()
     }
     
-    func deleteSchedule(_ schedule: Schedule) {
+    func deleteSchedule(_ schedule: Schedule) async throws {
         // 항상 최신 상태를 로드한 뒤 삭제 (다중 인스턴스 대비)
         loadFromUserDefaults()
 

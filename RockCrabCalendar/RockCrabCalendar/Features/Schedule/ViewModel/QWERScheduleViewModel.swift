@@ -49,7 +49,6 @@ final class QWERScheduleViewModel {
         } else {
             schedules.append(item)
         }
-        fetchAllSchedules(force: true)
     }
 
     private func removeLocalInMemory(_ item: QWERScheduleItem) {
@@ -69,7 +68,6 @@ final class QWERScheduleViewModel {
                 schedules.remove(at: idx)
             }
         }
-        fetchAllSchedules(force: true)
     }
     
     init(service: QWERScheduleService = QWERScheduleService()) {
@@ -118,12 +116,24 @@ final class QWERScheduleViewModel {
     
     // 일정 추가
     func addSchedule(_ item: QWERScheduleItem) {
-        service.saveSchedule(item)
+        Task {
+            do {
+                try await service.saveSchedule(item)
+            } catch {
+                print("🔥 QWER 스케줄 저장 실패: \(error.localizedDescription)")
+            }
+        }
     }
     
     // 일정 업데이트
     func updateSchedule(schedule: QWERScheduleItem) {
-        service.updateSchedule(schedule)
+        Task {
+            do {
+                try await service.updateSchedule(schedule)
+            } catch {
+                print("🔥 QWER 스케줄 업데이트 실패: \(error.localizedDescription)")
+            }
+        }
     }
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)

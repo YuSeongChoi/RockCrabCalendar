@@ -144,92 +144,68 @@ final class QWERScheduleService: ScheduleServiceProtocol {
     }
     
     /// 일정 추가 또는 업데이트 (동일 ID 문서가 있으면 update, 없으면 add)
-    func saveSchedule(_ schedule: Schedule) {
+    func saveSchedule(_ schedule: Schedule) async throws {
         let docId = stableDocumentID(for: schedule)
         let data = schedule.asDictionary
         let docRef = db.collection(collection).document(docId)
-        
-        docRef.getDocument { [weak self] snapshot, error in
-            guard let self else { return }
-            
-            if let error = error {
-                print("⚠️ 문서 확인 실패: \(error.localizedDescription)")
-                return
-            }
-            
-            if let snapshot = snapshot, snapshot.exists {
-                // 이미 존재하면 업데이트
-                self.updateSchedule(schedule)
-                print("🔄 기존 스케줄 발견 → 업데이트 수행: \(schedule.id)")
-            } else {
-                // 존재하지 않으면 신규 추가
-                docRef.setData(data) { error in
-                    if let error = error {
-                        print("🔥 스케줄 신규 등록 실패: \(error.localizedDescription)")
-                    } else {
-                        print("✅ 스케줄 신규 등록 성공: \(schedule.id)")
-                    }
-                }
-            }
+        let snapshot = try await docRef.getDocument()
+
+        if snapshot.exists {
+            try await updateSchedule(schedule)
+            #if DEBUG
+            print("🔄 기존 스케줄 발견 → 업데이트 수행: \(schedule.id)")
+            #endif
+        } else {
+            try await docRef.setData(data)
+            #if DEBUG
+            print("✅ 스케줄 신규 등록 성공: \(schedule.id)")
+            #endif
         }
     }
     
-    func updateSchedule(_ schedule: Schedule) {
+    func updateSchedule(_ schedule: Schedule) async throws {
         let docId = stableDocumentID(for: schedule)
         let data = schedule.asDictionary
-        db.collection(collection)
+        try await db.collection(collection)
             .document(docId)
-            .setData(data, merge: true) { error in
-                if let error = error {
-                    print("🔥 QWER 단일 업데이트 실패: \(error.localizedDescription)")
-                } else {
-                    print("✅ QWER 단일 업데이트 성공: \(schedule.id)")
-                }
-            }
+            .setData(data, merge: true)
+        #if DEBUG
+        print("✅ QWER 단일 업데이트 성공: \(schedule.id)")
+        #endif
     }
     
     /// 여러 일정 한번에 업데이트/추가 (배치 방식)
-    func updateSchedule(_ schedules: [Schedule]) {
+    func updateSchedule(_ schedules: [Schedule]) async throws {
         guard !schedules.isEmpty else { return }
 
         let payloads: [(docId: String, data: [String: Any])] = schedules.map { s in
             let docId = stableDocumentID(for: s)
             return (docId, s.asDictionary)
         }
-        
-        Task {
-            do {
-                try await self.upsertBatch(payloads)
-                print("✅ 업서트 배치 성공: \(payloads.count)건")
-            } catch {
-                print("🔥 업서트 배치 실패: \(error.localizedDescription)")
-            }
-        }
+
+        try await self.upsertBatch(payloads)
+        #if DEBUG
+        print("✅ 업서트 배치 성공: \(payloads.count)건")
+        #endif
     }
     
     /// 일정 삭제
-    func deleteSchedule(_ schedule: Schedule) {
+    func deleteSchedule(_ schedule: Schedule) async throws {
         let idUUID = schedule.id.uuidString
         let idStable = stableDocumentID(for: schedule)
         let col = db.collection(collection)
 
         // Try delete by UUID-based id
-        col.document(idUUID).delete { error in
-            if let error = error {
-                print("🔥 삭제 실패 (uuid id): \(idUUID) - \(error.localizedDescription)")
-            } else {
-                print("🗑️ 삭제 성공 (uuid id): \(idUUID)")
-            }
-        }
+        try await col.document(idUUID).delete()
+        #if DEBUG
+        print("🗑️ 삭제 성공 (uuid id): \(idUUID)")
+        #endif
 
         // Also try delete by stable hash id (in case the document was saved with stable ID)
-        col.document(idStable).delete { error in
-            if let error = error {
-                print("🔥 삭제 실패 (stable id): \(idStable) - \(error.localizedDescription)")
-            } else {
-                print("🗑️ 삭제 성공 (stable id): \(idStable)")
-            }
-        }
+        try await col.document(idStable).delete()
+        #if DEBUG
+        print("🗑️ 삭제 성공 (stable id): \(idStable)")
+        #endif
     }
     
     /// 일정 가져오기

@@ -11,11 +11,11 @@ protocol ScheduleServiceProtocol {
     associatedtype Schedule: SchedulableItemProtocol
     
     /// 스케줄 생성
-    func saveSchedule(_ schedule: Schedule)
+    func saveSchedule(_ schedule: Schedule) async throws
     /// 스케줄 수정
-    func updateSchedule(_ schedule: Schedule)
+    func updateSchedule(_ schedule: Schedule) async throws
     /// 스케줄 삭제
-    func deleteSchedule(_ schedule: Schedule)
+    func deleteSchedule(_ schedule: Schedule) async throws
     /// 스케줄 읽기(FireStore or UserDefaults)
     func fetchSchedule() async throws -> [Schedule]
 }

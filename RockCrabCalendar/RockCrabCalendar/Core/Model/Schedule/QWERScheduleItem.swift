@@ -724,10 +724,34 @@ extension QWERScheduleItem {
             category: .award
         ),
         QWERScheduleItem(
+            title: "ACON 2025 FESTA",
+            date: simpleDateFormatter.date(from: "2025-12-07")!,
+            startTime: simpleTimeFormatter.date(from: "18:00"),
+            place: "대만 가오슝 내셔널 스타디움",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "우리은행 QWER Special Stage",
             date: simpleDateFormatter.date(from: "2025-12-13")!,
             time: "",
+            place: "롯데시네마 월드타워점",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "위버스 팬사인회",
+            date: simpleDateFormatter.date(from: "2025-12-27")!,
+            time: "",
             place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
+        ),
+        QWERScheduleItem(
+            title: "WORLD K-POP Festival Countdown",
+            date: simpleDateFormatter.date(from: "2025-12-31")!,
+            startTime: simpleTimeFormatter.date(from: "21:00"),
+            place: "DDP 아트홀 1관",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),

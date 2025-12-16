@@ -19,11 +19,11 @@ final class UserScheduleViewModel {
     }
     
     func fetchAllSchedules() {
-        Task {
+        Task { @MainActor in
             do {
                 let fetched = try await service.fetchSchedule()
                 schedules = fetched
-                migrateLegacyTimesIfNeeded()
+                await migrateLegacyTimesIfNeeded()
             } catch {
                 print("⚠️ 사용자 일정 fetch 실패:", error.localizedDescription)
             }
@@ -31,23 +31,47 @@ final class UserScheduleViewModel {
     }
     
     func add(_ item: UserScheduleItem) {
-        service.saveSchedule(item)
-        schedules = service.schedules.sorted(by: scheduleSortRule)
+        Task { @MainActor in
+            do {
+                try await service.saveSchedule(item)
+                schedules = service.schedules.sorted(by: scheduleSortRule)
+            } catch {
+                print("⚠️ 사용자 일정 저장 실패:", error.localizedDescription)
+            }
+        }
     }
     
     func update(_ item: UserScheduleItem) {
-        service.updateSchedule(item)
-        schedules = service.schedules.sorted(by: scheduleSortRule)
+        Task { @MainActor in
+            do {
+                try await service.updateSchedule(item)
+                schedules = service.schedules.sorted(by: scheduleSortRule)
+            } catch {
+                print("⚠️ 사용자 일정 업데이트 실패:", error.localizedDescription)
+            }
+        }
     }
     
     func delete(_ item: UserScheduleItem) {
-        service.deleteSchedule(item)
-        schedules = service.schedules.sorted(by: scheduleSortRule)
+        Task { @MainActor in
+            do {
+                try await service.deleteSchedule(item)
+                schedules = service.schedules.sorted(by: scheduleSortRule)
+            } catch {
+                print("⚠️ 사용자 일정 삭제 실패:", error.localizedDescription)
+            }
+        }
     }
     
     func save(_ item: UserScheduleItem) {
-        service.saveSchedule(item)
-        schedules = service.schedules.sorted(by: scheduleSortRule)
+        Task { @MainActor in
+            do {
+                try await service.saveSchedule(item)
+                schedules = service.schedules.sorted(by: scheduleSortRule)
+            } catch {
+                print("⚠️ 사용자 일정 저장 실패:", error.localizedDescription)
+            }
+        }
     }
     
     private func scheduleSortRule(_ a: UserScheduleItem, _ b: UserScheduleItem) -> Bool {
@@ -84,7 +108,7 @@ final class UserScheduleViewModel {
 
 // MARK: 로직 리뉴얼로 인해 migration
 extension UserScheduleViewModel {
-    func migrateLegacyTimesIfNeeded() {
+    func migrateLegacyTimesIfNeeded() async {
         // UserDefaults 등을 통해 한 번만 실행되도록 설정
         // TODO: 테스트용
         let key = "hasMigratedUserScheduleTimes"
@@ -111,7 +135,7 @@ extension UserScheduleViewModel {
 
         // 저장 및 반영
         for updated in updatedItems {
-            service.updateSchedule(updated)
+            try? await service.updateSchedule(updated)
         }
         schedules = service.schedules.sorted(by: scheduleSortRule)
 
