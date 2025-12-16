@@ -61,6 +61,7 @@ struct ScheduleEditView: View {
     
     // Deletion alert state
     @State private var showNonDeletableAlert: Bool = false
+    @State private var isQWERLocalSchedule: Bool = false
 
     // MARK: - Init
     init(
@@ -174,7 +175,7 @@ struct ScheduleEditView: View {
 
                 switch kind {
                 case .qwer:
-                    if case .editQWER = mode, !isEditingQWERLocal {
+                    if case .editQWER = mode, !isQWERLocalSchedule {
                         Section {
                             Label {
                                 Text("이 일정은 Firestore에 등록된 항목이라 앱에서 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제 가능합니다.")
@@ -265,7 +266,7 @@ struct ScheduleEditView: View {
                 ToolbarItem(placement: .bottomBar) {
                     if case .editQWER = mode {
                         Button(role: .destructive) {
-                            if isEditingQWERLocal {
+                            if isQWERLocalSchedule {
                                 deleteItem()
                             } else {
                                 showNonDeletableAlert = true
@@ -289,6 +290,9 @@ struct ScheduleEditView: View {
             }
         }
         .environment(\.locale, Locale(identifier: "ko_KR"))
+        .task {
+            await refreshLocalFlagIfNeeded()
+        }
         .onAppear {
             AnalyticsHelper.logEvent(eventName: "schedule_edit_screen", parameters: ["label":"일정수정화면"])
         }
@@ -305,10 +309,13 @@ struct ScheduleEditView: View {
         }
     }
     
-    private var isEditingQWERLocal: Bool {
-        guard case .editQWER(let item) = mode else { return false }
+    private func refreshLocalFlagIfNeeded() async {
+        guard case .editQWER(let item) = mode else {
+            isQWERLocalSchedule = false
+            return
+        }
         let service = QWERScheduleService()
-        return service.isLocalSchedule(item)
+        isQWERLocalSchedule = await service.isLocalSchedule(item)
     }
 }
 

@@ -99,21 +99,27 @@ final class QWERScheduleViewModel {
     
     // MARK: - Local-only mutations (no fetch)
     func addLocal(_ item: QWERScheduleItem) {
-        service.saveLocalSchedule(item)
-        upsertLocalInMemory(item)
-        QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .add, item: item))
+        Task { @MainActor in
+            await service.saveLocalSchedule(item)
+            upsertLocalInMemory(item)
+            QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .add, item: item))
+        }
     }
 
     func updateLocal(_ item: QWERScheduleItem) {
-        service.updateLocalSchedule(item)
-        upsertLocalInMemory(item)
-        QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .update, item: item))
+        Task { @MainActor in
+            await service.updateLocalSchedule(item)
+            upsertLocalInMemory(item)
+            QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .update, item: item))
+        }
     }
 
     func deleteLocal(_ item: QWERScheduleItem) {
-        service.deleteLocalSchedule(item)
-        removeLocalInMemory(item)
-        QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .delete, item: item))
+        Task { @MainActor in
+            await service.deleteLocalSchedule(item)
+            removeLocalInMemory(item)
+            QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .delete, item: item))
+        }
     }
     
     // 일정 추가

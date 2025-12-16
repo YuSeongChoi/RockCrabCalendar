@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import CryptoKit
 
-final class QWERScheduleService: ScheduleServiceProtocol {
+actor QWERScheduleService: ScheduleServiceProtocol {
     typealias Schedule = QWERScheduleItem
     
     private let db = Firestore.firestore()
@@ -33,7 +33,9 @@ final class QWERScheduleService: ScheduleServiceProtocol {
             let data = try JSONEncoder().encode(values)
             UserDefaults.standard.set(data, forKey: localKey)
         } catch {
+            #if DEBUG
             print("🔥 QWER Local 저장 실패: \(error.localizedDescription)")
+            #endif
         }
     }
 
