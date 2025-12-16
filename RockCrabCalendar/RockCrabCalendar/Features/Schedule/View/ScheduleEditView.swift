@@ -172,6 +172,9 @@ struct ScheduleEditView: View {
                         endTime = endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)!
                     }
                 }
+                .onChange(of: startTime ?? Date()) { _, newValue in
+                    endTime = Calendar.current.date(byAdding: .hour, value: 1, to: newValue)
+                }
 
                 switch kind {
                 case .qwer:
