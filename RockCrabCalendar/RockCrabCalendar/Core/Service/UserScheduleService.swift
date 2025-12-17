@@ -53,7 +53,7 @@ actor UserScheduleService: ScheduleServiceProtocol {
                 scheduleMap[schedule.id] = schedule
                 didUpdate = true
                 #if DEBUG
-                print("🔄 UserScheduleService: ID 미일치로 필드기반 업데이트 수행 (title:\(schedule.title))")
+                AppLogger.debug("UserScheduleService: ID 미일치로 필드기반 업데이트 수행 (title:\(schedule.title))", category: .userService)
                 #endif
             }
         }
@@ -62,7 +62,7 @@ actor UserScheduleService: ScheduleServiceProtocol {
             // 기존 항목을 찾지 못한 경우: 신규 저장으로 처리
             scheduleMap[schedule.id] = schedule
             #if DEBUG
-            print("➕ UserScheduleService: 기존 항목을 찾지 못해 새로 저장 (title:\(schedule.title))")
+            AppLogger.debug("UserScheduleService: 기존 항목을 찾지 못해 새로 저장 (title:\(schedule.title))", category: .userService)
             #endif
         }
 
@@ -98,11 +98,11 @@ actor UserScheduleService: ScheduleServiceProtocol {
             })?.key {
                 scheduleMap.removeValue(forKey: key)
                 #if DEBUG
-                print("🗑️ UserScheduleService: ID 미일치로 필드기반 삭제 수행 (title:\(schedule.title))")
+                AppLogger.debug("UserScheduleService: ID 미일치로 필드기반 삭제 수행 (title:\(schedule.title))", category: .userService)
                 #endif
             } else {
                 #if DEBUG
-                print("⚠️ UserScheduleService: 삭제 대상 미발견 (id: \(schedule.id)) — 맵 크기: \(beforeCount)")
+                AppLogger.debug("UserScheduleService: 삭제 대상 미발견 (id: \(schedule.id)) — 맵 크기: \(beforeCount)", category: .userService)
                 #endif
             }
         }
@@ -124,7 +124,7 @@ extension UserScheduleService {
             let data = try JSONEncoder().encode(values)
             UserDefaults.standard.set(data, forKey: userDefaultKey)
         } catch {
-            print("🔥 UserScheduleService 저장 실패:", error.localizedDescription)
+            AppLogger.error("UserScheduleService 저장 실패: \(error.localizedDescription)", category: .userService)
         }
     }
     

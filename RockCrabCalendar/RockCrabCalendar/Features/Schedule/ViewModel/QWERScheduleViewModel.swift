@@ -128,7 +128,7 @@ final class QWERScheduleViewModel {
             do {
                 try await service.saveSchedule(item)
             } catch {
-                print("🔥 QWER 스케줄 저장 실패: \(error.localizedDescription)")
+                AppLogger.error("QWER 스케줄 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }
@@ -139,7 +139,7 @@ final class QWERScheduleViewModel {
             do {
                 try await service.updateSchedule(schedule)
             } catch {
-                print("🔥 QWER 스케줄 업데이트 실패: \(error.localizedDescription)")
+                AppLogger.error("QWER 스케줄 업데이트 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }
@@ -164,7 +164,7 @@ final class QWERScheduleViewModel {
             self.lastFetchedAt = lastFetch
             let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
             if !force, let hours = diff.hour, hours < cacheTTLHours {
-                print("⏳ 캐시 유효 – Service fetch 생략 (force == false)")
+                AppLogger.debug("⏳ 캐시 유효 – Service fetch 생략 (force == false)", category: .scheduleVM)
                 return
             }
         }
@@ -183,7 +183,7 @@ final class QWERScheduleViewModel {
                     UserDefaults.standard.set(now, forKey: lastFetchKey)
                 }
             } catch {
-                print("🔥 전체 스케줄 가져오기 실패: \(error.localizedDescription)")
+                AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }

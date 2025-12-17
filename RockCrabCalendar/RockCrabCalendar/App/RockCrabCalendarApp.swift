@@ -65,7 +65,7 @@ struct RockCrabCalendarApp: App {
         do {
             try RockTurtleCalendarFont.register()
         } catch {
-            print(error.localizedDescription)
+            AppLogger.error("폰트 등록 실패: \(error.localizedDescription)", category: .app)
         }
         
         requestNotificationPermission()
@@ -74,9 +74,9 @@ struct RockCrabCalendarApp: App {
     private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
-                print("알림 권한 요청 실패 : \(error.localizedDescription)")
+                AppLogger.error("알림 권한 요청 실패 : \(error.localizedDescription)", category: .notification)
             } else {
-                print("알림 권한 요청 결과 : \(granted ? "허용된" : "거부됨")")
+                AppLogger.debug("알림 권한 요청 결과 : \(granted ? "허용된" : "거부됨")", category: .notification)
             }
         }
     }

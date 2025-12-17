@@ -34,7 +34,9 @@ extension RockTurtleCalendarFont {
         }
         let sema = DispatchSemaphore(value: 0)
         CTFontManagerRegisterFontURLs(fontURLs as CFArray, .process, false) { errors, done in
-            print(errors)
+            #if DEBUG
+            AppLogger.error("Font 등록 오류: \(errors)", category: .app)
+            #endif
             if (done) {
                 errorArray.append(contentsOf: errors as! [CFError])
                 sema.signal()
@@ -47,4 +49,3 @@ extension RockTurtleCalendarFont {
         }
     }
 }
-

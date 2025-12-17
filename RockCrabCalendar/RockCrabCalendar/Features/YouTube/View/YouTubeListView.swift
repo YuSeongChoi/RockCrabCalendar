@@ -98,7 +98,7 @@ struct YouTubeListView: View {
             do {
                 try await viewModel.requestChannelInfo()
             } catch {
-                print(error.localizedDescription)
+                AppLogger.error("YouTubeListView channel info error: \(error.localizedDescription)", category: .youtube)
             }
         }
     }
@@ -241,4 +241,3 @@ private struct ChannelAvatar: View {
         return String(first + second)
     }
 }
-

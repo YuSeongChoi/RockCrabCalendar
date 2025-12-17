@@ -34,7 +34,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
             UserDefaults.standard.set(data, forKey: localKey)
         } catch {
             #if DEBUG
-            print("🔥 QWER Local 저장 실패: \(error.localizedDescription)")
+            AppLogger.error("QWER Local 저장 실패: \(error.localizedDescription)", category: .qwerService)
             #endif
         }
     }
@@ -102,7 +102,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
                 localMap[item.id] = item
                 didUpdate = true
                 #if DEBUG
-                print("🔄 QWER Local: ID 미일치로 필드기반 업데이트 수행 (title:\(item.title))")
+                AppLogger.debug("QWER Local: ID 미일치로 필드기반 업데이트 수행 (title:\(item.title))", category: .qwerService)
                 #endif
             }
         }
@@ -111,7 +111,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
             // 3) 기존 항목을 찾지 못한 경우: 신규 저장으로 처리
             localMap[item.id] = item
             #if DEBUG
-            print("➕ QWER Local: 기존 항목을 찾지 못해 새로 저장 (title:\(item.title))")
+            AppLogger.debug("QWER Local: 기존 항목을 찾지 못해 새로 저장 (title:\(item.title))", category: .qwerService)
             #endif
         }
 
@@ -134,11 +134,11 @@ actor QWERScheduleService: ScheduleServiceProtocol {
             })?.key {
                 localMap.removeValue(forKey: key)
                 #if DEBUG
-                print("🗑️ QWER Local: ID 미일치로 필드기반 삭제 수행 (title:\(item.title))")
+                AppLogger.debug("QWER Local: ID 미일치로 필드기반 삭제 수행 (title:\(item.title))", category: .qwerService)
                 #endif
             } else {
                 #if DEBUG
-                print("⚠️ QWER Local: 삭제 대상 미발견 (id: \(item.id))")
+                AppLogger.debug("QWER Local: 삭제 대상 미발견 (id: \(item.id))", category: .qwerService)
                 #endif
             }
         }
@@ -155,12 +155,12 @@ actor QWERScheduleService: ScheduleServiceProtocol {
         if snapshot.exists {
             try await updateSchedule(schedule)
             #if DEBUG
-            print("🔄 기존 스케줄 발견 → 업데이트 수행: \(schedule.id)")
+            AppLogger.debug("기존 스케줄 발견 → 업데이트 수행: \(schedule.id)", category: .qwerService)
             #endif
         } else {
             try await docRef.setData(data)
             #if DEBUG
-            print("✅ 스케줄 신규 등록 성공: \(schedule.id)")
+            AppLogger.debug("스케줄 신규 등록 성공: \(schedule.id)", category: .qwerService)
             #endif
         }
     }
@@ -172,7 +172,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
             .document(docId)
             .setData(data, merge: true)
         #if DEBUG
-        print("✅ QWER 단일 업데이트 성공: \(schedule.id)")
+        AppLogger.debug("QWER 단일 업데이트 성공: \(schedule.id)", category: .qwerService)
         #endif
     }
     
@@ -187,7 +187,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
 
         try await self.upsertBatch(payloads)
         #if DEBUG
-        print("✅ 업서트 배치 성공: \(payloads.count)건")
+        AppLogger.debug("업서트 배치 성공: \(payloads.count)건", category: .qwerService)
         #endif
     }
     
@@ -200,13 +200,13 @@ actor QWERScheduleService: ScheduleServiceProtocol {
         // Try delete by UUID-based id
         try await col.document(idUUID).delete()
         #if DEBUG
-        print("🗑️ 삭제 성공 (uuid id): \(idUUID)")
+        AppLogger.debug("삭제 성공 (uuid id): \(idUUID)", category: .qwerService)
         #endif
 
         // Also try delete by stable hash id (in case the document was saved with stable ID)
         try await col.document(idStable).delete()
         #if DEBUG
-        print("🗑️ 삭제 성공 (stable id): \(idStable)")
+        AppLogger.debug("삭제 성공 (stable id): \(idStable)", category: .qwerService)
         #endif
     }
     

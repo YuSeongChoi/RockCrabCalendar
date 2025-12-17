@@ -23,7 +23,7 @@ final class NotificationManager {
             return try await center.requestAuthorization(options: [.alert, .badge, .sound])
         } catch {
             #if DEBUG
-            print("📵 Notification auth error:", error.localizedDescription)
+            AppLogger.error("Notification auth error: \(error.localizedDescription)", category: .notification)
             #endif
             return false
         }
@@ -39,7 +39,7 @@ final class NotificationManager {
     ) {
         guard schedule.shouldNotify else {
             #if DEBUG
-            print("🔕 \(schedule.title): 알림 비활성화됨")
+            AppLogger.debug("\(schedule.title): 알림 비활성화됨", category: .notification)
             #endif
             return
         }

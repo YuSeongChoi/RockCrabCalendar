@@ -25,7 +25,7 @@ final class UserScheduleViewModel {
                 schedules = fetched.sorted(by: scheduleSortRule)
                 await migrateLegacyTimesIfNeeded()
             } catch {
-                print("⚠️ 사용자 일정 fetch 실패:", error.localizedDescription)
+                AppLogger.error("사용자 일정 fetch 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }
@@ -37,7 +37,7 @@ final class UserScheduleViewModel {
                 let fetched = try await service.fetchSchedule()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
-                print("⚠️ 사용자 일정 저장 실패:", error.localizedDescription)
+                AppLogger.error("사용자 일정 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }
@@ -49,7 +49,7 @@ final class UserScheduleViewModel {
                 let fetched = try await service.fetchSchedule()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
-                print("⚠️ 사용자 일정 업데이트 실패:", error.localizedDescription)
+                AppLogger.error("사용자 일정 업데이트 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }
@@ -61,7 +61,7 @@ final class UserScheduleViewModel {
                 let fetched = try await service.fetchSchedule()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
-                print("⚠️ 사용자 일정 삭제 실패:", error.localizedDescription)
+                AppLogger.error("사용자 일정 삭제 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }
@@ -73,7 +73,7 @@ final class UserScheduleViewModel {
                 let fetched = try await service.fetchSchedule()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
-                print("⚠️ 사용자 일정 저장 실패:", error.localizedDescription)
+                AppLogger.error("사용자 일정 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
     }

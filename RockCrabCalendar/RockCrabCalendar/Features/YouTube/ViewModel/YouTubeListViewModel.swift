@@ -54,7 +54,7 @@ final class YouTubeListViewModel {
                 self.lastSyncedAt = Date()
             }
         } catch {
-            print(#function, error.localizedDescription)
+            AppLogger.error("\(#function) \(error.localizedDescription)", category: .youtube)
         }
     }
     
@@ -71,7 +71,7 @@ final class YouTubeListViewModel {
                 self.lastSyncedAt = Date()
             }
         } catch {
-            print(#function, error.localizedDescription)
+            AppLogger.error("\(#function) \(error.localizedDescription)", category: .youtube)
         }
     }
     
@@ -88,7 +88,7 @@ final class YouTubeListViewModel {
                 self.lastSyncedAt = Date()
             }
         } catch {
-            print(#function, error.localizedDescription)
+            AppLogger.error("\(#function) \(error.localizedDescription)", category: .youtube)
         }
     }
     
