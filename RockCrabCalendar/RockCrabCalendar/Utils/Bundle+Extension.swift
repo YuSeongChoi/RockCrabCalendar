@@ -26,4 +26,8 @@ extension Bundle {
     var qwerChannelID: String {
         value(for: "QWERChannelID")
     }
+    
+    var holidayAPIKey: String {
+        value(for: "HolidayAPIKey")
+    }
 }
