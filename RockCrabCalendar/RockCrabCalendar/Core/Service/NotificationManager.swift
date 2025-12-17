@@ -77,7 +77,7 @@ final class NotificationManager {
 }
 
 // MARK: - 내부 헬퍼
-private extension NotificationManager {
+extension NotificationManager {
     func notificationID(for id: UUID, offset: TimeInterval) -> String {
         "\(id.uuidString)-\(Int(offset))"
     }
