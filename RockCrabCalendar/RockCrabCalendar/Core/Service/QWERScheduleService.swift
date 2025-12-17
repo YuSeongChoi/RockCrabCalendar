@@ -14,6 +14,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
     
     private let db = Firestore.firestore()
     private let collection = "schedules"
+    private let store: UserDefaults
     
     // Local (UserDefaults) storage for user-added QWER schedules
     private let localKey = "localQWERSchedules"
@@ -26,12 +27,17 @@ actor QWERScheduleService: ScheduleServiceProtocol {
         return formatter
     }()
     
+    // MARK: - Init
+    init(userDefaults: UserDefaults = .standard) {
+        self.store = userDefaults
+    }
+    
     // MARK: - Local Persistence (UserDefaults)
     private func persistLocal() {
         let values = Array(localMap.values)
         do {
             let data = try JSONEncoder().encode(values)
-            UserDefaults.standard.set(data, forKey: localKey)
+            store.set(data, forKey: localKey)
         } catch {
             #if DEBUG
             AppLogger.error("QWER Local 저장 실패: \(error.localizedDescription)", category: .qwerService)
@@ -40,7 +46,7 @@ actor QWERScheduleService: ScheduleServiceProtocol {
     }
 
     private func loadLocal() {
-        guard let data = UserDefaults.standard.data(forKey: localKey),
+        guard let data = store.data(forKey: localKey),
               let arr = try? JSONDecoder().decode([Schedule].self, from: data) else {
             return
         }

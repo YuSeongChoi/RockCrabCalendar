@@ -11,6 +11,7 @@ actor UserScheduleService: ScheduleServiceProtocol {
     typealias Schedule = UserScheduleItem
     
     private let userDefaultKey = "userSchedules"
+    private let store: UserDefaults
     
     // Dictionary 기반 저장
     private var scheduleMap: [UUID: Schedule] = [:]
@@ -19,8 +20,8 @@ actor UserScheduleService: ScheduleServiceProtocol {
         return Array(scheduleMap.values)
     }
     
-    init() {
-        // 초기 생성 시 로드
+    init(userDefaults: UserDefaults = .standard) {
+        self.store = userDefaults
         loadFromUserDefaults()
     }
     
@@ -122,14 +123,14 @@ extension UserScheduleService {
         let values = Array(scheduleMap.values)
         do {
             let data = try JSONEncoder().encode(values)
-            UserDefaults.standard.set(data, forKey: userDefaultKey)
+            store.set(data, forKey: userDefaultKey)
         } catch {
             AppLogger.error("UserScheduleService 저장 실패: \(error.localizedDescription)", category: .userService)
         }
     }
     
     private func loadFromUserDefaults() {
-        guard let data = UserDefaults.standard.data(forKey: userDefaultKey),
+        guard let data = store.data(forKey: userDefaultKey),
               let arr = try? JSONDecoder().decode([Schedule].self, from: data) else {
             return
         }
