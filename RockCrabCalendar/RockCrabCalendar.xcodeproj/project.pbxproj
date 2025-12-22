@@ -18,6 +18,7 @@
 		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
 		5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */; };
 		5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1121A72EE152EA00588095 /* NotificationManager.swift */; };
+		5D1E98072EF2A0A8000C2468 /* HolidayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E98062EF2A0A8000C2468 /* HolidayDTO.swift */; };
 		5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */; };
 		5D261D2A2EA204F8004DEE6B /* ScheduleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */; };
 		5D5E852D2E30B9D700DB8775 /* QWERScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */; };
@@ -104,6 +105,7 @@
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		5D1121A72EE152EA00588095 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		5D1E98062EF2A0A8000C2468 /* HolidayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayDTO.swift; sourceTree = "<group>"; };
 		5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleServiceProtocol.swift; sourceTree = "<group>"; };
 		5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleItem.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 			children = (
 				5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */,
 				5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */,
+				5D1E98062EF2A0A8000C2468 /* HolidayDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -738,6 +741,7 @@
 				5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */,
 				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
+				5D1E98072EF2A0A8000C2468 /* HolidayDTO.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,

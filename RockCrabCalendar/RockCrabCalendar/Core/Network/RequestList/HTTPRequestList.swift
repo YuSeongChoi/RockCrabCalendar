@@ -11,6 +11,40 @@ import Alamofire
 public enum HTTPRequestList {}
 
 extension HTTPRequestList {
+    // MARK: 공휴일 조회
+    struct HolidayDateInfoRequest: DataRequestFormProtocol, Encodable {
+        var base: String { "https://apis.data.go.kr/B090041/openapi" }
+        var path: String { "service/SpcdeInfoService/getRestDeInfo" }
+        var method: HTTPMethod { .get }
+        var validation: DataRequest.Validation? { nil }
+        let apiKey: String
+        let solYear: String
+        let numOfRows: String = "100"
+        let _type: String = "json"
+        
+        func asURLRequest() throws -> URLRequest {
+            var request = try baseRequest
+            let encodedKey: String = {
+                if apiKey.contains("%") {
+                    return apiKey
+                }
+                let reserved = CharacterSet(charactersIn: "+&=?/")
+                let allowed = CharacterSet.urlQueryAllowed.subtracting(reserved)
+                return apiKey.addingPercentEncoding(withAllowedCharacters: allowed) ?? apiKey
+            }()
+            
+            var urlCompoents = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)
+            urlCompoents?.percentEncodedQueryItems = [
+                URLQueryItem(name: "serviceKey", value: encodedKey),
+                URLQueryItem(name: "solYear", value: solYear),
+                URLQueryItem(name: "numOfRows", value: numOfRows),
+                URLQueryItem(name: "_type", value: _type)
+            ]
+            request.url = urlCompoents?.url
+            return request
+        }
+    }
+    
     // MARK: 채널 리스트 조회
     struct ChannelListRequest: DataRequestFormProtocol, Encodable {
         var path: String { "search" }

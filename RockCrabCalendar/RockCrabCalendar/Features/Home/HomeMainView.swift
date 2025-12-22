@@ -54,6 +54,10 @@ struct HomeMainView: View {
             }
         }
         .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
+        .task {
+            let year = Calendar.current.component(.year, from: Date())
+            await calendarVM.fetchHolidayOnce(baseYear: year)
+        }
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.fetchAllSchedules(force: false)

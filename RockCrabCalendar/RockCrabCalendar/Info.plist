@@ -5,7 +5,10 @@
 	<key>NSAllowsArbitraryLoads</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
-	<dict/>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>QWERChannelID</key>
 	<string>$(QWER_CHANNEL_ID)</string>
 	<key>YouTubeAPIKey</key>

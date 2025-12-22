@@ -11,6 +11,7 @@ struct ScheduleListView: View {
     var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
+    @State private var holidayService: HolidayService = .shared
     
     @State private var editTarget: ScheduleEditView.Mode? = nil
     
@@ -47,10 +48,17 @@ struct ScheduleListView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 12) {
                         ForEach(days, id: \.self) { day in
-                            Text(dayLabelFormatter.string(from: day))
-                                .pretendSemiBold(size: 16)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 20)
+                            HStack(spacing: 6) {
+                                Text(dayLabelFormatter.string(from: day))
+                                    .pretendSemiBold(size: 16)
+                                    .foregroundStyle(.secondary)
+                                if let holiday = holidayService.name(on: day) {
+                                    Text(holiday)
+                                        .pretendSemiBold(size: 13)
+                                        .foregroundStyle(.red)
+                                }
+                            }
+                            .padding(.horizontal, 20)
                             
                             if let qItems = groupedQ[day] {
                                 scheduleListView(schedules: qItems)

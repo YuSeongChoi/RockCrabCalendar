@@ -13,6 +13,7 @@ struct CalendarDayCell: View {
     let isSelected: Bool
     let isInCurrentMonth: Bool
     let eventColors: [Color]
+    let holidayName: String?
 
     private let dotSize: CGFloat = 6
     private let dotBackgroundSize: CGFloat = 8
@@ -64,6 +65,14 @@ struct CalendarDayCell: View {
                                 .frame(height: dayAreaHeight, alignment: .top)
                                 .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.35))
                                 .padding(.top, 3)
+                        }
+                        if let holiday = holidayName, isInCurrentMonth {
+                            Text(holiday)
+                                .font(.system(size: 10, weight: .semibold))
+                                .foregroundColor(.red)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.6)
+                                .padding(.top, 2)
                         }
 
                         if isPad {
@@ -124,6 +133,7 @@ struct CalendarDayCell: View {
     }
 
     private func weekdayColor(_ weekday: Int) -> Color {
+        if holidayName != nil { return .red }
         switch weekday {
         case 1: return .red       // Sunday
         case 7: return .blue      // Saturday
@@ -131,4 +141,3 @@ struct CalendarDayCell: View {
         }
     }
 }
-
