@@ -53,7 +53,7 @@ struct HomeMainView: View {
                 }
             }
         }
-        .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white }))
+        .background(Color.appBackground)
         .task {
             let year = Calendar.current.component(.year, from: Date())
             await calendarVM.fetchHolidayOnce(baseYear: year)
@@ -140,7 +140,7 @@ struct HomeMainView: View {
                     .labelStyle(.titleAndIcon)
                     .pretendSemiBold(size: 14)
                     .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
+                    .background(Capsule().fill(Color.pillBackground))
                     .foregroundColor(.primary)
             }
             Spacer()
@@ -153,7 +153,7 @@ struct HomeMainView: View {
                 Text("오늘")
                     .pretendSemiBold(size: 14)
                     .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
+                    .background(Capsule().fill(Color.pillBackground))
                     .foregroundColor(.primary)
             }
             
@@ -178,7 +178,7 @@ struct HomeMainView: View {
             .pretendSemiBold(size: 14)
             .padding(6)
             .animation(.easeInOut(duration: 0.25), value: viewType)
-            .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
+            .background(Capsule().fill(Color.pillBackground))
             .foregroundColor(.primary)
             
             Button {
@@ -188,7 +188,7 @@ struct HomeMainView: View {
                 Image(systemName: "arrow.circlepath")
                     .pretendSemiBold(size: 14)
                     .padding(6)
-                    .background(Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 })))
+                    .background(Capsule().fill(Color.pillBackground))
                     .foregroundColor(.primary)
             }
         }
@@ -214,7 +214,7 @@ struct HomeMainView: View {
                                 .pretendSemiBold(size: 14)
                                 .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
                                 .background(
-                                    Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
+                                    Capsule().fill(Color.pillBackground)
                                 )
                                 .foregroundColor(.primary)
                         }
@@ -230,7 +230,7 @@ struct HomeMainView: View {
                                 .pretendSemiBold(size: 14)
                                 .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
                                 .background(
-                                    Capsule().fill(Color(UIColor { $0.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6 }))
+                                    Capsule().fill(Color.pillBackground)
                                 )
                                 .foregroundColor(.primary)
                         }

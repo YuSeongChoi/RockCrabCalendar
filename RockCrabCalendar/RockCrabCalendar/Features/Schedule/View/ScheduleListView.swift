@@ -29,15 +29,11 @@ struct ScheduleListView: View {
             let qwerMonth = monthSchedulesForCurrentMonth()
             let userMonth = monthUserSchedulesForCurrentMonth()
             if qwerMonth.isEmpty && userMonth.isEmpty {
-                VStack(spacing: 8) {
-                    Image(systemName: "calendar.badge.exclamationmark")
-                        .font(.system(size: 24))
-                        .foregroundStyle(.tertiary)
-                    Text("이번 달 일정이 없습니다")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                }
+                EmptyStateView(
+                    systemImage: "calendar.badge.exclamationmark",
+                    title: "이번 달 일정이 없습니다"
+                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
             } else {
@@ -132,9 +128,7 @@ struct ScheduleListView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(UIColor { trait in
-                            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
-                        }))
+                        .fill(Color.cardBackground)
                 )
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())
@@ -171,9 +165,7 @@ struct ScheduleListView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(UIColor { trait in
-                            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
-                        }))
+                        .fill(Color.cardBackground)
                 )
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())

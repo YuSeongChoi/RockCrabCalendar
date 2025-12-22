@@ -46,6 +46,7 @@
 		5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */; };
 		5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */; };
 		5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */; };
+		5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -138,6 +139,7 @@
 		5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayAPIClient.swift; sourceTree = "<group>"; };
 		5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayRepository.swift; sourceTree = "<group>"; };
 		5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeAPIClient.swift; sourceTree = "<group>"; };
+		5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 			children = (
 				5DE016292EF9199F003E9843 /* AppDateFormats.swift */,
 				5DE0162A2EF9199F003E9843 /* AppStorageKeys.swift */,
+				5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */,
 				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
 				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
 				5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */,
@@ -800,6 +803,7 @@
 				5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */,
 				5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */,
 				5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */,
+				5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
 				5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */,

@@ -68,19 +68,15 @@ struct CalendarView: View {
                         .scrollIndicators(.hidden)
                     } else {
                         Spacer()
-                        VStack(spacing: 8) {
-                            Image(systemName: "calendar.badge.exclamationmark")
-                                .font(.system(size: 24))
-                                .foregroundStyle(.tertiary)
-                            Text("일정이 없습니다")
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                        }
+                        EmptyStateView(
+                            systemImage: "calendar.badge.exclamationmark",
+                            title: "일정이 없습니다"
+                        )
                         Spacer()
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(UIColor { $0.userInterfaceStyle == .dark ? .black : .white }))
+                .background(Color.appBackground)
             }
         }
         .navigationDestination(item: Binding(
@@ -313,9 +309,7 @@ struct CalendarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(UIColor { trait in
-                            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
-                        }))
+                        .fill(Color.cardBackground)
                 )
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())
@@ -356,9 +350,7 @@ struct CalendarView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color(UIColor { trait in
-                            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
-                        }))
+                        .fill(Color.cardBackground)
                 )
                 .padding(.horizontal, 10)
                 .contentShape(Rectangle())

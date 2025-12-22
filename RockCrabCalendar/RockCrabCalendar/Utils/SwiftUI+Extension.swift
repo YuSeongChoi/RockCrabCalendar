@@ -89,4 +89,18 @@ extension Color {
     static let pastelMagenta = Color(red: 244/255, green: 175/255, blue: 199/255)
     static let pastelHina = Color(red: 175/255, green: 205/255, blue: 244/255)
     static let pastelMing = Color(red: 199/255, green: 232/255, blue: 199/255)
+
+    static var appBackground: Color {
+        Color(UIColor { $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white })
+    }
+
+    static var cardBackground: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
+        })
+    }
+
+    static var pillBackground: Color {
+        cardBackground
+    }
 }

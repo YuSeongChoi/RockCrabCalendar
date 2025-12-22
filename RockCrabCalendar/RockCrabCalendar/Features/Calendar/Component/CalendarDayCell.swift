@@ -124,9 +124,7 @@ struct CalendarDayCell: View {
             }
             .frame(width: size.width, height: size.height)
             .background(
-                Color(UIColor {
-                    $0.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
-                })
+                Color.appBackground
             )
             .contentShape(Rectangle())
         }
