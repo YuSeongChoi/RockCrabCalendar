@@ -143,66 +143,14 @@ final class HolidayService {
 }
 
 extension CalendarViewModel {
-    func fetchHolidayOnce(baseYear: Int) async {
-        let targetYears = Set([baseYear - 1, baseYear, baseYear + 1])
-        let cachedYears = Set(UserDefaults.standard.array(forKey: AppStorageKeys.holidayCacheYears) as? [Int] ?? [])
-        let cachedBaseYear = UserDefaults.standard.integer(forKey: AppStorageKeys.holidayCacheBaseYear)
-        if cachedBaseYear == baseYear, !cachedYears.isEmpty {
-            return
-        }
-
+    func fetchHolidayOnce(baseYear: Int, repository: HolidayRepository = HolidayRepository()) async {
         do {
-            var holidayByDate: [String: String] = [:]
-            let sortedYears = targetYears.sorted()
-            for year in sortedYears {
-                let response = try await HTTPRequestList.HolidayDateInfoRequest(
-                    apiKey: HOLIDAY_API_KEY,
-                    solYear: String(year)
-                )
-                .buildDataRequest()
-                .serializingDecodable(HolidayResponse.self, automaticallyCancelling: true)
-                .result
-                .mapError { $0.underlyingError ?? $0 }
-                .get()
-                guard let items = response.response.body.items?.item else { continue }
-                let dtos = items.filter { $0.isHoliday == "Y" }
-                for dto in dtos {
-                    let dateKey = formatHolidayDate(dto.locdate)
-                    if holidayByDate[dateKey] == nil {
-                        holidayByDate[dateKey] = dto.dateName
-                    }
-                }
+            if let jsonData = try await repository.fetchHolidaysIfNeeded(baseYear: baseYear) {
+                HolidayService.shared.updateWithJSONData(jsonData)
+                print("✅ 공휴일 데이터 최초 API 호출 및 저장 완료")
             }
-
-            let saveArray = holidayByDate
-                .sorted { $0.key < $1.key }
-                .map { ["date": $0.key, "name": $0.value] }
-            let jsonData = try JSONSerialization.data(withJSONObject: saveArray)
-            HolidayService.shared.updateWithJSONData(jsonData)
-
-            UserDefaults.standard.set(Array(targetYears).sorted(), forKey: AppStorageKeys.holidayCacheYears)
-            UserDefaults.standard.set(baseYear, forKey: AppStorageKeys.holidayCacheBaseYear)
-            print("✅ 공휴일 데이터 최초 API 호출 및 저장 완료")
         } catch {
             print("❌ 공휴일 API 호출 실패:", error)
         }
-    }
-
-    private func formatHolidayDate(_ raw: Int) -> String {
-        let rawString = String(raw)
-        let input = DateFormatter()
-        input.calendar = Calendar(identifier: .gregorian)
-        input.locale = Locale(identifier: "ko_KR")
-        input.timeZone = TimeZone(identifier: "Asia/Seoul")
-        input.dateFormat = AppDateFormats.holidayInput
-
-        let output = DateFormatter()
-        output.calendar = Calendar(identifier: .gregorian)
-        output.locale = Locale(identifier: "ko_KR")
-        output.timeZone = TimeZone(identifier: "Asia/Seoul")
-        output.dateFormat = AppDateFormats.holidayOutput
-
-        guard let date = input.date(from: rawString) else { return rawString }
-        return output.string(from: date)
     }
 }

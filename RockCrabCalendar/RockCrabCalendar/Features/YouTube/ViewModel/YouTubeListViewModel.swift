@@ -19,8 +19,13 @@ final class YouTubeListViewModel {
     // MARK: - 페이징 상태
     private var nextPageToken: String?      // 다음 페이지 토큰
     private var hasMore: Bool = true        // 다음 페이지 존재 여부
-    
+    private let apiClient: YouTubeAPIClient
+
     // MARK: - 퍼블릭 API
+    init(apiClient: YouTubeAPIClient = YouTubeAPIClient()) {
+        self.apiClient = apiClient
+    }
+
     /// 화면 최초 진입 시 한번만 호출
     func loadIfNeeded() {
         guard youtubeList.isEmpty, !isLoading else { return }
@@ -97,20 +102,7 @@ final class YouTubeListViewModel {
     /// - Parameter pageToken: 다음 페이지 토큰(없으면 최초 페이지)
     /// - Returns: (도메인 모델 매핑, 다음 페이지 토큰)
     private func requestYoutubeList(pageToken: String?) async throws -> (videos: [YouTubeVideo], nextPageToken: String?) {
-        // 필요 시 pageSize 조절 가능
-        let request = HTTPRequestList.ChannelListRequest(
-            key: API_KEY,
-            channelId: CHANNEL_ID,
-            maxResults: 10,
-            pageToken: pageToken
-        )
-        
-        let dto = try await request
-            .buildDataRequest()
-            .serializingDecodable(YouTubeSearchListDTO.self, automaticallyCancelling: true)
-            .result
-            .mapError { $0.underlyingError ?? $0 }
-            .get()
+        let dto = try await apiClient.fetchVideos(pageToken: pageToken)
         
         // DTO -> Domain 매핑 (비디오만 필터)
         let mapped = YouTubeSearchMapper.map(dto)
@@ -118,12 +110,7 @@ final class YouTubeListViewModel {
     }
     
     func requestChannelInfo() async throws {
-        let dto = try await HTTPRequestList.ChannelInfoRequest()
-            .buildDataRequest()
-            .serializingDecodable(YouTubeChannelDTO.self, automaticallyCancelling: true)
-            .result
-            .mapError{ $0.underlyingError ?? $0 }
-            .get()
+        let dto = try await apiClient.fetchChannelInfo()
         
         let urlString =
         dto.items.first?.snippet.thumbnails.default?.url ??

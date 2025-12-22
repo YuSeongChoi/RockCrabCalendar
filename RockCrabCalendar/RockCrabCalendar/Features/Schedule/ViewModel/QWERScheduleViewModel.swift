@@ -22,13 +22,13 @@ final class QWERScheduleViewModel {
     
     // MARK: - 카테고리 필터 상태
     // 카테고리 상태를 UserDefaults에 저장하기 위한 키
-    private let categoryKey = AppStorageKeys.activeScheduleCategories
     // 현재 활성화된 카테고리 집합 (기본: 전체)
     var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
     // 모든 카테고리가 선택되어 있는지 여부
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
     private let service: QWERScheduleService
+    private let cacheStore: ScheduleCacheStore
     private var cancellables = Set<AnyCancellable>()
     private let instanceID = UUID()
 
@@ -72,11 +72,12 @@ final class QWERScheduleViewModel {
         }
     }
     
-    init(service: QWERScheduleService = QWERScheduleService()) {
+    init(service: QWERScheduleService = QWERScheduleService(),
+         cacheStore: ScheduleCacheStore = ScheduleCacheStore()) {
         self.service = service
-        if let raw = UserDefaults.standard.array(forKey: categoryKey) as? [String] {
-            let decoded = raw.compactMap { ScheduleCategory(rawValue: $0) }
-            if !decoded.isEmpty { self.activeCategories = Set(decoded) }
+        self.cacheStore = cacheStore
+        if let saved = cacheStore.loadActiveCategories() {
+            self.activeCategories = saved
         }
         // Observe local schedule changes coming from other instances
         QWERScheduleViewModel.localChangeSubject
@@ -146,8 +147,6 @@ final class QWERScheduleViewModel {
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)
     func fetchAllSchedules(force: Bool = false) {
-        let cacheKey = AppStorageKeys.qwerScheduleCacheData
-        let lastFetchKey = AppStorageKeys.qwerScheduleLastFetchDate
         let now = Date()
 
         if isFetching {
@@ -155,13 +154,12 @@ final class QWERScheduleViewModel {
         }
 
         // 1) Cache-first
-        if let cachedData = UserDefaults.standard.data(forKey: cacheKey),
-           let cachedSchedules = try? JSONDecoder().decode([QWERScheduleItem].self, from: cachedData) {
-            self.schedules = cachedSchedules
+        if let cachedSchedules = cacheStore.loadCachedSchedules() {
+            schedules = cachedSchedules
         }
 
-        if let lastFetch = UserDefaults.standard.object(forKey: lastFetchKey) as? Date {
-            self.lastFetchedAt = lastFetch
+        if let lastFetch = cacheStore.loadLastFetchDate() {
+            lastFetchedAt = lastFetch
             let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
             if !force, let hours = diff.hour, hours < cacheTTLHours {
                 AppLogger.debug("⏳ 캐시 유효 – Service fetch 생략 (force == false)", category: .scheduleVM)
@@ -178,10 +176,8 @@ final class QWERScheduleViewModel {
                 let fetched = try await self.service.fetchSchedule()
                 self.schedules = fetched
                 self.lastFetchedAt = now
-                if let data = try? JSONEncoder().encode(fetched) {
-                    UserDefaults.standard.set(data, forKey: cacheKey)
-                    UserDefaults.standard.set(now, forKey: lastFetchKey)
-                }
+                self.cacheStore.saveCachedSchedules(fetched)
+                self.cacheStore.saveLastFetchDate(now)
             } catch {
                 AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -229,8 +225,7 @@ extension QWERScheduleViewModel {
     
     // 카테고리 선택/토글/저장
     private func persistCategories() {
-        let raw = activeCategories.map { $0.rawValue }
-        UserDefaults.standard.set(raw, forKey: categoryKey)
+        cacheStore.saveActiveCategories(activeCategories)
     }
 
     private func passesCategory(_ item: QWERScheduleItem) -> Bool {

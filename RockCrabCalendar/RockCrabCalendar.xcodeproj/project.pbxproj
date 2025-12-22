@@ -41,6 +41,11 @@
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
 		5DE0162B2EF9199F003E9843 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0162A2EF9199F003E9843 /* AppStorageKeys.swift */; };
 		5DE0162C2EF9199F003E9843 /* AppDateFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE016292EF9199F003E9843 /* AppDateFormats.swift */; };
+		5DE016372EF91B0A003E9843 /* ScheduleCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */; };
+		5DE016402EF920AA003E9843 /* HolidayCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */; };
+		5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */; };
+		5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */; };
+		5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
@@ -128,6 +133,11 @@
 		5D8B12582E8A4AD30014649C /* UserScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleService.swift; sourceTree = "<group>"; };
 		5DE016292EF9199F003E9843 /* AppDateFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormats.swift; sourceTree = "<group>"; };
 		5DE0162A2EF9199F003E9843 /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
+		5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCacheStore.swift; sourceTree = "<group>"; };
+		5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCacheStore.swift; sourceTree = "<group>"; };
+		5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayAPIClient.swift; sourceTree = "<group>"; };
+		5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayRepository.swift; sourceTree = "<group>"; };
+		5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeAPIClient.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -360,8 +370,13 @@
 			children = (
 				5D261D252EA204A9004DEE6B /* Protocol */,
 				5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */,
+				5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */,
+				5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */,
+				5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */,
+				5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */,
 				5D8B12582E8A4AD30014649C /* UserScheduleService.swift */,
 				5D1121A72EE152EA00588095 /* NotificationManager.swift */,
+				5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -781,9 +796,14 @@
 				5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */,
 				5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */,
 				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
+				5DE016402EF920AA003E9843 /* HolidayCacheStore.swift in Sources */,
+				5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */,
+				5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */,
+				5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
 				5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */,
+				5DE016372EF91B0A003E9843 /* ScheduleCacheStore.swift in Sources */,
 				5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
