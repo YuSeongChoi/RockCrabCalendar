@@ -80,13 +80,13 @@ final class HolidayService {
         return cal
     }()
     
-    private let storageKey = "holidayCacheData"
+    private let storageKey = AppStorageKeys.holidayCacheData
     private let formatter: DateFormatter = {
         let f = DateFormatter()
         f.calendar = Calendar(identifier: .gregorian)
         f.locale = Locale(identifier: "ko_KR")
         f.timeZone = TimeZone(identifier: "Asia/Seoul")
-        f.dateFormat = "yyyy-MM-dd"
+        f.dateFormat = AppDateFormats.serverDay
         return f
     }()
     
@@ -145,8 +145,8 @@ final class HolidayService {
 extension CalendarViewModel {
     func fetchHolidayOnce(baseYear: Int) async {
         let targetYears = Set([baseYear - 1, baseYear, baseYear + 1])
-        let cachedYears = Set(UserDefaults.standard.array(forKey: "holidayCacheYears") as? [Int] ?? [])
-        let cachedBaseYear = UserDefaults.standard.integer(forKey: "holidayCacheBaseYear")
+        let cachedYears = Set(UserDefaults.standard.array(forKey: AppStorageKeys.holidayCacheYears) as? [Int] ?? [])
+        let cachedBaseYear = UserDefaults.standard.integer(forKey: AppStorageKeys.holidayCacheBaseYear)
         if cachedBaseYear == baseYear, !cachedYears.isEmpty {
             return
         }
@@ -180,8 +180,8 @@ extension CalendarViewModel {
             let jsonData = try JSONSerialization.data(withJSONObject: saveArray)
             HolidayService.shared.updateWithJSONData(jsonData)
 
-            UserDefaults.standard.set(Array(targetYears).sorted(), forKey: "holidayCacheYears")
-            UserDefaults.standard.set(baseYear, forKey: "holidayCacheBaseYear")
+            UserDefaults.standard.set(Array(targetYears).sorted(), forKey: AppStorageKeys.holidayCacheYears)
+            UserDefaults.standard.set(baseYear, forKey: AppStorageKeys.holidayCacheBaseYear)
             print("✅ 공휴일 데이터 최초 API 호출 및 저장 완료")
         } catch {
             print("❌ 공휴일 API 호출 실패:", error)
@@ -194,13 +194,13 @@ extension CalendarViewModel {
         input.calendar = Calendar(identifier: .gregorian)
         input.locale = Locale(identifier: "ko_KR")
         input.timeZone = TimeZone(identifier: "Asia/Seoul")
-        input.dateFormat = "yyyyMMdd"
+        input.dateFormat = AppDateFormats.holidayInput
 
         let output = DateFormatter()
         output.calendar = Calendar(identifier: .gregorian)
         output.locale = Locale(identifier: "ko_KR")
         output.timeZone = TimeZone(identifier: "Asia/Seoul")
-        output.dateFormat = "yyyy-MM-dd"
+        output.dateFormat = AppDateFormats.holidayOutput
 
         guard let date = input.date(from: rawString) else { return rawString }
         return output.string(from: date)

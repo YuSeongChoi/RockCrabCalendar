@@ -10,7 +10,7 @@ import Foundation
 actor UserScheduleService: ScheduleServiceProtocol {
     typealias Schedule = UserScheduleItem
     
-    private let userDefaultKey = "userSchedules"
+    private let userDefaultKey = AppStorageKeys.userSchedules
     private let store: UserDefaults
     
     // Dictionary 기반 저장

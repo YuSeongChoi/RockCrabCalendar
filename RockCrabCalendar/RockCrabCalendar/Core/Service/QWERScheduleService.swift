@@ -17,13 +17,13 @@ actor QWERScheduleService: ScheduleServiceProtocol {
     private let store: UserDefaults
     
     // Local (UserDefaults) storage for user-added QWER schedules
-    private let localKey = "localQWERSchedules"
+    private let localKey = AppStorageKeys.qwerLocalSchedules
     private var localMap: [UUID: Schedule] = [:]
     
     // 서버 저장용 날짜 포맷터
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = AppDateFormats.serverDay
         return formatter
     }()
     

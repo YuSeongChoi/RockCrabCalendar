@@ -19,7 +19,7 @@ struct CalendarView: View {
     private let lastSyncFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "ko_KR")
-        f.dateFormat = "yyyy.MM.dd HH:mm"
+        f.dateFormat = AppDateFormats.lastSync
         return f
     }()
     private var lastSyncText: String {

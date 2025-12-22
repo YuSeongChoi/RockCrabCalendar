@@ -115,7 +115,7 @@ extension UserScheduleViewModel {
     func migrateLegacyTimesIfNeeded() async {
         // UserDefaults 등을 통해 한 번만 실행되도록 설정
         // TODO: 테스트용
-        let key = "hasMigratedUserScheduleTimes"
+        let key = AppStorageKeys.userScheduleLegacyTimeMigration
         if UserDefaults.standard.bool(forKey: key) {
             return
         }
@@ -126,7 +126,7 @@ extension UserScheduleViewModel {
             if !item.time.isEmpty && item.startTime == nil {
                 var updated = item
                 let formatter = DateFormatter()
-                formatter.dateFormat = "HH:mm"
+                formatter.dateFormat = AppDateFormats.hourMinute
                 formatter.locale = Locale(identifier: "ko_KR")
                 if let parsed = formatter.date(from: item.time) {
                     updated.startTime = parsed

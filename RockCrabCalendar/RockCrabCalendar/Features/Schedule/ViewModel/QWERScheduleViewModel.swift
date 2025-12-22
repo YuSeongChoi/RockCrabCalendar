@@ -22,7 +22,7 @@ final class QWERScheduleViewModel {
     
     // MARK: - 카테고리 필터 상태
     // 카테고리 상태를 UserDefaults에 저장하기 위한 키
-    private let categoryKey = "activeScheduleCategories"
+    private let categoryKey = AppStorageKeys.activeScheduleCategories
     // 현재 활성화된 카테고리 집합 (기본: 전체)
     var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
     // 모든 카테고리가 선택되어 있는지 여부
@@ -146,8 +146,8 @@ final class QWERScheduleViewModel {
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)
     func fetchAllSchedules(force: Bool = false) {
-        let cacheKey = "cachedSchedules"
-        let lastFetchKey = "lastScheduleFetchDate"
+        let cacheKey = AppStorageKeys.qwerScheduleCacheData
+        let lastFetchKey = AppStorageKeys.qwerScheduleLastFetchDate
         let now = Date()
 
         if isFetching {
