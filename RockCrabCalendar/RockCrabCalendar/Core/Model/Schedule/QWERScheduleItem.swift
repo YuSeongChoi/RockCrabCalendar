@@ -740,6 +740,22 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "서울 코스프레 페스티벌",
+            date: simpleDateFormatter.date(from: "2025-12-21")!,
+            time: "",
+            place: "고양시 KINTEX",
+            members: [.W, .E],
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "크리스마스 파티 위버스 라이브",
+            date: simpleDateFormatter.date(from: "2025-12-24")!,
+            startTime: simpleTimeFormatter.date(from: "19:00"),
+            place: "위버스 라이브",
+            members: [.Q, .W, .E, .R],
+            category: .other
+        ),
+        QWERScheduleItem(
             title: "위버스 팬사인회",
             date: simpleDateFormatter.date(from: "2025-12-27")!,
             time: "",
@@ -749,8 +765,8 @@ extension QWERScheduleItem {
         ),
         QWERScheduleItem(
             title: "WORLD K-POP Festival Countdown",
-            date: simpleDateFormatter.date(from: "2025-12-31")!,
-            startTime: simpleTimeFormatter.date(from: "21:00"),
+            date: simpleDateFormatter.date(from: "2026-01-01")!,
+            startTime: simpleTimeFormatter.date(from: "02:25"),
             place: "DDP 아트홀 1관",
             members: [.Q, .W, .E, .R],
             category: .concert
