@@ -57,6 +57,10 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.members = members
         self.category = category
 
+        if self.isAllDay, self.startTime != nil || self.endTime != nil {
+            self.isAllDay = false
+        }
+
         // Legacy migration: if time exists -> convert
         if !time.isEmpty && startTime == nil {
             let formatter = DateFormatter()
@@ -99,9 +103,21 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
 
         self.time = (try? container.decode(String.self, forKey: .time)) ?? ""
 
-        self.isAllDay = (try? container.decode(Bool.self, forKey: .isAllDay)) ?? true
-        self.startTime = try? container.decode(Date.self, forKey: .startTime)
-        self.endTime = try? container.decode(Date.self, forKey: .endTime)
+        if let ts = try? container.decode(Timestamp.self, forKey: .startTime) {
+            self.startTime = ts.dateValue()
+        } else {
+            self.startTime = try? container.decode(Date.self, forKey: .startTime)
+        }
+        if let ts = try? container.decode(Timestamp.self, forKey: .endTime) {
+            self.endTime = ts.dateValue()
+        } else {
+            self.endTime = try? container.decode(Date.self, forKey: .endTime)
+        }
+        if let decodedIsAllDay = try? container.decode(Bool.self, forKey: .isAllDay) {
+            self.isAllDay = decodedIsAllDay
+        } else {
+            self.isAllDay = (self.startTime == nil && self.endTime == nil)
+        }
 
         // Migrate legacy
         if !self.time.isEmpty && self.startTime == nil {
@@ -113,6 +129,9 @@ struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
                 self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
                 self.isAllDay = false
             }
+        }
+        if self.isAllDay, self.startTime != nil || self.endTime != nil {
+            self.isAllDay = false
         }
 
         self.place = (try? container.decode(String.self, forKey: .place)) ?? ""
@@ -134,13 +153,14 @@ enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
 
 extension QWERScheduleItem {
     var asDictionary: [String: Any] {
+        let resolvedIsAllDay = (startTime == nil && endTime == nil) ? isAllDay : false
         var dict: [String: Any] = [
             "title": title,
             "date": Timestamp(date: date),
             "place": place,
             "members": members.map { $0.rawValue },
             "category": category.rawValue,
-            "isAllDay": isAllDay
+            "isAllDay": resolvedIsAllDay
         ]
 
         if let startTime = startTime {
@@ -845,4 +865,3 @@ extension QWERScheduleItem {
         ),
     ]
 }
-
