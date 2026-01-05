@@ -808,6 +808,14 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "히나 생일",
+            date: simpleDateFormatter.date(from: "2026-01-30")!,
+            time: "",
+            place: "",
+            members: [.E],
+            category: .birthday
+        ),
+        QWERScheduleItem(
             title: "WORLD TOUR HONG KONG",
             date: simpleDateFormatter.date(from: "2026-02-08")!,
             time: "",
