@@ -11,20 +11,20 @@ import Foundation
 final class AppEnvironment: ObservableObject {
     let qwerScheduleUseCase: QWERScheduleUseCase
     let userScheduleUseCase: UserScheduleUseCase
-    let youTubeUseCase: YouTubeUseCase
     let holidayUseCase: HolidayUseCase
+    let youTubeRepository: YouTubeRepository
 
     // Live dependency graph for the app.
     init(
         qwerScheduleUseCase: QWERScheduleUseCase = QWERScheduleUseCase(repository: QWERScheduleService()),
         userScheduleUseCase: UserScheduleUseCase = UserScheduleUseCase(repository: UserScheduleService()),
-        youTubeUseCase: YouTubeUseCase = YouTubeUseCase(repository: YouTubeRepositoryImpl()),
-        holidayUseCase: HolidayUseCase = HolidayUseCase(repository: HolidayRepository())
+        holidayUseCase: HolidayUseCase = HolidayUseCase(repository: HolidayRepository()),
+        youTubeRepository: YouTubeRepository = YouTubeRepositoryImpl()
     ) {
         self.qwerScheduleUseCase = qwerScheduleUseCase
         self.userScheduleUseCase = userScheduleUseCase
-        self.youTubeUseCase = youTubeUseCase
         self.holidayUseCase = holidayUseCase
+        self.youTubeRepository = youTubeRepository
     }
 
     // Convenience for production usage.

@@ -21,7 +21,7 @@ struct YouTubeListView: View {
 
     // Inject environment for DI.
     init(environment: AppEnvironment = .live) {
-        _viewModel = State(initialValue: YouTubeListViewModel(useCase: environment.youTubeUseCase))
+        _viewModel = State(initialValue: YouTubeListViewModel(repository: environment.youTubeRepository))
     }
     
     var body: some View {

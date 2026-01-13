@@ -11,19 +11,23 @@ import XCTest
 final class QWERScheduleServiceTests: XCTestCase {
     private var suite: UserDefaults!
     private var service: QWERScheduleService!
+    private var remote: MockQWERScheduleRemoteDataSource!
     private let sampleDate = Date(timeIntervalSince1970: 0)
     
     override func setUp() {
         super.setUp()
         suite = UserDefaults(suiteName: "QWERScheduleServiceTests")
         suite.removePersistentDomain(forName: "QWERScheduleServiceTests")
-        service = QWERScheduleService(userDefaults: suite)
+        remote = MockQWERScheduleRemoteDataSource()
+        let local = UserDefaultsQWERScheduleLocalDataSource(userDefaults: suite)
+        service = QWERScheduleService(remote: remote, local: local)
     }
     
     override func tearDown() {
         suite.removePersistentDomain(forName: "QWERScheduleServiceTests")
         suite = nil
         service = nil
+        remote = nil
         super.tearDown()
     }
     
@@ -77,5 +81,49 @@ final class QWERScheduleServiceTests: XCTestCase {
         
         let isLocal = await service.isLocalSchedule(item)
         XCTAssertTrue(isLocal)
+    }
+
+    func testFetchScheduleMergesRemoteAndLocal() async throws {
+        let remoteItem = makeSchedule(title: "remote")
+        let localItem = makeSchedule(title: "local")
+
+        await remote.setSchedules([remoteItem])
+        await service.saveLocalSchedule(localItem)
+
+        let fetched = try await service.fetchSchedule()
+        XCTAssertEqual(fetched.count, 2)
+        XCTAssertTrue(fetched.contains(where: { $0.title == "remote" }))
+        XCTAssertTrue(fetched.contains(where: { $0.title == "local" }))
+    }
+}
+
+// MARK: - Test doubles
+actor MockQWERScheduleRemoteDataSource: QWERScheduleRemoteDataSource {
+    private var schedules: [QWERScheduleItem] = []
+
+    func setSchedules(_ items: [QWERScheduleItem]) {
+        schedules = items
+    }
+
+    func fetchSchedules() async throws -> [QWERScheduleItem] {
+        schedules
+    }
+
+    func saveSchedule(_ schedule: QWERScheduleItem) async throws {
+        schedules.append(schedule)
+    }
+
+    func updateSchedule(_ schedule: QWERScheduleItem) async throws {
+        if let idx = schedules.firstIndex(where: { $0.id == schedule.id }) {
+            schedules[idx] = schedule
+        }
+    }
+
+    func updateSchedules(_ schedules: [QWERScheduleItem]) async throws {
+        self.schedules = schedules
+    }
+
+    func deleteSchedule(_ schedule: QWERScheduleItem) async throws {
+        schedules.removeAll { $0.id == schedule.id }
     }
 }

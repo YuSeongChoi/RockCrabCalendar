@@ -32,9 +32,8 @@ HomeMainView
 ```
 YouTubeListView
   -> YouTubeListViewModel
-    -> YouTubeUseCase
-      -> YouTubeRepository (protocol)
-        -> YouTubeRepositoryImpl (YouTubeAPIClient)
+    -> YouTubeRepository (protocol)
+      -> YouTubeRepositoryImpl (YouTubeAPIClient)
 ```
 
 ### Holiday Flow

@@ -128,7 +128,7 @@ final class HolidayService {
             if let date = formatter.date(from: item.date) {
                 let key = calendar.startOfDay(for: date)
                 map[key] = Holiday(date: key, name: item.name)
-            }
+            } 
         }
         holidays = map
     }
