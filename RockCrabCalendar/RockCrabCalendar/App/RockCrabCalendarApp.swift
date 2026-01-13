@@ -11,7 +11,7 @@ import UserNotifications
 @main
 struct RockCrabCalendarApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
-    private let environment = AppEnvironment.live
+    private let environment = AppEnvironment.live()
     
     var body: some Scene {
         WindowGroup {

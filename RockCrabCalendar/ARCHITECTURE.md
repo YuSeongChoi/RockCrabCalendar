@@ -54,6 +54,6 @@ DTO (Network/Storage)
 ### Dependency Assembly
 ```
 RockCrabCalendarApp
-  -> AppEnvironment (DI container)
-    -> UseCases wired to concrete repositories
+  -> AppEnvironment.live() (composition root)
+    -> DataSources -> Repositories -> UseCases
 ```
