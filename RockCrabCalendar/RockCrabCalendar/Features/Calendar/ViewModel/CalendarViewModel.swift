@@ -105,11 +105,13 @@ final class HolidayService {
         return holidays[key]?.name
     }
     
-    /// 외부 API에서 받은 JSON 데이터를 넘기면 UserDefaults에 캐싱하고 메모리에 로드합니다.
-    func updateWithJSONData(_ data: Data) {
-        guard let decoded = decode(from: data) else { return }
+    /// 외부 API에서 받은 도메인 모델을 넘기면 UserDefaults에 캐싱하고 메모리에 로드합니다.
+    func updateWithItems(_ items: [HolidayInfo]) {
+        guard let decoded = decode(from: items) else { return }
         DispatchQueue.main.async { self.holidays = decoded }
-        UserDefaults.standard.set(data, forKey: storageKey)
+        if let data = try? JSONEncoder().encode(items) {
+            UserDefaults.standard.set(data, forKey: storageKey)
+        }
     }
     
     private func loadFromCache() {
@@ -120,20 +122,23 @@ final class HolidayService {
     }
     
     private func loadBundledDefaults() {
-        let defaults: [(String, String)] = []
+        let defaults: [HolidayInfo] = []
         var map: [Date: Holiday] = [:]
-        for (rawDate, name) in defaults {
-            if let date = formatter.date(from: rawDate) {
+        for item in defaults {
+            if let date = formatter.date(from: item.date) {
                 let key = calendar.startOfDay(for: date)
-                map[key] = Holiday(date: key, name: name)
+                map[key] = Holiday(date: key, name: item.name)
             }
         }
         holidays = map
     }
     
     private func decode(from data: Data) -> [Date: Holiday]? {
-        struct HolidayDTO: Codable { let date: String; let name: String }
-        guard let items = try? JSONDecoder().decode([HolidayDTO].self, from: data) else { return nil }
+        guard let items = try? JSONDecoder().decode([HolidayInfo].self, from: data) else { return nil }
+        return decode(from: items)
+    }
+
+    private func decode(from items: [HolidayInfo]) -> [Date: Holiday]? {
         var map: [Date: Holiday] = [:]
         for item in items {
             if let date = formatter.date(from: item.date) {
@@ -149,8 +154,8 @@ extension CalendarViewModel {
     // Fetch holiday data once using the use-case boundary.
     func fetchHolidayOnce(baseYear: Int) async {
         do {
-            if let jsonData = try await holidayUseCase.fetchIfNeeded(baseYear: baseYear) {
-                HolidayService.shared.updateWithJSONData(jsonData)
+            if let items = try await holidayUseCase.fetchIfNeeded(baseYear: baseYear) {
+                HolidayService.shared.updateWithItems(items)
                 print("✅ 공휴일 데이터 최초 API 호출 및 저장 완료")
             }
         } catch {

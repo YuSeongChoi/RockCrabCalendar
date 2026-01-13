@@ -9,7 +9,7 @@ import Foundation
 
 // Repository abstraction for holiday fetching to enable DI and testing.
 protocol HolidayRepositoryProtocol {
-    func fetchHolidaysIfNeeded(baseYear: Int) async throws -> Data?
+    func fetchHolidaysIfNeeded(baseYear: Int) async throws -> [HolidayInfo]?
 }
 
 // Use-case layer for holiday sync.
@@ -22,7 +22,7 @@ struct HolidayUseCase {
     }
 
     // Fetch holidays for a base year if cache is stale.
-    func fetchIfNeeded(baseYear: Int) async throws -> Data? {
+    func fetchIfNeeded(baseYear: Int) async throws -> [HolidayInfo]? {
         try await repository.fetchHolidaysIfNeeded(baseYear: baseYear)
     }
 }

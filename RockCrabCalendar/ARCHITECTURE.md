@@ -45,6 +45,13 @@ CalendarViewModel
       -> HolidayRepository (HolidayAPIClient + Cache)
 ```
 
+### Domain Model Boundary
+```
+DTO (Network/Storage)
+  -> Repository maps to Domain models (e.g. HolidayInfo, YouTubeVideo)
+  -> UseCase returns Domain models to ViewModel
+```
+
 ### Dependency Assembly
 ```
 RockCrabCalendarApp

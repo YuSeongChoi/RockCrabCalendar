@@ -20,7 +20,7 @@ struct HolidayRepository: HolidayRepositoryProtocol {
         self.remote = remote
     }
 
-    func fetchHolidaysIfNeeded(baseYear: Int) async throws -> Data? {
+    func fetchHolidaysIfNeeded(baseYear: Int) async throws -> [HolidayInfo]? {
         let targetYears = Set([baseYear - 1, baseYear, baseYear + 1])
         let cachedBaseYear = cacheStore.loadBaseYear()
         let cachedYears = cacheStore.loadCachedYears()
@@ -42,13 +42,12 @@ struct HolidayRepository: HolidayRepositoryProtocol {
 
         let saveArray = holidayByDate
             .sorted { $0.key < $1.key }
-            .map { ["date": $0.key, "name": $0.value] }
-        let jsonData = try JSONSerialization.data(withJSONObject: saveArray)
+            .map { HolidayInfo(date: $0.key, name: $0.value) }
 
         cacheStore.saveCachedYears(targetYears)
         cacheStore.saveBaseYear(baseYear)
 
-        return jsonData
+        return saveArray
     }
 
     private func formatHolidayDate(_ raw: Int) -> String {
