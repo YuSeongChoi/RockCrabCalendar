@@ -11,6 +11,7 @@ import UserNotifications
 @main
 struct RockCrabCalendarApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    private let environment = AppEnvironment.live
     
     var body: some Scene {
         WindowGroup {
@@ -21,7 +22,7 @@ struct RockCrabCalendarApp: App {
                 WindowAlertHostingView()
                 
                 NavigationStack {
-                    HomeMainView()
+                    HomeMainView(environment: environment)
                 }
                 .navigationViewStyle(.stack)
             }

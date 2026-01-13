@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct HomeMainView: View {
-    @State private var calendarVM = CalendarViewModel()
-    @State private var scheduleVM = QWERScheduleViewModel()
-    @State private var userVM = UserScheduleViewModel()
+    @State private var calendarVM: CalendarViewModel
+    @State private var scheduleVM: QWERScheduleViewModel
+    @State private var userVM: UserScheduleViewModel
+
+    private let environment: AppEnvironment
     
     @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
@@ -24,6 +26,14 @@ struct HomeMainView: View {
         formatter.dateFormat = AppDateFormats.monthTitle
         return formatter
     }()
+
+    // Inject environment to build ViewModels with use-cases.
+    init(environment: AppEnvironment = .live) {
+        self.environment = environment
+        _calendarVM = State(initialValue: CalendarViewModel(holidayUseCase: environment.holidayUseCase))
+        _scheduleVM = State(initialValue: QWERScheduleViewModel(useCase: environment.qwerScheduleUseCase))
+        _userVM = State(initialValue: UserScheduleViewModel(useCase: environment.userScheduleUseCase))
+    }
     
     var body: some View {
         NavigationStack {

@@ -316,13 +316,13 @@ struct ScheduleEditView: View {
         }
     }
     
+    // Query ViewModel to determine if the QWER item is local-only.
     private func refreshLocalFlagIfNeeded() async {
         guard case .editQWER(let item) = mode else {
             isQWERLocalSchedule = false
             return
         }
-        let service = QWERScheduleService()
-        isQWERLocalSchedule = await service.isLocalSchedule(item)
+        isQWERLocalSchedule = await qwerVM.isLocalSchedule(item)
     }
 }
 

@@ -46,6 +46,11 @@
 		5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */; };
 		5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */; };
 		5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */; };
+		6FDF4C1743B969B6FFF7B5A2 /* YouTubeRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */; };
+		72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */; };
+		1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */; };
+		5CF4DA4A8B31D9E4EB909053 /* YouTubeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61006C5F5EB682B0C7E6E395 /* YouTubeUseCase.swift */; };
+		FE9EFED2A6605C3DB49B4276 /* HolidayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08788EF46894C09397342D6E /* HolidayUseCase.swift */; };
 		5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
@@ -82,6 +87,7 @@
 		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
 		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
 		5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */; };
+		5DF74CAD2F15D9E8005E589C /* QWERScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */; };
 		5DFA41BD2ED81770008BE45C /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -117,6 +123,12 @@
 		5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleServiceProtocol.swift; sourceTree = "<group>"; };
 		5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleItem.swift; sourceTree = "<group>"; };
+		9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleUseCase.swift; sourceTree = "<group>"; };
+		61006C5F5EB682B0C7E6E395 /* YouTubeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeUseCase.swift; sourceTree = "<group>"; };
+		08788EF46894C09397342D6E /* HolidayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayUseCase.swift; sourceTree = "<group>"; };
+		23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRepositoryImpl.swift; sourceTree = "<group>"; };
+		BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = text.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
 		5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
 		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
 		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
@@ -179,6 +191,7 @@
 		5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
 		5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
 		5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterSheet.swift; sourceTree = "<group>"; };
+		5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleUseCase.swift; sourceTree = "<group>"; };
 		5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -317,6 +330,7 @@
 		5D5E85302E30B9F800DB8775 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				5DF74CAC2F15D9E8005E589C /* Domain */,
 				5DE211192E655BF900E465E8 /* Network */,
 				5D5E857E2E31F6C200DB8775 /* Service */,
 				5D6B4A972D7045F600D90C0D /* Model */,
@@ -380,6 +394,7 @@
 				5D8B12582E8A4AD30014649C /* UserScheduleService.swift */,
 				5D1121A72EE152EA00588095 /* NotificationManager.swift */,
 				5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */,
+				23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -431,6 +446,7 @@
 		5DE024282CA3D79E00472395 = {
 			isa = PBXGroup;
 			children = (
+				94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */,
 				5DE024332CA3D79E00472395 /* RockCrabCalendar */,
 				5DE212252E6FC10B00E465E8 /* RockCrabCalendarUnitTests */,
 				5DE212412E6FC1A600E465E8 /* RockCrabCalendarUITests */,
@@ -478,6 +494,7 @@
 				5DE211752E697C6E00E465E8 /* Alert */,
 				5DE211722E697C5500E465E8 /* Indicator */,
 				5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */,
+				BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */,
 				5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */,
 				5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */,
 				5DE211522E65666B00E465E8 /* ServerConfig.swift */,
@@ -585,6 +602,17 @@
 				5DE211ED2E6FBB8000E465E8 /* Model */,
 			);
 			path = YouTube;
+			sourceTree = "<group>";
+		};
+		5DF74CAC2F15D9E8005E589C /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */,
+				9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */,
+				61006C5F5EB682B0C7E6E395 /* YouTubeUseCase.swift */,
+				08788EF46894C09397342D6E /* HolidayUseCase.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -766,6 +794,10 @@
 				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
 				5DE0162B2EF9199F003E9843 /* AppStorageKeys.swift in Sources */,
+				5DF74CAD2F15D9E8005E589C /* QWERScheduleUseCase.swift in Sources */,
+				1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */,
+				5CF4DA4A8B31D9E4EB909053 /* YouTubeUseCase.swift in Sources */,
+				FE9EFED2A6605C3DB49B4276 /* HolidayUseCase.swift in Sources */,
 				5DE0162C2EF9199F003E9843 /* AppDateFormats.swift in Sources */,
 				5D1E98072EF2A0A8000C2468 /* HolidayDTO.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
@@ -803,9 +835,11 @@
 				5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */,
 				5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */,
 				5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */,
+				6FDF4C1743B969B6FFF7B5A2 /* YouTubeRepositoryImpl.swift in Sources */,
 				5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
+				72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */,
 				5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */,
 				5DE016372EF91B0A003E9843 /* ScheduleCacheStore.swift in Sources */,
 				5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */,

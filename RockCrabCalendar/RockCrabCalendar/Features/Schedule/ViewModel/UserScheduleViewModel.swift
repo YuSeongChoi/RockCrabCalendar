@@ -10,18 +10,20 @@ import Foundation
 @Observable
 final class UserScheduleViewModel {
     var schedules: [UserScheduleItem] = []
-    
-    private let service: UserScheduleService
-    
-    init(service: UserScheduleService = UserScheduleService()) {
-        self.service = service
+
+    private let useCase: UserScheduleUseCase
+
+    // Inject use-case for DI and testability.
+    init(useCase: UserScheduleUseCase = UserScheduleUseCase(repository: UserScheduleService())) {
+        self.useCase = useCase
         self.schedules = []
     }
     
+    // Fetch schedules via use-case and apply ordering.
     func fetchAllSchedules() {
         Task { @MainActor in
             do {
-                let fetched = try await service.fetchSchedule()
+                let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
                 await migrateLegacyTimesIfNeeded()
             } catch {
@@ -30,11 +32,12 @@ final class UserScheduleViewModel {
         }
     }
     
+    // Add schedule via use-case and refresh list.
     func add(_ item: UserScheduleItem) {
         Task { @MainActor in
             do {
-                try await service.saveSchedule(item)
-                let fetched = try await service.fetchSchedule()
+                try await useCase.add(item)
+                let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 AppLogger.error("사용자 일정 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
@@ -42,11 +45,12 @@ final class UserScheduleViewModel {
         }
     }
     
+    // Update schedule via use-case and refresh list.
     func update(_ item: UserScheduleItem) {
         Task { @MainActor in
             do {
-                try await service.updateSchedule(item)
-                let fetched = try await service.fetchSchedule()
+                try await useCase.update(item)
+                let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 AppLogger.error("사용자 일정 업데이트 실패: \(error.localizedDescription)", category: .scheduleVM)
@@ -54,11 +58,12 @@ final class UserScheduleViewModel {
         }
     }
     
+    // Delete schedule via use-case and refresh list.
     func delete(_ item: UserScheduleItem) {
         Task { @MainActor in
             do {
-                try await service.deleteSchedule(item)
-                let fetched = try await service.fetchSchedule()
+                try await useCase.delete(item)
+                let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 AppLogger.error("사용자 일정 삭제 실패: \(error.localizedDescription)", category: .scheduleVM)
@@ -66,11 +71,12 @@ final class UserScheduleViewModel {
         }
     }
     
+    // Save (alias of add) via use-case and refresh list.
     func save(_ item: UserScheduleItem) {
         Task { @MainActor in
             do {
-                try await service.saveSchedule(item)
-                let fetched = try await service.fetchSchedule()
+                try await useCase.add(item)
+                let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
             } catch {
                 AppLogger.error("사용자 일정 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
@@ -112,6 +118,7 @@ final class UserScheduleViewModel {
 
 // MARK: 로직 리뉴얼로 인해 migration
 extension UserScheduleViewModel {
+    // One-time migration for legacy time fields.
     func migrateLegacyTimesIfNeeded() async {
         // UserDefaults 등을 통해 한 번만 실행되도록 설정
         // TODO: 테스트용
@@ -139,9 +146,9 @@ extension UserScheduleViewModel {
 
         // 저장 및 반영
         for updated in updatedItems {
-            try? await service.updateSchedule(updated)
+            try? await useCase.update(updated)
         }
-        if let refreshed = try? await service.fetchSchedule() {
+        if let refreshed = try? await useCase.fetchAll() {
             schedules = refreshed.sorted(by: scheduleSortRule)
         }
 

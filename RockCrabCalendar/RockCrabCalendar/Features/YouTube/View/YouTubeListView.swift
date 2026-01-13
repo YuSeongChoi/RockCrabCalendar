@@ -9,7 +9,7 @@ import SwiftUI
 
 struct YouTubeListView: View {
     @Environment(\.colorScheme) private var scheme
-    @State private var viewModel = YouTubeListViewModel()
+    @State private var viewModel: YouTubeListViewModel
     
     // 표시용 날짜 포매터
     private let dateFormatter: DateFormatter = {
@@ -18,6 +18,11 @@ struct YouTubeListView: View {
         formatter.dateFormat = "yyyy.MM.dd HH:mm"
         return formatter
     }()
+
+    // Inject environment for DI.
+    init(environment: AppEnvironment = .live) {
+        _viewModel = State(initialValue: YouTubeListViewModel(useCase: environment.youTubeUseCase))
+    }
     
     var body: some View {
         ZStack { // 전체 배경을 안전영역까지 깔아 하얀 플래시 방지

@@ -7,7 +7,8 @@
 
 import Foundation
 
-actor UserScheduleService: ScheduleServiceProtocol {
+// User schedule repository backed by UserDefaults (Data layer).
+actor UserScheduleService: ScheduleServiceProtocol, UserScheduleRepository {
     typealias Schedule = UserScheduleItem
     
     private let userDefaultKey = AppStorageKeys.userSchedules

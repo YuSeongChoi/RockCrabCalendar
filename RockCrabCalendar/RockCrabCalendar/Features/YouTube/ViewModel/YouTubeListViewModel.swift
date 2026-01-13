@@ -19,11 +19,12 @@ final class YouTubeListViewModel {
     // MARK: - 페이징 상태
     private var nextPageToken: String?      // 다음 페이지 토큰
     private var hasMore: Bool = true        // 다음 페이지 존재 여부
-    private let apiClient: YouTubeAPIClient
+    private let useCase: YouTubeUseCase
 
     // MARK: - 퍼블릭 API
-    init(apiClient: YouTubeAPIClient = YouTubeAPIClient()) {
-        self.apiClient = apiClient
+    // Inject use-case for DI and testability.
+    init(useCase: YouTubeUseCase = YouTubeUseCase(repository: YouTubeRepositoryImpl())) {
+        self.useCase = useCase
     }
 
     /// 화면 최초 진입 시 한번만 호출
@@ -102,23 +103,15 @@ final class YouTubeListViewModel {
     /// - Parameter pageToken: 다음 페이지 토큰(없으면 최초 페이지)
     /// - Returns: (도메인 모델 매핑, 다음 페이지 토큰)
     private func requestYoutubeList(pageToken: String?) async throws -> (videos: [YouTubeVideo], nextPageToken: String?) {
-        let dto = try await apiClient.fetchVideos(pageToken: pageToken)
-        
-        // DTO -> Domain 매핑 (비디오만 필터)
-        let mapped = YouTubeSearchMapper.map(dto)
-        return (mapped.videos, mapped.nextPageToken)
+        // Use-case handles DTO -> Domain mapping.
+        try await useCase.fetchVideoPage(pageToken: pageToken)
     }
     
     func requestChannelInfo() async throws {
-        let dto = try await apiClient.fetchChannelInfo()
-        
-        let urlString =
-        dto.items.first?.snippet.thumbnails.default?.url ??
-        dto.items.first?.snippet.thumbnails.medium?.url ??
-        dto.items.first?.snippet.thumbnails.high?.url
-        
+        // Use-case returns the parsed thumbnail URL.
+        let url = try await useCase.fetchChannelThumbnailURL()
         await MainActor.run {
-            self.channelThumnailURL = urlString.flatMap(URL.init(string:))
+            self.channelThumnailURL = url
         }
     }
     

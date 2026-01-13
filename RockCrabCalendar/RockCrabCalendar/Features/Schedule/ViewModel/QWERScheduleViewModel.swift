@@ -27,7 +27,7 @@ final class QWERScheduleViewModel {
     // 모든 카테고리가 선택되어 있는지 여부
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
-    private let service: QWERScheduleService
+    private let useCase: QWERScheduleUseCase
     private let cacheStore: ScheduleCacheStore
     private var cancellables = Set<AnyCancellable>()
     private let instanceID = UUID()
@@ -72,9 +72,10 @@ final class QWERScheduleViewModel {
         }
     }
     
-    init(service: QWERScheduleService = QWERScheduleService(),
+    // Inject use-case for DI and testability.
+    init(useCase: QWERScheduleUseCase = QWERScheduleUseCase(repository: QWERScheduleService()),
          cacheStore: ScheduleCacheStore = ScheduleCacheStore()) {
-        self.service = service
+        self.useCase = useCase
         self.cacheStore = cacheStore
         if let saved = cacheStore.loadActiveCategories() {
             self.activeCategories = saved
@@ -99,35 +100,39 @@ final class QWERScheduleViewModel {
     }
     
     // MARK: - Local-only mutations (no fetch)
+    // Add local schedule via use-case to keep ViewModel storage-agnostic.
     func addLocal(_ item: QWERScheduleItem) {
         Task { @MainActor in
-            await service.saveLocalSchedule(item)
+            await useCase.addLocal(item)
             upsertLocalInMemory(item)
             QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .add, item: item))
         }
     }
 
+    // Update local schedule via use-case to keep ViewModel storage-agnostic.
     func updateLocal(_ item: QWERScheduleItem) {
         Task { @MainActor in
-            await service.updateLocalSchedule(item)
+            await useCase.updateLocal(item)
             upsertLocalInMemory(item)
             QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .update, item: item))
         }
     }
 
+    // Delete local schedule via use-case to keep ViewModel storage-agnostic.
     func deleteLocal(_ item: QWERScheduleItem) {
         Task { @MainActor in
-            await service.deleteLocalSchedule(item)
+            await useCase.deleteLocal(item)
             removeLocalInMemory(item)
             QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .delete, item: item))
         }
     }
     
     // 일정 추가
+    // Add remote schedule via use-case to keep ViewModel storage-agnostic.
     func addSchedule(_ item: QWERScheduleItem) {
         Task {
             do {
-                try await service.saveSchedule(item)
+                try await useCase.add(item)
             } catch {
                 AppLogger.error("QWER 스케줄 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -135,10 +140,11 @@ final class QWERScheduleViewModel {
     }
     
     // 일정 업데이트
+    // Update remote schedule via use-case to keep ViewModel storage-agnostic.
     func updateSchedule(schedule: QWERScheduleItem) {
         Task {
             do {
-                try await service.updateSchedule(schedule)
+                try await useCase.update(schedule)
             } catch {
                 AppLogger.error("QWER 스케줄 업데이트 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -146,6 +152,7 @@ final class QWERScheduleViewModel {
     }
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)
+    // Fetch schedules with cache-first policy, then use-case for network.
     func fetchAllSchedules(force: Bool = false) {
         let now = Date()
 
@@ -173,7 +180,7 @@ final class QWERScheduleViewModel {
             isFetching = true
             defer { isFetching = false }
             do {
-                let fetched = try await self.service.fetchSchedule()
+                let fetched = try await self.useCase.fetchAll()
                 self.schedules = fetched
                 self.lastFetchedAt = now
                 self.cacheStore.saveCachedSchedules(fetched)
@@ -182,6 +189,14 @@ final class QWERScheduleViewModel {
                 AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
         }
+    }
+}
+
+// MARK: - Local check
+extension QWERScheduleViewModel {
+    // Check whether a schedule is local-only via use-case.
+    func isLocalSchedule(_ item: QWERScheduleItem) async -> Bool {
+        await useCase.isLocal(item)
     }
 }
 

@@ -16,8 +16,11 @@ final class CalendarViewModel {
     var selectedDate: Date = Date()
 
     private let calendar = Calendar.current
+    private let holidayUseCase: HolidayUseCase
 
-    init() {
+    // Inject use-case for holiday sync.
+    init(holidayUseCase: HolidayUseCase = HolidayUseCase(repository: HolidayRepository())) {
+        self.holidayUseCase = holidayUseCase
         generateDays()
     }
 
@@ -143,9 +146,10 @@ final class HolidayService {
 }
 
 extension CalendarViewModel {
-    func fetchHolidayOnce(baseYear: Int, repository: HolidayRepository = HolidayRepository()) async {
+    // Fetch holiday data once using the use-case boundary.
+    func fetchHolidayOnce(baseYear: Int) async {
         do {
-            if let jsonData = try await repository.fetchHolidaysIfNeeded(baseYear: baseYear) {
+            if let jsonData = try await holidayUseCase.fetchIfNeeded(baseYear: baseYear) {
                 HolidayService.shared.updateWithJSONData(jsonData)
                 print("✅ 공휴일 데이터 최초 API 호출 및 저장 완료")
             }

@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct HolidayRepository {
+// Concrete holiday repository (Data layer).
+struct HolidayRepository: HolidayRepositoryProtocol {
     private let cacheStore: HolidayCacheStore
     private let apiClient: HolidayAPIClient
 

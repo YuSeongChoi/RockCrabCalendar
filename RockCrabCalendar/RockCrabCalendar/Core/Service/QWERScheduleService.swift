@@ -9,10 +9,11 @@ import Foundation
 import FirebaseFirestore
 import CryptoKit
 
-actor QWERScheduleService: ScheduleServiceProtocol {
+actor QWERScheduleService: ScheduleServiceProtocol, QWERScheduleRepository {
     typealias Schedule = QWERScheduleItem
     
-    private let db = Firestore.firestore()
+    // Defer Firestore access until after FirebaseApp.configure() completes.
+    private var db: Firestore { Firestore.firestore() }
     private let collection = "schedules"
     private let store: UserDefaults
     
@@ -55,14 +56,16 @@ actor QWERScheduleService: ScheduleServiceProtocol {
     }
     
     /// 로컬(UserDefaults)에 저장된 사용자 추가 QWER 일정만 반환합니다.
-    func fetchLocalOnly() -> [Schedule] {
+    // Async to satisfy repository boundary for actor isolation.
+    func fetchLocalOnly() async -> [Schedule] {
         loadLocal()
         return Array(localMap.values)
     }
     
     /// 이 일정이 로컬(UserDefaults)에 저장된 사용자 추가 QWER 일정인지 확인합니다.
     /// - Returns: 로컬 일정이면 true, 아니면 false
-    func isLocalSchedule(_ item: Schedule) -> Bool {
+    // Async to satisfy repository boundary for actor isolation.
+    func isLocalSchedule(_ item: Schedule) async -> Bool {
         loadLocal()
         if localMap[item.id] != nil { return true }
         // Fallback: field-based match for legacy entries where id wasn't persisted
@@ -78,14 +81,16 @@ actor QWERScheduleService: ScheduleServiceProtocol {
     }
 
     /// 사용자 직접 추가용 (Firestore 업로드 없이 로컬에만 저장)
-    func saveLocalSchedule(_ item: Schedule) {
+    // Async to satisfy repository boundary for actor isolation.
+    func saveLocalSchedule(_ item: Schedule) async {
         loadLocal()
         localMap[item.id] = item
         persistLocal()
     }
 
     /// 로컬 QWER 일정 업데이트
-    func updateLocalSchedule(_ item: Schedule) {
+    // Async to satisfy repository boundary for actor isolation.
+    func updateLocalSchedule(_ item: Schedule) async {
         loadLocal()
         var didUpdate = false
 
@@ -125,7 +130,8 @@ actor QWERScheduleService: ScheduleServiceProtocol {
     }
 
     /// 로컬 QWER 일정 삭제
-    func deleteLocalSchedule(_ item: Schedule) {
+    // Async to satisfy repository boundary for actor isolation.
+    func deleteLocalSchedule(_ item: Schedule) async {
         loadLocal()
         let removedByID = localMap.removeValue(forKey: item.id) != nil
         if !removedByID {
