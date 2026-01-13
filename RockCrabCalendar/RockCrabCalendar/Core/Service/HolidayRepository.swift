@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 // Concrete holiday repository (Data layer).
 struct HolidayRepository: HolidayRepositoryProtocol {

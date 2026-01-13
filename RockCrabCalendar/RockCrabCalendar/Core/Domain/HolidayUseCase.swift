@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 // Repository abstraction for holiday fetching to enable DI and testing.
 protocol HolidayRepositoryProtocol {

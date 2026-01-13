@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 import FirebaseFirestore
 import CryptoKit
 

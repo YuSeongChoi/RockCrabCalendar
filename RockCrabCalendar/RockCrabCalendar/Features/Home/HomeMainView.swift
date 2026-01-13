@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 struct HomeMainView: View {
     @State private var calendarVM: CalendarViewModel
@@ -28,7 +29,7 @@ struct HomeMainView: View {
     }()
 
     // Inject environment to build ViewModels with use-cases.
-    init(environment: AppEnvironment = .live) {
+    init(environment: AppEnvironment = .live()) {
         self.environment = environment
         _calendarVM = State(initialValue: CalendarViewModel(holidayUseCase: environment.holidayUseCase))
         _scheduleVM = State(initialValue: QWERScheduleViewModel(useCase: environment.qwerScheduleUseCase))

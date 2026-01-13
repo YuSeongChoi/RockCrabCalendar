@@ -57,3 +57,9 @@ RockCrabCalendarApp
   -> AppEnvironment.live() (composition root)
     -> DataSources -> Repositories -> UseCases
 ```
+
+### SPM Module (First Step)
+```
+RockCrabShared (local package)
+  - AppDateFormats / AppStorageKeys / HolidayInfo
+```

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 struct ScheduleCacheStore {
     private let store: UserDefaults

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 @Observable
 final class UserScheduleViewModel {

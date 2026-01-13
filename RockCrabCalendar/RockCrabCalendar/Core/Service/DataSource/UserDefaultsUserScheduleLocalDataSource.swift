@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 // UserDefaults-backed local data source for user schedules.
 actor UserDefaultsUserScheduleLocalDataSource: UserScheduleLocalDataSource {

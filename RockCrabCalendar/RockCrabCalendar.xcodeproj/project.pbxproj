@@ -36,14 +36,13 @@
 		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
 		5D7FB74C2E78010900BE9B18 /* YouTubeChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
+		078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
 		5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B120B2E86510D0014649C /* ScheduleEditView.swift */; };
 		5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12392E867A1E0014649C /* UserScheduleItem.swift */; };
 		5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12412E867A400014649C /* SchedulableProtocol.swift */; };
 		5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12582E8A4AD30014649C /* UserScheduleService.swift */; };
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
-		5DE0162B2EF9199F003E9843 /* AppStorageKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0162A2EF9199F003E9843 /* AppStorageKeys.swift */; };
-		5DE0162C2EF9199F003E9843 /* AppDateFormats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE016292EF9199F003E9843 /* AppDateFormats.swift */; };
 		5DE016372EF91B0A003E9843 /* ScheduleCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */; };
 		5DE016402EF920AA003E9843 /* HolidayCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */; };
 		5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */; };
@@ -92,7 +91,6 @@
 		6FDF4C1743B969B6FFF7B5A2 /* YouTubeRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */; };
 		72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */; };
 		7660750C91FB6835AA14B23E /* HolidayCacheDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */; };
-		7A0932E29783F02FCD554DD8 /* HolidayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2BA6D028336F56333F24D /* HolidayInfo.swift */; };
 		83E0AD39E45142782079656F /* QWERScheduleRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */; };
 		97E352F5A5BA4FB683D1A493 /* FirestoreQWERScheduleRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */; };
 		A2995BC33C4557D8EAD808CA /* QWERScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */; };
@@ -131,7 +129,6 @@
 		35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsQWERScheduleLocalDataSource.swift; sourceTree = "<group>"; };
 		414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayRemoteDataSource.swift; sourceTree = "<group>"; };
 		416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleLocalDataSource.swift; sourceTree = "<group>"; };
-		52D2BA6D028336F56333F24D /* HolidayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayInfo.swift; sourceTree = "<group>"; };
 		549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleRemoteDataSource.swift; sourceTree = "<group>"; };
 		5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Resources.swift"; sourceTree = "<group>"; };
@@ -161,8 +158,6 @@
 		5D8B12392E867A1E0014649C /* UserScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleItem.swift; sourceTree = "<group>"; };
 		5D8B12412E867A400014649C /* SchedulableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulableProtocol.swift; sourceTree = "<group>"; };
 		5D8B12582E8A4AD30014649C /* UserScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleService.swift; sourceTree = "<group>"; };
-		5DE016292EF9199F003E9843 /* AppDateFormats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormats.swift; sourceTree = "<group>"; };
-		5DE0162A2EF9199F003E9843 /* AppStorageKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStorageKeys.swift; sourceTree = "<group>"; };
 		5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCacheStore.swift; sourceTree = "<group>"; };
 		5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCacheStore.swift; sourceTree = "<group>"; };
 		5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayAPIClient.swift; sourceTree = "<group>"; };
@@ -249,6 +244,7 @@
 			files = (
 				5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */,
 				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
+				078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */,
 				5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
@@ -380,8 +376,6 @@
 		5D5E853C2E30BA1100DB8775 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5DE016292EF9199F003E9843 /* AppDateFormats.swift */,
-				5DE0162A2EF9199F003E9843 /* AppStorageKeys.swift */,
 				5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */,
 				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
 				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
@@ -651,7 +645,6 @@
 				5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */,
 				9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */,
 				08788EF46894C09397342D6E /* HolidayUseCase.swift */,
-				52D2BA6D028336F56333F24D /* HolidayInfo.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -680,6 +673,7 @@
 				5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */,
 				5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */,
 				5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */,
+				A622A078AF1AD2268F01F207 /* RockCrabShared */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -763,6 +757,7 @@
 			);
 			mainGroup = 5DE024282CA3D79E00472395;
 			packageReferences = (
+				E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "RockCrabShared" */,
 				5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */,
 				5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */,
@@ -834,9 +829,7 @@
 				5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */,
 				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
-				5DE0162B2EF9199F003E9843 /* AppStorageKeys.swift in Sources */,
 				5DF74CAD2F15D9E8005E589C /* QWERScheduleUseCase.swift in Sources */,
-				7A0932E29783F02FCD554DD8 /* HolidayInfo.swift in Sources */,
 				83E0AD39E45142782079656F /* QWERScheduleRemoteDataSource.swift in Sources */,
 				97E352F5A5BA4FB683D1A493 /* FirestoreQWERScheduleRemoteDataSource.swift in Sources */,
 				A2995BC33C4557D8EAD808CA /* QWERScheduleLocalDataSource.swift in Sources */,
@@ -849,7 +842,6 @@
 				7660750C91FB6835AA14B23E /* HolidayCacheDataSource.swift in Sources */,
 				1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */,
 				FE9EFED2A6605C3DB49B4276 /* HolidayUseCase.swift in Sources */,
-				5DE0162C2EF9199F003E9843 /* AppDateFormats.swift in Sources */,
 				5D1E98072EF2A0A8000C2468 /* HolidayDTO.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */,
@@ -1309,7 +1301,19 @@
 		};
 /* End XCRemoteSwiftPackageReference section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "RockCrabShared" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/RockCrabShared;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		A622A078AF1AD2268F01F207 /* RockCrabShared */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "RockCrabShared" */;
+			productName = RockCrabShared;
+		};
 		5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

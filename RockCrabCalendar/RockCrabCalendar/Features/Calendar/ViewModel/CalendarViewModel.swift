@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 @Observable
 final class CalendarViewModel {

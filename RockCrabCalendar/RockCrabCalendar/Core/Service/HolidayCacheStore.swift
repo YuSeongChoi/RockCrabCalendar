@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 struct HolidayCacheStore {
     private let store: UserDefaults
