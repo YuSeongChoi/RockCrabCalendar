@@ -46,6 +46,16 @@
 		5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */; };
 		5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */; };
 		5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */; };
+		83E0AD39E45142782079656F /* QWERScheduleRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */; };
+		97E352F5A5BA4FB683D1A493 /* FirestoreQWERScheduleRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */; };
+		A2995BC33C4557D8EAD808CA /* QWERScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */; };
+		EB55C1CBBB134B95ED71C7D5 /* UserDefaultsQWERScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */; };
+		C5BA3C2820994B3C38948499 /* UserScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5A16B638FCA3127F3459D2 /* UserScheduleLocalDataSource.swift */; };
+		3BF2E822715912AB46F798F4 /* UserDefaultsUserScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCD059EF88C57693E2D709E /* UserDefaultsUserScheduleLocalDataSource.swift */; };
+		C8FCD3FAF0CFBF402B39B74C /* YouTubeRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE2A585A30AB133C4D7EAC8 /* YouTubeRemoteDataSource.swift */; };
+		418D4DFF922E084A2F6B97D2 /* YouTubeAPIRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE8DFA24F55D5816E4B91E3 /* YouTubeAPIRemoteDataSource.swift */; };
+		EB6B05792FC7C3BCA62BFCDF /* HolidayRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */; };
+		7660750C91FB6835AA14B23E /* HolidayCacheDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */; };
 		6FDF4C1743B969B6FFF7B5A2 /* YouTubeRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */; };
 		72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */; };
 		1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */; };
@@ -129,6 +139,16 @@
 		23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRepositoryImpl.swift; sourceTree = "<group>"; };
 		BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = text.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
+		549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleRemoteDataSource.swift; sourceTree = "<group>"; };
+		1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQWERScheduleRemoteDataSource.swift; sourceTree = "<group>"; };
+		416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleLocalDataSource.swift; sourceTree = "<group>"; };
+		35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsQWERScheduleLocalDataSource.swift; sourceTree = "<group>"; };
+		1A5A16B638FCA3127F3459D2 /* UserScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleLocalDataSource.swift; sourceTree = "<group>"; };
+		FBCD059EF88C57693E2D709E /* UserDefaultsUserScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUserScheduleLocalDataSource.swift; sourceTree = "<group>"; };
+		ECE2A585A30AB133C4D7EAC8 /* YouTubeRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRemoteDataSource.swift; sourceTree = "<group>"; };
+		0FE8DFA24F55D5816E4B91E3 /* YouTubeAPIRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeAPIRemoteDataSource.swift; sourceTree = "<group>"; };
+		414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayRemoteDataSource.swift; sourceTree = "<group>"; };
+		0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCacheDataSource.swift; sourceTree = "<group>"; };
 		5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
 		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
 		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
@@ -385,6 +405,7 @@
 		5D5E857E2E31F6C200DB8775 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				2597E98182E6537A9C12D938 /* DataSource */,
 				5D261D252EA204A9004DEE6B /* Protocol */,
 				5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */,
 				5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */,
@@ -397,6 +418,23 @@
 				23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		2597E98182E6537A9C12D938 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */,
+				1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */,
+				416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */,
+				35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */,
+				1A5A16B638FCA3127F3459D2 /* UserScheduleLocalDataSource.swift */,
+				FBCD059EF88C57693E2D709E /* UserDefaultsUserScheduleLocalDataSource.swift */,
+				ECE2A585A30AB133C4D7EAC8 /* YouTubeRemoteDataSource.swift */,
+				0FE8DFA24F55D5816E4B91E3 /* YouTubeAPIRemoteDataSource.swift */,
+				414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */,
+				0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */,
+			);
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		5D5E85822E31F6D800DB8775 /* Component */ = {
@@ -795,6 +833,16 @@
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
 				5DE0162B2EF9199F003E9843 /* AppStorageKeys.swift in Sources */,
 				5DF74CAD2F15D9E8005E589C /* QWERScheduleUseCase.swift in Sources */,
+				83E0AD39E45142782079656F /* QWERScheduleRemoteDataSource.swift in Sources */,
+				97E352F5A5BA4FB683D1A493 /* FirestoreQWERScheduleRemoteDataSource.swift in Sources */,
+				A2995BC33C4557D8EAD808CA /* QWERScheduleLocalDataSource.swift in Sources */,
+				EB55C1CBBB134B95ED71C7D5 /* UserDefaultsQWERScheduleLocalDataSource.swift in Sources */,
+				C5BA3C2820994B3C38948499 /* UserScheduleLocalDataSource.swift in Sources */,
+				3BF2E822715912AB46F798F4 /* UserDefaultsUserScheduleLocalDataSource.swift in Sources */,
+				C8FCD3FAF0CFBF402B39B74C /* YouTubeRemoteDataSource.swift in Sources */,
+				418D4DFF922E084A2F6B97D2 /* YouTubeAPIRemoteDataSource.swift in Sources */,
+				EB6B05792FC7C3BCA62BFCDF /* HolidayRemoteDataSource.swift in Sources */,
+				7660750C91FB6835AA14B23E /* HolidayCacheDataSource.swift in Sources */,
 				1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */,
 				5CF4DA4A8B31D9E4EB909053 /* YouTubeUseCase.swift in Sources */,
 				FE9EFED2A6605C3DB49B4276 /* HolidayUseCase.swift in Sources */,

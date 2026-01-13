@@ -7,22 +7,22 @@
 
 import Foundation
 
-// Concrete repository using the API client (Data layer).
+// Concrete repository using a remote data source (Data layer).
 struct YouTubeRepositoryImpl: YouTubeRepository {
-    private let apiClient: YouTubeAPIClient
+    private let remote: YouTubeRemoteDataSource
 
-    // Inject API client for testability.
-    init(apiClient: YouTubeAPIClient = YouTubeAPIClient()) {
-        self.apiClient = apiClient
+    // Inject remote data source for testability.
+    init(remote: YouTubeRemoteDataSource = YouTubeAPIRemoteDataSource()) {
+        self.remote = remote
     }
 
     // Fetch video list DTO from the API.
     func fetchVideos(pageToken: String?, pageSize: Int) async throws -> YouTubeSearchListDTO {
-        try await apiClient.fetchVideos(pageToken: pageToken, pageSize: pageSize)
+        try await remote.fetchVideos(pageToken: pageToken, pageSize: pageSize)
     }
 
     // Fetch channel info DTO from the API.
     func fetchChannelInfo() async throws -> YouTubeChannelDTO {
-        try await apiClient.fetchChannelInfo()
+        try await remote.fetchChannelInfo()
     }
 }

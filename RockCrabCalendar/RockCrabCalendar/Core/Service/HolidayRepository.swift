@@ -9,13 +9,15 @@ import Foundation
 
 // Concrete holiday repository (Data layer).
 struct HolidayRepository: HolidayRepositoryProtocol {
-    private let cacheStore: HolidayCacheStore
-    private let apiClient: HolidayAPIClient
+    private let cacheStore: HolidayCacheDataSource
+    private let remote: HolidayRemoteDataSource
 
-    init(cacheStore: HolidayCacheStore = HolidayCacheStore(),
-         apiClient: HolidayAPIClient = HolidayAPIClient()) {
+    init(
+        cacheStore: HolidayCacheDataSource = HolidayCacheStoreDataSource(),
+        remote: HolidayRemoteDataSource = HolidayAPIRemoteDataSource()
+    ) {
         self.cacheStore = cacheStore
-        self.apiClient = apiClient
+        self.remote = remote
     }
 
     func fetchHolidaysIfNeeded(baseYear: Int) async throws -> Data? {
@@ -28,7 +30,7 @@ struct HolidayRepository: HolidayRepositoryProtocol {
 
         var holidayByDate: [String: String] = [:]
         for year in targetYears.sorted() {
-            let items = try await apiClient.fetchHolidayItems(year: year)
+            let items = try await remote.fetchHolidayItems(year: year)
             let dtos = items.filter { $0.isHoliday == "Y" }
             for dto in dtos {
                 let dateKey = formatHolidayDate(dto.locdate)
