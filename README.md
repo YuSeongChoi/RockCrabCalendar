@@ -44,6 +44,7 @@
 >   open RockCrabCalendar.xcodeproj
 >   ```
 > - Xcode에서 빌드 후 시뮬레이터 또는 실제 디바이스에서 실행 가능
+> - 아키텍처 개요: `RockCrabCalendar/ARCHITECTURE.md`
 
 ---
 
