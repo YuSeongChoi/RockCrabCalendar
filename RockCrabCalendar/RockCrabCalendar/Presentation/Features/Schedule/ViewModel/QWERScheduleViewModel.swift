@@ -77,7 +77,7 @@ final class QWERScheduleViewModel {
          cacheStore: ScheduleCacheStoreProtocol) {
         self.useCase = useCase
         self.cacheStore = cacheStore
-        if let saved = cacheStore.loadActiveCategories() {
+        if let saved = useCase.loadActiveCategories(cacheStore: cacheStore) {
             self.activeCategories = saved
         }
         // Observe local schedule changes coming from other instances
@@ -239,7 +239,7 @@ extension QWERScheduleViewModel {
     
     // 카테고리 선택/토글/저장
     private func persistCategories() {
-        cacheStore.saveActiveCategories(activeCategories)
+        useCase.saveActiveCategories(activeCategories, cacheStore: cacheStore)
     }
 
     private func passesCategory(_ item: QWERScheduleItem) -> Bool {

@@ -19,6 +19,24 @@ RockCrabCalendar/Presentation
   - Utils (UI/helpers used by Presentation)
 ```
 
+### Domain Module Structure
+```
+Modules/RockCrabDomain/Sources/RockCrabDomain
+  - Models (entities, value types)
+  - UseCases (application actions)
+  - Protocols (repository/store abstractions)
+```
+
+### Data Module Structure
+```
+Modules/RockCrabData/Sources/RockCrabData
+  - Network (HTTP client + request definitions)
+  - Config (server/API config)
+  - YouTube (clients, DTOs, mappers, data sources, repositories)
+  - Holiday (clients, DTOs, data sources, repositories, stores)
+  - Schedule (data sources, services, stores, extensions)
+```
+
 ### QWER Schedule Flow
 ```
 HomeMainView

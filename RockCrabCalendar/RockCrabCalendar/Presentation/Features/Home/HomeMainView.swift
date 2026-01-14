@@ -58,15 +58,13 @@ struct HomeMainView: View {
                             CalendarView(
                                 calendarVM: calendarVM,
                                 scheduleVM: scheduleVM,
-                                userVM: userVM,
-                                holidayStore: environment.holidayStore
+                                userVM: userVM
                             )
                         case .list:
                             ScheduleListView(
                                 calendarVM: calendarVM,
                                 scheduleVM: scheduleVM,
-                                userVM: userVM,
-                                holidayStore: environment.holidayStore
+                                userVM: userVM
                             )
                         }
                     }

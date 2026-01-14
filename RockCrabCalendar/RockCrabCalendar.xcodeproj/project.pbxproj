@@ -237,70 +237,9 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		5D1A72C82F177562007F3FB8 /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		5D1A72C92F177562007F3FB8 /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DTO;
-			sourceTree = "<group>";
-		};
-		5D1A72CA2F177562007F3FB8 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Schedule;
-			sourceTree = "<group>";
-		};
-		5D1A72CB2F177562007F3FB8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				5D1A72C92F177562007F3FB8 /* DTO */,
-				5D1A72CA2F177562007F3FB8 /* Schedule */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		5D1A72CC2F177562007F3FB8 /* RequestList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RequestList;
-			sourceTree = "<group>";
-		};
-		5D1A72CD2F177562007F3FB8 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				5D1A72CC2F177562007F3FB8 /* RequestList */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		5D1A72CE2F177562007F3FB8 /* DataSource */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DataSource;
-			sourceTree = "<group>";
-		};
-		5D1A72CF2F177562007F3FB8 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
 		5D1A72D12F177562007F3FB8 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				5D1A72CE2F177562007F3FB8 /* DataSource */,
-				5D1A72CF2F177562007F3FB8 /* Protocol */,
 				5D1A72D02F177562007F3FB8 /* NotificationManager.swift */,
 			);
 			path = Service;
@@ -309,9 +248,6 @@
 		5D1A72D22F177562007F3FB8 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				5D1A72C82F177562007F3FB8 /* Domain */,
-				5D1A72CB2F177562007F3FB8 /* Model */,
-				5D1A72CD2F177562007F3FB8 /* Network */,
 				5D1A72D12F177562007F3FB8 /* Service */,
 			);
 			path = Core;
@@ -387,13 +323,6 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
-		5D1A72E42F177562007F3FB8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		5D1A72E62F177562007F3FB8 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,7 +342,6 @@
 		5D1A72E92F177562007F3FB8 /* YouTube */ = {
 			isa = PBXGroup;
 			children = (
-				5D1A72E42F177562007F3FB8 /* Model */,
 				5D1A72E62F177562007F3FB8 /* View */,
 				5D1A72E82F177562007F3FB8 /* ViewModel */,
 			);

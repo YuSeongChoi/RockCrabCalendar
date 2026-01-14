@@ -35,6 +35,19 @@ public struct QWERScheduleUseCase {
         try await repository.fetchSchedule()
     }
 
+    public func loadActiveCategories(
+        cacheStore: ScheduleCacheStoreProtocol
+    ) -> Set<ScheduleCategory>? {
+        cacheStore.loadActiveCategories()
+    }
+
+    public func saveActiveCategories(
+        _ categories: Set<ScheduleCategory>,
+        cacheStore: ScheduleCacheStoreProtocol
+    ) {
+        cacheStore.saveActiveCategories(categories)
+    }
+
     // Load cached schedules and last fetch date.
     public func loadCache(
         cacheStore: ScheduleCacheStoreProtocol

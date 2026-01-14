@@ -68,6 +68,10 @@ final class CalendarViewModel {
         let adjustedHeight = max(totalHeight, minHeight)
         return adjustedHeight / CGFloat(numberOfWeeks)
     }
+
+    func holidayName(on date: Date) -> String? {
+        holidayStore.name(on: date)
+    }
 }
 
 extension CalendarViewModel {

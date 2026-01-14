@@ -13,7 +13,6 @@ struct CalendarView: View {
     var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
-    let holidayStore: any HolidayStoreProtocol
     
     @State private var dragOffset: CGFloat = 0
     @State private var editTarget: ScheduleEditView.Mode? = nil
@@ -149,7 +148,7 @@ struct CalendarView: View {
                         isSelected: calendarVM.isSelected(date),
                         isInCurrentMonth: calendarVM.isInCurrentMonth(date),
                         eventColors: combinedEventColors(for: date),
-                        holidayName: holidayStore.name(on: date)
+                        holidayName: calendarVM.holidayName(on: date)
                     )
                     .frame(height: cellHeight)
                     .onTapGesture {
