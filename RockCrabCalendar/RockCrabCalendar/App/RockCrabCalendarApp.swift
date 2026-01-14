@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UserNotifications
+import RockCrabShared
 
 @main
 struct RockCrabCalendarApp: App {

@@ -7,6 +7,8 @@
 
 import XCTest
 @testable import RockCrabCalendar
+import RockCrabDomain
+import RockCrabData
 
 final class QWERScheduleServiceTests: XCTestCase {
     private var suite: UserDefaults!

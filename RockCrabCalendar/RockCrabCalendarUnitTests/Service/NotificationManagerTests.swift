@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import RockCrabCalendar
+import RockCrabDomain
 
 final class NotificationManagerTests: XCTestCase {
     private let manager = NotificationManager.shared

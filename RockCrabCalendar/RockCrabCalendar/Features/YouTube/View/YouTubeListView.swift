@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 struct YouTubeListView: View {
     @Environment(\.colorScheme) private var scheme

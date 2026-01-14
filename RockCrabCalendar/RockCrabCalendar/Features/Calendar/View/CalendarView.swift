@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RockCrabShared
+import RockCrabDomain
 
 struct CalendarView: View {
     var calendarVM: CalendarViewModel

@@ -7,6 +7,9 @@
 
 import XCTest
 @testable import RockCrabCalendar
+import RockCrabDomain
+import RockCrabShared
+import RockCrabData
 
 final class HolidayRepositoryTests: XCTestCase {
     func testFetchHolidaysReturnsNilWhenCacheIsValid() async throws {

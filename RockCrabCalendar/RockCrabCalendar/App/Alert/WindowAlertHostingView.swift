@@ -6,14 +6,9 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 struct WindowAlertHostingView: View {
-    static var AlertNotificationName: Notification.Name {
-        .init("RockCrabCalendar.WindowAlertHosting.NetworkError.Name")
-    }
-    static var AlertDismissNotificationName: Notification.Name {
-        .init("RockCrabCalendar.Hosting.NetworkErrorDismiss.Name")
-    }
     @State private var error: Error? = nil
     @State private var isPresented: Bool = false
     
@@ -26,7 +21,7 @@ struct WindowAlertHostingView: View {
             }
         }
         .frame(width: 0, height: 0)
-        .onReceive(NotificationCenter.default.publisher(for: Self.AlertNotificationName)
+        .onReceive(NotificationCenter.default.publisher(for: AlertNotificationName.networkError)
             .map(\.object)
             .compactMap { $0 as? Error }
             .receive(on: DispatchQueue.main)
@@ -34,7 +29,7 @@ struct WindowAlertHostingView: View {
             self.error = error
             self.isPresented = true
         }
-        .onReceive(NotificationCenter.default.publisher(for: Self.AlertDismissNotificationName)
+        .onReceive(NotificationCenter.default.publisher(for: AlertNotificationName.networkErrorDismiss)
             .receive(on: DispatchQueue.main)
         ) { _ in
             self.isPresented = false

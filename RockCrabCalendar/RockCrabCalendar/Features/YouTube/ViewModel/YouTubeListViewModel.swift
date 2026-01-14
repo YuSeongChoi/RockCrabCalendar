@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RockCrabData
+import RockCrabShared
 
 @Observable
 final class YouTubeListViewModel {

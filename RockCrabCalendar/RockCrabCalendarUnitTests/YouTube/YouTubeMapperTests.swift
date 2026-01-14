@@ -7,6 +7,7 @@
 
 import XCTest
 @testable import RockCrabCalendar
+import RockCrabData
 
 final class YouTubeMapperTests: XCTestCase {
     func testThumbnailPriorityHighOverDefault() throws {

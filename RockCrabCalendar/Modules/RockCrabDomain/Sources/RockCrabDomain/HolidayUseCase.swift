@@ -1,0 +1,29 @@
+//
+//  HolidayUseCase.swift
+//  RockCrabCalendar
+//
+//  Created by Codex on 2025/01/09.
+//
+
+import Foundation
+import RockCrabShared
+
+// Repository abstraction for holiday fetching to enable DI and testing.
+public protocol HolidayRepositoryProtocol {
+    func fetchHolidaysIfNeeded(baseYear: Int) async throws -> [HolidayInfo]?
+}
+
+// Use-case layer for holiday sync.
+public struct HolidayUseCase {
+    private let repository: HolidayRepositoryProtocol
+
+    // Compose with a repository (API client + cache, mock, etc).
+    public init(repository: HolidayRepositoryProtocol) {
+        self.repository = repository
+    }
+
+    // Fetch holidays for a base year if cache is stale.
+    public func fetchIfNeeded(baseYear: Int) async throws -> [HolidayInfo]? {
+        try await repository.fetchHolidaysIfNeeded(baseYear: baseYear)
+    }
+}

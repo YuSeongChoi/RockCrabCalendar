@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabDomain
 
 struct ScheduleEditView: View {
     enum Kind {
@@ -134,131 +135,17 @@ struct ScheduleEditView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("기본 정보") {
-                    TextField("제목", text: $title)
-                    DatePicker("날짜", selection: $date, displayedComponents: .date)
-                    Toggle("하루종일", isOn: $isAllDay)
-
-                    if !isAllDay {
-                        DatePicker(
-                            "시작 시간",
-                            selection: Binding(
-                                get: { startTime ?? Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date)! },
-                                set: { startTime = $0 }
-                            ),
-                            displayedComponents: .hourAndMinute
-                        )
-
-                        DatePicker(
-                            "종료 시간",
-                            selection: Binding(
-                                get: { endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)! },
-                                set: { endTime = $0 }
-                            ),
-                            displayedComponents: .hourAndMinute
-                        )
-                        
-                        Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
-                    }
-                    
-                    TextField("장소", text: $place)
-                }
-                .onChange(of: isAllDay) { _, newValue in
-                    if newValue {
-                        startTime = nil
-                        endTime = nil
-                    } else {
-                        startTime = startTime ?? Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date)!
-                        endTime = endTime ?? Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date)!
-                    }
-                }
-                .task(id: startTime) {
-                    guard let newStart = startTime else { return }
-                    
-                    if endTime == nil || endTime! <= newStart {
-                        endTime = Calendar.current.date(byAdding: .hour, value: 1, to: newStart)
-                    }
-                }
-
-                switch kind {
-                case .qwer:
-                    if case .editQWER = mode, !isQWERLocalSchedule {
-                        Section {
-                            Label {
-                                Text("이 일정은 Firestore에 등록된 항목이라 앱에서 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제 가능합니다.")
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
-                            } icon: {
-                                Image(systemName: "exclamationmark.triangle.fill")
-                                    .foregroundStyle(.yellow)
-                            }
-                        }
-                    }
-                    Section("분류") {
-                        Picker("카테고리", selection: $category) {
-                            ForEach(ScheduleCategory.allCases, id: \.self) { cat in
-                                Text(cat.rawValue).tag(cat)
-                            }
-                        }
-                    }
-
-                    Section("멤버") {
-                        ForEach(QWERMember.allCases, id: \.self) { member in
-                            Toggle(isOn: Binding(
-                                get: { selectedMembers.contains(member) },
-                                set: { newValue in
-                                    if newValue { selectedMembers.insert(member) }
-                                    else { selectedMembers.remove(member) }
-                                }
-                            )) {
-                                HStack(spacing: 8) {
-                                    Circle()
-                                        .strokeBorder(Color.gray.opacity(0.4), lineWidth: 1)
-                                        .background(Circle().fill(member.color))
-                                        .frame(width: 10, height: 10)
-                                    
-                                    Text(member.name)
-                                }
-                            }
-                            .tint(member.color)
-                        }
-                    }
-
-                case .user:
-                    Section("반복") {
-                        Toggle("반복", isOn: $isRepeat)
-                            .onChange(of: isRepeat) { _, newValue in
-                                if newValue && repeatType == .none {
-                                    repeatType = .week
-                                }
-                            }
-
-                        if isRepeat {
-                            Picker("반복 종류", selection: $repeatType) {
-                                ForEach(UserScheduleItem.RepeatType.allCases, id: \.self) { t in
-                                    Text(t.rawValue).tag(t)
-                                }
-                            }
-                            DatePicker("반복 종료", selection: $repeatEndDate, displayedComponents: .date)
-                        }
-                    }
-                    Section("색상") {
-                        ColorPicker("색상 선택", selection: $selectedColor, supportsOpacity: false)
-                    }
+                basicInfoSection
+                if kind == .qwer {
+                    qwerSection
+                } else {
+                    userSection
                 }
             }
             .scrollContentBackground(.hidden)
             .listStyle(.insetGrouped)
-            .listRowBackground(
-                Color(UIColor { trait in
-                    trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
-                })
-            )
-            .background(
-                Color(UIColor { trait in
-                    trait.userInterfaceStyle == .dark ? .black : .systemGroupedBackground
-                })
-            )
+            .listRowBackground(listRowBackgroundColor)
+            .background(listBackgroundColor)
             .navigationTitle(titleText)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -439,6 +326,150 @@ extension ScheduleEditView.Mode: Identifiable {
         case .editQWER(let item): return "qwer_\(item.id.uuidString)"
         case .editUser(let item): return "user_\(item.id.uuidString)"
         }
+    }
+}
+
+// MARK: - Sections
+private extension ScheduleEditView {
+    var listRowBackgroundColor: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
+        })
+    }
+
+    var listBackgroundColor: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? .black : .systemGroupedBackground
+        })
+    }
+
+    var startTimeBinding: Binding<Date> {
+        Binding(
+            get: { startTime ?? defaultStartTime() },
+            set: { startTime = $0 }
+        )
+    }
+
+    var endTimeBinding: Binding<Date> {
+        Binding(
+            get: { endTime ?? defaultEndTime() },
+            set: { endTime = $0 }
+        )
+    }
+
+    func defaultStartTime() -> Date {
+        Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: date) ?? date
+    }
+
+    func defaultEndTime() -> Date {
+        Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date) ?? date
+    }
+
+    var basicInfoSection: some View {
+        Section("기본 정보") {
+            TextField("제목", text: $title)
+            DatePicker("날짜", selection: $date, displayedComponents: .date)
+            Toggle("하루종일", isOn: $isAllDay)
+
+            if !isAllDay {
+                DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
+                DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
+                Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+            }
+
+            TextField("장소", text: $place)
+        }
+        .onChange(of: isAllDay) { _, newValue in
+            if newValue {
+                startTime = nil
+                endTime = nil
+            } else {
+                startTime = startTime ?? defaultStartTime()
+                endTime = endTime ?? defaultEndTime()
+            }
+        }
+        .task(id: startTime) {
+            guard let newStart = startTime else { return }
+
+            if endTime == nil || endTime! <= newStart {
+                endTime = Calendar.current.date(byAdding: .hour, value: 1, to: newStart)
+            }
+        }
+    }
+
+    @ViewBuilder
+    var qwerSection: some View {
+        if case .editQWER = mode, !isQWERLocalSchedule {
+            Section {
+                Label {
+                    Text("이 일정은 Firestore에 등록된 항목이라 앱에서 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제 가능합니다.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                } icon: {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.yellow)
+                }
+            }
+        }
+
+        Section("분류") {
+            Picker("카테고리", selection: $category) {
+                ForEach(ScheduleCategory.allCases, id: \.self) { cat in
+                    Text(cat.rawValue).tag(cat)
+                }
+            }
+        }
+
+        Section("멤버") {
+            ForEach(QWERMember.allCases, id: \.self) { member in
+                memberToggle(member)
+            }
+        }
+    }
+
+    var userSection: some View {
+        Group {
+            Section("반복") {
+                Toggle("반복", isOn: $isRepeat)
+                    .onChange(of: isRepeat) { _, newValue in
+                        if newValue && repeatType == .none {
+                            repeatType = .week
+                        }
+                    }
+
+                if isRepeat {
+                    Picker("반복 종류", selection: $repeatType) {
+                        ForEach(UserScheduleItem.RepeatType.allCases, id: \.self) { t in
+                            Text(t.rawValue).tag(t)
+                        }
+                    }
+                    DatePicker("반복 종료", selection: $repeatEndDate, displayedComponents: .date)
+                }
+            }
+            Section("색상") {
+                ColorPicker("색상 선택", selection: $selectedColor, supportsOpacity: false)
+            }
+        }
+    }
+
+    private func memberToggle(_ member: QWERMember) -> some View {
+        Toggle(isOn: Binding(
+            get: { selectedMembers.contains(member) },
+            set: { newValue in
+                if newValue { selectedMembers.insert(member) }
+                else { selectedMembers.remove(member) }
+            }
+        )) {
+            HStack(spacing: 8) {
+                Circle()
+                    .strokeBorder(Color.gray.opacity(0.4), lineWidth: 1)
+                    .background(Circle().fill(qwerVM.memberColor(member)))
+                    .frame(width: 10, height: 10)
+
+                Text(member.name)
+            }
+        }
+        .tint(qwerVM.memberColor(member))
     }
 }
 

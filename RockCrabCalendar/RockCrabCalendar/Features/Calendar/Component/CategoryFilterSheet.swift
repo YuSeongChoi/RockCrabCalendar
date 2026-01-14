@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabDomain
 
 struct CategoryFilterSheet: View {
     @Environment(\.dismiss) private var dismiss

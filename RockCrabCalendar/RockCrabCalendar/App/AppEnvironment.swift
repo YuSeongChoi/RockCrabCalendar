@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RockCrabDomain
+import RockCrabData
 
 // Central DI container for assembling live dependencies.
 final class AppEnvironment: ObservableObject {

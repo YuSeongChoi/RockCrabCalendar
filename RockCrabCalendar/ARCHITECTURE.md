@@ -63,3 +63,9 @@ RockCrabCalendarApp
 RockCrabShared (local package)
   - AppDateFormats / AppStorageKeys / HolidayInfo
 ```
+
+### SPM Module (Domain)
+```
+RockCrabDomain (local package)
+  - UseCases / Repository protocols / Domain models
+```

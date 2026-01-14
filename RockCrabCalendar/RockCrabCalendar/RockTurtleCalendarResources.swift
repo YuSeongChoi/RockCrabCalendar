@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreText
+import RockCrabShared
 
 import RswiftResources
 

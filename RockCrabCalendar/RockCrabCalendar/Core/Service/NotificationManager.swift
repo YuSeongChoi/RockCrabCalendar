@@ -7,6 +7,8 @@
 
 import Foundation
 import UserNotifications
+import RockCrabDomain
+import RockCrabShared
 
 /// 로컬 알림을 관리하는 매니저
 /// - 사용 예: 앱 시작 시 권한 요청 → 일정 생성/수정 시 예약, 삭제 시 취소

@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */; };
-		3BF2E822715912AB46F798F4 /* UserDefaultsUserScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCD059EF88C57693E2D709E /* UserDefaultsUserScheduleLocalDataSource.swift */; };
-		418D4DFF922E084A2F6B97D2 /* YouTubeAPIRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE8DFA24F55D5816E4B91E3 /* YouTubeAPIRemoteDataSource.swift */; };
+		078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
+		29CDB8D5AAC58DDADD2CB983 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
+		4C2D8FDF10774333DDA785D3 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
 		5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */; };
 		5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */; };
 		5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */; };
@@ -21,34 +21,19 @@
 		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
 		5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */; };
 		5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1121A72EE152EA00588095 /* NotificationManager.swift */; };
-		5D1E98072EF2A0A8000C2468 /* HolidayDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1E98062EF2A0A8000C2468 /* HolidayDTO.swift */; };
 		5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */; };
-		5D261D2A2EA204F8004DEE6B /* ScheduleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */; };
-		5D5E852D2E30B9D700DB8775 /* QWERScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */; };
 		5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */; };
 		5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */; };
 		5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */; };
-		5D5E85802E31F6CE00DB8775 /* QWERScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */; };
-		5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E86292E39D6A800DB8775 /* QWERMember.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
 		5D68DCFE2E39EF5C00A69D92 /* QWERScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */; };
 		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
-		5D7FB74C2E78010900BE9B18 /* YouTubeChannelDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
-		078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
-		5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */; };
 		5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B120B2E86510D0014649C /* ScheduleEditView.swift */; };
-		5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12392E867A1E0014649C /* UserScheduleItem.swift */; };
-		5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12412E867A400014649C /* SchedulableProtocol.swift */; };
-		5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B12582E8A4AD30014649C /* UserScheduleService.swift */; };
+		5DDA57DD2F171A7600C8D2A1 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
+		5DDA57DE2F171A7600C8D2A1 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
-		5DE016372EF91B0A003E9843 /* ScheduleCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */; };
-		5DE016402EF920AA003E9843 /* HolidayCacheStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */; };
-		5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */; };
-		5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */; };
-		5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */; };
-		3CC2AF17E8D8C264AA4B03AD /* YouTubeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126FBB45482F11BE60462EE8 /* YouTubeRepository.swift */; };
 		5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */; };
 		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
@@ -71,34 +56,21 @@
 		5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */; };
 		5DE024692CA3DC2500472395 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */; };
 		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
-		5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */; };
-		5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211522E65666B00E465E8 /* ServerConfig.swift */; };
-		5DE2115D2E657F0200E465E8 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115C2E657F0200E465E8 /* HTTPClient.swift */; };
 		5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */; };
 		5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211622E6583F100E465E8 /* WindowOverlayView.swift */; };
 		5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */; };
-		5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211862E698AE200E465E8 /* HTTPRequestList.swift */; };
-		5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */; };
 		5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */; };
 		5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */; };
 		5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */; };
 		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
 		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
 		5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */; };
-		5DF74CAD2F15D9E8005E589C /* QWERScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */; };
 		5DFA41BD2ED81770008BE45C /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
-		6FDF4C1743B969B6FFF7B5A2 /* YouTubeRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */; };
+		6827595737CB4172CD588381 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */; };
-		7660750C91FB6835AA14B23E /* HolidayCacheDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */; };
-		83E0AD39E45142782079656F /* QWERScheduleRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */; };
-		97E352F5A5BA4FB683D1A493 /* FirestoreQWERScheduleRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */; };
-		A2995BC33C4557D8EAD808CA /* QWERScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */; };
-		C5BA3C2820994B3C38948499 /* UserScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5A16B638FCA3127F3459D2 /* UserScheduleLocalDataSource.swift */; };
-		C8FCD3FAF0CFBF402B39B74C /* YouTubeRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE2A585A30AB133C4D7EAC8 /* YouTubeRemoteDataSource.swift */; };
-		EB55C1CBBB134B95ED71C7D5 /* UserDefaultsQWERScheduleLocalDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */; };
-		EB6B05792FC7C3BCA62BFCDF /* HolidayRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */; };
-		FE9EFED2A6605C3DB49B4276 /* HolidayUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08788EF46894C09397342D6E /* HolidayUseCase.swift */; };
+		B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
+		B0A1D2C3E4F5061728394A63 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,17 +91,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCacheDataSource.swift; sourceTree = "<group>"; };
-		126FBB45482F11BE60462EE8 /* YouTubeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRepository.swift; sourceTree = "<group>"; };
-		08788EF46894C09397342D6E /* HolidayUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayUseCase.swift; sourceTree = "<group>"; };
-		0FE8DFA24F55D5816E4B91E3 /* YouTubeAPIRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeAPIRemoteDataSource.swift; sourceTree = "<group>"; };
-		1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreQWERScheduleRemoteDataSource.swift; sourceTree = "<group>"; };
-		1A5A16B638FCA3127F3459D2 /* UserScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleLocalDataSource.swift; sourceTree = "<group>"; };
-		23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRepositoryImpl.swift; sourceTree = "<group>"; };
-		35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsQWERScheduleLocalDataSource.swift; sourceTree = "<group>"; };
-		414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayRemoteDataSource.swift; sourceTree = "<group>"; };
-		416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleLocalDataSource.swift; sourceTree = "<group>"; };
-		549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleRemoteDataSource.swift; sourceTree = "<group>"; };
 		5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Resources.swift"; sourceTree = "<group>"; };
 		5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarResources.swift; sourceTree = "<group>"; };
@@ -139,30 +100,15 @@
 		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
 		5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		5D1121A72EE152EA00588095 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		5D1E98062EF2A0A8000C2468 /* HolidayDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayDTO.swift; sourceTree = "<group>"; };
 		5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
-		5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleServiceProtocol.swift; sourceTree = "<group>"; };
-		5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleItem.swift; sourceTree = "<group>"; };
 		5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
 		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
 		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleService.swift; sourceTree = "<group>"; };
-		5D5E86292E39D6A800DB8775 /* QWERMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERMember.swift; sourceTree = "<group>"; };
 		5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeChannelDTO.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5D8B120B2E86510D0014649C /* ScheduleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditView.swift; sourceTree = "<group>"; };
-		5D8B12392E867A1E0014649C /* UserScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleItem.swift; sourceTree = "<group>"; };
-		5D8B12412E867A400014649C /* SchedulableProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulableProtocol.swift; sourceTree = "<group>"; };
-		5D8B12582E8A4AD30014649C /* UserScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleService.swift; sourceTree = "<group>"; };
-		5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCacheStore.swift; sourceTree = "<group>"; };
-		5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayCacheStore.swift; sourceTree = "<group>"; };
-		5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayAPIClient.swift; sourceTree = "<group>"; };
-		5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayRepository.swift; sourceTree = "<group>"; };
-		5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeAPIClient.swift; sourceTree = "<group>"; };
 		5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
@@ -187,14 +133,9 @@
 		5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
 		5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
-		5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestProtocol.swift; sourceTree = "<group>"; };
-		5DE211522E65666B00E465E8 /* ServerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerConfig.swift; sourceTree = "<group>"; };
-		5DE2115C2E657F0200E465E8 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAlertHostingView.swift; sourceTree = "<group>"; };
 		5DE211622E6583F100E465E8 /* WindowOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOverlayView.swift; sourceTree = "<group>"; };
 		5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
-		5DE211862E698AE200E465E8 /* HTTPRequestList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPRequestList.swift; sourceTree = "<group>"; };
-		5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeSearchListDTO.swift; sourceTree = "<group>"; };
 		5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+YouTube.swift"; sourceTree = "<group>"; };
 		5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
 		5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeSearchMapper.swift; sourceTree = "<group>"; };
@@ -203,14 +144,10 @@
 		5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
 		5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
 		5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterSheet.swift; sourceTree = "<group>"; };
-		5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleUseCase.swift; sourceTree = "<group>"; };
 		5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = text.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
-		9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleUseCase.swift; sourceTree = "<group>"; };
 		BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
-		ECE2A585A30AB133C4D7EAC8 /* YouTubeRemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeRemoteDataSource.swift; sourceTree = "<group>"; };
-		FBCD059EF88C57693E2D709E /* UserDefaultsUserScheduleLocalDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUserScheduleLocalDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -245,6 +182,8 @@
 				5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */,
 				5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */,
 				078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */,
+				4C2D8FDF10774333DDA785D3 /* RockCrabDomain in Frameworks */,
+				B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */,
 				5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */,
 				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
@@ -256,6 +195,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5DDA57DD2F171A7600C8D2A1 /* RockCrabShared in Frameworks */,
+				5DDA57DE2F171A7600C8D2A1 /* RockCrabDomain in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +204,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29CDB8D5AAC58DDADD2CB983 /* RockCrabDomain in Frameworks */,
+				6827595737CB4172CD588381 /* RockCrabShared in Frameworks */,
+				B0A1D2C3E4F5061728394A63 /* RockCrabData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,16 +216,6 @@
 		2597E98182E6537A9C12D938 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				549C40EA4EE63775D1169489 /* QWERScheduleRemoteDataSource.swift */,
-				1112B88C2BD742FD15766A06 /* FirestoreQWERScheduleRemoteDataSource.swift */,
-				416149F6F5903BB38FF5C558 /* QWERScheduleLocalDataSource.swift */,
-				35F3D54B99E87A2E616375BC /* UserDefaultsQWERScheduleLocalDataSource.swift */,
-				1A5A16B638FCA3127F3459D2 /* UserScheduleLocalDataSource.swift */,
-				FBCD059EF88C57693E2D709E /* UserDefaultsUserScheduleLocalDataSource.swift */,
-				ECE2A585A30AB133C4D7EAC8 /* YouTubeRemoteDataSource.swift */,
-				0FE8DFA24F55D5816E4B91E3 /* YouTubeAPIRemoteDataSource.swift */,
-				414CADD4A5FFA0F10DF7CCE2 /* HolidayRemoteDataSource.swift */,
-				0303DD2CBB059D4F66E82A25 /* HolidayCacheDataSource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -290,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */,
-				5D7FC9BF2E5ED7A500B5EDCA /* Bundle+Extension.swift */,
 				5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */,
 			);
 			name = Extensions;
@@ -357,7 +290,6 @@
 		5D261D252EA204A9004DEE6B /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				5D261D292EA204F8004DEE6B /* ScheduleServiceProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -420,16 +352,7 @@
 			children = (
 				2597E98182E6537A9C12D938 /* DataSource */,
 				5D261D252EA204A9004DEE6B /* Protocol */,
-				5D5E857F2E31F6CE00DB8775 /* QWERScheduleService.swift */,
-				5DE0163C2EF920AA003E9843 /* HolidayCacheStore.swift */,
-				5DE0163D2EF920AA003E9843 /* HolidayAPIClient.swift */,
-				5DE0163E2EF920AA003E9843 /* HolidayRepository.swift */,
-				5DE016362EF91B0A003E9843 /* ScheduleCacheStore.swift */,
-				5D8B12582E8A4AD30014649C /* UserScheduleService.swift */,
 				5D1121A72EE152EA00588095 /* NotificationManager.swift */,
-				5DE0163F2EF920AA003E9843 /* YouTubeAPIClient.swift */,
-				23DB7F532269B55990E50DA0 /* YouTubeRepositoryImpl.swift */,
-				126FBB45482F11BE60462EE8 /* YouTubeRepository.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -448,7 +371,6 @@
 			children = (
 				5D8B124B2E867A510014649C /* Schedule */,
 				5DE211E52E6FB26A00E465E8 /* DTO */,
-				5D5E86292E39D6A800DB8775 /* QWERMember.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -464,9 +386,6 @@
 		5D8B124B2E867A510014649C /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				5D8B12412E867A400014649C /* SchedulableProtocol.swift */,
-				5D5E852C2E30B9D700DB8775 /* QWERScheduleItem.swift */,
-				5D8B12392E867A1E0014649C /* UserScheduleItem.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -532,7 +451,6 @@
 				BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */,
 				5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */,
 				5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */,
-				5DE211522E65666B00E465E8 /* ServerConfig.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -578,8 +496,6 @@
 		5DE211192E655BF900E465E8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				5DE2114F2E65662400E465E8 /* HTTPRequestProtocol.swift */,
-				5DE2115C2E657F0200E465E8 /* HTTPClient.swift */,
 				5DE211812E698ABF00E465E8 /* RequestList */,
 			);
 			path = Network;
@@ -605,7 +521,6 @@
 		5DE211812E698ABF00E465E8 /* RequestList */ = {
 			isa = PBXGroup;
 			children = (
-				5DE211862E698AE200E465E8 /* HTTPRequestList.swift */,
 			);
 			path = RequestList;
 			sourceTree = "<group>";
@@ -613,9 +528,6 @@
 		5DE211E52E6FB26A00E465E8 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				5DE211E62E6FB27400E465E8 /* YouTubeSearchListDTO.swift */,
-				5D7FB74B2E78010900BE9B18 /* YouTubeChannelDTO.swift */,
-				5D1E98062EF2A0A8000C2468 /* HolidayDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -642,9 +554,6 @@
 		5DF74CAC2F15D9E8005E589C /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				5DF74CAB2F15D9E8005E589C /* QWERScheduleUseCase.swift */,
-				9B3BB6B6CDD0AB6A1C175E30 /* UserScheduleUseCase.swift */,
-				08788EF46894C09397342D6E /* HolidayUseCase.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -674,6 +583,8 @@
 				5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */,
 				5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */,
 				A622A078AF1AD2268F01F207 /* RockCrabShared */,
+				E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */,
+				B0A1D2C3E4F5061728394A61 /* RockCrabData */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -694,6 +605,8 @@
 			);
 			name = RockCrabCalendarUITests;
 			packageProductDependencies = (
+				A622A078AF1AD2268F01F207 /* RockCrabShared */,
+				E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */,
 			);
 			productName = RockCrabCalendarUITests;
 			productReference = 5DE212142E6FC0F400E465E8 /* RockCrabCalendarUITests.xctest */;
@@ -710,7 +623,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				5DDE86082E7BF29B00643DB5 /* PBXTargetDependency */,
 				5DE212292E6FC10B00E465E8 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -719,6 +631,7 @@
 			);
 			name = RockCrabCalendarUnitTests;
 			packageProductDependencies = (
+				B0A1D2C3E4F5061728394A61 /* RockCrabData */,
 			);
 			productName = RockCrabCalendarUnitTests;
 			productReference = 5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */;
@@ -757,7 +670,9 @@
 			);
 			mainGroup = 5DE024282CA3D79E00472395;
 			packageReferences = (
-				E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "RockCrabShared" */,
+				E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "Modules/RockCrabShared" */,
+				53D074D72340BE18E676B1E8 /* XCLocalSwiftPackageReference "Modules/RockCrabDomain" */,
+				B0A1D2C3E4F5061728394A60 /* XCLocalSwiftPackageReference "Modules/RockCrabData" */,
 				5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */,
 				5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */,
@@ -823,26 +738,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D8B12422E867A400014649C /* SchedulableProtocol.swift in Sources */,
 				5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */,
-				5D261D2A2EA204F8004DEE6B /* ScheduleServiceProtocol.swift in Sources */,
 				5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */,
-				5D7FC9C02E5ED7A500B5EDCA /* Bundle+Extension.swift in Sources */,
 				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
-				5DF74CAD2F15D9E8005E589C /* QWERScheduleUseCase.swift in Sources */,
-				83E0AD39E45142782079656F /* QWERScheduleRemoteDataSource.swift in Sources */,
-				97E352F5A5BA4FB683D1A493 /* FirestoreQWERScheduleRemoteDataSource.swift in Sources */,
-				A2995BC33C4557D8EAD808CA /* QWERScheduleLocalDataSource.swift in Sources */,
-				EB55C1CBBB134B95ED71C7D5 /* UserDefaultsQWERScheduleLocalDataSource.swift in Sources */,
-				C5BA3C2820994B3C38948499 /* UserScheduleLocalDataSource.swift in Sources */,
-				3BF2E822715912AB46F798F4 /* UserDefaultsUserScheduleLocalDataSource.swift in Sources */,
-				C8FCD3FAF0CFBF402B39B74C /* YouTubeRemoteDataSource.swift in Sources */,
-				418D4DFF922E084A2F6B97D2 /* YouTubeAPIRemoteDataSource.swift in Sources */,
-				EB6B05792FC7C3BCA62BFCDF /* HolidayRemoteDataSource.swift in Sources */,
-				7660750C91FB6835AA14B23E /* HolidayCacheDataSource.swift in Sources */,
-				1C776534FCB70F387CE832CB /* UserScheduleUseCase.swift in Sources */,
-				FE9EFED2A6605C3DB49B4276 /* HolidayUseCase.swift in Sources */,
-				5D1E98072EF2A0A8000C2468 /* HolidayDTO.swift in Sources */,
 				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
 				5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
@@ -850,42 +748,24 @@
 				5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
 				5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */,
-				5D7FB74C2E78010900BE9B18 /* YouTubeChannelDTO.swift in Sources */,
-				5DE2115D2E657F0200E465E8 /* HTTPClient.swift in Sources */,
 				5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */,
-				5DE211532E65666B00E465E8 /* ServerConfig.swift in Sources */,
 				5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */,
 				5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */,
-				5D8B123A2E867A1E0014649C /* UserScheduleItem.swift in Sources */,
 				5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */,
-				5DE211872E698AE200E465E8 /* HTTPRequestList.swift in Sources */,
-				5DE211E72E6FB27500E465E8 /* YouTubeSearchListDTO.swift in Sources */,
 				5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */,
 				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
 				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
 				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
 				5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */,
-				5DE211502E65662400E465E8 /* HTTPRequestProtocol.swift in Sources */,
 				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
-				5D5E85802E31F6CE00DB8775 /* QWERScheduleService.swift in Sources */,
-				5D5E852D2E30B9D700DB8775 /* QWERScheduleItem.swift in Sources */,
 				5D68DCFE2E39EF5C00A69D92 /* QWERScheduleViewModel.swift in Sources */,
 				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
-				5D8B12592E8A4AD30014649C /* UserScheduleService.swift in Sources */,
 				5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */,
-				5D5E862A2E39D6A800DB8775 /* QWERMember.swift in Sources */,
-				5DE016402EF920AA003E9843 /* HolidayCacheStore.swift in Sources */,
-				5DE016412EF920AA003E9843 /* HolidayAPIClient.swift in Sources */,
-				5DE016422EF920AA003E9843 /* HolidayRepository.swift in Sources */,
-				5DE016432EF920AA003E9843 /* YouTubeAPIClient.swift in Sources */,
-				3CC2AF17E8D8C264AA4B03AD /* YouTubeRepository.swift in Sources */,
-				6FDF4C1743B969B6FFF7B5A2 /* YouTubeRepositoryImpl.swift in Sources */,
 				5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */,
 				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
 				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
 				72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */,
 				5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */,
-				5DE016372EF91B0A003E9843 /* ScheduleCacheStore.swift in Sources */,
 				5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -910,10 +790,6 @@
 		5D43243C2E8142B10026E23E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 5D43243B2E8142B10026E23E /* RswiftGenerateInternalResources */;
-		};
-		5DDE86082E7BF29B00643DB5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */;
 		};
 		5DE2121B2E6FC0F400E465E8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1274,6 +1150,21 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		53D074D72340BE18E676B1E8 /* XCLocalSwiftPackageReference "Modules/RockCrabDomain" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/RockCrabDomain;
+		};
+		B0A1D2C3E4F5061728394A60 /* XCLocalSwiftPackageReference "Modules/RockCrabData" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/RockCrabData;
+		};
+		E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "Modules/RockCrabShared" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/RockCrabShared;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1301,19 +1192,7 @@
 		};
 /* End XCRemoteSwiftPackageReference section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "RockCrabShared" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Modules/RockCrabShared;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		A622A078AF1AD2268F01F207 /* RockCrabShared */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "RockCrabShared" */;
-			productName = RockCrabShared;
-		};
 		5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1349,9 +1228,20 @@
 			package = 5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */;
 			productName = RswiftLibrary;
 		};
-		5DDE86072E7BF29B00643DB5 /* RswiftGenerateInternalResources */ = {
+		A622A078AF1AD2268F01F207 /* RockCrabShared */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:RswiftGenerateInternalResources";
+			package = E9A82E1A37315A67EF69E562 /* XCLocalSwiftPackageReference "Modules/RockCrabShared" */;
+			productName = RockCrabShared;
+		};
+		B0A1D2C3E4F5061728394A61 /* RockCrabData */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0A1D2C3E4F5061728394A60 /* XCLocalSwiftPackageReference "Modules/RockCrabData" */;
+			productName = RockCrabData;
+		};
+		E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 53D074D72340BE18E676B1E8 /* XCLocalSwiftPackageReference "Modules/RockCrabDomain" */;
+			productName = RockCrabDomain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
