@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabDomain
 import RockCrabShared
 
 struct YouTubeListView: View {
@@ -22,7 +23,7 @@ struct YouTubeListView: View {
 
     // Inject environment for DI.
     init(environment: AppEnvironment = .live()) {
-        _viewModel = State(initialValue: YouTubeListViewModel(repository: environment.youTubeRepository))
+        _viewModel = State(initialValue: YouTubeListViewModel(useCase: environment.youTubeUseCase))
     }
     
     var body: some View {

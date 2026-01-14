@@ -9,7 +9,7 @@ import Foundation
 import RockCrabShared
 import RockCrabDomain
 
-public struct ScheduleCacheStore {
+public struct ScheduleCacheStore: ScheduleCacheStoreProtocol {
     private let store: UserDefaults
 
     public init(userDefaults: UserDefaults = .standard) {

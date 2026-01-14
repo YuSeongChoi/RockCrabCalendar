@@ -10,32 +10,40 @@
 		078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		29CDB8D5AAC58DDADD2CB983 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
 		4C2D8FDF10774333DDA785D3 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
-		5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */; };
 		5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */; };
 		5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5D00F0842EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport */; };
 		5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */; };
 		5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */; };
-		5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */; };
-		5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */; };
-		5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */; };
-		5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */; };
-		5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */; };
-		5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1121A72EE152EA00588095 /* NotificationManager.swift */; };
-		5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */; };
-		5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */; };
-		5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */; };
-		5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */; };
+		5D1A72F22F177562007F3FB8 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EE2F177562007F3FB8 /* EmptyStateView.swift */; };
+		5D1A72F32F177562007F3FB8 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D02F177562007F3FB8 /* NotificationManager.swift */; };
+		5D1A72F42F177562007F3FB8 /* CategoryFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D42F177562007F3FB8 /* CategoryFilterSheet.swift */; };
+		5D1A72F52F177562007F3FB8 /* CalendarGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EC2F177562007F3FB8 /* CalendarGenerator.swift */; };
+		5D1A72F62F177562007F3FB8 /* WindowOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72BF2F177562007F3FB8 /* WindowOverlayView.swift */; };
+		5D1A72F72F177562007F3FB8 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72ED2F177562007F3FB8 /* DateUtil.swift */; };
+		5D1A72F82F177562007F3FB8 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C52F177562007F3FB8 /* RockCrabCalendarApp.swift */; };
+		5D1A72F92F177562007F3FB8 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D62F177562007F3FB8 /* CalendarView.swift */; };
+		5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72DE2F177562007F3FB8 /* ScheduleListView.swift */; };
+		5D1A72FB2F177562007F3FB8 /* QWERScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */; };
+		5D1A72FC2F177562007F3FB8 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */; };
+		5D1A72FD2F177562007F3FB8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72BE2F177562007F3FB8 /* WindowAlertHostingView.swift */; };
+		5D1A72FE2F177562007F3FB8 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EB2F177562007F3FB8 /* AnalyticsHelper.swift */; };
+		5D1A72FF2F177562007F3FB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C32F177562007F3FB8 /* AppDelegate.swift */; };
+		5D1A73002F177562007F3FB8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E72F177562007F3FB8 /* YouTubeListViewModel.swift */; };
+		5D1A73012F177562007F3FB8 /* ScheduleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72DD2F177562007F3FB8 /* ScheduleEditView.swift */; };
+		5D1A73022F177562007F3FB8 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72DB2F177562007F3FB8 /* HomeMainView.swift */; };
+		5D1A73032F177562007F3FB8 /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EF2F177562007F3FB8 /* SwiftUI+Extension.swift */; };
+		5D1A73042F177562007F3FB8 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D32F177562007F3FB8 /* CalendarDayCell.swift */; };
+		5D1A73052F177562007F3FB8 /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */; };
+		5D1A73062F177562007F3FB8 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D82F177562007F3FB8 /* CalendarViewModel.swift */; };
+		5D1A73072F177562007F3FB8 /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */; };
+		5D1A73082F177562007F3FB8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E52F177562007F3FB8 /* YouTubeListView.swift */; };
+		5D1A73092F177562007F3FB8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C12F177562007F3FB8 /* LoadingIndicatorView.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
-		5D68DCFE2E39EF5C00A69D92 /* QWERScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */; };
-		5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
-		5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8B120B2E86510D0014649C /* ScheduleEditView.swift */; };
 		5DDA57DD2F171A7600C8D2A1 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		5DDA57DE2F171A7600C8D2A1 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
 		5DDE85F22E7BF02D00643DB5 /* RswiftLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = 5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */; };
-		5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */; };
-		5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */; };
 		5DE024392CA3D7A000472395 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024382CA3D7A000472395 /* Assets.xcassets */; };
 		5DE0243D2CA3D7A000472395 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */; };
 		5DE024592CA3DC2500472395 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024472CA3DC2500472395 /* Lato-Italic.ttf */; };
@@ -56,19 +64,8 @@
 		5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */; };
 		5DE024692CA3DC2500472395 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */; };
 		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
-		5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */; };
-		5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211622E6583F100E465E8 /* WindowOverlayView.swift */; };
-		5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */; };
-		5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */; };
-		5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */; };
-		5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */; };
-		5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */; };
-		5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */; };
-		5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */; };
-		5DFA41BD2ED81770008BE45C /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */; };
 		62FF6C832E3DD90B0060012F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */; };
 		6827595737CB4172CD588381 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
-		72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */; };
 		B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
 		B0A1D2C3E4F5061728394A63 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
 /* End PBXBuildFile section */
@@ -91,27 +88,35 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
 		5D029BD32CA3DD5A0090B4D1 /* SwiftUI+Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Resources.swift"; sourceTree = "<group>"; };
 		5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockTurtleCalendarResources.swift; sourceTree = "<group>"; };
-		5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Extension.swift"; sourceTree = "<group>"; };
-		5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
-		5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
-		5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
-		5D1121A72EE152EA00588095 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
-		5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
-		5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
-		5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
-		5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleViewModel.swift; sourceTree = "<group>"; };
-		5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5D1A72BE2F177562007F3FB8 /* WindowAlertHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAlertHostingView.swift; sourceTree = "<group>"; };
+		5D1A72BF2F177562007F3FB8 /* WindowOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOverlayView.swift; sourceTree = "<group>"; };
+		5D1A72C12F177562007F3FB8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
+		5D1A72C32F177562007F3FB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		5D1A72C52F177562007F3FB8 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
+		5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
+		5D1A72D02F177562007F3FB8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		5D1A72D32F177562007F3FB8 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
+		5D1A72D42F177562007F3FB8 /* CategoryFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterSheet.swift; sourceTree = "<group>"; };
+		5D1A72D62F177562007F3FB8 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		5D1A72D82F177562007F3FB8 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		5D1A72DB2F177562007F3FB8 /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
+		5D1A72DD2F177562007F3FB8 /* ScheduleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditView.swift; sourceTree = "<group>"; };
+		5D1A72DE2F177562007F3FB8 /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
+		5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleViewModel.swift; sourceTree = "<group>"; };
+		5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
+		5D1A72E52F177562007F3FB8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
+		5D1A72E72F177562007F3FB8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
+		5D1A72EB2F177562007F3FB8 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
+		5D1A72EC2F177562007F3FB8 /* CalendarGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGenerator.swift; sourceTree = "<group>"; };
+		5D1A72ED2F177562007F3FB8 /* DateUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtil.swift; sourceTree = "<group>"; };
+		5D1A72EE2F177562007F3FB8 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		5D1A72EF2F177562007F3FB8 /* SwiftUI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwiftUI+Extension.swift"; sourceTree = "<group>"; };
+		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
-		5D8B120B2E86510D0014649C /* ScheduleEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditView.swift; sourceTree = "<group>"; };
-		5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5DE024382CA3D7A000472395 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5DE0243A2CA3D7A000472395 /* RockTurtleCalendar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RockTurtleCalendar.entitlements; sourceTree = "<group>"; };
 		5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -133,21 +138,10 @@
 		5DE024562CA3DC2500472395 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
 		5DE024572CA3DC2500472395 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
 		5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
-		5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowAlertHostingView.swift; sourceTree = "<group>"; };
-		5DE211622E6583F100E465E8 /* WindowOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowOverlayView.swift; sourceTree = "<group>"; };
-		5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
-		5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+YouTube.swift"; sourceTree = "<group>"; };
-		5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeVideo.swift; sourceTree = "<group>"; };
-		5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeSearchMapper.swift; sourceTree = "<group>"; };
 		5DE212142E6FC0F400E465E8 /* RockCrabCalendarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockCrabCalendarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockCrabCalendarUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
-		5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
-		5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryFilterSheet.swift; sourceTree = "<group>"; };
-		5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = text.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
-		BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -213,166 +207,251 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2597E98182E6537A9C12D938 /* DataSource */ = {
+		5D1A72C02F177562007F3FB8 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72BE2F177562007F3FB8 /* WindowAlertHostingView.swift */,
+				5D1A72BF2F177562007F3FB8 /* WindowOverlayView.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		5D1A72C22F177562007F3FB8 /* Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72C12F177562007F3FB8 /* LoadingIndicatorView.swift */,
+			);
+			path = Indicator;
+			sourceTree = "<group>";
+		};
+		5D1A72C72F177562007F3FB8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72C02F177562007F3FB8 /* Alert */,
+				5D1A72C22F177562007F3FB8 /* Indicator */,
+				5D1A72C32F177562007F3FB8 /* AppDelegate.swift */,
+				5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */,
+				5D1A72C52F177562007F3FB8 /* RockCrabCalendarApp.swift */,
+				5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5D1A72C82F177562007F3FB8 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		5D1A72C92F177562007F3FB8 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		5D1A72CA2F177562007F3FB8 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		5D1A72CB2F177562007F3FB8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72C92F177562007F3FB8 /* DTO */,
+				5D1A72CA2F177562007F3FB8 /* Schedule */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5D1A72CC2F177562007F3FB8 /* RequestList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RequestList;
+			sourceTree = "<group>";
+		};
+		5D1A72CD2F177562007F3FB8 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72CC2F177562007F3FB8 /* RequestList */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		5D1A72CE2F177562007F3FB8 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = DataSource;
 			sourceTree = "<group>";
 		};
-		5D029BD82CA3E1670090B4D1 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				5D029BD92CA3E1750090B4D1 /* SwiftUI+Extension.swift */,
-				5DE211E92E6FBA7800E465E8 /* JSONDecoder+YouTube.swift */,
-			);
-			name = Extensions;
-			sourceTree = "<group>";
-		};
-		5D05B7C72ED6E0BB004C5AD3 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				5D05B7C82ED6E0C4004C5AD3 /* HomeMainView.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		5D261CFF2EA20428004DEE6B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				5DFA41BC2ED81770008BE45C /* ScheduleListView.swift */,
-				5D8B120B2E86510D0014649C /* ScheduleEditView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		5D261D022EA20431004DEE6B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				5D68DCFD2E39EF5C00A69D92 /* QWERScheduleViewModel.swift */,
-				5D261C202E8BA930004DEE6B /* UserScheduleViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		5D261D0E2EA20449004DEE6B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				5D5E85702E31EEF200DB8775 /* CalendarViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		5D261D122EA20453004DEE6B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				5D6B4ABF2D76BD2800D90C0D /* CalendarView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		5D261D162EA2045E004DEE6B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				5DE212632E6FCAB300E465E8 /* YouTubeListViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		5D261D1C2EA20467004DEE6B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				5DE2125E2E6FC8A700E465E8 /* YouTubeListView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		5D261D252EA204A9004DEE6B /* Protocol */ = {
+		5D1A72CF2F177562007F3FB8 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		5D5E85302E30B9F800DB8775 /* Core */ = {
+		5D1A72D12F177562007F3FB8 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				5DF74CAC2F15D9E8005E589C /* Domain */,
-				5DE211192E655BF900E465E8 /* Network */,
-				5D5E857E2E31F6C200DB8775 /* Service */,
-				5D6B4A972D7045F600D90C0D /* Model */,
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
-		5D5E853C2E30BA1100DB8775 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				5DE0164B2EF9234E003E9843 /* EmptyStateView.swift */,
-				5D029BE92CA3F6C90090B4D1 /* DateUtil.swift */,
-				5D5E855F2E30BADF00DB8775 /* CalendarGenerator.swift */,
-				5D00F0722EE7FDF000B3E1E5 /* AnalyticsHelper.swift */,
-				5D029BD82CA3E1670090B4D1 /* Extensions */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		5D5E854B2E30BA3B00DB8775 /* Features */ = {
-			isa = PBXGroup;
-			children = (
-				5D05B7C72ED6E0BB004C5AD3 /* Home */,
-				5D5E854C2E30BA4700DB8775 /* Calendar */,
-				5D5E854E2E30BA5300DB8775 /* Schedule */,
-				5DE2125C2E6FC89500E465E8 /* YouTube */,
-			);
-			path = Features;
-			sourceTree = "<group>";
-		};
-		5D5E854C2E30BA4700DB8775 /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				5D261D122EA20453004DEE6B /* View */,
-				5D261D0E2EA20449004DEE6B /* ViewModel */,
-				5D5E85822E31F6D800DB8775 /* Component */,
-			);
-			path = Calendar;
-			sourceTree = "<group>";
-		};
-		5D5E854E2E30BA5300DB8775 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				5D261CFF2EA20428004DEE6B /* View */,
-				5D261D022EA20431004DEE6B /* ViewModel */,
-			);
-			path = Schedule;
-			sourceTree = "<group>";
-		};
-		5D5E857E2E31F6C200DB8775 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				2597E98182E6537A9C12D938 /* DataSource */,
-				5D261D252EA204A9004DEE6B /* Protocol */,
-				5D1121A72EE152EA00588095 /* NotificationManager.swift */,
+				5D1A72CE2F177562007F3FB8 /* DataSource */,
+				5D1A72CF2F177562007F3FB8 /* Protocol */,
+				5D1A72D02F177562007F3FB8 /* NotificationManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
 		};
-		5D5E85822E31F6D800DB8775 /* Component */ = {
+		5D1A72D22F177562007F3FB8 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				5D5E855B2E30BAD000DB8775 /* CalendarDayCell.swift */,
-				5DF727BD2E83C4230046EC72 /* CategoryFilterSheet.swift */,
+				5D1A72C82F177562007F3FB8 /* Domain */,
+				5D1A72CB2F177562007F3FB8 /* Model */,
+				5D1A72CD2F177562007F3FB8 /* Network */,
+				5D1A72D12F177562007F3FB8 /* Service */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		5D1A72D52F177562007F3FB8 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72D32F177562007F3FB8 /* CalendarDayCell.swift */,
+				5D1A72D42F177562007F3FB8 /* CategoryFilterSheet.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
 		};
-		5D6B4A972D7045F600D90C0D /* Model */ = {
+		5D1A72D72F177562007F3FB8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5D8B124B2E867A510014649C /* Schedule */,
-				5DE211E52E6FB26A00E465E8 /* DTO */,
+				5D1A72D62F177562007F3FB8 /* CalendarView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D1A72D92F177562007F3FB8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72D82F177562007F3FB8 /* CalendarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5D1A72DA2F177562007F3FB8 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72D52F177562007F3FB8 /* Component */,
+				5D1A72D72F177562007F3FB8 /* View */,
+				5D1A72D92F177562007F3FB8 /* ViewModel */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		5D1A72DC2F177562007F3FB8 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72DB2F177562007F3FB8 /* HomeMainView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		5D1A72DF2F177562007F3FB8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72DD2F177562007F3FB8 /* ScheduleEditView.swift */,
+				5D1A72DE2F177562007F3FB8 /* ScheduleListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D1A72E22F177562007F3FB8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */,
+				5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5D1A72E32F177562007F3FB8 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72DF2F177562007F3FB8 /* View */,
+				5D1A72E22F177562007F3FB8 /* ViewModel */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		5D1A72E42F177562007F3FB8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5D1A72E62F177562007F3FB8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72E52F177562007F3FB8 /* YouTubeListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D1A72E82F177562007F3FB8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72E72F177562007F3FB8 /* YouTubeListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5D1A72E92F177562007F3FB8 /* YouTube */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72E42F177562007F3FB8 /* Model */,
+				5D1A72E62F177562007F3FB8 /* View */,
+				5D1A72E82F177562007F3FB8 /* ViewModel */,
+			);
+			path = YouTube;
+			sourceTree = "<group>";
+		};
+		5D1A72EA2F177562007F3FB8 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72DA2F177562007F3FB8 /* Calendar */,
+				5D1A72DC2F177562007F3FB8 /* Home */,
+				5D1A72E32F177562007F3FB8 /* Schedule */,
+				5D1A72E92F177562007F3FB8 /* YouTube */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		5D1A72F02F177562007F3FB8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72EB2F177562007F3FB8 /* AnalyticsHelper.swift */,
+				5D1A72EC2F177562007F3FB8 /* CalendarGenerator.swift */,
+				5D1A72ED2F177562007F3FB8 /* DateUtil.swift */,
+				5D1A72EE2F177562007F3FB8 /* EmptyStateView.swift */,
+				5D1A72EF2F177562007F3FB8 /* SwiftUI+Extension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		5D1A72F12F177562007F3FB8 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				5D1A72C72F177562007F3FB8 /* App */,
+				5D1A72D22F177562007F3FB8 /* Core */,
+				5D1A72EA2F177562007F3FB8 /* Features */,
+				5D1A72F02F177562007F3FB8 /* Utils */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		5D7FC9CC2E5EDA6100B5EDCA /* Config */ = {
@@ -381,13 +460,6 @@
 				5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */,
 			);
 			path = Config;
-			sourceTree = "<group>";
-		};
-		5D8B124B2E867A510014649C /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Schedule;
 			sourceTree = "<group>";
 		};
 		5DDE85EB2E7BEF7400643DB5 /* Frameworks */ = {
@@ -422,12 +494,9 @@
 		5DE024332CA3D79E00472395 /* RockCrabCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				5D7FC9CC2E5EDA6100B5EDCA /* Config */,
 				5D7FC95A2E555DB600B5EDCA /* Info.plist */,
-				5DE024432CA3DA4600472395 /* App */,
-				5D5E854B2E30BA3B00DB8775 /* Features */,
-				5D5E85302E30B9F800DB8775 /* Core */,
-				5D5E853C2E30BA1100DB8775 /* Utils */,
+				5D7FC9CC2E5EDA6100B5EDCA /* Config */,
+				5D1A72F12F177562007F3FB8 /* Presentation */,
 				5DE024442CA3DA5900472395 /* Resources */,
 				62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */,
 			);
@@ -440,19 +509,6 @@
 				5DE0243C2CA3D7A000472395 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		5DE024432CA3DA4600472395 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				5DE211752E697C6E00E465E8 /* Alert */,
-				5DE211722E697C5500E465E8 /* Indicator */,
-				5DE024342CA3D79E00472395 /* RockCrabCalendarApp.swift */,
-				BA1BBB8AB16A4EA50A9397A0 /* AppEnvironment.swift */,
-				5D029BDC2CA3F1700090B4D1 /* WindowDelegate.swift */,
-				5D029BDF2CA3F2060090B4D1 /* AppDelegate.swift */,
-			);
-			path = App;
 			sourceTree = "<group>";
 		};
 		5DE024442CA3DA5900472395 /* Resources */ = {
@@ -491,71 +547,6 @@
 				5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */,
 			);
 			path = Font;
-			sourceTree = "<group>";
-		};
-		5DE211192E655BF900E465E8 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				5DE211812E698ABF00E465E8 /* RequestList */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		5DE211722E697C5500E465E8 /* Indicator */ = {
-			isa = PBXGroup;
-			children = (
-				5DE211792E697C7C00E465E8 /* LoadingIndicatorView.swift */,
-			);
-			path = Indicator;
-			sourceTree = "<group>";
-		};
-		5DE211752E697C6E00E465E8 /* Alert */ = {
-			isa = PBXGroup;
-			children = (
-				5DE2115F2E65809600E465E8 /* WindowAlertHostingView.swift */,
-				5DE211622E6583F100E465E8 /* WindowOverlayView.swift */,
-			);
-			path = Alert;
-			sourceTree = "<group>";
-		};
-		5DE211812E698ABF00E465E8 /* RequestList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RequestList;
-			sourceTree = "<group>";
-		};
-		5DE211E52E6FB26A00E465E8 /* DTO */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DTO;
-			sourceTree = "<group>";
-		};
-		5DE211ED2E6FBB8000E465E8 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				5DE211EE2E6FBB8800E465E8 /* YouTubeVideo.swift */,
-				5DE211F32E6FBBC700E465E8 /* YouTubeSearchMapper.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		5DE2125C2E6FC89500E465E8 /* YouTube */ = {
-			isa = PBXGroup;
-			children = (
-				5D261D1C2EA20467004DEE6B /* View */,
-				5D261D162EA2045E004DEE6B /* ViewModel */,
-				5DE211ED2E6FBB8000E465E8 /* Model */,
-			);
-			path = YouTube;
-			sourceTree = "<group>";
-		};
-		5DF74CAC2F15D9E8005E589C /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -738,35 +729,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D5E855C2E30BAD000DB8775 /* CalendarDayCell.swift in Sources */,
-				5DE211EF2E6FBB8800E465E8 /* YouTubeVideo.swift in Sources */,
-				5D029BDD2CA3F1700090B4D1 /* WindowDelegate.swift in Sources */,
-				5D029BDA2CA3E1750090B4D1 /* SwiftUI+Extension.swift in Sources */,
-				5D261C212E8BA930004DEE6B /* UserScheduleViewModel.swift in Sources */,
 				5D029BD72CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift in Sources */,
-				5DFA41BD2ED81770008BE45C /* ScheduleListView.swift in Sources */,
-				5DE211F42E6FBBC700E465E8 /* YouTubeSearchMapper.swift in Sources */,
+				5D1A72F22F177562007F3FB8 /* EmptyStateView.swift in Sources */,
+				5D1A72F32F177562007F3FB8 /* NotificationManager.swift in Sources */,
+				5D1A72F42F177562007F3FB8 /* CategoryFilterSheet.swift in Sources */,
+				5D1A72F52F177562007F3FB8 /* CalendarGenerator.swift in Sources */,
+				5D1A72F62F177562007F3FB8 /* WindowOverlayView.swift in Sources */,
+				5D1A72F72F177562007F3FB8 /* DateUtil.swift in Sources */,
+				5D1A72F82F177562007F3FB8 /* RockCrabCalendarApp.swift in Sources */,
+				5D1A72F92F177562007F3FB8 /* CalendarView.swift in Sources */,
+				5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */,
+				5D1A72FB2F177562007F3FB8 /* QWERScheduleViewModel.swift in Sources */,
+				5D1A72FC2F177562007F3FB8 /* AppEnvironment.swift in Sources */,
+				5D1A72FD2F177562007F3FB8 /* WindowAlertHostingView.swift in Sources */,
+				5D1A72FE2F177562007F3FB8 /* AnalyticsHelper.swift in Sources */,
+				5D1A72FF2F177562007F3FB8 /* AppDelegate.swift in Sources */,
+				5D1A73002F177562007F3FB8 /* YouTubeListViewModel.swift in Sources */,
+				5D1A73012F177562007F3FB8 /* ScheduleEditView.swift in Sources */,
+				5D1A73022F177562007F3FB8 /* HomeMainView.swift in Sources */,
+				5D1A73032F177562007F3FB8 /* SwiftUI+Extension.swift in Sources */,
+				5D1A73042F177562007F3FB8 /* CalendarDayCell.swift in Sources */,
+				5D1A73052F177562007F3FB8 /* UserScheduleViewModel.swift in Sources */,
+				5D1A73062F177562007F3FB8 /* CalendarViewModel.swift in Sources */,
+				5D1A73072F177562007F3FB8 /* WindowDelegate.swift in Sources */,
+				5D1A73082F177562007F3FB8 /* YouTubeListView.swift in Sources */,
+				5D1A73092F177562007F3FB8 /* LoadingIndicatorView.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
-				5DE2117A2E697C7C00E465E8 /* LoadingIndicatorView.swift in Sources */,
-				5DE211632E6583F100E465E8 /* WindowOverlayView.swift in Sources */,
-				5DE212642E6FCAB300E465E8 /* YouTubeListViewModel.swift in Sources */,
-				5DE2125F2E6FC8A700E465E8 /* YouTubeListView.swift in Sources */,
-				5D00F0732EE7FDF000B3E1E5 /* AnalyticsHelper.swift in Sources */,
-				5D1121A82EE152EA00588095 /* NotificationManager.swift in Sources */,
-				5D029BEA2CA3F6CA0090B4D1 /* DateUtil.swift in Sources */,
-				5D5E85712E31EEF200DB8775 /* CalendarViewModel.swift in Sources */,
-				5D6B4AC02D76BD2800D90C0D /* CalendarView.swift in Sources */,
-				5DE211602E65809600E465E8 /* WindowAlertHostingView.swift in Sources */,
-				5D029BE02CA3F2060090B4D1 /* AppDelegate.swift in Sources */,
-				5D68DCFE2E39EF5C00A69D92 /* QWERScheduleViewModel.swift in Sources */,
-				5D5E85602E30BADF00DB8775 /* CalendarGenerator.swift in Sources */,
-				5DF727BE2E83C4230046EC72 /* CategoryFilterSheet.swift in Sources */,
-				5DE0164C2EF9234E003E9843 /* EmptyStateView.swift in Sources */,
-				5DE211EA2E6FBA7800E465E8 /* JSONDecoder+YouTube.swift in Sources */,
-				5DE024352CA3D79E00472395 /* RockCrabCalendarApp.swift in Sources */,
-				72A6F60B1073DFDAF13ACF13 /* AppEnvironment.swift in Sources */,
-				5D05B7C92ED6E0C4004C5AD3 /* HomeMainView.swift in Sources */,
-				5D8B120C2E86510D0014649C /* ScheduleEditView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,17 +8,18 @@
 import Foundation
 import RockCrabShared
 import RockCrabDomain
-import RockCrabData
 
 @Observable
 final class UserScheduleViewModel {
     var schedules: [UserScheduleItem] = []
 
     private let useCase: UserScheduleUseCase
+    private let migrationStore: UserScheduleMigrationStoreProtocol
 
     // Inject use-case for DI and testability.
-    init(useCase: UserScheduleUseCase = UserScheduleUseCase(repository: UserScheduleService())) {
+    init(useCase: UserScheduleUseCase, migrationStore: UserScheduleMigrationStoreProtocol) {
         self.useCase = useCase
+        self.migrationStore = migrationStore
         self.schedules = []
     }
     
@@ -28,7 +29,11 @@ final class UserScheduleViewModel {
             do {
                 let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
-                await migrateLegacyTimesIfNeeded()
+                let didMigrate = try await useCase.migrateLegacyTimesIfNeeded(migrationStore: migrationStore)
+                if didMigrate {
+                    let refreshed = try await useCase.fetchAll()
+                    schedules = refreshed.sorted(by: scheduleSortRule)
+                }
             } catch {
                 AppLogger.error("사용자 일정 fetch 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -116,45 +121,5 @@ final class UserScheduleViewModel {
         case (let sa?, let sb?):
             return sa < sb
         }
-    }
-}
-
-// MARK: 로직 리뉴얼로 인해 migration
-extension UserScheduleViewModel {
-    // One-time migration for legacy time fields.
-    func migrateLegacyTimesIfNeeded() async {
-        // UserDefaults 등을 통해 한 번만 실행되도록 설정
-        // TODO: 테스트용
-        let key = AppStorageKeys.userScheduleLegacyTimeMigration
-        if UserDefaults.standard.bool(forKey: key) {
-            return
-        }
-        var updatedItems: [UserScheduleItem] = []
-
-        for item in schedules {
-            // time만 있고 startTime이 없는 경우만 대상으로
-            if !item.time.isEmpty && item.startTime == nil {
-                var updated = item
-                let formatter = DateFormatter()
-                formatter.dateFormat = AppDateFormats.hourMinute
-                formatter.locale = Locale(identifier: "ko_KR")
-                if let parsed = formatter.date(from: item.time) {
-                    updated.startTime = parsed
-                    updated.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
-                    updated.isAllDay = false
-                    updatedItems.append(updated)
-                }
-            }
-        }
-
-        // 저장 및 반영
-        for updated in updatedItems {
-            try? await useCase.update(updated)
-        }
-        if let refreshed = try? await useCase.fetchAll() {
-            schedules = refreshed.sorted(by: scheduleSortRule)
-        }
-
-        UserDefaults.standard.set(true, forKey: key)
     }
 }

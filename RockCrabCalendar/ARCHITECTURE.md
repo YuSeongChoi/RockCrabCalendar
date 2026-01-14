@@ -10,6 +10,15 @@ View (SwiftUI)
         -> DataSource (Firestore / UserDefaults / HTTP)
 ```
 
+### Presentation Layer Structure
+```
+RockCrabCalendar/Presentation
+  - App (AppDelegate / AppEnvironment / App entry)
+  - Features (Views / ViewModels)
+  - Core (App-level services)
+  - Utils (UI/helpers used by Presentation)
+```
+
 ### QWER Schedule Flow
 ```
 HomeMainView
@@ -32,8 +41,9 @@ HomeMainView
 ```
 YouTubeListView
   -> YouTubeListViewModel
-    -> YouTubeRepository (protocol)
-      -> YouTubeRepositoryImpl (YouTubeAPIClient)
+    -> YouTubeUseCase
+      -> YouTubeRepository (protocol)
+        -> YouTubeRepositoryImpl (YouTubeAPIClient)
 ```
 
 ### Holiday Flow
@@ -42,6 +52,7 @@ CalendarViewModel
   -> HolidayUseCase
     -> HolidayRepositoryProtocol (protocol)
       -> HolidayRepository (HolidayAPIClient + Cache)
+  -> HolidayStore (cache-backed, for UI lookup)
 ```
 
 ### Domain Model Boundary

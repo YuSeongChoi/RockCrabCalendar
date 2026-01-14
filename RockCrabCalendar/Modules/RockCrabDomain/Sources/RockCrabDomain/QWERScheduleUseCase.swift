@@ -35,6 +35,39 @@ public struct QWERScheduleUseCase {
         try await repository.fetchSchedule()
     }
 
+    // Load cached schedules and last fetch date.
+    public func loadCache(
+        cacheStore: ScheduleCacheStoreProtocol
+    ) -> (schedules: [QWERScheduleItem]?, lastFetchedAt: Date?) {
+        let cached = cacheStore.loadCachedSchedules()
+        let lastFetch = cacheStore.loadLastFetchDate()
+        return (cached, lastFetch)
+    }
+
+    // Decide whether a refresh is needed based on TTL and force flag.
+    public func shouldRefresh(
+        cacheStore: ScheduleCacheStoreProtocol,
+        now: Date = Date(),
+        cacheTTLHours: Int = 24,
+        force: Bool
+    ) -> Bool {
+        guard !force else { return true }
+        guard let lastFetch = cacheStore.loadLastFetchDate() else { return true }
+        let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
+        return (diff.hour ?? cacheTTLHours) >= cacheTTLHours
+    }
+
+    // Fetch schedules and update cache metadata.
+    public func refreshAndCache(
+        cacheStore: ScheduleCacheStoreProtocol,
+        now: Date = Date()
+    ) async throws -> [QWERScheduleItem] {
+        let fetched = try await repository.fetchSchedule()
+        cacheStore.saveCachedSchedules(fetched)
+        cacheStore.saveLastFetchDate(now)
+        return fetched
+    }
+
     // Create or upsert a remote schedule.
     public func add(_ schedule: QWERScheduleItem) async throws {
         try await repository.saveSchedule(schedule)

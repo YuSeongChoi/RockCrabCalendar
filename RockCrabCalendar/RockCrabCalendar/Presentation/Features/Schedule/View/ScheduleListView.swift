@@ -13,7 +13,7 @@ struct ScheduleListView: View {
     var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
-    @State private var holidayService: HolidayService = .shared
+    let holidayStore: any HolidayStoreProtocol
     
     @State private var editTarget: ScheduleEditView.Mode? = nil
     
@@ -50,7 +50,7 @@ struct ScheduleListView: View {
                                 Text(dayLabelFormatter.string(from: day))
                                     .pretendSemiBold(size: 16)
                                     .foregroundStyle(.secondary)
-                                if let holiday = holidayService.name(on: day) {
+                                if let holiday = holidayStore.name(on: day) {
                                     Text(holiday)
                                         .pretendSemiBold(size: 13)
                                         .foregroundStyle(.red)

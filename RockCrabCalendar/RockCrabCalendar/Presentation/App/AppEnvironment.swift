@@ -14,19 +14,28 @@ final class AppEnvironment: ObservableObject {
     let qwerScheduleUseCase: QWERScheduleUseCase
     let userScheduleUseCase: UserScheduleUseCase
     let holidayUseCase: HolidayUseCase
-    let youTubeRepository: YouTubeRepository
+    let youTubeUseCase: YouTubeUseCase
+    let scheduleCacheStore: ScheduleCacheStoreProtocol
+    let holidayStore: HolidayStoreProtocol
+    let userScheduleMigrationStore: UserScheduleMigrationStoreProtocol
 
     // Compose dependencies from the live graph.
     init(
         qwerScheduleUseCase: QWERScheduleUseCase,
         userScheduleUseCase: UserScheduleUseCase,
         holidayUseCase: HolidayUseCase,
-        youTubeRepository: YouTubeRepository
+        youTubeUseCase: YouTubeUseCase,
+        scheduleCacheStore: ScheduleCacheStoreProtocol,
+        holidayStore: HolidayStoreProtocol,
+        userScheduleMigrationStore: UserScheduleMigrationStoreProtocol
     ) {
         self.qwerScheduleUseCase = qwerScheduleUseCase
         self.userScheduleUseCase = userScheduleUseCase
         self.holidayUseCase = holidayUseCase
-        self.youTubeRepository = youTubeRepository
+        self.youTubeUseCase = youTubeUseCase
+        self.scheduleCacheStore = scheduleCacheStore
+        self.holidayStore = holidayStore
+        self.userScheduleMigrationStore = userScheduleMigrationStore
     }
 
     // Live composition root (single place to wire concrete implementations).
@@ -51,12 +60,19 @@ final class AppEnvironment: ObservableObject {
         let qwerUseCase = QWERScheduleUseCase(repository: qwerRepository)
         let userUseCase = UserScheduleUseCase(repository: userRepository)
         let holidayUseCase = HolidayUseCase(repository: holidayRepository)
+        let youtubeUseCase = YouTubeUseCase(repository: youtubeRepository)
+        let scheduleCacheStore = ScheduleCacheStore(userDefaults: userDefaults)
+        let holidayStore = HolidayStore(userDefaults: userDefaults)
+        let userScheduleMigrationStore = UserScheduleMigrationStore(userDefaults: userDefaults)
 
         return AppEnvironment(
             qwerScheduleUseCase: qwerUseCase,
             userScheduleUseCase: userUseCase,
             holidayUseCase: holidayUseCase,
-            youTubeRepository: youtubeRepository
+            youTubeUseCase: youtubeUseCase,
+            scheduleCacheStore: scheduleCacheStore,
+            holidayStore: holidayStore,
+            userScheduleMigrationStore: userScheduleMigrationStore
         )
     }
 }

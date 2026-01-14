@@ -44,4 +44,43 @@ public struct UserScheduleUseCase {
     public func delete(_ schedule: UserScheduleItem) async throws {
         try await repository.deleteSchedule(schedule)
     }
+
+    // Migrate legacy time fields once and return whether a migration ran.
+    public func migrateLegacyTimesIfNeeded(
+        migrationStore: UserScheduleMigrationStoreProtocol
+    ) async throws -> Bool {
+        if migrationStore.isLegacyTimeMigrationDone() {
+            return false
+        }
+
+        let items = try await repository.fetchSchedule()
+        var updatedItems: [UserScheduleItem] = []
+
+        for item in items {
+            if !item.time.isEmpty && item.startTime == nil {
+                var updated = item
+                let formatter = DateFormatter()
+                formatter.dateFormat = AppDateFormats.hourMinute
+                formatter.locale = Locale(identifier: "ko_KR")
+                if let parsed = formatter.date(from: item.time) {
+                    updated.startTime = parsed
+                    updated.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
+                    updated.isAllDay = false
+                    updatedItems.append(updated)
+                }
+            }
+        }
+
+        if updatedItems.isEmpty {
+            migrationStore.markLegacyTimeMigrationDone()
+            return false
+        }
+
+        for updated in updatedItems {
+            try await repository.updateSchedule(updated)
+        }
+
+        migrationStore.markLegacyTimeMigrationDone()
+        return true
+    }
 }

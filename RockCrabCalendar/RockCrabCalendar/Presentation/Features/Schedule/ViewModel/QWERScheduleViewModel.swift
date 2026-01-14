@@ -6,12 +6,10 @@
 //
 
 import Foundation
-import FirebaseFirestore
 import Combine
 import SwiftUI
 import CryptoKit
 import RockCrabDomain
-import RockCrabData
 import RockCrabShared
 
 @Observable
@@ -31,7 +29,7 @@ final class QWERScheduleViewModel {
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
     
     private let useCase: QWERScheduleUseCase
-    private let cacheStore: ScheduleCacheStore
+    private let cacheStore: ScheduleCacheStoreProtocol
     private var cancellables = Set<AnyCancellable>()
     private let instanceID = UUID()
 
@@ -45,7 +43,6 @@ final class QWERScheduleViewModel {
 
     static let localChangeSubject = PassthroughSubject<LocalChangeEvent, Never>()
     private var isFetching = false
-    private let cacheTTLHours: Int = 24
     
     // MARK: - Local (in-memory) partial updates
     private func upsertLocalInMemory(_ item: QWERScheduleItem) {
@@ -76,8 +73,8 @@ final class QWERScheduleViewModel {
     }
     
     // Inject use-case for DI and testability.
-    init(useCase: QWERScheduleUseCase = QWERScheduleUseCase(repository: QWERScheduleService()),
-         cacheStore: ScheduleCacheStore = ScheduleCacheStore()) {
+    init(useCase: QWERScheduleUseCase,
+         cacheStore: ScheduleCacheStoreProtocol) {
         self.useCase = useCase
         self.cacheStore = cacheStore
         if let saved = cacheStore.loadActiveCategories() {
@@ -164,17 +161,18 @@ final class QWERScheduleViewModel {
         }
 
         // 1) Cache-first
-        if let cachedSchedules = cacheStore.loadCachedSchedules() {
+        let cache = useCase.loadCache(cacheStore: cacheStore)
+        if let cachedSchedules = cache.schedules {
             schedules = cachedSchedules
         }
 
-        if let lastFetch = cacheStore.loadLastFetchDate() {
+        if let lastFetch = cache.lastFetchedAt {
             lastFetchedAt = lastFetch
-            let diff = Calendar.current.dateComponents([.hour], from: lastFetch, to: now)
-            if !force, let hours = diff.hour, hours < cacheTTLHours {
-                AppLogger.debug("⏳ 캐시 유효 – Service fetch 생략 (force == false)", category: .scheduleVM)
-                return
-            }
+        }
+
+        if !useCase.shouldRefresh(cacheStore: cacheStore, now: now, force: force) {
+            AppLogger.debug("⏳ 캐시 유효 – Service fetch 생략 (force == false)", category: .scheduleVM)
+            return
         }
 
         // 2) Network
@@ -183,11 +181,9 @@ final class QWERScheduleViewModel {
             isFetching = true
             defer { isFetching = false }
             do {
-                let fetched = try await self.useCase.fetchAll()
+                let fetched = try await self.useCase.refreshAndCache(cacheStore: self.cacheStore, now: now)
                 self.schedules = fetched
                 self.lastFetchedAt = now
-                self.cacheStore.saveCachedSchedules(fetched)
-                self.cacheStore.saveLastFetchDate(now)
             } catch {
                 AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
             }

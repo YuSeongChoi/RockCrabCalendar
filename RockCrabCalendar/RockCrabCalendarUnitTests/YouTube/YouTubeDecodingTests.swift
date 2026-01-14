@@ -8,6 +8,7 @@
 import XCTest
 @testable import RockCrabCalendar
 import RockCrabData
+import RockCrabDomain
 
 final class YouTubeDecodingTests: XCTestCase {
     let json = """

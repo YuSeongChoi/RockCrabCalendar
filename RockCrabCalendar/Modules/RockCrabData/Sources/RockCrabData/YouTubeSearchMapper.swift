@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import RockCrabData
+import RockCrabDomain
 
 public enum YouTubeSearchMapper {
     // Search 리스트 DTO -> [YouTubeVideo]

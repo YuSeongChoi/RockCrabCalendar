@@ -31,9 +31,18 @@ struct HomeMainView: View {
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
         self.environment = environment
-        _calendarVM = State(initialValue: CalendarViewModel(holidayUseCase: environment.holidayUseCase))
-        _scheduleVM = State(initialValue: QWERScheduleViewModel(useCase: environment.qwerScheduleUseCase))
-        _userVM = State(initialValue: UserScheduleViewModel(useCase: environment.userScheduleUseCase))
+        _calendarVM = State(initialValue: CalendarViewModel(
+            holidayUseCase: environment.holidayUseCase,
+            holidayStore: environment.holidayStore
+        ))
+        _scheduleVM = State(initialValue: QWERScheduleViewModel(
+            useCase: environment.qwerScheduleUseCase,
+            cacheStore: environment.scheduleCacheStore
+        ))
+        _userVM = State(initialValue: UserScheduleViewModel(
+            useCase: environment.userScheduleUseCase,
+            migrationStore: environment.userScheduleMigrationStore
+        ))
     }
     
     var body: some View {
@@ -46,9 +55,19 @@ struct HomeMainView: View {
                         
                         switch viewType {
                         case .calendar:
-                            CalendarView(calendarVM: calendarVM, scheduleVM: scheduleVM, userVM: userVM)
+                            CalendarView(
+                                calendarVM: calendarVM,
+                                scheduleVM: scheduleVM,
+                                userVM: userVM,
+                                holidayStore: environment.holidayStore
+                            )
                         case .list:
-                            ScheduleListView(calendarVM: calendarVM, scheduleVM: scheduleVM, userVM: userVM)
+                            ScheduleListView(
+                                calendarVM: calendarVM,
+                                scheduleVM: scheduleVM,
+                                userVM: userVM,
+                                holidayStore: environment.holidayStore
+                            )
                         }
                     }
                     

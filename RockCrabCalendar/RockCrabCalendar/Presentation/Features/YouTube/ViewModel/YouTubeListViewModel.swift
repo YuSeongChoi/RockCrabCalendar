@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import RockCrabData
+import RockCrabDomain
 import RockCrabShared
 
 @Observable
@@ -21,12 +21,12 @@ final class YouTubeListViewModel {
     // MARK: - 페이징 상태
     private var nextPageToken: String?      // 다음 페이지 토큰
     private var hasMore: Bool = true        // 다음 페이지 존재 여부
-    private let repository: YouTubeRepository
+    private let useCase: YouTubeUseCase
 
     // MARK: - 퍼블릭 API
     // Inject repository for DI and testability.
-    init(repository: YouTubeRepository = YouTubeRepositoryImpl()) {
-        self.repository = repository
+    init(useCase: YouTubeUseCase) {
+        self.useCase = useCase
     }
 
     /// 화면 최초 진입 시 한번만 호출
@@ -105,21 +105,14 @@ final class YouTubeListViewModel {
     /// - Parameter pageToken: 다음 페이지 토큰(없으면 최초 페이지)
     /// - Returns: (도메인 모델 매핑, 다음 페이지 토큰)
     private func requestYoutubeList(pageToken: String?) async throws -> (videos: [YouTubeVideo], nextPageToken: String?) {
-        let dto = try await repository.fetchVideos(pageToken: pageToken, pageSize: 10)
-        let mapped = YouTubeSearchMapper.map(dto)
-        return (mapped.videos, mapped.nextPageToken)
+        let result = try await useCase.fetchVideos(pageToken: pageToken, pageSize: 10)
+        return (result.videos, result.nextPageToken)
     }
     
     func requestChannelInfo() async throws {
-        let dto = try await repository.fetchChannelInfo()
-        
-        let urlString =
-        dto.items.first?.snippet.thumbnails.default?.url ??
-        dto.items.first?.snippet.thumbnails.medium?.url ??
-        dto.items.first?.snippet.thumbnails.high?.url
-        
+        let info = try await useCase.fetchChannelInfo()
         await MainActor.run {
-            self.channelThumnailURL = urlString.flatMap(URL.init(string:))
+            self.channelThumnailURL = info.thumbnailURL
         }
     }
     
