@@ -9,7 +9,7 @@ import SwiftUI
 import RockCrabDomain
 
 struct ScheduleEditQWERSection: View {
-    let mode: ScheduleEditView.Mode
+    let mode: ScheduleEditMode
     let isLocalOnly: Bool
     @Binding var category: ScheduleCategory
     @Binding var selectedMembers: Set<QWERMember>

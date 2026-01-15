@@ -126,6 +126,10 @@ final class UserScheduleViewModel {
 
 // MARK: - Query helpers
 extension UserScheduleViewModel {
+    func latestSchedule(for item: UserScheduleItem) -> UserScheduleItem {
+        schedules.first(where: { $0.id == item.id }) ?? item
+    }
+
     func schedules(on date: Date) -> [UserScheduleItem] {
         let cal = Calendar.current
         let day = cal.startOfDay(for: date)
@@ -161,10 +165,15 @@ extension UserScheduleViewModel {
                 title: item.title,
                 date: d,
                 time: item.time,
+                isAllDay: item.isAllDay,
+                startTime: item.startTime,
+                endTime: item.endTime,
                 place: item.place,
+                shouldNotify: item.shouldNotify,
                 isRepeat: item.isRepeat,
                 repeatType: item.repeatType,
-                repeatEndDate: item.repeatEndDate
+                repeatEndDate: item.repeatEndDate,
+                colorHex: item.colorHex
             )]
         }
 
@@ -197,10 +206,15 @@ extension UserScheduleViewModel {
                     title: item.title,
                     date: current,
                     time: item.time,
+                    isAllDay: item.isAllDay,
+                    startTime: item.startTime,
+                    endTime: item.endTime,
                     place: item.place,
+                    shouldNotify: item.shouldNotify,
                     isRepeat: item.isRepeat,
                     repeatType: item.repeatType,
-                    repeatEndDate: item.repeatEndDate
+                    repeatEndDate: item.repeatEndDate,
+                    colorHex: item.colorHex
                 ))
             }
             guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }

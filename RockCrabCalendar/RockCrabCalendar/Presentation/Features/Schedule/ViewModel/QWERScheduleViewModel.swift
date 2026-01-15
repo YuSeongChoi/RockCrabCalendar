@@ -20,10 +20,10 @@ final class QWERScheduleViewModel {
     var selectedDate: Date = Date()
     // 마지막으로 동기화한 시각
     var lastFetchedAt: Date? = nil
-    
+     
     // MARK: - 카테고리 필터 상태
     // 카테고리 상태를 UserDefaults에 저장하기 위한 키
-    // 현재 활성화된 카테고리 집합 (기본: 전체) 
+    // 현재 활성화된 카테고리 집합 (기본: 전체)   
     var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
     // 모든 카테고리가 선택되어 있는지 여부
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }

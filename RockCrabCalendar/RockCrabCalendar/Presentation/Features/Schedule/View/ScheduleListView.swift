@@ -14,7 +14,7 @@ struct ScheduleListView: View {
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
     
-    @State private var editTarget: ScheduleEditView.Mode? = nil
+    @State private var editTarget: ScheduleEditMode? = nil
     
     private let calendar = Calendar.current
     
@@ -67,11 +67,7 @@ struct ScheduleListView: View {
                                 UserScheduleListView(
                                     schedules: uItems,
                                     onEdit: { item in
-                                        if let latest = userVM.schedules.first(where: { $0.id == item.id }) {
-                                            editTarget = .editUser(latest)
-                                        } else {
-                                            editTarget = .editUser(item)
-                                        }
+                                        editTarget = .editUser(userVM.latestSchedule(for: item))
                                     }
                                 )
                             }
@@ -90,14 +86,7 @@ struct ScheduleListView: View {
                 mode: mode,
                 defaultDate: scheduleVM.selectedDate,
                 qwerVM: scheduleVM,
-                userVM: userVM,
-                defaultColor: {
-                    if case .editUser(let item) = mode {
-                        return Color(hex: item.colorHex)
-                    } else {
-                        return .purple
-                    }
-                }()
+                userVM: userVM
             )
         }
     }

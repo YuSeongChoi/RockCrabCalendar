@@ -36,6 +36,9 @@
 		5D1A73032F177562007F3FB8 /* SwiftUI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EF2F177562007F3FB8 /* SwiftUI+Extension.swift */; };
 		5D1A73042F177562007F3FB8 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D32F177562007F3FB8 /* CalendarDayCell.swift */; };
 		5D1A73052F177562007F3FB8 /* UserScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */; };
+		D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */; };
+		D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */; };
+		D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */; };
 		5D1A73062F177562007F3FB8 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72D82F177562007F3FB8 /* CalendarViewModel.swift */; };
 		5D1A73072F177562007F3FB8 /* WindowDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */; };
 		5D1A73082F177562007F3FB8 /* YouTubeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E52F177562007F3FB8 /* YouTubeListView.swift */; };
@@ -124,6 +127,9 @@
 		5D1A72DE2F177562007F3FB8 /* ScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListView.swift; sourceTree = "<group>"; };
 		5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleViewModel.swift; sourceTree = "<group>"; };
 		5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleViewModel.swift; sourceTree = "<group>"; };
+		A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditActionHandler.swift; sourceTree = "<group>"; };
+		B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditFormState.swift; sourceTree = "<group>"; };
+		C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditMode.swift; sourceTree = "<group>"; };
 		5D1A72E52F177562007F3FB8 /* YouTubeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListView.swift; sourceTree = "<group>"; };
 		5D1A72E72F177562007F3FB8 /* YouTubeListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeListViewModel.swift; sourceTree = "<group>"; };
 		5D1A72EB2F177562007F3FB8 /* AnalyticsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsHelper.swift; sourceTree = "<group>"; };
@@ -344,6 +350,9 @@
 			children = (
 				5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */,
 				5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */,
+				A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */,
+				B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */,
+				C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -752,6 +761,9 @@
 				316E54F6B60741D6A13BE539 /* Color+Hex.swift in Sources */,
 				5D1A73042F177562007F3FB8 /* CalendarDayCell.swift in Sources */,
 				5D1A73052F177562007F3FB8 /* UserScheduleViewModel.swift in Sources */,
+				D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */,
+				D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */,
+				D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */,
 				5D1A73062F177562007F3FB8 /* CalendarViewModel.swift in Sources */,
 				5D1A73072F177562007F3FB8 /* WindowDelegate.swift in Sources */,
 				5D1A73082F177562007F3FB8 /* YouTubeListView.swift in Sources */,

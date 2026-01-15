@@ -15,10 +15,9 @@ struct HomeMainView: View {
 
     private let environment: AppEnvironment
     
-    @State private var dragOffset: CGFloat = 0
     @State private var showCategorySheet: Bool = false
     @State private var addScheduleSheet: Bool = false
-    @State private var addKind: ScheduleEditView.Kind = .qwer
+    @State private var addKind: ScheduleEditKind = .qwer
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
     
@@ -41,68 +40,71 @@ struct HomeMainView: View {
     
     var body: some View {
         NavigationStack {
-            GeometryReader { geometry in
-                ZStack {
-                    VStack(spacing: 10) {
-                        HomeDateSelectionView(
-                            currentMonth: calendarVM.currentMonth,
-                            onPrev: { calendarVM.changeMonth(by: -1) },
-                            onNext: { calendarVM.changeMonth(by: 1) }
-                        )
-                        HomeCalendarOptionView(
-                            viewType: viewType,
-                            onShowFilter: { showCategorySheet = true },
-                            onToday: {
-                                let today = Date()
-                                calendarVM.select(date: today)
-                                calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
-                                scheduleVM.selectedDate = today
-                            },
-                            onToggleView: {
-                                viewType = (viewType == .calendar) ? .list : .calendar
-                            },
-                            onRefresh: {
-                                scheduleVM.fetchAllSchedules(force: true)
-                                userVM.fetchAllSchedules()
-                            }
-                        )
-                        
-                        switch viewType {
-                        case .calendar:
-                            CalendarView(
-                                calendarVM: calendarVM,
-                                scheduleVM: scheduleVM,
-                                userVM: userVM
-                            )
-                        case .list:
-                            ScheduleListView(
-                                calendarVM: calendarVM,
-                                scheduleVM: scheduleVM,
-                                userVM: userVM
-                            )
-                        }
-                    }
-                    
-                    if isFabExpanded {
-                        Color.black.opacity(0.001)
-                            .ignoresSafeArea()
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                            }
-                    }
-                    
-                    HomeScheduleFloatingButton(
-                        isExpanded: $isFabExpanded,
-                        onAddQWER: {
-                            addKind = .qwer
-                            addScheduleSheet = true
+            ZStack {
+                VStack(spacing: 10) {
+                    HomeDateSelectionView(
+                        currentMonth: calendarVM.currentMonth,
+                        onPrev: { calendarVM.changeMonth(by: -1) },
+                        onNext: { calendarVM.changeMonth(by: 1) }
+                    )
+                    HomeCalendarOptionView(
+                        viewType: viewType,
+                        onShowFilter: {
+                            addScheduleSheet = false
+                            showCategorySheet = true
                         },
-                        onAddUser: {
-                            addKind = .user
-                            addScheduleSheet = true
+                        onToday: {
+                            let today = Date()
+                            calendarVM.select(date: today)
+                            calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
+                            scheduleVM.selectedDate = today
+                        },
+                        onToggleView: {
+                            viewType = (viewType == .calendar) ? .list : .calendar
+                        },
+                        onRefresh: {
+                            scheduleVM.fetchAllSchedules(force: true)
+                            userVM.fetchAllSchedules()
                         }
                     )
+                    
+                    switch viewType {
+                    case .calendar:
+                        CalendarView(
+                            calendarVM: calendarVM,
+                            scheduleVM: scheduleVM,
+                            userVM: userVM
+                        )
+                    case .list:
+                        ScheduleListView(
+                            calendarVM: calendarVM,
+                            scheduleVM: scheduleVM,
+                            userVM: userVM
+                        )
+                    }
                 }
+                
+                if isFabExpanded {
+                    Color.black.opacity(0.001)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
+                        }
+                }
+                
+                HomeScheduleFloatingButton(
+                    isExpanded: $isFabExpanded,
+                    onAddQWER: {
+                        showCategorySheet = false
+                        addKind = .qwer
+                        addScheduleSheet = true
+                    },
+                    onAddUser: {
+                        showCategorySheet = false
+                        addKind = .user
+                        addScheduleSheet = true
+                    }
+                )
             }
         }
         .background(Color.appBackground)

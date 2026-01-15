@@ -15,7 +15,7 @@ struct CalendarView: View {
     var userVM: UserScheduleViewModel
     
     @State private var dragOffset: CGFloat = 0
-    @State private var editTarget: ScheduleEditView.Mode? = nil
+    @State private var editTarget: ScheduleEditMode? = nil
     
     private let lastSyncFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -84,11 +84,7 @@ struct CalendarView: View {
                                     UserScheduleListView(
                                         schedules: selectedUser,
                                         onEdit: { item in
-                                            if let latest = userVM.schedules.first(where: { $0.id == item.id }) {
-                                                editTarget = .editUser(latest)
-                                            } else {
-                                                editTarget = .editUser(item)
-                                            }
+                                            editTarget = .editUser(userVM.latestSchedule(for: item))
                                         },
                                         embedInScrollView: false
                                     )
@@ -118,14 +114,7 @@ struct CalendarView: View {
                 mode: mode,
                 defaultDate: scheduleVM.selectedDate,
                 qwerVM: scheduleVM,
-                userVM: userVM,
-                defaultColor: {
-                    if case .editUser(let item) = mode {
-                        return Color(hex: item.colorHex)
-                    } else {
-                        return .purple
-                    }
-                }()
+                userVM: userVM
             )
         }
     }
