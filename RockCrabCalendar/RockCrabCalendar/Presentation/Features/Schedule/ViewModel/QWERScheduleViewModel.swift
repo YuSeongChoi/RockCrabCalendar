@@ -23,7 +23,7 @@ final class QWERScheduleViewModel {
     
     // MARK: - 카테고리 필터 상태
     // 카테고리 상태를 UserDefaults에 저장하기 위한 키
-    // 현재 활성화된 카테고리 집합 (기본: 전체)
+    // 현재 활성화된 카테고리 집합 (기본: 전체) 
     var activeCategories: Set<ScheduleCategory> = Set(ScheduleCategory.allCases)
     // 모든 카테고리가 선택되어 있는지 여부
     var isAllCategories: Bool { activeCategories.count == ScheduleCategory.allCases.count }
@@ -70,6 +70,27 @@ final class QWERScheduleViewModel {
                 schedules.remove(at: idx)
             }
         }
+    }
+
+    private func mergeLocalSchedules(
+        base: [QWERScheduleItem],
+        locals: [QWERScheduleItem]
+    ) -> [QWERScheduleItem] {
+        guard !locals.isEmpty else { return base }
+        var merged = base
+        var indexByID: [UUID: Int] = [:]
+        for (index, item) in merged.enumerated() {
+            indexByID[item.id] = index
+        }
+        for local in locals {
+            if let index = indexByID[local.id] {
+                merged[index] = local
+            } else {
+                merged.append(local)
+                indexByID[local.id] = merged.count - 1
+            }
+        }
+        return merged
     }
     
     // Inject use-case for DI and testability.
@@ -172,6 +193,11 @@ final class QWERScheduleViewModel {
 
         if !useCase.shouldRefresh(cacheStore: cacheStore, now: now, force: force) {
             AppLogger.debug("⏳ 캐시 유효 – Service fetch 생략 (force == false)", category: .scheduleVM)
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                let locals = await self.useCase.fetchLocalOnly()
+                self.schedules = self.mergeLocalSchedules(base: self.schedules, locals: locals)
+            }
             return
         }
 
@@ -219,6 +245,13 @@ extension QWERScheduleViewModel {
         return schedules.filter {
             Calendar.current.isDate($0.date, inSameDayAs: target) && passesCategory($0)
         }
+    }
+
+    func schedules(in range: DateInterval, categories: Set<ScheduleCategory>? = nil) -> [QWERScheduleItem] {
+        let active = categories ?? activeCategories
+        return schedules.filter { item in
+            item.date >= range.start && item.date <= range.end && active.contains(item.category)
+        }.sorted { $0.date < $1.date }
     }
 
     func toggleCategory(_ category: ScheduleCategory) {

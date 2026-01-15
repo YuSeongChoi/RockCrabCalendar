@@ -24,35 +24,17 @@ struct CategoryFilterSheet: View {
         NavigationStack {
             List {
                 Section {
-                    // 전체 선택 (토글)
-                    Button {
-                        if selected.count == ScheduleCategory.allCases.count {
-                            selected.removeAll()
-                        } else {
-                            selected = Set(ScheduleCategory.allCases)
-                        }
-                    } label: {
-                        HStack(spacing: 10) {
-                            let allSelected = selected.count == ScheduleCategory.allCases.count
-                            Image(systemName: allSelected ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(allSelected ? .blue : .secondary)
-                            Text("전체 선택")
-                            Spacer()
-                        }
-                    }
-                    
+                    CategorySelectAllRow(
+                        isAllSelected: selected.count == ScheduleCategory.allCases.count,
+                        onToggle: toggleAll
+                    )
+
                     ForEach(Array(ScheduleCategory.allCases), id: \.self) { cat in
-                        HStack(spacing: 10) {
-                            Image(systemName: selected.contains(cat) ? "checkmark.circle.fill" : "circle")
-                                .foregroundStyle(selected.contains(cat) ? .blue : .secondary)
-                            Text(cat.rawValue)
-                            Spacer()
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            if selected.contains(cat) { selected.remove(cat) }
-                            else { selected.insert(cat) }
-                        }
+                        CategoryFilterRow(
+                            title: cat.rawValue,
+                            isSelected: selected.contains(cat),
+                            onToggle: { toggleCategory(cat) }
+                        )
                     }
                 } header: {
                     HStack {
@@ -115,5 +97,54 @@ struct CategoryFilterSheet: View {
         @unknown default:
             return Color.primary
         }
+    }
+
+    private func toggleAll() {
+        if selected.count == ScheduleCategory.allCases.count {
+            selected.removeAll()
+        } else {
+            selected = Set(ScheduleCategory.allCases)
+        }
+    }
+
+    private func toggleCategory(_ category: ScheduleCategory) {
+        if selected.contains(category) {
+            selected.remove(category)
+        } else {
+            selected.insert(category)
+        }
+    }
+}
+
+private struct CategorySelectAllRow: View {
+    let isAllSelected: Bool
+    let onToggle: () -> Void
+
+    var body: some View {
+        Button(action: onToggle) {
+            HStack(spacing: 10) {
+                Image(systemName: isAllSelected ? "checkmark.circle.fill" : "circle")
+                    .foregroundStyle(isAllSelected ? .blue : .secondary)
+                Text("전체 선택")
+                Spacer()
+            }
+        }
+    }
+}
+
+private struct CategoryFilterRow: View {
+    let title: String
+    let isSelected: Bool
+    let onToggle: () -> Void
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                .foregroundStyle(isSelected ? .blue : .secondary)
+            Text(title)
+            Spacer()
+        }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: onToggle)
     }
 }

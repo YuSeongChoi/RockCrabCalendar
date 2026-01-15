@@ -45,27 +45,13 @@ struct CalendarDayCell: View {
                     let isToday = Calendar.current.isDateInToday(date)
 
                     VStack(spacing: 0) {
-                        ZStack {
-                            if isToday {
-                                // 라이트/다크 모두 가시성 좋은 오늘 배경 색
-                                let base = Color(UIColor { trait in
-                                    trait.userInterfaceStyle == .dark ? UIColor(.white) : UIColor(.gray)
-                                })
-                                Circle()
-                                    .fill(base.opacity(0.28))
-                                    .overlay(
-                                        Circle().stroke(base.opacity(0.6), lineWidth: 1)
-                                    )
-                                    .frame(width: 24, height: 24)
-                                    .padding(.top, 1)
-                            }
-                            Text("\(day)")
-                                .pretendSemiBold(size: 15)
-                                .monospacedDigit()
-                                .frame(height: dayAreaHeight, alignment: .top)
-                                .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.35))
-                                .padding(.top, 3)
-                        }
+                        CalendarDayNumberView(
+                            day: day,
+                            isToday: isToday,
+                            isInCurrentMonth: isInCurrentMonth,
+                            weekday: weekday,
+                            dayAreaHeight: dayAreaHeight
+                        )
                         if let holiday = holidayName, isInCurrentMonth {
                             Text(holiday)
                                 .font(.system(size: 10, weight: .semibold))
@@ -77,20 +63,13 @@ struct CalendarDayCell: View {
 
                         if isPad {
                             // iPad 등 큰 셀: 날짜 바로 아래에 점들 표시 (최대 5개)
-                            HStack(spacing: 3) {
-                                ForEach(0..<min(eventColors.count, 5), id: \.self) { i in
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color(white: isDark ? 0.2 : 0.88))
-                                            .opacity(isInCurrentMonth ? 1 : 0.55)
-                                            .frame(width: dotBackgroundSize, height: dotBackgroundSize)
-                                        Circle()
-                                            .fill(eventColors[i])
-                                            .opacity(isInCurrentMonth ? 1 : 0.5)
-                                            .frame(width: dotSize, height: dotSize)
-                                    }
-                                }
-                            }
+                            EventDotRow(
+                                colors: eventColors,
+                                isDark: isDark,
+                                isInCurrentMonth: isInCurrentMonth,
+                                dotBackgroundSize: dotBackgroundSize,
+                                dotSize: dotSize
+                            )
                             .frame(height: dotRowHeight)
                             .padding(.top, 4)
 
@@ -99,20 +78,13 @@ struct CalendarDayCell: View {
                             // iPhone 등 작은 셀: 기존처럼 하단 배치 유지 (최대 5개)
                             Spacer(minLength: 0)
 
-                            HStack(spacing: 3) {
-                                ForEach(0..<min(eventColors.count, 5), id: \.self) { i in
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color(white: isDark ? 0.2 : 0.88))
-                                            .opacity(isInCurrentMonth ? 1 : 0.55)
-                                            .frame(width: dotBackgroundSize, height: dotBackgroundSize)
-                                        Circle()
-                                            .fill(eventColors[i])
-                                            .opacity(isInCurrentMonth ? 1 : 0.5)
-                                            .frame(width: dotSize, height: dotSize)
-                                    }
-                                }
-                            }
+                            EventDotRow(
+                                colors: eventColors,
+                                isDark: isDark,
+                                isInCurrentMonth: isInCurrentMonth,
+                                dotBackgroundSize: dotBackgroundSize,
+                                dotSize: dotSize
+                            )
                             .frame(height: dotRowHeight)
                             .padding(.bottom, 4)
                         }
@@ -136,6 +108,70 @@ struct CalendarDayCell: View {
         case 1: return .red       // Sunday
         case 7: return .blue      // Saturday
         default: return .primary  // Weekdays
+        }
+    }
+}
+
+private struct CalendarDayNumberView: View {
+    let day: Int
+    let isToday: Bool
+    let isInCurrentMonth: Bool
+    let weekday: Int
+    let dayAreaHeight: CGFloat
+
+    var body: some View {
+        ZStack {
+            if isToday {
+                let base = Color(UIColor { trait in
+                    trait.userInterfaceStyle == .dark ? UIColor(.white) : UIColor(.gray)
+                })
+                Circle()
+                    .fill(base.opacity(0.28))
+                    .overlay(
+                        Circle().stroke(base.opacity(0.6), lineWidth: 1)
+                    )
+                    .frame(width: 24, height: 24)
+                    .padding(.top, 1)
+            }
+            Text("\(day)")
+                .pretendSemiBold(size: 15)
+                .monospacedDigit()
+                .frame(height: dayAreaHeight, alignment: .top)
+                .foregroundColor(isInCurrentMonth ? weekdayColor(weekday) : .gray.opacity(0.35))
+                .padding(.top, 3)
+        }
+    }
+
+    private func weekdayColor(_ weekday: Int) -> Color {
+        switch weekday {
+        case 1: return .red       // Sunday
+        case 7: return .blue      // Saturday
+        default: return .primary  // Weekdays
+        }
+    }
+}
+
+private struct EventDotRow: View {
+    let colors: [Color]
+    let isDark: Bool
+    let isInCurrentMonth: Bool
+    let dotBackgroundSize: CGFloat
+    let dotSize: CGFloat
+
+    var body: some View {
+        HStack(spacing: 3) {
+            ForEach(0..<min(colors.count, 5), id: \.self) { i in
+                ZStack {
+                    Circle()
+                        .fill(Color(white: isDark ? 0.2 : 0.88))
+                        .opacity(isInCurrentMonth ? 1 : 0.55)
+                        .frame(width: dotBackgroundSize, height: dotBackgroundSize)
+                    Circle()
+                        .fill(colors[i])
+                        .opacity(isInCurrentMonth ? 1 : 0.5)
+                        .frame(width: dotSize, height: dotSize)
+                }
+            }
         }
     }
 }

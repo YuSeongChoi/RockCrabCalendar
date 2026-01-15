@@ -69,6 +69,12 @@ final class CalendarViewModel {
         return adjustedHeight / CGFloat(numberOfWeeks)
     }
 
+    func currentMonthRange() -> DateInterval {
+        let start = startOfMonth(for: currentMonth)
+        let end = endOfMonth(for: currentMonth)
+        return DateInterval(start: start, end: end)
+    }
+
     func holidayName(on date: Date) -> String? {
         holidayStore.name(on: date)
     }

@@ -22,12 +22,6 @@ struct HomeMainView: View {
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
     
-    private let monthYearFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = AppDateFormats.monthTitle
-        return formatter
-    }()
-
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
         self.environment = environment
@@ -50,8 +44,28 @@ struct HomeMainView: View {
             GeometryReader { geometry in
                 ZStack {
                     VStack(spacing: 10) {
-                        dateSelectionView
-                        calendarOptionView
+                        HomeDateSelectionView(
+                            currentMonth: calendarVM.currentMonth,
+                            onPrev: { calendarVM.changeMonth(by: -1) },
+                            onNext: { calendarVM.changeMonth(by: 1) }
+                        )
+                        HomeCalendarOptionView(
+                            viewType: viewType,
+                            onShowFilter: { showCategorySheet = true },
+                            onToday: {
+                                let today = Date()
+                                calendarVM.select(date: today)
+                                calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
+                                scheduleVM.selectedDate = today
+                            },
+                            onToggleView: {
+                                viewType = (viewType == .calendar) ? .list : .calendar
+                            },
+                            onRefresh: {
+                                scheduleVM.fetchAllSchedules(force: true)
+                                userVM.fetchAllSchedules()
+                            }
+                        )
                         
                         switch viewType {
                         case .calendar:
@@ -77,7 +91,17 @@ struct HomeMainView: View {
                             }
                     }
                     
-                    scheduleFloatingButton
+                    HomeScheduleFloatingButton(
+                        isExpanded: $isFabExpanded,
+                        onAddQWER: {
+                            addKind = .qwer
+                            addScheduleSheet = true
+                        },
+                        onAddUser: {
+                            addKind = .user
+                            addScheduleSheet = true
+                        }
+                    )
                 }
             }
         }
@@ -127,164 +151,6 @@ struct HomeMainView: View {
         }
     }
     
-    // MARK: 월 선택뷰
-    @ViewBuilder
-    private var dateSelectionView: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Button {
-                    calendarVM.changeMonth(by: -1)
-                } label: {
-                    Image(systemName: "chevron.left")
-                }
-                Spacer()
-                
-                Text(monthYearFormatter.string(from: calendarVM.currentMonth))
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.primary)
-                
-                Spacer()
-                Button {
-                    calendarVM.changeMonth(by: 1)
-                } label: {
-                    Image(systemName: "chevron.right")
-                }
-            }
-            .padding()
-            .foregroundStyle(.primary)
-            
-            Divider()
-        }
-    }
-    
-    // MARK: 캘린더 옵션 뷰
-    @ViewBuilder
-    private var calendarOptionView: some View {
-        HStack {
-            Button {
-                showCategorySheet = true
-            } label: {
-                Label("필터", systemImage: "line.3.horizontal.decrease.circle")
-                    .labelStyle(.titleAndIcon)
-                    .pretendSemiBold(size: 14)
-                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color.pillBackground))
-                    .foregroundColor(.primary)
-            }
-            Spacer()
-            Button {
-                let today = Date()
-                calendarVM.select(date: today)
-                calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
-                scheduleVM.selectedDate = today
-            } label: {
-                Text("오늘")
-                    .pretendSemiBold(size: 14)
-                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color.pillBackground))
-                    .foregroundColor(.primary)
-            }
-            
-            Spacer()
-            
-            Group {
-                switch viewType {
-                case .calendar:
-                    Button {
-                        viewType = .list
-                    } label: {
-                        Image(systemName: "list.bullet")
-                    }
-                case .list:
-                    Button {
-                        viewType = .calendar
-                    } label: {
-                        Image(systemName: "calendar")
-                    }
-                }
-            }
-            .pretendSemiBold(size: 14)
-            .padding(6)
-            .animation(.easeInOut(duration: 0.25), value: viewType)
-            .background(Capsule().fill(Color.pillBackground))
-            .foregroundColor(.primary)
-            
-            Button {
-                scheduleVM.fetchAllSchedules(force: true)
-                userVM.fetchAllSchedules()
-            } label: {
-                Image(systemName: "arrow.circlepath")
-                    .pretendSemiBold(size: 14)
-                    .padding(6)
-                    .background(Capsule().fill(Color.pillBackground))
-                    .foregroundColor(.primary)
-            }
-        }
-        .padding(.horizontal, 12)
-    }
-    
-    // MARK: Floating Button View
-    @ViewBuilder
-    private var scheduleFloatingButton: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                VStack(alignment: .trailing, spacing: 10) {
-                    if isFabExpanded {
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                            addKind = .qwer
-                            addScheduleSheet = true
-                        } label: {
-                            Label("QWER 스케줄", systemImage: "person.3.fill")
-                                .labelStyle(.titleAndIcon)
-                                .pretendSemiBold(size: 14)
-                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                                .background(
-                                    Capsule().fill(Color.pillBackground)
-                                )
-                                .foregroundColor(.primary)
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
-                            addKind = .user
-                            addScheduleSheet = true
-                        } label: {
-                            Label("개인 스케줄", systemImage: "person.fill")
-                                .labelStyle(.titleAndIcon)
-                                .pretendSemiBold(size: 14)
-                                .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-                                .background(
-                                    Capsule().fill(Color.pillBackground)
-                                )
-                                .foregroundColor(.primary)
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                    }
-                    
-                    Button {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.9)) {
-                            isFabExpanded.toggle()
-                        }
-                    } label: {
-                        Image(systemName: isFabExpanded ? "xmark.circle" : "plus.circle")
-                            .renderingMode(.template)
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(Color(UIColor {
-                                $0.userInterfaceStyle == .dark ? .RGB_173 : .black
-                            }))
-                    }
-                }
-            }
-            .padding(.trailing, 20)
-            .padding(.bottom, 15)
-            .animation(.spring(response: 0.25, dampingFraction: 0.9), value: isFabExpanded)
-        }
-    }
 }
 
 extension HomeMainView {

@@ -123,3 +123,103 @@ final class UserScheduleViewModel {
         }
     }
 }
+
+// MARK: - Query helpers
+extension UserScheduleViewModel {
+    func schedules(on date: Date) -> [UserScheduleItem] {
+        let cal = Calendar.current
+        let day = cal.startOfDay(for: date)
+        let interval = DateInterval(start: day, end: day)
+        return schedules(in: interval)
+    }
+
+    func schedules(in range: DateInterval) -> [UserScheduleItem] {
+        let cal = Calendar.current
+        let rangeStart = cal.startOfDay(for: range.start)
+        let rangeEnd = cal.startOfDay(for: range.end)
+        var result: [UserScheduleItem] = []
+
+        for item in schedules {
+            result.append(contentsOf: generateOccurrences(for: item, rangeStart: rangeStart, rangeEnd: rangeEnd, calendar: cal))
+        }
+
+        return result.sorted { $0.date < $1.date }
+    }
+
+    private func generateOccurrences(
+        for item: UserScheduleItem,
+        rangeStart: Date,
+        rangeEnd: Date,
+        calendar cal: Calendar
+    ) -> [UserScheduleItem] {
+        // Non-repeating: include only if inside range
+        if !item.isRepeat || item.repeatType == .none {
+            let d = cal.startOfDay(for: item.date)
+            guard d >= rangeStart && d <= rangeEnd else { return [] }
+            return [UserScheduleItem(
+                id: item.id,
+                title: item.title,
+                date: d,
+                time: item.time,
+                place: item.place,
+                isRepeat: item.isRepeat,
+                repeatType: item.repeatType,
+                repeatEndDate: item.repeatEndDate
+            )]
+        }
+
+        // Repeating: iterate occurrences
+        var occurrences: [UserScheduleItem] = []
+        var current = cal.startOfDay(for: item.date)
+        let effectiveEnd = min(rangeEnd, cal.startOfDay(for: item.repeatEndDate ?? rangeEnd))
+
+        // Fast-forward to the first occurrence on/after rangeStart
+        switch item.repeatType ?? .none {
+        case .week:
+            if current < rangeStart {
+                if let days = cal.dateComponents([.day], from: current, to: rangeStart).day {
+                    let remainder = days % 7
+                    let advance = remainder == 0 ? 0 : (7 - remainder)
+                    current = cal.date(byAdding: .day, value: days + advance, to: current) ?? current
+                }
+            }
+        case .month, .year, .none:
+            while current < rangeStart {
+                guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
+                current = next
+            }
+        }
+
+        while current <= effectiveEnd {
+            if current >= rangeStart {
+                occurrences.append(UserScheduleItem(
+                    id: item.id,
+                    title: item.title,
+                    date: current,
+                    time: item.time,
+                    place: item.place,
+                    isRepeat: item.isRepeat,
+                    repeatType: item.repeatType,
+                    repeatEndDate: item.repeatEndDate
+                ))
+            }
+            guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
+            current = next
+        }
+
+        return occurrences
+    }
+
+    private func nextOccurrenceDate(from date: Date, type: UserScheduleItem.RepeatType, calendar cal: Calendar) -> Date? {
+        switch type {
+        case .none:
+            return nil
+        case .week:
+            return cal.date(byAdding: .day, value: 7, to: date)
+        case .month:
+            return cal.date(byAdding: .month, value: 1, to: date)
+        case .year:
+            return cal.date(byAdding: .year, value: 1, to: date)
+        }
+    }
+}
