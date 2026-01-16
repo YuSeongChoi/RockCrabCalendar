@@ -36,18 +36,18 @@ struct CalendarView: View {
             VStack(spacing: 0) {
                 VStack(spacing: 10) {
                     CalendarWeekdayHeaderView()
-                    CalendarMonthGridView(
-                        days: calendarVM.days,
-                        numberOfWeeks: calendarVM.numberOfWeeks,
-                        availableWidth: geometry.size.width,
-                        isSelected: { calendarVM.isSelected($0) },
-                        isInCurrentMonth: { calendarVM.isInCurrentMonth($0) },
-                        eventColors: combinedEventColors,
-                        holidayName: { calendarVM.holidayName(on: $0) },
-                        onSelectDate: { date in
-                            calendarVM.select(date: date)
-                            scheduleVM.selectedDate = date
-                        },
+                        CalendarMonthGridView(
+                            days: calendarVM.days,
+                            numberOfWeeks: calendarVM.numberOfWeeks,
+                            availableWidth: geometry.size.width,
+                            isSelected: { calendarVM.isSelected($0) },
+                            isInCurrentMonth: { calendarVM.isInCurrentMonth($0) },
+                            eventColors: combinedEventColors,
+                            holidayName: { calendarVM.holidayName(on: $0) },
+                            onSelectDate: { date in
+                                calendarVM.select(date: date)
+                                scheduleVM.selectedDate = date
+                            },
                         onChangeMonth: { offset in
                             calendarVM.changeMonth(by: offset)
                         },
@@ -72,7 +72,7 @@ struct CalendarView: View {
                                 if !selectedQWER.isEmpty {
                                     QWERScheduleListView(
                                         schedules: selectedQWER,
-                                        memberColor: scheduleVM.memberColor,
+                                        memberColor: QWERStyleMapper.memberColor,
                                         onEdit: { item in
                                             editTarget = .editQWER(item)
                                         },
@@ -120,9 +120,17 @@ struct CalendarView: View {
     }
     
     private func combinedEventColors(for date: Date) -> [Color] {
-        var colors = scheduleVM.eventColors(for: date)
+        var colors = qwerEventColors(for: date)
         let items = userVM.schedules(on: date)
         colors.append(contentsOf: items.map { Color(hex: $0.colorHex) })
         return colors
+    }
+
+    private func qwerEventColors(for date: Date) -> [Color] {
+        let items = scheduleVM.schedules(on: date)
+        let members = Set(items.flatMap { $0.members })
+        return QWERMember.allCases.compactMap { member in
+            members.contains(member) ? QWERStyleMapper.memberColor(member) : nil
+        }
     }
 }

@@ -11,6 +11,17 @@ import RockCrabDomain
 struct ScheduleEditActionHandler {
     let qwerVM: QWERScheduleViewModel
     let userVM: UserScheduleViewModel
+    let notificationManager: NotificationScheduling
+
+    init(
+        qwerVM: QWERScheduleViewModel,
+        userVM: UserScheduleViewModel,
+        notificationManager: NotificationScheduling = NotificationManager.shared
+    ) {
+        self.qwerVM = qwerVM
+        self.userVM = userVM
+        self.notificationManager = notificationManager
+    }
 
     func save(mode: ScheduleEditMode, form: ScheduleEditFormState) {
         switch mode {
@@ -20,13 +31,13 @@ struct ScheduleEditActionHandler {
                 let item = form.buildQWERSchedule()
                 qwerVM.addLocal(item)
                 if item.shouldNotify {
-                    NotificationManager.shared.schedule(for: item)
+                    notificationManager.schedule(for: item)
                 }
             case .user:
                 let item = form.buildUserSchedule()
                 userVM.add(item)
                 if item.shouldNotify {
-                    NotificationManager.shared.schedule(for: item)
+                    notificationManager.schedule(for: item)
                 }
             }
         case .editQWER(let original):
@@ -43,10 +54,10 @@ struct ScheduleEditActionHandler {
     func delete(mode: ScheduleEditMode) {
         switch mode {
         case .editQWER(let original):
-            NotificationManager.shared.cancel(for: original)
+            notificationManager.cancel(for: original)
             qwerVM.deleteLocal(original)
         case .editUser(let original):
-            NotificationManager.shared.cancel(for: original)
+            notificationManager.cancel(for: original)
             userVM.delete(original)
         case .create:
             break
@@ -55,9 +66,9 @@ struct ScheduleEditActionHandler {
 
     private func updateNotifications<T: SchedulableItemProtocol>(for schedule: T) {
         if schedule.shouldNotify {
-            NotificationManager.shared.schedule(for: schedule)
+            notificationManager.schedule(for: schedule)
         } else {
-            NotificationManager.shared.cancel(for: schedule)
+            notificationManager.cancel(for: schedule)
         }
     }
 }

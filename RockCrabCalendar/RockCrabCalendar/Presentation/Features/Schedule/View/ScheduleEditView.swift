@@ -81,7 +81,7 @@ struct ScheduleEditView: View {
                         isLocalOnly: isQWERLocalSchedule,
                         category: $form.category,
                         selectedMembers: $form.selectedMembers,
-                        memberColor: qwerVM.memberColor
+                        memberColor: QWERStyleMapper.memberColor
                     )
                 } else {
                     ScheduleEditUserSection(

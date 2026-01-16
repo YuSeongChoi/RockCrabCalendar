@@ -63,12 +63,6 @@ final class CalendarViewModel {
         return (days.count + 6) / 7
     }
 
-    func cellHeight(for totalHeight: CGFloat) -> CGFloat {
-        let minHeight: CGFloat = 240
-        let adjustedHeight = max(totalHeight, minHeight)
-        return adjustedHeight / CGFloat(numberOfWeeks)
-    }
-
     func currentMonthRange() -> DateInterval {
         let start = startOfMonth(for: currentMonth)
         let end = endOfMonth(for: currentMonth)

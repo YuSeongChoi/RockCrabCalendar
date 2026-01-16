@@ -7,7 +7,6 @@
 
 import Foundation
 import Combine
-import SwiftUI
 import CryptoKit
 import RockCrabDomain
 import RockCrabShared
@@ -225,20 +224,8 @@ extension QWERScheduleViewModel {
     }
 }
 
-// MARK: - 멤버들 색상관련
+// MARK: - Categories
 extension QWERScheduleViewModel {
-    // 특정 날짜에 해당하는 스케줄들의 멤버 색상 반환
-    func eventColors(for date: Date) -> [Color] {
-        let items = schedules.filter {
-            Calendar.current.isDate($0.date, inSameDayAs: date) && passesCategory($0)
-        }
-        let members = Set(items.flatMap { $0.members })
-
-        return QWERMember.allCases.compactMap { member in
-            members.contains(member) ? memberColor(member) : nil
-        }
-    }
-
     // 특정 날짜(또는 선택된 날짜)의 스케줄 반환
     func schedules(on date: Date? = nil) -> [QWERScheduleItem] {
         let target = date ?? selectedDate
@@ -277,15 +264,5 @@ extension QWERScheduleViewModel {
 
     private func passesCategory(_ item: QWERScheduleItem) -> Bool {
         activeCategories.contains(item.category)
-    }
-    
-    // 멤버별 대표 파스텔 색상
-    func memberColor(_ member: QWERMember) -> Color {
-        switch member {
-        case .Q: return .pastelChodan
-        case .W: return .pastelMagenta
-        case .E: return .pastelHina
-        case .R: return .pastelMing
-        }
     }
 }

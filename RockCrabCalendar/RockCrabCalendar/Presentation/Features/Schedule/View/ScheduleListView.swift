@@ -57,7 +57,7 @@ struct ScheduleListView: View {
                             if let qItems = groupedQ[day] {
                                 QWERScheduleListView(
                                     schedules: qItems,
-                                    memberColor: scheduleVM.memberColor,
+                                    memberColor: QWERStyleMapper.memberColor,
                                     onEdit: { item in
                                         editTarget = .editQWER(item)
                                     }

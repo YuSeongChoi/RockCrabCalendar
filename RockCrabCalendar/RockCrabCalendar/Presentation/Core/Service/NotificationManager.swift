@@ -10,9 +10,24 @@ import UserNotifications
 import RockCrabDomain
 import RockCrabShared
 
+protocol NotificationScheduling {
+    func schedule<T: SchedulableItemProtocol>(for schedule: T, offsets: [TimeInterval])
+    func cancel<T: SchedulableItemProtocol>(for schedule: T, offsets: [TimeInterval])
+}
+
+extension NotificationScheduling {
+    func schedule<T: SchedulableItemProtocol>(for item: T) {
+        self.schedule(for: item, offsets: [300, 600])
+    }
+
+    func cancel<T: SchedulableItemProtocol>(for item: T) {
+        self.cancel(for: item, offsets: [300, 600])
+    }
+}
+
 /// 로컬 알림을 관리하는 매니저
 /// - 사용 예: 앱 시작 시 권한 요청 → 일정 생성/수정 시 예약, 삭제 시 취소
-final class NotificationManager {
+final class NotificationManager: NotificationScheduling {
     static let shared = NotificationManager()
     private init() {}
 
