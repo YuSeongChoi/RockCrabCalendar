@@ -13,6 +13,7 @@ struct ScheduleEditUserSection: View {
     @Binding var repeatType: UserScheduleItem.RepeatType
     @Binding var repeatEndDate: Date
     @Binding var selectedColor: Color
+    let rowBackground: Color
 
     var body: some View {
         Section("반복") {
@@ -32,9 +33,11 @@ struct ScheduleEditUserSection: View {
                 DatePicker("반복 종료", selection: $repeatEndDate, displayedComponents: .date)
             }
         }
+        .listRowBackground(rowBackground)
 
         Section("색상") {
             ColorPicker("색상 선택", selection: $selectedColor, supportsOpacity: false)
         }
+        .listRowBackground(rowBackground)
     }
 }

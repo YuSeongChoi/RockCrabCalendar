@@ -18,6 +18,7 @@ struct ScheduleEditBasicInfoSection: View {
 
     let defaultStartTime: () -> Date
     let defaultEndTime: () -> Date
+    let rowBackground: Color
 
     private var startTimeBinding: Binding<Date> {
         Binding(
@@ -47,6 +48,7 @@ struct ScheduleEditBasicInfoSection: View {
 
             TextField("장소", text: $place)
         }
+        .listRowBackground(rowBackground)
         .onChange(of: isAllDay) { _, newValue in
             if newValue {
                 startTime = nil

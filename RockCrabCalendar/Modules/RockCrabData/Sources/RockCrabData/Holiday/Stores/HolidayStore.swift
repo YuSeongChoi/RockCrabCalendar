@@ -21,7 +21,7 @@ public final class HolidayStore: HolidayStoreProtocol {
     private let formatter: DateFormatter = {
         let f = DateFormatter()
         f.calendar = Calendar(identifier: .gregorian)
-        f.locale = Locale(identifier: "ko_KR")
+        f.locale = .autoupdatingCurrent
         f.timeZone = TimeZone(identifier: "Asia/Seoul")
         f.dateFormat = AppDateFormats.serverDay
         return f

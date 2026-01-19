@@ -126,7 +126,7 @@ struct HomeMainView: View {
                 }
             )
         }
-        .sheet(isPresented: $addScheduleSheet) {
+        .navigationDestination(isPresented: $addScheduleSheet) {
             if addKind == .user {
                 ScheduleEditView(
                     viewModel: ScheduleEditViewModel(

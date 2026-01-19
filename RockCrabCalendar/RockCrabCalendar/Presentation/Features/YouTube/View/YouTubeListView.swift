@@ -16,7 +16,7 @@ struct YouTubeListView: View {
     // 표시용 날짜 포매터
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = .autoupdatingCurrent
         formatter.dateFormat = "yyyy.MM.dd HH:mm"
         return formatter
     }()

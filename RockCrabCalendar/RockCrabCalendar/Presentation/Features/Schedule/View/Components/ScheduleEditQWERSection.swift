@@ -14,6 +14,7 @@ struct ScheduleEditQWERSection: View {
     @Binding var category: ScheduleCategory
     @Binding var selectedMembers: Set<QWERMember>
     let memberColor: (QWERMember) -> Color
+    let rowBackground: Color
 
     var body: some View {
         if case .editQWER = mode, !isLocalOnly {
@@ -27,6 +28,7 @@ struct ScheduleEditQWERSection: View {
                         .foregroundStyle(.yellow)
                 }
             }
+            .listRowBackground(rowBackground)
         }
 
         Section("분류") {
@@ -36,6 +38,7 @@ struct ScheduleEditQWERSection: View {
                 }
             }
         }
+        .listRowBackground(rowBackground)
 
         Section("멤버") {
             ForEach(QWERMember.allCases, id: \.self) { member in
@@ -53,5 +56,6 @@ struct ScheduleEditQWERSection: View {
                 )
             }
         }
+        .listRowBackground(rowBackground)
     }
 }

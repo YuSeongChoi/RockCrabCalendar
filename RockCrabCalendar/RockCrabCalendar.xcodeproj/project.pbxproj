@@ -333,8 +333,8 @@
 		5D1A72DC2F177562007F3FB8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				76774DF7A0A34F3C831607E1 /* Components */,
 				5D1A72DB2F177562007F3FB8 /* HomeMainView.swift */,
+				76774DF7A0A34F3C831607E1 /* Components */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -399,8 +399,8 @@
 		5D1A72EA2F177562007F3FB8 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				5D1A72DA2F177562007F3FB8 /* Calendar */,
 				5D1A72DC2F177562007F3FB8 /* Home */,
+				5D1A72DA2F177562007F3FB8 /* Calendar */,
 				5D1A72E32F177562007F3FB8 /* Schedule */,
 				5D1A72E92F177562007F3FB8 /* YouTube */,
 			);

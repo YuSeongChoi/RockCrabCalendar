@@ -63,7 +63,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         if !time.isEmpty && startTime == nil {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            formatter.locale = Locale(identifier: "ko_KR")
+            formatter.locale = .autoupdatingCurrent
             if let parsed = formatter.date(from: time) {
                 self.startTime = parsed
 //                self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
@@ -108,7 +108,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         if !self.time.isEmpty && self.startTime == nil {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            formatter.locale = Locale(identifier: "ko_KR")
+            formatter.locale = .autoupdatingCurrent
             if let parsed = formatter.date(from: time) {
                 self.startTime = parsed
                 self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
@@ -156,7 +156,7 @@ extension QWERScheduleItem {
     public static var simpleDateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = .autoupdatingCurrent
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
     }
@@ -164,7 +164,7 @@ extension QWERScheduleItem {
     public static var simpleTimeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.locale = .autoupdatingCurrent
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return formatter
     }

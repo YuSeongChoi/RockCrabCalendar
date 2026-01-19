@@ -67,7 +67,7 @@ public struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         if !time.isEmpty && startTime == nil {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
-            formatter.locale = Locale(identifier: "ko_KR")
+            formatter.locale = .autoupdatingCurrent
             if let parsed = formatter.date(from: time) {
                 self.startTime = parsed
                 self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)

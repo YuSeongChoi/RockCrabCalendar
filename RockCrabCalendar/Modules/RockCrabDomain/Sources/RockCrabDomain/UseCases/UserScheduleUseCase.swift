@@ -61,7 +61,7 @@ public struct UserScheduleUseCase {
                 var updated = item
                 let formatter = DateFormatter()
                 formatter.dateFormat = AppDateFormats.hourMinute
-                formatter.locale = Locale(identifier: "ko_KR")
+                formatter.locale = .autoupdatingCurrent
                 if let parsed = formatter.date(from: item.time) {
                     updated.startTime = parsed
                     updated.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)

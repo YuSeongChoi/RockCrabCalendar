@@ -35,7 +35,7 @@ extension Date {
     
     func string(format: String) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.locale = .autoupdatingCurrent
         dateFormatter.calendar = .init(identifier: .gregorian)
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)

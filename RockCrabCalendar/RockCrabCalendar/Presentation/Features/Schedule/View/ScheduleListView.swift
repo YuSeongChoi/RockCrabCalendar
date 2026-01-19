@@ -20,7 +20,7 @@ struct ScheduleListView: View {
     
     private let dayLabelFormatter: DateFormatter = {
         let f = DateFormatter()
-        f.locale = Locale(identifier: "ko_KR")
+        f.locale = .autoupdatingCurrent
         f.dateFormat = AppDateFormats.dayLabel
         return f
     }()

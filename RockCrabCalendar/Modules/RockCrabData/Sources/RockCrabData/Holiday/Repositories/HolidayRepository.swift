@@ -56,13 +56,13 @@ public struct HolidayRepository: HolidayRepositoryProtocol {
         let rawString = String(raw)
         let input = DateFormatter()
         input.calendar = Calendar(identifier: .gregorian)
-        input.locale = Locale(identifier: "ko_KR")
+        input.locale = .autoupdatingCurrent
         input.timeZone = TimeZone(identifier: "Asia/Seoul")
         input.dateFormat = AppDateFormats.holidayInput
 
         let output = DateFormatter()
         output.calendar = Calendar(identifier: .gregorian)
-        output.locale = Locale(identifier: "ko_KR")
+        output.locale = .autoupdatingCurrent
         output.timeZone = TimeZone(identifier: "Asia/Seoul")
         output.dateFormat = AppDateFormats.holidayOutput
 

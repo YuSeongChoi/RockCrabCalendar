@@ -19,39 +19,46 @@ struct ScheduleEditView: View {
     var body: some View {
         @Bindable var viewModel = viewModel
         NavigationStack {
-            Form {
-                ScheduleEditBasicInfoSection(
-                    title: $viewModel.form.title,
-                    date: $viewModel.form.date,
-                    isAllDay: $viewModel.form.isAllDay,
-                    startTime: $viewModel.form.startTime,
-                    endTime: $viewModel.form.endTime,
-                    shouldNotify: $viewModel.form.shouldNotify,
-                    place: $viewModel.form.place,
-                    defaultStartTime: defaultStartTime,
-                    defaultEndTime: defaultEndTime
-                )
-                if viewModel.kind == .qwer {
-                    ScheduleEditQWERSection(
-                        mode: viewModel.mode,
-                        isLocalOnly: viewModel.isQWERLocalSchedule,
-                        category: $viewModel.form.category,
-                        selectedMembers: $viewModel.form.selectedMembers,
-                        memberColor: QWERStyleMapper.memberColor
+            ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
+                
+                Form {
+                    ScheduleEditBasicInfoSection(
+                        title: $viewModel.form.title,
+                        date: $viewModel.form.date,
+                        isAllDay: $viewModel.form.isAllDay,
+                        startTime: $viewModel.form.startTime,
+                        endTime: $viewModel.form.endTime,
+                        shouldNotify: $viewModel.form.shouldNotify,
+                        place: $viewModel.form.place,
+                        defaultStartTime: defaultStartTime,
+                        defaultEndTime: defaultEndTime,
+                        rowBackground: listRowBackgroundColor
                     )
-                } else {
-                    ScheduleEditUserSection(
-                        isRepeat: $viewModel.form.isRepeat,
-                        repeatType: $viewModel.form.repeatType,
-                        repeatEndDate: $viewModel.form.repeatEndDate,
-                        selectedColor: $viewModel.form.selectedColor
-                    )
+                    
+                    if viewModel.kind == .qwer {
+                        ScheduleEditQWERSection(
+                            mode: viewModel.mode,
+                            isLocalOnly: viewModel.isQWERLocalSchedule,
+                            category: $viewModel.form.category,
+                            selectedMembers: $viewModel.form.selectedMembers,
+                            memberColor: QWERStyleMapper.memberColor,
+                            rowBackground: listRowBackgroundColor
+                        )
+                    } else {
+                        ScheduleEditUserSection(
+                            isRepeat: $viewModel.form.isRepeat,
+                            repeatType: $viewModel.form.repeatType,
+                            repeatEndDate: $viewModel.form.repeatEndDate,
+                            selectedColor: $viewModel.form.selectedColor,
+                            rowBackground: listRowBackgroundColor
+                        )
+                    }
                 }
+                .scrollContentBackground(.hidden)
+                .listStyle(.insetGrouped)
             }
-            .scrollContentBackground(.hidden)
-            .listStyle(.insetGrouped)
-            .listRowBackground(listRowBackgroundColor)
-            .background(listBackgroundColor)
             .navigationTitle(viewModel.titleText)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -71,11 +78,7 @@ struct ScheduleEditView: View {
                     }
                 }
             }
-            .toolbarBackground(
-                Color(UIColor { trait in
-                    trait.userInterfaceStyle == .dark ? .black : .white
-                }), for: .navigationBar
-            )
+            .toolbarBackground(Color.appBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .alert("삭제할 수 없습니다", isPresented: $viewModel.showNonDeletableAlert) {
                 Button("확인", role: .cancel) { }
@@ -83,7 +86,6 @@ struct ScheduleEditView: View {
                 Text("Firestore에 올라간 QWER 일정은 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제할 수 있어요.")
             }
         }
-        .environment(\.locale, Locale(identifier: "ko_KR"))
         .task {
             await viewModel.refreshLocalFlagIfNeeded()
         }
@@ -111,15 +113,7 @@ private extension ScheduleEditView {
 // MARK: - Sections
 private extension ScheduleEditView {
     var listRowBackgroundColor: Color {
-        Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
-        })
-    }
-
-    var listBackgroundColor: Color {
-        Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark ? .black : .systemGroupedBackground
-        })
+        return Color.cardBackground
     }
 
     func defaultStartTime() -> Date {
