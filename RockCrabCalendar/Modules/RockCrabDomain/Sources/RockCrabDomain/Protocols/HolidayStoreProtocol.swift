@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RockCrabShared
 
 public protocol HolidayStoreProtocol {
     func name(on date: Date) -> String?

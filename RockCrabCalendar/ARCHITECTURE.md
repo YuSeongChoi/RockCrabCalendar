@@ -90,7 +90,7 @@ RockCrabCalendarApp
 ### SPM Module (First Step)
 ```
 RockCrabShared (local package)
-  - AppDateFormats / AppStorageKeys / HolidayInfo
+  - AppDateFormats / AppStorageKeys / AppLogger / Bundle+Extension / AlertNotifications
 ```
 
 ### SPM Module (Domain)
