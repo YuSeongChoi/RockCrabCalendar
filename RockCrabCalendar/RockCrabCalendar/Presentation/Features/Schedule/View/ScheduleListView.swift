@@ -83,10 +83,12 @@ struct ScheduleListView: View {
             set: { editTarget = $0 }
         )) { mode in
             ScheduleEditView(
-                mode: mode,
-                defaultDate: scheduleVM.selectedDate,
-                qwerVM: scheduleVM,
-                userVM: userVM
+                viewModel: ScheduleEditViewModel(
+                    mode: mode,
+                    defaultDate: scheduleVM.selectedDate,
+                    qwerVM: scheduleVM,
+                    userVM: userVM
+                )
             )
         }
     }

@@ -35,11 +35,6 @@ struct CalendarView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 VStack(spacing: 10) {
-                    Button("UPLOAD") {
-                        QWERScheduleItem.schedules.forEach {
-                            scheduleVM.updateSchedule(schedule: $0)
-                        }
-                    }
                     CalendarWeekdayHeaderView()
                         CalendarMonthGridView(
                             days: calendarVM.days,
@@ -116,10 +111,12 @@ struct CalendarView: View {
             set: { editTarget = $0 }
         )) { mode in
             ScheduleEditView(
-                mode: mode,
-                defaultDate: scheduleVM.selectedDate,
-                qwerVM: scheduleVM,
-                userVM: userVM
+                viewModel: ScheduleEditViewModel(
+                    mode: mode,
+                    defaultDate: scheduleVM.selectedDate,
+                    qwerVM: scheduleVM,
+                    userVM: userVM
+                )
             )
         }
     }

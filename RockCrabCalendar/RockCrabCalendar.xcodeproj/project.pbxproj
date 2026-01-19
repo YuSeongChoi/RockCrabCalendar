@@ -43,6 +43,7 @@
 		5D1A73F12F178DB0007F3FB8 /* HomeDateSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A73EF2F178DB0007F3FB8 /* HomeDateSelectionView.swift */; };
 		5D1A73F22F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A73F02F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift */; };
 		5D1A73F32F178DB0007F3FB8 /* HomeCalendarOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A73EE2F178DB0007F3FB8 /* HomeCalendarOptionView.swift */; };
+		5D5115652F1DFC7700545259 /* ScheduleEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115642F1DFC7700545259 /* ScheduleEditViewModel.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
@@ -138,6 +139,7 @@
 		5D1A73EE2F178DB0007F3FB8 /* HomeCalendarOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarOptionView.swift; sourceTree = "<group>"; };
 		5D1A73EF2F178DB0007F3FB8 /* HomeDateSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDateSelectionView.swift; sourceTree = "<group>"; };
 		5D1A73F02F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScheduleFloatingButton.swift; sourceTree = "<group>"; };
+		5D5115642F1DFC7700545259 /* ScheduleEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditViewModel.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,6 +352,7 @@
 		5D1A72E22F177562007F3FB8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5D5115642F1DFC7700545259 /* ScheduleEditViewModel.swift */,
 				5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */,
 				5D1A72E12F177562007F3FB8 /* UserScheduleViewModel.swift */,
 				A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */,
@@ -747,6 +750,7 @@
 				5D1A72F72F177562007F3FB8 /* DateUtil.swift in Sources */,
 				5D1A72F82F177562007F3FB8 /* RockCrabCalendarApp.swift in Sources */,
 				5D1A72F92F177562007F3FB8 /* CalendarView.swift in Sources */,
+				5D5115652F1DFC7700545259 /* ScheduleEditViewModel.swift in Sources */,
 				5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */,
 				5D1A72FB2F177562007F3FB8 /* QWERScheduleViewModel.swift in Sources */,
 				5D1A72FC2F177562007F3FB8 /* AppEnvironment.swift in Sources */,

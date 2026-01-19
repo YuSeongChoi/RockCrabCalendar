@@ -129,18 +129,24 @@ struct HomeMainView: View {
         .sheet(isPresented: $addScheduleSheet) {
             if addKind == .user {
                 ScheduleEditView(
-                    kind: .user,
-                    defaultDate: scheduleVM.selectedDate,
-                    qwerVM: scheduleVM,
-                    userVM: userVM,
-                    defaultColor: userVM.schedules.last?.colorHex != nil ? Color(hex: userVM.schedules.last!.colorHex) : .purple
+                    viewModel: ScheduleEditViewModel(
+                        kind: .user,
+                        defaultDate: scheduleVM.selectedDate,
+                        qwerVM: scheduleVM,
+                        userVM: userVM,
+                        defaultColor: userVM.schedules.last?.colorHex != nil
+                            ? Color(hex: userVM.schedules.last!.colorHex)
+                            : .purple
+                    )
                 )
             } else {
                 ScheduleEditView(
-                    kind: .qwer,
-                    defaultDate: scheduleVM.selectedDate,
-                    qwerVM: scheduleVM,
-                    userVM: userVM
+                    viewModel: ScheduleEditViewModel(
+                        kind: .qwer,
+                        defaultDate: scheduleVM.selectedDate,
+                        qwerVM: scheduleVM,
+                        userVM: userVM
+                    )
                 )
             }
         }
