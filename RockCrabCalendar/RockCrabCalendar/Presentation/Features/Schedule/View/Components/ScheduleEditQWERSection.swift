@@ -39,6 +39,7 @@ struct ScheduleEditQWERSection: View {
             }
         }
         .listRowBackground(rowBackground)
+        .transaction { $0.animation = nil }
 
         Section("멤버") {
             ForEach(QWERMember.allCases, id: \.self) { member in

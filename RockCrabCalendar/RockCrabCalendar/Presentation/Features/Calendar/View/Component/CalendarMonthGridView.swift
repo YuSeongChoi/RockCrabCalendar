@@ -65,33 +65,26 @@ struct CalendarMonthGridView: View {
                     let predicted = value.predictedEndTranslation.width
                     let final = dx + (predicted - dx) * 0.35
                     let threshold: CGFloat = 80
+                    let slideDuration: TimeInterval = 0.2
 
                     if final <= -threshold {
-                        withAnimation(.linear(duration: 0.20)) {
+                        withAnimation(.easeOut(duration: slideDuration)) {
                             dragOffset = -availableWidth
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.20) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + slideDuration) {
                             onChangeMonth(1)
-                            dragOffset = availableWidth
-                            withAnimation(.linear(duration: 0.20)) {
-                                dragOffset = 0
-                            }
-                        }
-                    } else if final >= threshold {
-                        withAnimation(.linear(duration: 0.20)) {
-                            dragOffset = availableWidth
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.20) {
-                            onChangeMonth(-1)
-                            dragOffset = -availableWidth
-                            withAnimation(.linear(duration: 0.20)) {
-                                dragOffset = 0
-                            }
-                        }
-                    } else {
-                        withAnimation(.linear(duration: 0.18)) {
                             dragOffset = 0
                         }
+                    } else if final >= threshold {
+                        withAnimation(.easeOut(duration: slideDuration)) {
+                            dragOffset = availableWidth
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + slideDuration) {
+                            onChangeMonth(-1)
+                            dragOffset = 0
+                        }
+                    } else {
+                        dragOffset = 0
                     }
                 }
         )

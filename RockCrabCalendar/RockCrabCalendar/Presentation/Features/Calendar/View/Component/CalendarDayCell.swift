@@ -19,6 +19,7 @@ struct CalendarDayCell: View {
     private let dotBackgroundSize: CGFloat = 8
     private var dotRowHeight: CGFloat { dotBackgroundSize + 6 } // auto-calculated from dot size + padding
     private let dayAreaHeight: CGFloat = 22
+    private let holidayRowHeight: CGFloat = 12
 
     var body: some View {
         GeometryReader { proxy in
@@ -52,14 +53,15 @@ struct CalendarDayCell: View {
                             weekday: weekday,
                             dayAreaHeight: dayAreaHeight
                         )
-                        if let holiday = holidayName, isInCurrentMonth {
-                            Text(holiday)
-                                .font(.system(size: 10, weight: .semibold))
-                                .foregroundColor(.red)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
-                                .padding(.top, 2)
-                        }
+                        let holidayText = (holidayName != nil && isInCurrentMonth) ? holidayName! : " "
+                        Text(holidayText)
+                            .font(.system(size: 10, weight: .semibold))
+                            .foregroundColor(.red)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.6)
+                            .padding(.top, 2)
+                            .frame(height: holidayRowHeight, alignment: .top)
+                            .opacity((holidayName != nil && isInCurrentMonth) ? 1 : 0)
 
                         if isPad {
                             // iPad 등 큰 셀: 날짜 바로 아래에 점들 표시 (최대 5개)
@@ -70,6 +72,7 @@ struct CalendarDayCell: View {
                                 dotBackgroundSize: dotBackgroundSize,
                                 dotSize: dotSize
                             )
+                            .animation(nil, value: eventColors)
                             .frame(height: dotRowHeight)
                             .padding(.top, 4)
 
@@ -85,6 +88,7 @@ struct CalendarDayCell: View {
                                 dotBackgroundSize: dotBackgroundSize,
                                 dotSize: dotSize
                             )
+                            .animation(nil, value: eventColors)
                             .frame(height: dotRowHeight)
                             .padding(.bottom, 4)
                         }
