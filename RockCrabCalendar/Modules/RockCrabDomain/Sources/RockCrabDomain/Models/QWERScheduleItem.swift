@@ -771,6 +771,22 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "배성재의 TEN 생녹방",
+            date: simpleDateFormatter.date(from: "2026-01-23")!,
+            time: "19:00",
+            place: "SBS 파워FM",
+            members: [.Q, .E],
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "배성재의 TEN 본방송",
+            date: simpleDateFormatter.date(from: "2026-01-25")!,
+            time: "22:00",
+            place: "SBS 파워FM",
+            members: [.Q, .E],
+            category: .other
+        ),
+        QWERScheduleItem(
             title: "히나 생일",
             date: simpleDateFormatter.date(from: "2026-01-30")!,
             time: "",
