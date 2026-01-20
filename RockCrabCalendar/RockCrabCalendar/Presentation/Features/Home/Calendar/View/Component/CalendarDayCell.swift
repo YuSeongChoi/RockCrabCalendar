@@ -99,9 +99,6 @@ struct CalendarDayCell: View {
                 }
             }
             .frame(width: size.width, height: size.height)
-            .background(
-                Color.appBackground
-            )
             .contentShape(Rectangle())
         }
     }
@@ -167,9 +164,12 @@ private struct EventDotRow: View {
             ForEach(0..<min(colors.count, 5), id: \.self) { i in
                 ZStack {
                     Circle()
-                        .fill(Color(white: isDark ? 0.2 : 0.88))
-                        .opacity(isInCurrentMonth ? 1 : 0.55)
+                        .fill(Color(white: isDark ? 0.5 : 0.8))
+                        .opacity(isInCurrentMonth ? 1 : 0.2)
+//                        .fill(Color(white: isDark ? 0.2 : 0.88))
+//                        .opacity(isInCurrentMonth ? 1 : 0.55)
                         .frame(width: dotBackgroundSize, height: dotBackgroundSize)
+                    
                     Circle()
                         .fill(colors[i])
                         .opacity(isInCurrentMonth ? 1 : 0.5)

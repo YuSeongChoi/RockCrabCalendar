@@ -2,7 +2,7 @@
 //  HomeSmokeUITests.swift
 //  RockCrabCalendarUITests
 //
-//  Created by Codex on 2024/11/24.
+//  Created by YuSeongChoi on 2024/11/24.
 //
 
 import XCTest

@@ -13,6 +13,9 @@ import RockCrabShared
 struct RockCrabCalendarApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private let environment = AppEnvironment.live()
+    @State private var calendarVM: CalendarViewModel
+    @State private var scheduleVM: QWERScheduleViewModel
+    @State private var userVM: UserScheduleViewModel
     
     var body: some Scene {
         WindowGroup {
@@ -22,17 +25,42 @@ struct RockCrabCalendarApp: App {
                 }
                 WindowAlertHostingView()
                 
-                NavigationStack {
-                    HomeMainView(environment: environment)
+                TabView {
+                    HomeMainView(
+                        calendarVM: calendarVM,
+                        scheduleVM: scheduleVM,
+                        userVM: userVM
+                    )
+                    .tabItem {
+                        Label("홈", systemImage: "calendar")
+                    }
+
+                    SettingsView(scheduleVM: scheduleVM, userVM: userVM)
+                        .tabItem {
+                            Label("설정", systemImage: "gearshape")
+                        }
                 }
-                .navigationViewStyle(.stack)
             }
             .environmentObject(appDelegate)
+            .environment(\.locale, .autoupdatingCurrent)
         }
     }
     
     @MainActor
     init() {
+        _calendarVM = State(initialValue: CalendarViewModel(
+            holidayUseCase: environment.holidayUseCase,
+            holidayStore: environment.holidayStore
+        ))
+        _scheduleVM = State(initialValue: QWERScheduleViewModel(
+            useCase: environment.qwerScheduleUseCase,
+            cacheStore: environment.scheduleCacheStore
+        ))
+        _userVM = State(initialValue: UserScheduleViewModel(
+            useCase: environment.userScheduleUseCase,
+            migrationStore: environment.userScheduleMigrationStore
+        ))
+
         // 1) 전역 네비게이션 바 Appearance 구성
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground() // 불투명 배경 (투명 스크롤 이슈 방지)

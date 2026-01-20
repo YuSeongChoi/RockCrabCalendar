@@ -2,7 +2,7 @@
 //  HolidayRepositoryTests.swift
 //  RockCrabCalendarUnitTests
 //
-//  Created by Codex on 2025/01/09.
+//  Created by YuSeongChoi on 2025/01/09.
 //
 
 import XCTest

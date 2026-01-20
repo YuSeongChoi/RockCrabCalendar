@@ -192,7 +192,7 @@ extension UserScheduleViewModel {
                     current = cal.date(byAdding: .day, value: days + advance, to: current) ?? current
                 }
             }
-        case .month, .year, .none:
+        case .day, .month, .year, .none:
             while current < rangeStart {
                 guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
                 current = next
@@ -228,6 +228,8 @@ extension UserScheduleViewModel {
         switch type {
         case .none:
             return nil
+        case .day:
+            return cal.date(byAdding: .day, value: 1, to: date)
         case .week:
             return cal.date(byAdding: .day, value: 7, to: date)
         case .month:

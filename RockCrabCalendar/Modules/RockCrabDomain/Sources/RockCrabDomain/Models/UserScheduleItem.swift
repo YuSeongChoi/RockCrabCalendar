@@ -91,6 +91,7 @@ public struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
 extension UserScheduleItem {
     public enum RepeatType: String ,Codable, CaseIterable {
         case none = "없음"
+        case day = "매일"
         case week = "매주"
         case month = "매월"
         case year = "매년"

@@ -50,13 +50,9 @@ struct CategoryFilterSheet: View {
             .foregroundStyle(.secondary)
             .listStyle(.insetGrouped)
             .scrollContentBackground(.hidden)
-            .background(Color(UIColor { trait in
-                trait.userInterfaceStyle == .dark ? .black : .systemGroupedBackground
-            }))
-            .listRowBackground(Color(UIColor { trait in
-                trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
-            }))
+            .listRowBackground(Color.cardBackground)
             .navigationTitle("필터")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
@@ -77,15 +73,9 @@ struct CategoryFilterSheet: View {
                     }
                 }
             }
-            .toolbarBackground(Color(UIColor { trait in
-                trait.userInterfaceStyle == .dark ? .black : .white
-            }), for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
-            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color.appBackground)
         }
-        .background(Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark ? .black : .white
-        }))
+        .background(Color.appBackground)
     }
     
     private var closeButtonColor: Color {

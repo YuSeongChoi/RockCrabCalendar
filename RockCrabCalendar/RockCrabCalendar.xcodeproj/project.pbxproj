@@ -44,6 +44,9 @@
 		5D1A73F22F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A73F02F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift */; };
 		5D1A73F32F178DB0007F3FB8 /* HomeCalendarOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A73EE2F178DB0007F3FB8 /* HomeCalendarOptionView.swift */; };
 		5D5115652F1DFC7700545259 /* ScheduleEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115642F1DFC7700545259 /* ScheduleEditViewModel.swift */; };
+		5D5115B02F1E2F8F00545259 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115AD2F1E2F8F00545259 /* SettingsView.swift */; };
+		5D5115B92F1E2FB800545259 /* ICSExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115B82F1E2FB800545259 /* ICSExporter.swift */; };
+		5D5115BD2F1E2FCB00545259 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115BC2F1E2FCB00545259 /* ActivityView.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
@@ -72,6 +75,7 @@
 		5DE0246A2CA3DC2500472395 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5DE024582CA3DC2500472395 /* Pretendard-SemiBold.otf */; };
 		5DF8D4C32F17904600371672 /* CalendarMonthGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8D4C12F17904600371672 /* CalendarMonthGridView.swift */; };
 		5DF8D4C42F17904600371672 /* CalendarWeekdayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8D4C22F17904600371672 /* CalendarWeekdayHeaderView.swift */; };
+		5DFCA6682F1F507000271E4A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFCA6672F1F507000271E4A /* Localizable.xcstrings */; };
 		5DFE3F9F2F17958700CDA23F /* ScheduleDayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F972F17958700CDA23F /* ScheduleDayHeaderView.swift */; };
 		5DFE3FA12F17958700CDA23F /* QWERScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F952F17958700CDA23F /* QWERScheduleCard.swift */; };
 		5DFE3FA22F17958700CDA23F /* QWERScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F962F17958700CDA23F /* QWERScheduleListView.swift */; };
@@ -140,6 +144,9 @@
 		5D1A73EF2F178DB0007F3FB8 /* HomeDateSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDateSelectionView.swift; sourceTree = "<group>"; };
 		5D1A73F02F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScheduleFloatingButton.swift; sourceTree = "<group>"; };
 		5D5115642F1DFC7700545259 /* ScheduleEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditViewModel.swift; sourceTree = "<group>"; };
+		5D5115AD2F1E2F8F00545259 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		5D5115B82F1E2FB800545259 /* ICSExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICSExporter.swift; sourceTree = "<group>"; };
+		5D5115BC2F1E2FCB00545259 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DE024312CA3D79E00472395 /* RockCrabCalendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RockCrabCalendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +175,7 @@
 		5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RockCrabCalendarUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF8D4C12F17904600371672 /* CalendarMonthGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthGridView.swift; sourceTree = "<group>"; };
 		5DF8D4C22F17904600371672 /* CalendarWeekdayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeekdayHeaderView.swift; sourceTree = "<group>"; };
+		5DFCA6672F1F507000271E4A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5DFE3F952F17958700CDA23F /* QWERScheduleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleCard.swift; sourceTree = "<group>"; };
 		5DFE3F962F17958700CDA23F /* QWERScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleListView.swift; sourceTree = "<group>"; };
 		5DFE3F972F17958700CDA23F /* ScheduleDayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDayHeaderView.swift; sourceTree = "<group>"; };
@@ -335,6 +343,8 @@
 			children = (
 				5D1A72DB2F177562007F3FB8 /* HomeMainView.swift */,
 				76774DF7A0A34F3C831607E1 /* Components */,
+				5D1A72DA2F177562007F3FB8 /* Calendar */,
+				5D1A72E32F177562007F3FB8 /* Schedule */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -400,8 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				5D1A72DC2F177562007F3FB8 /* Home */,
-				5D1A72DA2F177562007F3FB8 /* Calendar */,
-				5D1A72E32F177562007F3FB8 /* Schedule */,
+				5D5115AF2F1E2F8F00545259 /* Settings */,
 				5D1A72E92F177562007F3FB8 /* YouTube */,
 			);
 			path = Features;
@@ -417,6 +426,8 @@
 				5D1A72EF2F177562007F3FB8 /* SwiftUI+Extension.swift */,
 				9688A04DCAD949E2BC09AAE9 /* Color+Hex.swift */,
 				5DFE40B72F18E24200CDA23F /* QWERStyleMapper.swift */,
+				5D5115B82F1E2FB800545259 /* ICSExporter.swift */,
+				5D5115BC2F1E2FCB00545259 /* ActivityView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -437,6 +448,22 @@
 			children = (
 			);
 			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		5D5115AE2F1E2F8F00545259 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5D5115AD2F1E2F8F00545259 /* SettingsView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5D5115AF2F1E2F8F00545259 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				5D5115AE2F1E2F8F00545259 /* View */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		5D7FC9CC2E5EDA6100B5EDCA /* Config */ = {
@@ -506,6 +533,7 @@
 				5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */,
 				5DE0243B2CA3D7A000472395 /* Preview Content */,
 				5DE0243A2CA3D7A000472395 /* RockTurtleCalendar.entitlements */,
+				5DFCA6672F1F507000271E4A /* Localizable.xcstrings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -665,11 +693,12 @@
 			};
 			buildConfigurationList = 5DE0242C2CA3D79E00472395 /* Build configuration list for PBXProject "RockCrabCalendar" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 5DE024282CA3D79E00472395;
 			packageReferences = (
@@ -712,6 +741,7 @@
 				5DE024622CA3DC2500472395 /* Lato-BlackItalic.ttf in Resources */,
 				5DE0245A2CA3DC2500472395 /* Lato-LightItalic.ttf in Resources */,
 				5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */,
+				5DFCA6682F1F507000271E4A /* Localizable.xcstrings in Resources */,
 				5DE024602CA3DC2500472395 /* NotoSansCJKkr-Medium.otf in Resources */,
 				5DE024612CA3DC2500472395 /* Lato-Regular.ttf in Resources */,
 				5DE024662CA3DC2500472395 /* Lato-Light.ttf in Resources */,
@@ -745,6 +775,7 @@
 				5D1A72F22F177562007F3FB8 /* EmptyStateView.swift in Sources */,
 				5D1A72F32F177562007F3FB8 /* NotificationManager.swift in Sources */,
 				5D1A72F42F177562007F3FB8 /* CategoryFilterSheet.swift in Sources */,
+				5D5115B92F1E2FB800545259 /* ICSExporter.swift in Sources */,
 				5D1A72F52F177562007F3FB8 /* CalendarGenerator.swift in Sources */,
 				5D1A72F62F177562007F3FB8 /* WindowOverlayView.swift in Sources */,
 				5D1A72F72F177562007F3FB8 /* DateUtil.swift in Sources */,
@@ -765,9 +796,11 @@
 				6EB5BEE66D53465B879776B9 /* ScheduleEditUserSection.swift in Sources */,
 				5D1A73022F177562007F3FB8 /* HomeMainView.swift in Sources */,
 				5D1A73032F177562007F3FB8 /* SwiftUI+Extension.swift in Sources */,
+				5D5115BD2F1E2FCB00545259 /* ActivityView.swift in Sources */,
 				316E54F6B60741D6A13BE539 /* Color+Hex.swift in Sources */,
 				5D1A73042F177562007F3FB8 /* CalendarDayCell.swift in Sources */,
 				5D1A73052F177562007F3FB8 /* UserScheduleViewModel.swift in Sources */,
+				5D5115B02F1E2F8F00545259 /* SettingsView.swift in Sources */,
 				D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */,
 				D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */,
 				D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */,
@@ -885,6 +918,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -943,6 +977,7 @@
 				MTL_FAST_MATH = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};

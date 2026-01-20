@@ -2,7 +2,7 @@
 //  ScheduleEditBasicInfoSection.swift
 //  RockCrabCalendar
 //
-//  Created by Codex on 2025/01/14.
+//  Created by YuSeongChoi on 2025/01/14.
 //
 
 import SwiftUI
@@ -38,6 +38,7 @@ struct ScheduleEditBasicInfoSection: View {
         Section("기본 정보") {
             TextField("제목", text: $title)
             DatePicker("날짜", selection: $date, displayedComponents: .date)
+                .datePickerStyle(.compact)
             Toggle("하루종일", isOn: $isAllDay)
 
             if !isAllDay {
