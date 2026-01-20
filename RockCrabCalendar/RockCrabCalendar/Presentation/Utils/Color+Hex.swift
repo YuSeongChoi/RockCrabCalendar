@@ -2,7 +2,7 @@
 //  Color+Hex.swift
 //  RockCrabCalendar
 //
-//  Created by YuSeongChoi on 2025/01/14.
+//  Created by Codex on 2025/01/14.
 //
 
 import SwiftUI
