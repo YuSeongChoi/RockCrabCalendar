@@ -2,13 +2,13 @@
 //  ScheduleEditMode.swift
 //  RockCrabCalendar
 //
-//  Created by Codex on 2026/01/15.
+//  Created by YuSeongChoi on 2026/01/15.
 //
 
 import Foundation
 import RockCrabDomain
 
-enum ScheduleEditKind {
+enum ScheduleEditKind: Hashable {
     case qwer
     case user
 }

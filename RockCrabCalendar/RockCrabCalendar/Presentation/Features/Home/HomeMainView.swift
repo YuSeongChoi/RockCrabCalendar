@@ -12,18 +12,14 @@ struct HomeMainView: View {
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
-
-    private let environment: AppEnvironment
     
     @State private var showCategorySheet: Bool = false
-    @State private var addScheduleSheet: Bool = false
-    @State private var addKind: ScheduleEditKind = .qwer
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
+    @State private var navigationPath: [HomeRoute] = []
     
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
-        self.environment = environment
         _calendarVM = State(initialValue: CalendarViewModel(
             holidayUseCase: environment.holidayUseCase,
             holidayStore: environment.holidayStore
@@ -37,10 +33,23 @@ struct HomeMainView: View {
             migrationStore: environment.userScheduleMigrationStore
         ))
     }
+
+    init(
+        calendarVM: CalendarViewModel,
+        scheduleVM: QWERScheduleViewModel,
+        userVM: UserScheduleViewModel
+    ) {
+        _calendarVM = State(initialValue: calendarVM)
+        _scheduleVM = State(initialValue: scheduleVM)
+        _userVM = State(initialValue: userVM)
+    }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             ZStack {
+                Color.appBackground
+                    .ignoresSafeArea()
+                
                 VStack(spacing: 10) {
                     HomeDateSelectionView(
                         currentMonth: calendarVM.currentMonth,
@@ -50,7 +59,6 @@ struct HomeMainView: View {
                     HomeCalendarOptionView(
                         viewType: viewType,
                         onShowFilter: {
-                            addScheduleSheet = false
                             showCategorySheet = true
                         },
                         onToday: {
@@ -73,13 +81,19 @@ struct HomeMainView: View {
                         CalendarView(
                             calendarVM: calendarVM,
                             scheduleVM: scheduleVM,
-                            userVM: userVM
+                            userVM: userVM,
+                            onEdit: { mode in
+                                navigationPath.append(.editSchedule(mode: mode))
+                            }
                         )
                     case .list:
                         ScheduleListView(
                             calendarVM: calendarVM,
                             scheduleVM: scheduleVM,
-                            userVM: userVM
+                            userVM: userVM,
+                            onEdit: { mode in
+                                navigationPath.append(.editSchedule(mode: mode))
+                            }
                         )
                     }
                 }
@@ -96,18 +110,52 @@ struct HomeMainView: View {
                     isExpanded: $isFabExpanded,
                     onAddQWER: {
                         showCategorySheet = false
-                        addKind = .qwer
-                        addScheduleSheet = true
+                        navigationPath.append(.addSchedule(kind: .qwer))
                     },
                     onAddUser: {
                         showCategorySheet = false
-                        addKind = .user
-                        addScheduleSheet = true
+                        navigationPath.append(.addSchedule(kind: .user))
                     }
                 )
             }
+            .navigationDestination(for: HomeRoute.self) { route in
+                switch route {
+                case .addSchedule(let kind):
+                    if kind == .user {
+                        ScheduleEditView(
+                            viewModel: ScheduleEditViewModel(
+                                kind: .user,
+                                defaultDate: scheduleVM.selectedDate,
+                                qwerVM: scheduleVM,
+                                userVM: userVM,
+                                defaultColor: userVM.schedules.last?.colorHex != nil
+                                    ? Color(hex: userVM.schedules.last!.colorHex)
+                                    : .purple
+                            )
+                        )
+                    } else {
+                        ScheduleEditView(
+                            viewModel: ScheduleEditViewModel(
+                                kind: .qwer,
+                                defaultDate: scheduleVM.selectedDate,
+                                qwerVM: scheduleVM,
+                                userVM: userVM
+                            )
+                        )
+                    }
+                case .editSchedule(let mode):
+                    ScheduleEditView(
+                        viewModel: ScheduleEditViewModel(
+                            mode: mode,
+                            defaultDate: scheduleVM.selectedDate,
+                            qwerVM: scheduleVM,
+                            userVM: userVM
+                        )
+                    )
+                }
+            }
         }
-        .background(Color.appBackground)
+        .toolbar(navigationPath.isEmpty ? .visible : .hidden, for: .tabBar)
         .task {
             let year = Calendar.current.component(.year, from: Date())
             await calendarVM.fetchHolidayOnce(baseYear: year)
@@ -125,33 +173,11 @@ struct HomeMainView: View {
                     scheduleVM.setCategories(selected)
                 }
             )
+            .presentationDragIndicator(.visible)
+            .presentationDetents([.fraction(0.7)])
         }
-        .navigationDestination(isPresented: $addScheduleSheet) {
-            if addKind == .user {
-                ScheduleEditView(
-                    viewModel: ScheduleEditViewModel(
-                        kind: .user,
-                        defaultDate: scheduleVM.selectedDate,
-                        qwerVM: scheduleVM,
-                        userVM: userVM,
-                        defaultColor: userVM.schedules.last?.colorHex != nil
-                            ? Color(hex: userVM.schedules.last!.colorHex)
-                            : .purple
-                    )
-                )
-            } else {
-                ScheduleEditView(
-                    viewModel: ScheduleEditViewModel(
-                        kind: .qwer,
-                        defaultDate: scheduleVM.selectedDate,
-                        qwerVM: scheduleVM,
-                        userVM: userVM
-                    )
-                )
-            }
-        }
-        .onChange(of: addScheduleSheet) { _, newValue in
-            if newValue == false {
+        .onChange(of: navigationPath) { _, newValue in
+            if newValue.isEmpty {
                 // 부분 갱신이 이미 반영되므로 전체 강제 fetch는 피합니다
                 scheduleVM.fetchAllSchedules(force: false)
                 // userVM은 로컬 변경 시 바로 schedules에 반영되므로 fetch 생략 가능
@@ -162,6 +188,11 @@ struct HomeMainView: View {
 }
 
 extension HomeMainView {
+    private enum HomeRoute: Hashable {
+        case addSchedule(kind: ScheduleEditKind)
+        case editSchedule(mode: ScheduleEditMode)
+    }
+
     enum ViewType {
         /// 달력
         case calendar

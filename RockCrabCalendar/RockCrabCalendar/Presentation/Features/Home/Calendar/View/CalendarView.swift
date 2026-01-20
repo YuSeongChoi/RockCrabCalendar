@@ -13,9 +13,9 @@ struct CalendarView: View {
     var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
+    let onEdit: (ScheduleEditMode) -> Void
     
     @State private var dragOffset: CGFloat = 0
-    @State private var editTarget: ScheduleEditMode? = nil
     
     private let lastSyncFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -74,7 +74,7 @@ struct CalendarView: View {
                                         schedules: selectedQWER,
                                         memberColor: QWERStyleMapper.memberColor,
                                         onEdit: { item in
-                                            editTarget = .editQWER(item)
+                                            onEdit(.editQWER(item))
                                         },
                                         embedInScrollView: false
                                     )
@@ -84,7 +84,7 @@ struct CalendarView: View {
                                     UserScheduleListView(
                                         schedules: selectedUser,
                                         onEdit: { item in
-                                            editTarget = .editUser(userVM.latestSchedule(for: item))
+                                            onEdit(.editUser(userVM.latestSchedule(for: item)))
                                         },
                                         embedInScrollView: false
                                     )
@@ -103,22 +103,9 @@ struct CalendarView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.appBackground)
             }
         }
-        .navigationDestination(item: Binding(
-            get: { editTarget },
-            set: { editTarget = $0 }
-        )) { mode in
-            ScheduleEditView(
-                viewModel: ScheduleEditViewModel(
-                    mode: mode,
-                    defaultDate: scheduleVM.selectedDate,
-                    qwerVM: scheduleVM,
-                    userVM: userVM
-                )
-            )
-        }
+        .background(Color.appBackground)
     }
     
     private func combinedEventColors(for date: Date) -> [Color] {

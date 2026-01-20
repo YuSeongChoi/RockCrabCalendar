@@ -2,7 +2,7 @@
 //  ScheduleEditViewModel.swift
 //  RockCrabCalendar
 //
-//  Created by Codex on 2026/01/15.
+//  Created by YuSeongChoi on 2026/01/15.
 //
 
 import Foundation
@@ -65,7 +65,7 @@ final class ScheduleEditViewModel {
         defaultDate: Date = Date(),
         qwerVM: QWERScheduleViewModel,
         userVM: UserScheduleViewModel,
-        defaultColor: Color = .purple,
+        defaultColor: Color = Color(red: 254/255, green: 225/255, blue: 232/255),
         notificationManager: NotificationScheduling = NotificationManager.shared
     ) {
         self.init(

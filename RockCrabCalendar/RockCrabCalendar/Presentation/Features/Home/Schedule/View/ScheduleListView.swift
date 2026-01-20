@@ -13,8 +13,7 @@ struct ScheduleListView: View {
     var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
-    
-    @State private var editTarget: ScheduleEditMode? = nil
+    let onEdit: (ScheduleEditMode) -> Void
     
     private let calendar = Calendar.current
     
@@ -59,7 +58,7 @@ struct ScheduleListView: View {
                                     schedules: qItems,
                                     memberColor: QWERStyleMapper.memberColor,
                                     onEdit: { item in
-                                        editTarget = .editQWER(item)
+                                        onEdit(.editQWER(item))
                                     }
                                 )
                             }
@@ -67,7 +66,7 @@ struct ScheduleListView: View {
                                 UserScheduleListView(
                                     schedules: uItems,
                                     onEdit: { item in
-                                        editTarget = .editUser(userVM.latestSchedule(for: item))
+                                        onEdit(.editUser(userVM.latestSchedule(for: item)))
                                     }
                                 )
                             }
@@ -78,19 +77,8 @@ struct ScheduleListView: View {
                 .transition(.opacity)
             }
         }
-        .navigationDestination(item: Binding(
-            get: { editTarget },
-            set: { editTarget = $0 }
-        )) { mode in
-            ScheduleEditView(
-                viewModel: ScheduleEditViewModel(
-                    mode: mode,
-                    defaultDate: scheduleVM.selectedDate,
-                    qwerVM: scheduleVM,
-                    userVM: userVM
-                )
-            )
-        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.appBackground)
     }
     
     private func monthSchedulesForCurrentMonth() -> [QWERScheduleItem] {
