@@ -99,6 +99,12 @@ extension Color {
             trait.userInterfaceStyle == .dark ? .systemGray5 : .systemGray6
         })
     }
+    
+    static var textColor: Color {
+        Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark ? .white : .black
+        })
+    }
 
     static var pillBackground: Color {
         cardBackground
