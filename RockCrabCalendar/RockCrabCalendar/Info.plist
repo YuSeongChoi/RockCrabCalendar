@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>HolidayAPIKey</key>
+	<string>$(HOLIDAY_API_KEY)</string>
 	<key>NSAllowsArbitraryLoads</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -13,7 +15,5 @@
 	<string>$(QWER_CHANNEL_ID)</string>
 	<key>YouTubeAPIKey</key>
 	<string>$(YOUTUBE_API_KEY)</string>
-	<key>HolidayAPIKey</key>
-	<string>$(HOLIDAY_API_KEY)</string>
 </dict>
 </plist>
