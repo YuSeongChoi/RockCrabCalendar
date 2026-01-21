@@ -17,13 +17,34 @@
 
     },
     "개인 스케줄" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Private Schedule"
+          }
+        }
+      }
     },
     "기본 정보" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic Info"
+          }
+        }
+      }
     },
     "날짜" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        }
+      }
     },
     "내보내기 실패" : {
 
@@ -32,19 +53,54 @@
 
     },
     "멤버" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Member"
+          }
+        }
+      }
     },
     "반복" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "repeat"
+          }
+        }
+      }
     },
     "반복 종료" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "repeat end"
+          }
+        }
+      }
     },
     "반복 종류" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "repeat type"
+          }
+        }
+      }
     },
     "분류" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "category"
+          }
+        }
+      }
     },
     "분류 선택" : {
 
