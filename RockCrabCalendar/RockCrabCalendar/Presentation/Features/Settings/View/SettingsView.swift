@@ -23,27 +23,36 @@ struct SettingsView: View {
     }
 
     var body: some View {
-        VStack {
-            Form {
-                Section("일정") {
-                    Button {
-                        exportSchedules()
-                    } label: {
-                        HStack {
-                            Text("전체 일정 내보내기 (ICS)")
-                            Spacer()
-                            if isExporting {
-                                ProgressView()
+        ZStack {
+            Color.appBackground
+                .ignoresSafeArea()
+            
+            VStack {
+                Form {
+                    Section("일정") {
+                        Button {
+                            exportSchedules()
+                        } label: {
+                            HStack {
+                                Text("전체 일정 내보내기 (ICS)")
+                                Spacer()
+                                if isExporting {
+                                    ProgressView()
+                                }
                             }
                         }
+                        .padding()
+                        .disabled(isExporting)
                     }
-                    .disabled(isExporting)
+                    .background(Color.cardBackground)
+                    .cornerRadius(15)
                 }
+                .scrollContentBackground(.hidden)
             }
-            .foregroundStyle(Color.textColor)
-            .navigationTitle("설정")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .foregroundStyle(Color.textColor)
+        .navigationTitle("설정")
+        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showShareSheet) {
             if let url = exportURL {
                 ActivityView(activityItems: [url])
