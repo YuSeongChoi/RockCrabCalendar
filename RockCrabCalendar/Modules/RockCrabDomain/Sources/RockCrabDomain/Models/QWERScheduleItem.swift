@@ -803,6 +803,14 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "2026 D AWARDS",
+            date: simpleDateFormatter.date(from: "2026-02-11")!,
+            time: "18:00",
+            place: "고려대학교 화정체육관",
+            members: [.Q, .W, .E, .R],
+            category: .award
+        ),
+        QWERScheduleItem(
             title: "WORLD TOUR TAIPEI",
             date: simpleDateFormatter.date(from: "2026-02-14")!,
             time: "",

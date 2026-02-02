@@ -266,3 +266,12 @@ extension QWERScheduleViewModel {
         activeCategories.contains(item.category)
     }
 }
+
+// MARK: - 스태틱 일정 업로드
+extension QWERScheduleViewModel {
+    func uploadDefaultQWERSchedules() {
+        QWERScheduleItem.schedules.forEach {
+            addSchedule($0)
+        }
+    }
+}
