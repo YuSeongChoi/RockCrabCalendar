@@ -811,6 +811,30 @@ extension QWERScheduleItem {
             category: .award
         ),
         QWERScheduleItem(
+            title: "QWER WORLD TOUR(ROCKATION - HOMECOMING) 팬클럽 선예매 사전 인증 시작",
+            date: simpleDateFormatter.date(from: "2026-02-09")!,
+            time: "14:00",
+            place: "멜론티켓",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER WORLD TOUR(ROCKATION - HOMECOMING) 선예매",
+            date: simpleDateFormatter.date(from: "2026-02-11")!,
+            time: "20:00",
+            place: "멜론티켓",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER WORLD TOUR(ROCKATION - HOMECOMING) 일반예매 시작",
+            date: simpleDateFormatter.date(from: "2026-02-13")!,
+            time: "20:00",
+            place: "멜론티켓",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "WORLD TOUR TAIPEI",
             date: simpleDateFormatter.date(from: "2026-02-14")!,
             time: "",
@@ -855,6 +879,30 @@ extension QWERScheduleItem {
             date: simpleDateFormatter.date(from: "2026-02-28")!,
             time: "",
             place: "The Theatre at Mediacorp",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER WORLD TOUR(ROCKATION - HOMECOMING)",
+            date: simpleDateFormatter.date(from: "2026-03-20")!,
+            time: "19:00",
+            place: "티켓링크 라이브 아레나(올림픽공원 핸드볼경기장)",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER WORLD TOUR(ROCKATION - HOMECOMING)",
+            date: simpleDateFormatter.date(from: "2026-03-21")!,
+            time: "17:00",
+            place: "티켓링크 라이브 아레나(올림픽공원 핸드볼경기장)",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER WORLD TOUR(ROCKATION - HOMECOMING)",
+            date: simpleDateFormatter.date(from: "2026-03-22")!,
+            time: "16:00",
+            place: "티켓링크 라이브 아레나(올림픽공원 핸드볼경기장)",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
