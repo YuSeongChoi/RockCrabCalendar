@@ -21,3 +21,6 @@ xcuserdata/
 
 # 기타 민감정보
 *.env
+
+# Agent instructions
+AGENTS.md
