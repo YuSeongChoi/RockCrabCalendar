@@ -14,7 +14,7 @@ jobs:
   build-and-test:
     name: Build and Unit Tests
     runs-on: macos-14
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -28,36 +28,8 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: Create Secrets.xcconfig
-        run: |
-          mkdir -p RockCrabCalendar/RockCrabCalendar/Config
-          cat > RockCrabCalendar/RockCrabCalendar/Config/Secrets.xcconfig <<EOF
-          YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
-          QWER_CHANNEL_ID=${{ secrets.QWER_CHANNEL_ID }}
-          HOLIDAY_API_KEY=${{ secrets.HOLIDAY_API_KEY }}
-          EOF
+      - name: Test RockCrabShared module
+        run: swift test --package-path RockCrabCalendar/Modules/RockCrabShared
 
-      - name: Build for testing
-        run: >
-          xcodebuild
-          -project RockCrabCalendar/RockCrabCalendar.xcodeproj
-          -scheme RockCrabCalendar
-          -only-testing:RockCrabCalendarUnitTests
-          -skip-testing:RockCrabCalendarUITests
-          -destination 'platform=iOS Simulator,name=iPhone 16'
-          -skipPackagePluginValidation
-          ONLY_ACTIVE_ARCH=YES
-          build-for-testing
-
-      - name: Run unit tests (without rebuilding)
-        run: >
-          xcodebuild
-          -project RockCrabCalendar/RockCrabCalendar.xcodeproj
-          -scheme RockCrabCalendar
-          -only-testing:RockCrabCalendarUnitTests
-          -skip-testing:RockCrabCalendarUITests
-          -destination 'platform=iOS Simulator,name=iPhone 16'
-          -skipPackagePluginValidation
-          -parallel-testing-enabled NO
-          ONLY_ACTIVE_ARCH=YES
-          test-without-building
+      - name: Test RockCrabDomain module
+        run: swift test --package-path RockCrabCalendar/Modules/RockCrabDomain
