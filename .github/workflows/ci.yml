@@ -28,7 +28,7 @@ jobs:
           xcodebuild
           -project RockCrabCalendar/RockCrabCalendar.xcodeproj
           -scheme RockCrabCalendar
-          -destination 'platform=iOS Simulator,name=iPhone 15'
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
           build
 
       - name: Run unit tests
@@ -36,5 +36,5 @@ jobs:
           xcodebuild
           -project RockCrabCalendar/RockCrabCalendar.xcodeproj
           -scheme RockCrabCalendarUnitTests
-          -destination 'platform=iOS Simulator,name=iPhone 15'
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
           test
