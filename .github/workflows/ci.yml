@@ -23,6 +23,15 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      - name: Create Secrets.xcconfig
+        run: |
+          mkdir -p RockCrabCalendar/RockCrabCalendar/Config
+          cat > RockCrabCalendar/RockCrabCalendar/Config/Secrets.xcconfig <<EOF
+          YOUTUBE_API_KEY=${{ secrets.YOUTUBE_API_KEY }}
+          QWER_CHANNEL_ID=${{ secrets.QWER_CHANNEL_ID }}
+          HOLIDAY_API_KEY=${{ secrets.HOLIDAY_API_KEY }}
+          EOF
+
       - name: Build app
         run: >
           xcodebuild
