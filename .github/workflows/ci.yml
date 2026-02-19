@@ -46,6 +46,7 @@ jobs:
           -skip-testing:RockCrabCalendarUITests
           -destination 'platform=iOS Simulator,name=iPhone 16'
           -skipPackagePluginValidation
+          ONLY_ACTIVE_ARCH=YES
           build-for-testing
 
       - name: Run unit tests (without rebuilding)
@@ -58,4 +59,5 @@ jobs:
           -destination 'platform=iOS Simulator,name=iPhone 16'
           -skipPackagePluginValidation
           -parallel-testing-enabled NO
+          ONLY_ACTIVE_ARCH=YES
           test-without-building
