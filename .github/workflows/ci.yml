@@ -13,12 +13,17 @@ concurrency:
 jobs:
   build-and-test:
     name: Build and Unit Tests
-    runs-on: macos-15
+    runs-on: macos-14
     timeout-minutes: 30
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Select Xcode 16.2
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "16.2"
 
       - name: Show Xcode version
         run: xcodebuild -version
@@ -39,7 +44,7 @@ jobs:
           -scheme RockCrabCalendar
           -only-testing:RockCrabCalendarUnitTests
           -skip-testing:RockCrabCalendarUITests
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+          -destination 'platform=iOS Simulator,name=iPhone 16'
           -skipPackagePluginValidation
           build-for-testing
 
@@ -50,7 +55,7 @@ jobs:
           -scheme RockCrabCalendar
           -only-testing:RockCrabCalendarUnitTests
           -skip-testing:RockCrabCalendarUITests
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+          -destination 'platform=iOS Simulator,name=iPhone 16'
           -skipPackagePluginValidation
           -parallel-testing-enabled NO
           test-without-building
