@@ -11,7 +11,7 @@ let package = Package(
         .package(path: "../RockCrabShared"),
         .package(path: "../RockCrabDomain"),
         .package(url: "https://github.com/Alamofire/Alamofire", from: "5.9.0"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk", exact: "12.7.0")
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", exact: "11.15.0")
     ],
     targets: [
         .target(
