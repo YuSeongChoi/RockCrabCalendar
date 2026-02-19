@@ -47,6 +47,8 @@ jobs:
           -project RockCrabCalendar/RockCrabCalendar.xcodeproj
           -scheme RockCrabCalendar
           -only-testing:RockCrabCalendarUnitTests
+          -skip-testing:RockCrabCalendarUITests
           -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
           -skipPackagePluginValidation
+          -parallel-testing-enabled NO
           test
