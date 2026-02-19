@@ -37,7 +37,7 @@ jobs:
           xcodebuild
           -project RockCrabCalendar/RockCrabCalendar.xcodeproj
           -scheme RockCrabCalendar
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5,arch=x86_64'
           -skipPackagePluginValidation
           ARCHS=x86_64
           ONLY_ACTIVE_ARCH=YES
@@ -50,7 +50,7 @@ jobs:
           -scheme RockCrabCalendar
           -only-testing:RockCrabCalendarUnitTests
           -skip-testing:RockCrabCalendarUITests
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5,arch=x86_64'
           -skipPackagePluginValidation
           -parallel-testing-enabled NO
           ARCHS=x86_64
