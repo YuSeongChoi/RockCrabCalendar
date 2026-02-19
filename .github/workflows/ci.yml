@@ -37,7 +37,7 @@ jobs:
           xcodebuild
           -project RockCrabCalendar/RockCrabCalendar.xcodeproj
           -scheme RockCrabCalendar
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
           -skipPackagePluginValidation
           build
 
@@ -48,7 +48,7 @@ jobs:
           -scheme RockCrabCalendar
           -only-testing:RockCrabCalendarUnitTests
           -skip-testing:RockCrabCalendarUITests
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest'
+          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
           -skipPackagePluginValidation
           -parallel-testing-enabled NO
           test
