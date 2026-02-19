@@ -48,6 +48,7 @@
 		5D5115B92F1E2FB800545259 /* ICSExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115B82F1E2FB800545259 /* ICSExporter.swift */; };
 		5D5115BD2F1E2FCB00545259 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115BC2F1E2FCB00545259 /* ActivityView.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
+		5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5DDA57DD2F171A7600C8D2A1 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		5DDA57DE2F171A7600C8D2A1 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
@@ -227,6 +228,7 @@
 				B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */,
 				5D00F0852EE9400900B3E1E5 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				5D00F0832EE9400900B3E1E5 /* FirebaseAnalyticsCore in Frameworks */,
+				5D68DCF42E39E8B400A69D92 /* FirebaseFirestore in Frameworks */,
 				5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,6 +608,7 @@
 			name = RockCrabCalendar;
 			packageProductDependencies = (
 				5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */,
+				5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */,
 				5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */,
 				5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */,
 				5D00F0822EE9400900B3E1E5 /* FirebaseAnalyticsCore */,
@@ -1223,7 +1226,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 11.15.0;
+				minimumVersion = 12.0.0;
 			};
 		};
 		5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -1264,6 +1267,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		5D68DCF32E39E8B400A69D92 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;

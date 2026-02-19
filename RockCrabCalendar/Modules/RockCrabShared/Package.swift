@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "RockCrabShared",
-    platforms: [.iOS(.v17), .macOS(.v13)],
+    platforms: [.iOS(.v17)],
     products: [
         .library(name: "RockCrabShared", targets: ["RockCrabShared"])
     ],
@@ -11,11 +11,6 @@ let package = Package(
         .target(
             name: "RockCrabShared",
             path: "Sources/RockCrabShared"
-        ),
-        .testTarget(
-            name: "RockCrabSharedTests",
-            dependencies: ["RockCrabShared"],
-            path: "Tests/RockCrabSharedTests"
         )
     ]
 )
