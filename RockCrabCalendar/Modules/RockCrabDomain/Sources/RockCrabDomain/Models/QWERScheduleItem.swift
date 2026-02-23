@@ -906,5 +906,21 @@ extension QWERScheduleItem {
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
+        QWERScheduleItem(
+            title: "체리 블라썸 뮤직 페스티벌",
+            date: simpleDateFormatter.date(from: "2026-04-05")!,
+            time: "14:00",
+            place: "진해공실운동장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "JJ50th Anniversary Fest 2026",
+            date: simpleDateFormatter.date(from: "2026-04-18")!,
+            time: "15:00",
+            place: "피아 아레나 MM",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        )
     ]
 }
