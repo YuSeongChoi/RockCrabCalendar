@@ -63,46 +63,89 @@ struct RockCrabCalendarApp: App {
             useCase: environment.userScheduleUseCase,
             migrationStore: environment.userScheduleMigrationStore
         ))
+        AppStartupCoordinator().start()
+    }
+}
 
-        // 1) 전역 네비게이션 바 Appearance 구성
+private struct AppStartupCoordinator {
+    private let appearanceConfigurator: NavigationBarAppearanceConfiguring
+    private let fontRegistrar: AppFontRegistering
+    private let notificationRequester: NotificationPermissionRequesting
+
+    init(
+        appearanceConfigurator: NavigationBarAppearanceConfiguring = NavigationBarAppearanceConfigurator(),
+        fontRegistrar: AppFontRegistering = RockTurtleFontRegistrar(),
+        notificationRequester: NotificationPermissionRequesting = UserNotificationPermissionRequester()
+    ) {
+        self.appearanceConfigurator = appearanceConfigurator
+        self.fontRegistrar = fontRegistrar
+        self.notificationRequester = notificationRequester
+    }
+
+    @MainActor
+    func start() {
+        appearanceConfigurator.configure()
+        fontRegistrar.register()
+        notificationRequester.request()
+    }
+}
+
+private protocol NavigationBarAppearanceConfiguring {
+    @MainActor
+    func configure()
+}
+
+private struct NavigationBarAppearanceConfigurator: NavigationBarAppearanceConfiguring {
+    @MainActor
+    func configure() {
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground() // 불투명 배경 (투명 스크롤 이슈 방지)
+        appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .white
         appearance.shadowColor = .clear
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.label,
-                                          .font: UIFont.boldSystemFont(ofSize: 17)]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.label,
+            .font: UIFont.boldSystemFont(ofSize: 17)
+        ]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.label]
 
-        // 2) Back indicator 아이콘 명시적으로 지정 (SF Symbol 추천)
         if let chevron = UIImage(systemName: "chevron.left")?.withRenderingMode(.alwaysOriginal) {
-            // alignment inset이 필요하면 여기서 조절
             let insetChevron = chevron.withAlignmentRectInsets(.init(top: 0, left: -2, bottom: 0, right: 0))
             appearance.setBackIndicatorImage(insetChevron, transitionMaskImage: insetChevron)
         }
 
-        // 3) Back 버튼 타이틀 스타일(전역) — 완전 제거는 per-view .minimal 권장
         let back = UIBarButtonItemAppearance(style: .plain)
         back.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
         appearance.backButtonAppearance = back
 
-        // 4) 모든 상태에 동일 적용
         let navBar = UINavigationBar.appearance()
         navBar.standardAppearance = appearance
         navBar.scrollEdgeAppearance = appearance
         navBar.compactAppearance = appearance
-        navBar.tintColor = .label // back 아이콘/바튼 색
+        navBar.tintColor = .label
         navBar.isTranslucent = false
+    }
+}
 
+private protocol AppFontRegistering {
+    func register()
+}
+
+private struct RockTurtleFontRegistrar: AppFontRegistering {
+    func register() {
         do {
             try RockTurtleCalendarFont.register()
         } catch {
             AppLogger.error("폰트 등록 실패: \(error.localizedDescription)", category: .app)
         }
-        
-        requestNotificationPermission()
     }
-    
-    private func requestNotificationPermission() {
+}
+
+private protocol NotificationPermissionRequesting {
+    func request()
+}
+
+private struct UserNotificationPermissionRequester: NotificationPermissionRequesting {
+    func request() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
                 AppLogger.error("알림 권한 요청 실패 : \(error.localizedDescription)", category: .notification)
