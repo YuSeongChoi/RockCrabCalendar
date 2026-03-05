@@ -1,14 +1,6 @@
-//
-//  YouTubeDecodingTests.swift
-//  RockCrabCalendar
-//
-//  Created by YuSeongChoi on 9/9/25.
-//
-
 import XCTest
-@testable import RockCrabCalendar
-import RockCrabData
 import RockCrabDomain
+@testable import RockCrabData
 
 final class YouTubeDecodingTests: XCTestCase {
     let json = """
@@ -49,7 +41,7 @@ final class YouTubeDecodingTests: XCTestCase {
     func testdecodeSample() throws {
         let dto = try JSONDecoder.youtube.decode(YouTubeSearchListDTO.self, from: json)
         let (videos, token) = YouTubeSearchMapper.map(dto)
-        
+
         XCTAssertEqual(token, "CAUQAA")
         XCTAssertEqual(videos.count, 2)
         XCTAssertEqual(videos.first?.id, "VID_A")

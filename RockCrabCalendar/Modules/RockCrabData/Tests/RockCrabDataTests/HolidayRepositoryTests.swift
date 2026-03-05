@@ -1,15 +1,7 @@
-//
-//  HolidayRepositoryTests.swift
-//  RockCrabCalendarUnitTests
-//
-//  Created by YuSeongChoi on 2025/01/09.
-//
-
 import XCTest
-@testable import RockCrabCalendar
 import RockCrabDomain
 import RockCrabShared
-import RockCrabData
+@testable import RockCrabData
 
 final class HolidayRepositoryTests: XCTestCase {
     func testFetchHolidaysReturnsNilWhenCacheIsValid() async throws {
@@ -45,7 +37,6 @@ final class HolidayRepositoryTests: XCTestCase {
     }
 }
 
-// MARK: - Test doubles
 final class MockHolidayCacheDataSource: HolidayCacheDataSource {
     var baseYear: Int?
     var cachedYears: Set<Int> = []

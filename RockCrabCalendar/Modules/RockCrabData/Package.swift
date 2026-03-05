@@ -3,7 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "RockCrabData",
-    platforms: [.iOS(.v17)],
+    platforms: [
+        .iOS(.v17),
+        .macOS(.v11)
+    ],
     products: [
         .library(name: "RockCrabData", targets: ["RockCrabData"])
     ],
@@ -23,6 +26,15 @@ let package = Package(
                 .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")
             ],
             path: "Sources/RockCrabData"
+        ),
+        .testTarget(
+            name: "RockCrabDataTests",
+            dependencies: [
+                "RockCrabData",
+                "RockCrabDomain",
+                "RockCrabShared"
+            ],
+            path: "Tests/RockCrabDataTests"
         )
     ]
 )
