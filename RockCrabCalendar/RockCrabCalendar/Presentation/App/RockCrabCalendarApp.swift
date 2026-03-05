@@ -12,7 +12,7 @@ import RockCrabShared
 @main
 struct RockCrabCalendarApp: App {
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
-    private let environment = AppEnvironment.live()
+    private let environment: AppEnvironment
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
@@ -48,6 +48,9 @@ struct RockCrabCalendarApp: App {
     
     @MainActor
     init() {
+        let runtimeMode = AppEnvironment.RuntimeMode.resolved()
+        self.environment = AppEnvironment.configured(mode: runtimeMode)
+
         _calendarVM = State(initialValue: CalendarViewModel(
             holidayUseCase: environment.holidayUseCase,
             holidayStore: environment.holidayStore
@@ -89,8 +92,6 @@ struct RockCrabCalendarApp: App {
         navBar.compactAppearance = appearance
         navBar.tintColor = .label // back 아이콘/바튼 색
         navBar.isTranslucent = false
-
-        // (선택) iOS 17 네비 바 배경과 동기화하고 싶으면, 뷰단에서 .toolbarBackground(...)도 같이 써줘
 
         do {
             try RockTurtleCalendarFont.register()

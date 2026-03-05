@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  module-tests:
+    name: Module Tests
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test shared/domain/data modules
+        run: make test-modules
+
+  app-unit-tests:
+    name: App Unit Tests
+    runs-on: macos-15
+    needs: module-tests
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test app unit target (skip if empty)
+        run: make test-app

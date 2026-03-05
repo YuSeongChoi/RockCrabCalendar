@@ -1,14 +1,6 @@
-//
-//  YouTubeMapperTests.swift
-//  RockCrabCalendarUnitTests
-//
-//  Created by YuSeongChoi on 2024/11/24.
-//
-
 import XCTest
-@testable import RockCrabCalendar
-import RockCrabData
 import RockCrabDomain
+@testable import RockCrabData
 
 final class YouTubeMapperTests: XCTestCase {
     func testThumbnailPriorityHighOverDefault() throws {
@@ -41,13 +33,13 @@ final class YouTubeMapperTests: XCTestCase {
                 )
             ]
         )
-        
+
         let (videos, token) = YouTubeSearchMapper.map(dto)
         XCTAssertNil(token)
         XCTAssertEqual(videos.count, 1)
         XCTAssertEqual(videos.first?.thumbnailURL?.absoluteString, "https://high.jpg")
     }
-    
+
     func testNextPageTokenNilWhenMissing() throws {
         let dto = YouTubeSearchListDTO(
             kind: "youtube#searchListResponse",
@@ -58,7 +50,7 @@ final class YouTubeMapperTests: XCTestCase {
             pageInfo: .init(totalResults: 0, resultsPerPage: 0),
             items: []
         )
-        
+
         let (videos, token) = YouTubeSearchMapper.map(dto)
         XCTAssertTrue(videos.isEmpty)
         XCTAssertNil(token)

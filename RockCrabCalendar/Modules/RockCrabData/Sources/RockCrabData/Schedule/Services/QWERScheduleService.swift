@@ -17,7 +17,7 @@ public actor QWERScheduleService: ScheduleServiceProtocol, QWERScheduleRepositor
 
     // MARK: - Init
     public init(
-        remote: QWERScheduleRemoteDataSource = FirestoreQWERScheduleRemoteDataSource(),
+        remote: QWERScheduleRemoteDataSource = NoopQWERScheduleRemoteDataSource(),
         local: QWERScheduleLocalDataSource = UserDefaultsQWERScheduleLocalDataSource()
     ) {
         self.remote = remote
@@ -26,7 +26,7 @@ public actor QWERScheduleService: ScheduleServiceProtocol, QWERScheduleRepositor
 
     // Convenience for test injection (local store only).
     public init(userDefaults: UserDefaults) {
-        self.remote = FirestoreQWERScheduleRemoteDataSource()
+        self.remote = NoopQWERScheduleRemoteDataSource()
         self.local = UserDefaultsQWERScheduleLocalDataSource(userDefaults: userDefaults)
     }
 

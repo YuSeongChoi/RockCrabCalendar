@@ -41,9 +41,23 @@
 >   ```bash
 >   git clone https://github.com/YuSeongChoi/RockCrabCalendar.git
 >   cd RockCrabCalendar
->   open RockCrabCalendar.xcodeproj
+>   make open
 >   ```
-> - Xcode에서 빌드 후 시뮬레이터 또는 실제 디바이스에서 실행 가능
+> - CLI 빌드/테스트:
+>   ```bash
+>   make build
+>   # 1) 모듈 테스트(권장/CI 1차 게이트)
+>   make test-modules
+>   # 2) 앱 유닛 테스트
+>   make test-app
+>   # 필요 시
+>   make test-ui
+>   make test-all
+>   ```
+> - 시뮬레이터 변경 예시:
+>   ```bash
+>   make test-app DESTINATION='platform=iOS Simulator,name=iPhone 17,OS=latest'
+>   ```
 > - 아키텍처 개요: `RockCrabCalendar/ARCHITECTURE.md`
 
 ---

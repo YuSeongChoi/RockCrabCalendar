@@ -11,6 +11,23 @@ import RockCrabData
 
 // Central DI container for assembling live dependencies.
 final class AppEnvironment: ObservableObject {
+    enum RuntimeMode: String {
+        case live
+        case localOnly = "local-only"
+        case mock
+
+        static func resolved(
+            processInfo: ProcessInfo = .processInfo
+        ) -> RuntimeMode {
+            let arguments = Set(processInfo.arguments)
+            if arguments.contains("--mock") { return .mock }
+            if arguments.contains("--local-only") { return .localOnly }
+
+            let env = processInfo.environment["APP_ENV"]?.lowercased()
+            return RuntimeMode(rawValue: env ?? "") ?? .live
+        }
+    }
+
     let qwerScheduleUseCase: QWERScheduleUseCase
     let userScheduleUseCase: UserScheduleUseCase
     let holidayUseCase: HolidayUseCase
@@ -38,12 +55,33 @@ final class AppEnvironment: ObservableObject {
         self.userScheduleMigrationStore = userScheduleMigrationStore
     }
 
-    // Live composition root (single place to wire concrete implementations).
+    // Composition root with runtime-selectable remote strategy.
+    static func configured(
+        mode: RuntimeMode = .resolved(),
+        userDefaults: UserDefaults = .standard
+    ) -> AppEnvironment {
+        let qwerRemote: QWERScheduleRemoteDataSource
+        switch mode {
+        case .live:
+            qwerRemote = FirestoreQWERScheduleRemoteDataSource()
+        case .localOnly, .mock:
+            qwerRemote = NoopQWERScheduleRemoteDataSource()
+        }
+        return compose(qwerRemote: qwerRemote, userDefaults: userDefaults)
+    }
+
+    // Backward-compatible entry point.
     static func live(
         userDefaults: UserDefaults = .standard
     ) -> AppEnvironment {
+        configured(mode: .live, userDefaults: userDefaults)
+    }
+
+    private static func compose(
+        qwerRemote: QWERScheduleRemoteDataSource,
+        userDefaults: UserDefaults
+    ) -> AppEnvironment {
         // DataSources
-        let qwerRemote = FirestoreQWERScheduleRemoteDataSource()
         let qwerLocal = UserDefaultsQWERScheduleLocalDataSource(userDefaults: userDefaults)
         let userLocal = UserDefaultsUserScheduleLocalDataSource(userDefaults: userDefaults)
         let holidayRemote = HolidayAPIRemoteDataSource()

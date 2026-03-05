@@ -1,21 +1,13 @@
-//
-//  QWERScheduleServiceTests.swift
-//  RockCrabCalendarUnitTests
-//
-//  Created by YuSeongChoi on 2024/11/24.
-//
-
 import XCTest
-@testable import RockCrabCalendar
 import RockCrabDomain
-import RockCrabData
+@testable import RockCrabData
 
 final class QWERScheduleServiceTests: XCTestCase {
     private var suite: UserDefaults!
     private var service: QWERScheduleService!
     private var remote: MockQWERScheduleRemoteDataSource!
     private let sampleDate = Date(timeIntervalSince1970: 0)
-    
+
     override func setUp() {
         super.setUp()
         suite = UserDefaults(suiteName: "QWERScheduleServiceTests")
@@ -24,7 +16,7 @@ final class QWERScheduleServiceTests: XCTestCase {
         let local = UserDefaultsQWERScheduleLocalDataSource(userDefaults: suite)
         service = QWERScheduleService(remote: remote, local: local)
     }
-    
+
     override func tearDown() {
         suite.removePersistentDomain(forName: "QWERScheduleServiceTests")
         suite = nil
@@ -32,7 +24,7 @@ final class QWERScheduleServiceTests: XCTestCase {
         remote = nil
         super.tearDown()
     }
-    
+
     private func makeSchedule(title: String = "테스트") -> QWERScheduleItem {
         QWERScheduleItem(
             title: title,
@@ -47,40 +39,40 @@ final class QWERScheduleServiceTests: XCTestCase {
             category: .other
         )
     }
-    
+
     func testSaveLocalAndFetchLocalOnly() async {
         let item = makeSchedule()
         await service.saveLocalSchedule(item)
-        
+
         let locals = await service.fetchLocalOnly()
         XCTAssertEqual(locals.count, 1)
         XCTAssertEqual(locals.first?.title, item.title)
     }
-    
+
     func testUpdateLocalReplacesByID() async {
         var item = makeSchedule(title: "원본")
         await service.saveLocalSchedule(item)
-        
+
         item.title = "수정됨"
         await service.updateLocalSchedule(item)
-        
+
         let locals = await service.fetchLocalOnly()
         XCTAssertEqual(locals.first?.title, "수정됨")
     }
-    
+
     func testDeleteLocalRemovesItem() async {
         let item = makeSchedule(title: "삭제 대상")
         await service.saveLocalSchedule(item)
-        
+
         await service.deleteLocalSchedule(item)
         let locals = await service.fetchLocalOnly()
         XCTAssertTrue(locals.isEmpty)
     }
-    
+
     func testIsLocalScheduleMatchesStored() async {
         let item = makeSchedule()
         await service.saveLocalSchedule(item)
-        
+
         let isLocal = await service.isLocalSchedule(item)
         XCTAssertTrue(isLocal)
     }
@@ -99,7 +91,6 @@ final class QWERScheduleServiceTests: XCTestCase {
     }
 }
 
-// MARK: - Test doubles
 actor MockQWERScheduleRemoteDataSource: QWERScheduleRemoteDataSource {
     private var schedules: [QWERScheduleItem] = []
 

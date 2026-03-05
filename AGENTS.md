@@ -38,21 +38,32 @@
   - `RockCrabCalendar/Modules/RockCrabDomain` (domain models, use cases, protocols).
   - `RockCrabCalendar/Modules/RockCrabData` (repositories, data sources, DTOs, API clients).
 - Tests: `RockCrabCalendar/RockCrabCalendarUnitTests/` and `RockCrabCalendar/RockCrabCalendarUITests/`.
+- Module tests: `RockCrabCalendar/Modules/*/Tests/`.
 - Media assets for README: `RockCrabCalendar/media/`.
 
 ## Build, Test, and Development Commands
-- Open the project: `open RockCrabCalendar/RockCrabCalendar.xcodeproj`.
+- Open the project: `make open`.
 - Build (CLI):
   ```bash
-  xcodebuild -scheme RockCrabCalendar -destination 'platform=iOS Simulator,name=iPhone 15' build
+  make build
   ```
 - Run unit tests:
   ```bash
-  xcodebuild -scheme RockCrabCalendarUnitTests -destination 'platform=iOS Simulator,name=iPhone 15' test
+  make test-modules   # SPM modules (Shared -> Domain -> Data)
+  make test-app       # App unit tests
   ```
 - UI tests (if needed):
   ```bash
-  xcodebuild -scheme RockCrabCalendarUITests -destination 'platform=iOS Simulator,name=iPhone 15' test
+  make test-ui
+  ```
+- Run all tests:
+  ```bash
+  make test-all
+  ```
+- List available schemes/destinations:
+  ```bash
+  make list-schemes
+  make list-destinations
   ```
 
 ## Coding Style & Naming Conventions
@@ -65,7 +76,9 @@
 ## Testing Guidelines
 - Framework: XCTest.
 - Test files end with `Tests.swift`; test classes use `*Tests` naming.
-- Prefer unit tests in `RockCrabCalendarUnitTests/`; keep UI tests minimal.
+- Prefer pure logic tests in each SPM module under `Modules/*/Tests`.
+- Keep `RockCrabCalendarUnitTests/` for app-level composition/feature tests.
+- Keep UI tests minimal.
 
 ## Commit & Pull Request Guidelines
 - Commit messages typically follow `refactor: ...` style (keep type prefix + short summary).
