@@ -15,6 +15,7 @@ xcuserdata/
 # SwiftPM
 .swiftpm/
 .build/
+.xcode/
 
 # Logs
 *.log
