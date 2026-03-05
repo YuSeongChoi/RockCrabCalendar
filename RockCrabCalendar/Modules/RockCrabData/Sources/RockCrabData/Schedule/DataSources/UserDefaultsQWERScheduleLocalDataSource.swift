@@ -31,11 +31,13 @@ public actor UserDefaultsQWERScheduleLocalDataSource: QWERScheduleLocalDataSourc
         let cal = Calendar.current
         return localMap.values.contains(where: { s in
             s.title == item.title &&
-            s.time == item.time &&
             s.place == item.place &&
             cal.isDate(s.date, inSameDayAs: item.date) &&
             s.members == item.members &&
-            s.category == item.category
+            s.category == item.category &&
+            s.startTime == item.startTime &&
+            s.endTime == item.endTime &&
+            s.isAllDay == item.isAllDay
         })
     }
 
@@ -58,11 +60,13 @@ public actor UserDefaultsQWERScheduleLocalDataSource: QWERScheduleLocalDataSourc
             let cal = Calendar.current
             if let key = localMap.first(where: { _, s in
                 s.title == item.title &&
-                s.time == item.time &&
                 s.place == item.place &&
                 cal.isDate(s.date, inSameDayAs: item.date) &&
                 s.members == item.members &&
-                s.category == item.category
+                s.category == item.category &&
+                s.startTime == item.startTime &&
+                s.endTime == item.endTime &&
+                s.isAllDay == item.isAllDay
             })?.key {
                 localMap.removeValue(forKey: key)
                 localMap[item.id] = item
@@ -91,11 +95,13 @@ public actor UserDefaultsQWERScheduleLocalDataSource: QWERScheduleLocalDataSourc
             let cal = Calendar.current
             if let key = localMap.first(where: { _, s in
                 s.title == item.title &&
-                s.time == item.time &&
                 s.place == item.place &&
                 cal.isDate(s.date, inSameDayAs: item.date) &&
                 s.members == item.members &&
-                s.category == item.category
+                s.category == item.category &&
+                s.startTime == item.startTime &&
+                s.endTime == item.endTime &&
+                s.isAllDay == item.isAllDay
             })?.key {
                 localMap.removeValue(forKey: key)
                 #if DEBUG

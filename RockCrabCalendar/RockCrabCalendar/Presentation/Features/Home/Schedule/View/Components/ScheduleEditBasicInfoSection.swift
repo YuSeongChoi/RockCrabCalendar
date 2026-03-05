@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabDomain
 
 struct ScheduleEditBasicInfoSection: View {
     @Binding var title: String
@@ -13,6 +14,7 @@ struct ScheduleEditBasicInfoSection: View {
     @Binding var isAllDay: Bool
     @Binding var startTime: Date?
     @Binding var endTime: Date?
+    var qwerTimeStatus: Binding<QWERScheduleItem.TimeStatus>?
     @Binding var shouldNotify: Bool
     @Binding var place: String
 
@@ -39,18 +41,53 @@ struct ScheduleEditBasicInfoSection: View {
             TextField("제목", text: $title)
             DatePicker("날짜", selection: $date, displayedComponents: .date)
                 .datePickerStyle(.compact)
-            Toggle("하루종일", isOn: $isAllDay)
 
-            if !isAllDay {
-                DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
-                DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
-                Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+            if let qwerTimeStatus {
+                Picker("시간", selection: qwerTimeStatus) {
+                    Text("하루종일").tag(QWERScheduleItem.TimeStatus.allDay)
+                    Text("시간 있음").tag(QWERScheduleItem.TimeStatus.timed)
+                    Text("시간 미정").tag(QWERScheduleItem.TimeStatus.unspecified)
+                }
+                .pickerStyle(.segmented)
+
+                if qwerTimeStatus.wrappedValue == .timed {
+                    DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
+                    DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
+                    Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                }
+            } else {
+                Toggle("하루종일", isOn: $isAllDay)
+
+                if !isAllDay {
+                    DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
+                    DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
+                    Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                }
             }
 
             TextField("장소", text: $place)
         }
         .listRowBackground(rowBackground)
+        .onChange(of: qwerTimeStatus?.wrappedValue) { _, newValue in
+            guard let newValue else { return }
+            switch newValue {
+            case .allDay:
+                isAllDay = true
+                startTime = nil
+                endTime = nil
+                shouldNotify = false
+            case .timed:
+                isAllDay = false
+                startTime = startTime ?? defaultStartTime()
+            case .unspecified:
+                isAllDay = false
+                startTime = nil
+                endTime = nil
+                shouldNotify = false
+            }
+        }
         .onChange(of: isAllDay) { _, newValue in
+            guard qwerTimeStatus == nil else { return }
             if newValue {
                 startTime = nil
                 endTime = nil
@@ -60,6 +97,7 @@ struct ScheduleEditBasicInfoSection: View {
             }
         }
         .task(id: startTime) {
+            guard qwerTimeStatus == nil else { return }
             guard let newStart = startTime else { return }
 
             if endTime == nil || endTime! <= newStart {

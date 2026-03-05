@@ -16,6 +16,7 @@ struct ScheduleEditFormState {
     var isAllDay: Bool
     var startTime: Date?
     var endTime: Date?
+    var qwerTimeStatus: QWERScheduleItem.TimeStatus
     var shouldNotify: Bool
 
     var selectedMembers: Set<QWERMember>
@@ -36,6 +37,7 @@ struct ScheduleEditFormState {
             self.isAllDay = true
             self.startTime = nil
             self.endTime = nil
+            self.qwerTimeStatus = .allDay
             self.shouldNotify = false
             self.selectedMembers = []
             self.category = .other
@@ -51,6 +53,7 @@ struct ScheduleEditFormState {
             self.isAllDay = item.isAllDay
             self.startTime = item.startTime
             self.endTime = item.endTime
+            self.qwerTimeStatus = item.timeStatus
             self.shouldNotify = item.shouldNotify
             self.selectedMembers = Set(item.members)
             self.category = item.category
@@ -66,6 +69,7 @@ struct ScheduleEditFormState {
             self.isAllDay = item.isAllDay
             self.startTime = item.startTime
             self.endTime = item.endTime
+            self.qwerTimeStatus = .allDay
             self.shouldNotify = item.shouldNotify
             self.selectedMembers = []
             self.category = .other
@@ -77,16 +81,27 @@ struct ScheduleEditFormState {
     }
 
     func buildQWERSchedule(id: UUID? = nil) -> QWERScheduleItem {
-        QWERScheduleItem(
+        let normalizedStartTime = qwerTimeStatus == .timed ? startTime : nil
+        let normalizedEndTime = qwerTimeStatus == .timed ? endTime : nil
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = .autoupdatingCurrent
+        let trimmedTime = trimmed(time)
+        let legacyTime = qwerTimeStatus == .timed
+            ? (trimmedTime.isEmpty ? (normalizedStartTime.map { formatter.string(from: $0) } ?? "") : trimmedTime)
+            : ""
+
+        return QWERScheduleItem(
             id: id ?? UUID(),
             title: trimmed(title),
             date: date,
-            time: trimmed(time),
-            isAllDay: isAllDay,
-            startTime: isAllDay ? nil : startTime,
-            endTime: isAllDay ? nil : endTime,
+            time: legacyTime,
+            isAllDay: qwerTimeStatus == .allDay,
+            startTime: normalizedStartTime,
+            endTime: normalizedEndTime,
+            timeStatus: qwerTimeStatus,
             place: trimmed(place),
-            shouldNotify: shouldNotify,
+            shouldNotify: qwerTimeStatus == .timed ? shouldNotify : false,
             members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
             category: category
         )

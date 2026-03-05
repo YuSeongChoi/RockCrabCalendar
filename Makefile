@@ -4,13 +4,16 @@ SCHEME ?= RockCrabCalendar
 DESTINATION ?= platform=iOS Simulator,name=iPhone 17,OS=latest
 APP_UNIT_TESTS_DIR ?= $(PROJECT_DIR)/RockCrabCalendarUnitTests
 RUN_IOS_TESTS ?= 0
+ROOT_DIR := $(CURDIR)
+DERIVED_DATA_PATH ?= $(ROOT_DIR)/.xcode/DerivedData
+CLONED_SOURCE_PACKAGES_DIR_PATH ?= $(ROOT_DIR)/.xcode/SourcePackages
 
 XCODEBUILD_FLAGS ?=
 ifeq ($(CI),true)
 XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation
 endif
 
-XCODEBUILD = xcodebuild $(XCODEBUILD_FLAGS) -project $(PROJECT) -scheme $(SCHEME) -destination '$(DESTINATION)'
+XCODEBUILD = xcodebuild $(XCODEBUILD_FLAGS) -project $(PROJECT) -scheme $(SCHEME) -destination '$(DESTINATION)' -derivedDataPath '$(DERIVED_DATA_PATH)' -clonedSourcePackagesDirPath '$(CLONED_SOURCE_PACKAGES_DIR_PATH)'
 
 .PHONY: help open build test-unit test-app test-ui test-all test-modules test-module-shared test-module-domain test-module-data list-schemes list-destinations
 
@@ -34,6 +37,7 @@ open:
 	cd $(PROJECT_DIR) && open $(PROJECT)
 
 build:
+	mkdir -p '$(DERIVED_DATA_PATH)' '$(CLONED_SOURCE_PACKAGES_DIR_PATH)'
 	cd $(PROJECT_DIR) && $(XCODEBUILD) build
 
 test-unit:
@@ -41,6 +45,7 @@ test-unit:
 
 test-app:
 	@if [ "$$CI" = "true" ] || [ "$(RUN_IOS_TESTS)" = "1" ]; then \
+		mkdir -p '$(DERIVED_DATA_PATH)' '$(CLONED_SOURCE_PACKAGES_DIR_PATH)'; \
 		if find $(APP_UNIT_TESTS_DIR) -type f -name '*Tests.swift' -print -quit 2>/dev/null | grep -q .; then \
 			cd $(PROJECT_DIR) && $(XCODEBUILD) -only-testing:RockCrabCalendarUnitTests test; \
 		else \
@@ -63,6 +68,7 @@ test-modules: test-module-shared test-module-domain test-module-data
 
 test-ui:
 	@if [ "$$CI" = "true" ] || [ "$(RUN_IOS_TESTS)" = "1" ]; then \
+		mkdir -p '$(DERIVED_DATA_PATH)' '$(CLONED_SOURCE_PACKAGES_DIR_PATH)'; \
 		cd $(PROJECT_DIR) && $(XCODEBUILD) -only-testing:RockCrabCalendarUITests test; \
 	else \
 		echo "Skipping UI tests locally. Use RUN_IOS_TESTS=1 to run simulator tests."; \

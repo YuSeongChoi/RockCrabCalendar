@@ -19,7 +19,9 @@ public actor UserDefaultsUserScheduleLocalDataSource: UserScheduleLocalDataSourc
 
     public init(userDefaults: UserDefaults = .standard) {
         self.store = userDefaults
-        loadFromUserDefaults()
+        self.scheduleMap = Self.decodeScheduleMap(
+            from: userDefaults.data(forKey: AppStorageKeys.userSchedules)
+        )
     }
 
     public func saveSchedule(_ schedule: UserScheduleItem) async throws {
@@ -114,6 +116,19 @@ public actor UserDefaultsUserScheduleLocalDataSource: UserScheduleLocalDataSourc
 
 // MARK: - Storage helpers
 private extension UserDefaultsUserScheduleLocalDataSource {
+    static func decodeScheduleMap(from data: Data?) -> [UUID: UserScheduleItem] {
+        guard let data,
+              let arr = try? JSONDecoder().decode([UserScheduleItem].self, from: data) else {
+            return [:]
+        }
+
+        var map: [UUID: UserScheduleItem] = [:]
+        for item in arr {
+            map[item.id] = item
+        }
+        return map
+    }
+
     func saveToUserDefaults() {
         let values = Array(scheduleMap.values)
         do {
@@ -125,14 +140,6 @@ private extension UserDefaultsUserScheduleLocalDataSource {
     }
 
     func loadFromUserDefaults() {
-        guard let data = store.data(forKey: userDefaultKey),
-              let arr = try? JSONDecoder().decode([UserScheduleItem].self, from: data) else {
-            return
-        }
-        // map 재구성
-        scheduleMap.removeAll()
-        for item in arr {
-            scheduleMap[item.id] = item
-        }
+        scheduleMap = Self.decodeScheduleMap(from: store.data(forKey: userDefaultKey))
     }
 }

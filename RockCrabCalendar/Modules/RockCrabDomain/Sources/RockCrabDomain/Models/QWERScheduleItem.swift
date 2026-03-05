@@ -8,20 +8,32 @@
 import Foundation
 
 public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
+    public enum TimeStatus: String, Codable, Equatable {
+        case allDay
+        case timed
+        case unspecified
+    }
+
     public var id: UUID
     /// 스케줄명
     public var title: String
     /// 날짜
     public var date: Date
     /// 시간 (legacy, deprecated)
+    private var legacyTime: String
     @available(*, deprecated, message: "Use isAllDay/startTime/endTime instead")
-    public var time: String
+    public var time: String {
+        get { legacyTime }
+        set { legacyTime = newValue }
+    }
     /// 하루종일 여부
     public var isAllDay: Bool
     /// 시작시간
     public var startTime: Date?
     /// 종료시간
     public var endTime: Date?
+    /// 시간 상태(종일/시간있음/미정)
+    public var timeStatus: TimeStatus
     /// 장소
     public var place: String
     /// 알람여부
@@ -38,6 +50,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         isAllDay: Bool = true,
         startTime: Date? = nil,
         endTime: Date? = nil,
+        timeStatus: TimeStatus? = nil,
         place: String,
         shouldNotify: Bool = false,
         members: [QWERMember],
@@ -46,30 +59,18 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.id = id
         self.title = title
         self.date = date
-        self.time = time
+        self.legacyTime = time
         self.isAllDay = isAllDay
         self.startTime = startTime
         self.endTime = endTime
+        self.timeStatus = timeStatus ?? .allDay
         self.place = place
         self.shouldNotify = shouldNotify
         self.members = members
         self.category = category
 
-        if self.isAllDay, self.startTime != nil || self.endTime != nil {
-            self.isAllDay = false
-        }
-
-        // Legacy migration: if time exists -> convert
-        if !time.isEmpty && startTime == nil {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            formatter.locale = .autoupdatingCurrent
-            if let parsed = formatter.date(from: time) {
-                self.startTime = parsed
-//                self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
-                self.isAllDay = false
-            }
-        }
+        migrateLegacyTimeIfNeeded()
+        normalizeTimeState()
     }
 
     enum CodingKeys: String, CodingKey {
@@ -80,6 +81,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         case isAllDay
         case startTime
         case endTime
+        case timeStatus
         case place
         case shouldNotify
         case members
@@ -93,30 +95,15 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.title = try container.decode(String.self, forKey: .title)
 
         self.date = try container.decode(Date.self, forKey: .date)
-
-        self.time = (try? container.decode(String.self, forKey: .time)) ?? ""
+        self.legacyTime = (try? container.decode(String.self, forKey: .time)) ?? ""
 
         self.startTime = try? container.decode(Date.self, forKey: .startTime)
         self.endTime = try? container.decode(Date.self, forKey: .endTime)
+        self.timeStatus = (try? container.decode(TimeStatus.self, forKey: .timeStatus)) ?? .allDay
         if let decodedIsAllDay = try? container.decode(Bool.self, forKey: .isAllDay) {
             self.isAllDay = decodedIsAllDay
         } else {
             self.isAllDay = (self.startTime == nil && self.endTime == nil)
-        }
-
-        // Migrate legacy
-        if !self.time.isEmpty && self.startTime == nil {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            formatter.locale = .autoupdatingCurrent
-            if let parsed = formatter.date(from: time) {
-                self.startTime = parsed
-                self.endTime = Calendar.current.date(byAdding: .hour, value: 1, to: parsed)
-                self.isAllDay = false
-            }
-        }
-        if self.isAllDay, self.startTime != nil || self.endTime != nil {
-            self.isAllDay = false
         }
 
         self.place = (try? container.decode(String.self, forKey: .place)) ?? ""
@@ -125,6 +112,25 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
         self.members = rawMembers.compactMap { QWERMember(rawValue: $0) }
         self.category = ScheduleCategory(rawValue: (try? container.decode(String.self, forKey: .category)) ?? "") ?? .other
+
+        migrateLegacyTimeIfNeeded()
+        normalizeTimeState()
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(title, forKey: .title)
+        try container.encode(date, forKey: .date)
+        try container.encode(legacyTime, forKey: .time)
+        try container.encode(isAllDay, forKey: .isAllDay)
+        try container.encodeIfPresent(startTime, forKey: .startTime)
+        try container.encodeIfPresent(endTime, forKey: .endTime)
+        try container.encode(timeStatus, forKey: .timeStatus)
+        try container.encode(place, forKey: .place)
+        try container.encode(shouldNotify, forKey: .shouldNotify)
+        try container.encode(members.map { $0.rawValue }, forKey: .members)
+        try container.encode(category.rawValue, forKey: .category)
     }
 }
 
@@ -138,7 +144,8 @@ public enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
 
 extension QWERScheduleItem {
     public var displayTime: String {
-        if isAllDay { return "하루종일" }
+        if timeStatus == .allDay { return "하루종일" }
+        if timeStatus == .unspecified { return "시간 미정" }
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
         if let s = startTime, let e = endTime {
@@ -146,9 +153,41 @@ extension QWERScheduleItem {
         } else if let s = startTime {
             return "\(f.string(from: s))"
         }
-        return time.isEmpty ? "시간 미정" : time
+        return legacyTime.isEmpty ? "시간 미정" : legacyTime
     }
     public var displayPlace: String { place.isEmpty ? "장소 미정" : place }
+}
+
+private extension QWERScheduleItem {
+    mutating func migrateLegacyTimeIfNeeded() {
+        guard !legacyTime.isEmpty, startTime == nil else { return }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = .autoupdatingCurrent
+        if let parsed = formatter.date(from: legacyTime) {
+            startTime = parsed
+        }
+    }
+
+    mutating func normalizeTimeState() {
+        if isAllDay && (startTime != nil || endTime != nil) {
+            isAllDay = false
+        }
+
+        if isAllDay {
+            timeStatus = .allDay
+            startTime = nil
+            endTime = nil
+            return
+        }
+
+        if startTime != nil || endTime != nil || !legacyTime.isEmpty {
+            timeStatus = .timed
+            return
+        }
+
+        timeStatus = .unspecified
+    }
 }
 
 // MARK: - QWER 스케줄 모음

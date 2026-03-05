@@ -30,6 +30,7 @@ struct ScheduleEditView: View {
                     isAllDay: $viewModel.form.isAllDay,
                     startTime: $viewModel.form.startTime,
                     endTime: $viewModel.form.endTime,
+                    qwerTimeStatus: viewModel.kind == .qwer ? $viewModel.form.qwerTimeStatus : nil,
                     shouldNotify: $viewModel.form.shouldNotify,
                     place: $viewModel.form.place,
                     defaultStartTime: defaultStartTime,
