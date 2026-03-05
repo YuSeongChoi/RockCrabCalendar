@@ -8,7 +8,8 @@ let package = Package(
         .macOS(.v11)
     ],
     products: [
-        .library(name: "RockCrabData", targets: ["RockCrabData"])
+        .library(name: "RockCrabData", targets: ["RockCrabData"]),
+        .library(name: "RockCrabDataFirestore", targets: ["RockCrabDataFirestore"])
     ],
     dependencies: [
         .package(path: "../RockCrabShared"),
@@ -22,10 +23,19 @@ let package = Package(
             dependencies: [
                 "RockCrabShared",
                 "RockCrabDomain",
-                "Alamofire",
-                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")
+                "Alamofire"
             ],
             path: "Sources/RockCrabData"
+        ),
+        .target(
+            name: "RockCrabDataFirestore",
+            dependencies: [
+                "RockCrabData",
+                "RockCrabShared",
+                "RockCrabDomain",
+                .product(name: "FirebaseFirestore", package: "firebase-ios-sdk")
+            ],
+            path: "Sources/RockCrabDataFirestore"
         ),
         .testTarget(
             name: "RockCrabDataTests",

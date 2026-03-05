@@ -86,6 +86,7 @@
 		8D20BA2F3A754B829FA771D7 /* ScheduleEditMemberToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF378DC10BF04A46A3DA9CFF /* ScheduleEditMemberToggle.swift */; };
 		9495EDAF8C2A40E9A6638CD1 /* ScheduleEditQWERSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D645CD62B46769F355F50 /* ScheduleEditQWERSection.swift */; };
 		B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
+		B0A1D2C3E4F5061728394A72 /* RockCrabDataFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */; };
 		D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */; };
 		D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */; };
 		D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */; };
@@ -196,6 +197,7 @@
 				078BD5609F58B78802F5A628 /* RockCrabShared in Frameworks */,
 				4C2D8FDF10774333DDA785D3 /* RockCrabDomain in Frameworks */,
 				B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */,
+				B0A1D2C3E4F5061728394A72 /* RockCrabDataFirestore in Frameworks */,
 				5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -595,6 +597,7 @@
 				A622A078AF1AD2268F01F207 /* RockCrabShared */,
 				E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */,
 				B0A1D2C3E4F5061728394A61 /* RockCrabData */,
+				B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -1249,6 +1252,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B0A1D2C3E4F5061728394A60 /* XCLocalSwiftPackageReference "Modules/RockCrabData" */;
 			productName = RockCrabData;
+		};
+		B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B0A1D2C3E4F5061728394A60 /* XCLocalSwiftPackageReference "Modules/RockCrabData" */;
+			productName = RockCrabDataFirestore;
 		};
 		E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -8,6 +8,7 @@
 import Foundation
 import RockCrabShared
 import RockCrabDomain
+import RockCrabData
 import FirebaseFirestore
 import CryptoKit
 
