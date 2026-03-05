@@ -24,6 +24,7 @@
 		5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72DE2F177562007F3FB8 /* ScheduleListView.swift */; };
 		5D1A72FB2F177562007F3FB8 /* QWERScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */; };
 		5D1A72FC2F177562007F3FB8 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */; };
+		A1B2C3D4E5F60718293A4B5D /* AppEnvironmentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */; };
 		5D1A72FD2F177562007F3FB8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72BE2F177562007F3FB8 /* WindowAlertHostingView.swift */; };
 		5D1A72FE2F177562007F3FB8 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EB2F177562007F3FB8 /* AnalyticsHelper.swift */; };
 		5D1A72FF2F177562007F3FB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C32F177562007F3FB8 /* AppDelegate.swift */; };
@@ -112,6 +113,7 @@
 		5D1A72C12F177562007F3FB8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		5D1A72C32F177562007F3FB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentFactory.swift; sourceTree = "<group>"; };
 		5D1A72C52F177562007F3FB8 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		5D1A72D02F177562007F3FB8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				5D1A72C22F177562007F3FB8 /* Indicator */,
 				5D1A72C32F177562007F3FB8 /* AppDelegate.swift */,
 				5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */,
+				A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */,
 				5D1A72C52F177562007F3FB8 /* RockCrabCalendarApp.swift */,
 				5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */,
 			);
@@ -762,6 +765,7 @@
 				5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */,
 				5D1A72FB2F177562007F3FB8 /* QWERScheduleViewModel.swift in Sources */,
 				5D1A72FC2F177562007F3FB8 /* AppEnvironment.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5D /* AppEnvironmentFactory.swift in Sources */,
 				5D1A72FD2F177562007F3FB8 /* WindowAlertHostingView.swift in Sources */,
 				5D1A72FE2F177562007F3FB8 /* AnalyticsHelper.swift in Sources */,
 				5D1A72FF2F177562007F3FB8 /* AppDelegate.swift in Sources */,
