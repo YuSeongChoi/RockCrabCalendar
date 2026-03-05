@@ -3,6 +3,7 @@ PROJECT ?= RockCrabCalendar.xcodeproj
 SCHEME ?= RockCrabCalendar
 DESTINATION ?= platform=iOS Simulator,name=iPhone 17,OS=latest
 APP_UNIT_TESTS_DIR ?= $(PROJECT_DIR)/RockCrabCalendarUnitTests
+RUN_IOS_TESTS ?= 0
 
 XCODEBUILD = xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination '$(DESTINATION)'
 
@@ -13,15 +14,16 @@ help:
 	@echo "  make open              # Open Xcode project"
 	@echo "  make build             # Build app scheme"
 	@echo "  make test-modules      # Run SPM module tests (Shared -> Domain -> Data)"
-	@echo "  make test-app          # Run app unit tests only"
+	@echo "  make test-app          # Run app unit tests only (CI or RUN_IOS_TESTS=1)"
 	@echo "  make test-unit         # Alias of test-app"
-	@echo "  make test-ui           # Run UI tests only"
+	@echo "  make test-ui           # Run UI tests only (CI or RUN_IOS_TESTS=1)"
 	@echo "  make test-all          # Run module tests + app unit + UI tests"
 	@echo "  make list-schemes      # List schemes"
 	@echo "  make list-destinations # Show available destinations"
 	@echo ""
 	@echo "Overrides:"
 	@echo "  DESTINATION='platform=iOS Simulator,name=iPhone 17,OS=latest'"
+	@echo "  RUN_IOS_TESTS=1        # Force iOS simulator tests locally"
 
 open:
 	cd $(PROJECT_DIR) && open $(PROJECT)
@@ -33,10 +35,14 @@ test-unit:
 	@$(MAKE) test-app
 
 test-app:
-	@if find $(APP_UNIT_TESTS_DIR) -type f -name '*Tests.swift' -print -quit 2>/dev/null | grep -q .; then \
-		cd $(PROJECT_DIR) && $(XCODEBUILD) -only-testing:RockCrabCalendarUnitTests test; \
+	@if [ "$$CI" = "true" ] || [ "$(RUN_IOS_TESTS)" = "1" ]; then \
+		if find $(APP_UNIT_TESTS_DIR) -type f -name '*Tests.swift' -print -quit 2>/dev/null | grep -q .; then \
+			cd $(PROJECT_DIR) && $(XCODEBUILD) -only-testing:RockCrabCalendarUnitTests test; \
+		else \
+			echo "No app-level unit tests found under $(APP_UNIT_TESTS_DIR). Skipping."; \
+		fi; \
 	else \
-		echo "No app-level unit tests found under $(APP_UNIT_TESTS_DIR). Skipping."; \
+		echo "Skipping app unit tests locally. Use RUN_IOS_TESTS=1 to run simulator tests."; \
 	fi
 
 test-module-shared:
@@ -51,7 +57,11 @@ test-module-data:
 test-modules: test-module-shared test-module-domain test-module-data
 
 test-ui:
-	cd $(PROJECT_DIR) && $(XCODEBUILD) -only-testing:RockCrabCalendarUITests test
+	@if [ "$$CI" = "true" ] || [ "$(RUN_IOS_TESTS)" = "1" ]; then \
+		cd $(PROJECT_DIR) && $(XCODEBUILD) -only-testing:RockCrabCalendarUITests test; \
+	else \
+		echo "Skipping UI tests locally. Use RUN_IOS_TESTS=1 to run simulator tests."; \
+	fi
 
 test-all:
 	@$(MAKE) test-modules
