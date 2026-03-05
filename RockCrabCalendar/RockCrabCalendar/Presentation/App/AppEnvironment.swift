@@ -7,8 +7,6 @@
 
 import Foundation
 import RockCrabDomain
-import RockCrabData
-import RockCrabDataFirestore
 
 // Central DI container for assembling live dependencies.
 final class AppEnvironment: ObservableObject {
@@ -61,14 +59,7 @@ final class AppEnvironment: ObservableObject {
         mode: RuntimeMode = .resolved(),
         userDefaults: UserDefaults = .standard
     ) -> AppEnvironment {
-        let qwerRemote: QWERScheduleRemoteDataSource
-        switch mode {
-        case .live:
-            qwerRemote = FirestoreQWERScheduleRemoteDataSource()
-        case .localOnly, .mock:
-            qwerRemote = NoopQWERScheduleRemoteDataSource()
-        }
-        return compose(qwerRemote: qwerRemote, userDefaults: userDefaults)
+        AppEnvironmentFactory.make(mode: mode, userDefaults: userDefaults)
     }
 
     // Backward-compatible entry point.
@@ -76,42 +67,5 @@ final class AppEnvironment: ObservableObject {
         userDefaults: UserDefaults = .standard
     ) -> AppEnvironment {
         configured(mode: .live, userDefaults: userDefaults)
-    }
-
-    private static func compose(
-        qwerRemote: QWERScheduleRemoteDataSource,
-        userDefaults: UserDefaults
-    ) -> AppEnvironment {
-        // DataSources
-        let qwerLocal = UserDefaultsQWERScheduleLocalDataSource(userDefaults: userDefaults)
-        let userLocal = UserDefaultsUserScheduleLocalDataSource(userDefaults: userDefaults)
-        let holidayRemote = HolidayAPIRemoteDataSource()
-        let holidayCache = HolidayCacheStoreDataSource()
-        let youtubeRemote = YouTubeAPIRemoteDataSource()
-
-        // Repositories
-        let qwerRepository = QWERScheduleService(remote: qwerRemote, local: qwerLocal)
-        let userRepository = UserScheduleService(local: userLocal)
-        let holidayRepository = HolidayRepository(cacheStore: holidayCache, remote: holidayRemote)
-        let youtubeRepository = YouTubeRepositoryImpl(remote: youtubeRemote)
-
-        // UseCases
-        let qwerUseCase = QWERScheduleUseCase(repository: qwerRepository)
-        let userUseCase = UserScheduleUseCase(repository: userRepository)
-        let holidayUseCase = HolidayUseCase(repository: holidayRepository)
-        let youtubeUseCase = YouTubeUseCase(repository: youtubeRepository)
-        let scheduleCacheStore = ScheduleCacheStore(userDefaults: userDefaults)
-        let holidayStore = HolidayStore(userDefaults: userDefaults)
-        let userScheduleMigrationStore = UserScheduleMigrationStore(userDefaults: userDefaults)
-
-        return AppEnvironment(
-            qwerScheduleUseCase: qwerUseCase,
-            userScheduleUseCase: userUseCase,
-            holidayUseCase: holidayUseCase,
-            youTubeUseCase: youtubeUseCase,
-            scheduleCacheStore: scheduleCacheStore,
-            holidayStore: holidayStore,
-            userScheduleMigrationStore: userScheduleMigrationStore
-        )
     }
 }
