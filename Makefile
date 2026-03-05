@@ -5,7 +5,12 @@ DESTINATION ?= platform=iOS Simulator,name=iPhone 17,OS=latest
 APP_UNIT_TESTS_DIR ?= $(PROJECT_DIR)/RockCrabCalendarUnitTests
 RUN_IOS_TESTS ?= 0
 
-XCODEBUILD = xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination '$(DESTINATION)'
+XCODEBUILD_FLAGS ?=
+ifeq ($(CI),true)
+XCODEBUILD_FLAGS += -skipPackagePluginValidation -skipMacroValidation
+endif
+
+XCODEBUILD = xcodebuild $(XCODEBUILD_FLAGS) -project $(PROJECT) -scheme $(SCHEME) -destination '$(DESTINATION)'
 
 .PHONY: help open build test-unit test-app test-ui test-all test-modules test-module-shared test-module-domain test-module-data list-schemes list-destinations
 
