@@ -164,7 +164,7 @@ extension UserScheduleViewModel {
                 id: item.id,
                 title: item.title,
                 date: d,
-                time: item.time,
+                time: legacyTimeString(from: item),
                 isAllDay: item.isAllDay,
                 startTime: item.startTime,
                 endTime: item.endTime,
@@ -205,7 +205,7 @@ extension UserScheduleViewModel {
                     id: item.id,
                     title: item.title,
                     date: current,
-                    time: item.time,
+                    time: legacyTimeString(from: item),
                     isAllDay: item.isAllDay,
                     startTime: item.startTime,
                     endTime: item.endTime,
@@ -237,5 +237,13 @@ extension UserScheduleViewModel {
         case .year:
             return cal.date(byAdding: .year, value: 1, to: date)
         }
+    }
+
+    private func legacyTimeString(from item: UserScheduleItem) -> String {
+        guard !item.isAllDay, let start = item.startTime else { return "" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = .autoupdatingCurrent
+        return formatter.string(from: start)
     }
 }

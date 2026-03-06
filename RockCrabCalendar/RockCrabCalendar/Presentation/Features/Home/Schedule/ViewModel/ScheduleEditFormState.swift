@@ -48,7 +48,10 @@ struct ScheduleEditFormState {
         case .editQWER(let item):
             self.title = item.title
             self.date = item.date
-            self.time = item.time
+            self.time = Self.legacyTimeString(
+                isAllDay: item.isAllDay,
+                startTime: item.startTime
+            )
             self.place = item.place
             self.isAllDay = item.isAllDay
             self.startTime = item.startTime
@@ -64,7 +67,10 @@ struct ScheduleEditFormState {
         case .editUser(let item):
             self.title = item.title
             self.date = item.date
-            self.time = item.time
+            self.time = Self.legacyTimeString(
+                isAllDay: item.isAllDay,
+                startTime: item.startTime
+            )
             self.place = item.place
             self.isAllDay = item.isAllDay
             self.startTime = item.startTime
@@ -127,5 +133,13 @@ struct ScheduleEditFormState {
 
     private func trimmed(_ value: String) -> String {
         value.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private static func legacyTimeString(isAllDay: Bool, startTime: Date?) -> String {
+        guard !isAllDay, let startTime else { return "" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = .autoupdatingCurrent
+        return formatter.string(from: startTime)
     }
 }
