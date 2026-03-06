@@ -24,7 +24,6 @@
 		5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72DE2F177562007F3FB8 /* ScheduleListView.swift */; };
 		5D1A72FB2F177562007F3FB8 /* QWERScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72E02F177562007F3FB8 /* QWERScheduleViewModel.swift */; };
 		5D1A72FC2F177562007F3FB8 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */; };
-		A1B2C3D4E5F60718293A4B5D /* AppEnvironmentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */; };
 		5D1A72FD2F177562007F3FB8 /* WindowAlertHostingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72BE2F177562007F3FB8 /* WindowAlertHostingView.swift */; };
 		5D1A72FE2F177562007F3FB8 /* AnalyticsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72EB2F177562007F3FB8 /* AnalyticsHelper.swift */; };
 		5D1A72FF2F177562007F3FB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D1A72C32F177562007F3FB8 /* AppDelegate.swift */; };
@@ -86,6 +85,16 @@
 		6EB5BEE66D53465B879776B9 /* ScheduleEditUserSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558F81149452431E8FB97E75 /* ScheduleEditUserSection.swift */; };
 		8D20BA2F3A754B829FA771D7 /* ScheduleEditMemberToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF378DC10BF04A46A3DA9CFF /* ScheduleEditMemberToggle.swift */; };
 		9495EDAF8C2A40E9A6638CD1 /* ScheduleEditQWERSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28D645CD62B46769F355F50 /* ScheduleEditQWERSection.swift */; };
+		A1B2C3D4E5F60718293A4B5D /* AppEnvironmentFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */; };
+		A7A000012F70000100000020 /* CalendarWidgetDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000001 /* CalendarWidgetDataStore.swift */; };
+		A7A000012F70000100000021 /* RockCrabCalendarWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000002 /* RockCrabCalendarWidgetEntry.swift */; };
+		A7A000012F70000100000022 /* RockCrabCalendarWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000003 /* RockCrabCalendarWidgetProvider.swift */; };
+		A7A000012F70000100000023 /* RockCrabCalendarWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000004 /* RockCrabCalendarWidgets.swift */; };
+		A7A000012F70000100000024 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000007 /* WidgetKit.framework */; };
+		A7A000012F70000100000025 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000008 /* SwiftUI.framework */; };
+		A7A000012F70000100000026 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
+		A7A000012F70000100000027 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
+		A7A000012F70000100000028 /* RockCrabCalendarWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000006 /* RockCrabCalendarWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
 		B0A1D2C3E4F5061728394A72 /* RockCrabDataFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */; };
 		D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */; };
@@ -101,7 +110,28 @@
 			remoteGlobalIDString = 5DE024302CA3D79E00472395;
 			remoteInfo = RockCrabCalendar;
 		};
+		A7A000012F70000100000041 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5DE024292CA3D79E00472395 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A7A000012F70000100000040;
+			remoteInfo = RockCrabCalendarWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A7A000012F70000100000033 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A7A000012F70000100000028 /* RockCrabCalendarWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		50015E97571244FA9C654F0C /* ScheduleEditBasicInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditBasicInfoSection.swift; sourceTree = "<group>"; };
@@ -113,7 +143,6 @@
 		5D1A72C12F177562007F3FB8 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		5D1A72C32F177562007F3FB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D1A72C42F177562007F3FB8 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentFactory.swift; sourceTree = "<group>"; };
 		5D1A72C52F177562007F3FB8 /* RockCrabCalendarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarApp.swift; sourceTree = "<group>"; };
 		5D1A72C62F177562007F3FB8 /* WindowDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowDelegate.swift; sourceTree = "<group>"; };
 		5D1A72D02F177562007F3FB8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -182,6 +211,15 @@
 		62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */ = {isa = PBXFileReference; lastKnownFileType = text.markdown; path = ARCHITECTURE.md; sourceTree = "<group>"; };
 		9688A04DCAD949E2BC09AAE9 /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5C /* AppEnvironmentFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironmentFactory.swift; sourceTree = "<group>"; };
+		A7A000012F70000100000001 /* CalendarWidgetDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWidgetDataStore.swift; sourceTree = "<group>"; };
+		A7A000012F70000100000002 /* RockCrabCalendarWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarWidgetEntry.swift; sourceTree = "<group>"; };
+		A7A000012F70000100000003 /* RockCrabCalendarWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarWidgetProvider.swift; sourceTree = "<group>"; };
+		A7A000012F70000100000004 /* RockCrabCalendarWidgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarWidgets.swift; sourceTree = "<group>"; };
+		A7A000012F70000100000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7A000012F70000100000006 /* RockCrabCalendarWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RockCrabCalendarWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7A000012F70000100000007 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A7A000012F70000100000008 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditActionHandler.swift; sourceTree = "<group>"; };
 		B28D645CD62B46769F355F50 /* ScheduleEditQWERSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditQWERSection.swift; sourceTree = "<group>"; };
 		B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditFormState.swift; sourceTree = "<group>"; };
@@ -217,6 +255,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7A000012F70000100000030 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7A000012F70000100000024 /* WidgetKit.framework in Frameworks */,
+				A7A000012F70000100000025 /* SwiftUI.framework in Frameworks */,
+				A7A000012F70000100000026 /* RockCrabDomain in Frameworks */,
+				A7A000012F70000100000027 /* RockCrabShared in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +505,8 @@
 		5DDE85EB2E7BEF7400643DB5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A7A000012F70000100000008 /* SwiftUI.framework */,
+				A7A000012F70000100000007 /* WidgetKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -465,6 +516,7 @@
 			children = (
 				94FF8C54C98B1082F9AE6BA9 /* ARCHITECTURE.md */,
 				5DE024332CA3D79E00472395 /* RockCrabCalendar */,
+				A7A000012F70000100000010 /* RockCrabCalendarWidget */,
 				5DCF9AB02F595A59008EA555 /* RockCrabCalendarUITests */,
 				A1B2C3D62F30000100AAA111 /* RockCrabCalendarUnitTests */,
 				5DDE85EB2E7BEF7400643DB5 /* Frameworks */,
@@ -477,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				5DE024312CA3D79E00472395 /* RockCrabCalendar.app */,
+				A7A000012F70000100000006 /* RockCrabCalendarWidget.appex */,
 				5DE212142E6FC0F400E465E8 /* RockCrabCalendarUITests.xctest */,
 				5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */,
 			);
@@ -560,6 +613,18 @@
 			path = RockCrabCalendarUnitTests;
 			sourceTree = "<group>";
 		};
+		A7A000012F70000100000010 /* RockCrabCalendarWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A7A000012F70000100000005 /* Info.plist */,
+				A7A000012F70000100000001 /* CalendarWidgetDataStore.swift */,
+				A7A000012F70000100000002 /* RockCrabCalendarWidgetEntry.swift */,
+				A7A000012F70000100000003 /* RockCrabCalendarWidgetProvider.swift */,
+				A7A000012F70000100000004 /* RockCrabCalendarWidgets.swift */,
+			);
+			path = RockCrabCalendarWidget;
+			sourceTree = "<group>";
+		};
 		F60CBDF887AD4524883CF013 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,11 +651,13 @@
 				5DE0242D2CA3D79E00472395 /* Sources */,
 				5DE0242E2CA3D79E00472395 /* Frameworks */,
 				5DE0242F2CA3D79E00472395 /* Resources */,
+				A7A000012F70000100000033 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				5D43243C2E8142B10026E23E /* PBXTargetDependency */,
+				A7A000012F70000100000042 /* PBXTargetDependency */,
 			);
 			name = RockCrabCalendar;
 			packageProductDependencies = (
@@ -648,6 +715,27 @@
 			productReference = 5DE212242E6FC10B00E465E8 /* RockCrabCalendarUnitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		A7A000012F70000100000040 /* RockCrabCalendarWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7A000012F70000100000052 /* Build configuration list for PBXNativeTarget "RockCrabCalendarWidget" */;
+			buildPhases = (
+				A7A000012F70000100000031 /* Sources */,
+				A7A000012F70000100000030 /* Frameworks */,
+				A7A000012F70000100000032 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RockCrabCalendarWidget;
+			packageProductDependencies = (
+				E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */,
+				A622A078AF1AD2268F01F207 /* RockCrabShared */,
+			);
+			productName = RockCrabCalendarWidget;
+			productReference = A7A000012F70000100000006 /* RockCrabCalendarWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -656,7 +744,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					5DE024302CA3D79E00472395 = {
 						CreatedOnToolsVersion = 15.0;
@@ -668,6 +756,9 @@
 					5DE212232E6FC10B00E465E8 = {
 						CreatedOnToolsVersion = 16.4;
 						TestTargetID = 5DE024302CA3D79E00472395;
+					};
+					A7A000012F70000100000040 = {
+						CreatedOnToolsVersion = 16.4;
 					};
 				};
 			};
@@ -694,6 +785,7 @@
 			projectRoot = "";
 			targets = (
 				5DE024302CA3D79E00472395 /* RockCrabCalendar */,
+				A7A000012F70000100000040 /* RockCrabCalendarWidget */,
 				5DE212232E6FC10B00E465E8 /* RockCrabCalendarUnitTests */,
 				5DE212132E6FC0F400E465E8 /* RockCrabCalendarUITests */,
 			);
@@ -738,6 +830,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5DE212222E6FC10B00E465E8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7A000012F70000100000032 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -821,6 +920,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A7A000012F70000100000031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7A000012F70000100000020 /* CalendarWidgetDataStore.swift in Sources */,
+				A7A000012F70000100000021 /* RockCrabCalendarWidgetEntry.swift in Sources */,
+				A7A000012F70000100000022 /* RockCrabCalendarWidgetProvider.swift in Sources */,
+				A7A000012F70000100000023 /* RockCrabCalendarWidgets.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -833,6 +943,11 @@
 			target = 5DE024302CA3D79E00472395 /* RockCrabCalendar */;
 			targetProxy = 5DE2121A2E6FC0F400E465E8 /* PBXContainerItemProxy */;
 		};
+		A7A000012F70000100000042 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A7A000012F70000100000040 /* RockCrabCalendarWidget */;
+			targetProxy = A7A000012F70000100000041 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -842,6 +957,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -908,6 +1024,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -1143,6 +1260,65 @@
 			};
 			name = Release;
 		};
+		A7A000012F70000100000050 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = RockCrabCalendarWidget/RockCrabCalendarWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RockCrabCalendarWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.6;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A7A000012F70000100000051 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = RockCrabCalendarWidget/RockCrabCalendarWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N7PD4AXR6;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RockCrabCalendarWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1.6;
+				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "RELEASE $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1178,6 +1354,15 @@
 			buildConfigurations = (
 				5DE2122B2E6FC10B00E465E8 /* Debug */,
 				5DE2122C2E6FC10B00E465E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7A000012F70000100000052 /* Build configuration list for PBXNativeTarget "RockCrabCalendarWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7A000012F70000100000050 /* Debug */,
+				A7A000012F70000100000051 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

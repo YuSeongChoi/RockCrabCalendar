@@ -8,6 +8,9 @@
 import Foundation
 import RockCrabShared
 import RockCrabDomain
+#if canImport(WidgetKit)
+import WidgetKit
+#endif
 
 @Observable
 final class UserScheduleViewModel {
@@ -15,6 +18,12 @@ final class UserScheduleViewModel {
 
     private let useCase: UserScheduleUseCase
     private let migrationStore: UserScheduleMigrationStoreProtocol
+
+    private func reloadWidgetTimelines() {
+        #if canImport(WidgetKit)
+        WidgetCenter.shared.reloadAllTimelines()
+        #endif
+    }
 
     // Inject use-case for DI and testability.
     init(useCase: UserScheduleUseCase, migrationStore: UserScheduleMigrationStoreProtocol) {
@@ -34,6 +43,7 @@ final class UserScheduleViewModel {
                     let refreshed = try await useCase.fetchAll()
                     schedules = refreshed.sorted(by: scheduleSortRule)
                 }
+                reloadWidgetTimelines()
             } catch {
                 AppLogger.error("사용자 일정 fetch 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -47,6 +57,7 @@ final class UserScheduleViewModel {
                 try await useCase.add(item)
                 let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
+                reloadWidgetTimelines()
             } catch {
                 AppLogger.error("사용자 일정 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -60,6 +71,7 @@ final class UserScheduleViewModel {
                 try await useCase.update(item)
                 let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
+                reloadWidgetTimelines()
             } catch {
                 AppLogger.error("사용자 일정 업데이트 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -73,6 +85,7 @@ final class UserScheduleViewModel {
                 try await useCase.delete(item)
                 let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
+                reloadWidgetTimelines()
             } catch {
                 AppLogger.error("사용자 일정 삭제 실패: \(error.localizedDescription)", category: .scheduleVM)
             }
@@ -86,6 +99,7 @@ final class UserScheduleViewModel {
                 try await useCase.add(item)
                 let fetched = try await useCase.fetchAll()
                 schedules = fetched.sorted(by: scheduleSortRule)
+                reloadWidgetTimelines()
             } catch {
                 AppLogger.error("사용자 일정 저장 실패: \(error.localizedDescription)", category: .scheduleVM)
             }

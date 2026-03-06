@@ -19,4 +19,16 @@ public enum AppStorageKeys {
 
     public static let userSchedules = "userSchedules"
     public static let userScheduleLegacyTimeMigration = "hasMigratedUserScheduleTimes"
+
+    public static let appGroupMigrationKeys: [String] = [
+        holidayCacheData,
+        holidayCacheYears,
+        holidayCacheBaseYear,
+        qwerScheduleCacheData,
+        qwerScheduleLastFetchDate,
+        activeScheduleCategories,
+        qwerLocalSchedules,
+        userSchedules,
+        userScheduleLegacyTimeMigration
+    ]
 }
