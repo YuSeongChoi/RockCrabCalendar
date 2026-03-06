@@ -29,7 +29,7 @@ struct ScheduleEditFormState {
 
     init(mode: ScheduleEditMode, defaultDate: Date, defaultColor: Color) {
         switch mode {
-        case .create:
+        case .create(let kind):
             self.title = ""
             self.date = defaultDate
             self.time = ""
@@ -39,7 +39,7 @@ struct ScheduleEditFormState {
             self.endTime = nil
             self.qwerTimeStatus = .allDay
             self.shouldNotify = false
-            self.selectedMembers = []
+            self.selectedMembers = kind == .qwer ? Set(QWERMember.allCases) : []
             self.category = .other
             self.isRepeat = false
             self.repeatType = .none

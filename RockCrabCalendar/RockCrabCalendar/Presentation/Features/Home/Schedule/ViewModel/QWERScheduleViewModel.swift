@@ -10,6 +10,9 @@ import Combine
 import CryptoKit
 import RockCrabDomain
 import RockCrabShared
+#if canImport(WidgetKit)
+import WidgetKit
+#endif
 
 @Observable
 final class QWERScheduleViewModel {
@@ -42,6 +45,12 @@ final class QWERScheduleViewModel {
 
     static let localChangeSubject = PassthroughSubject<LocalChangeEvent, Never>()
     private var isFetching = false
+
+    private func reloadWidgetTimelines() {
+        #if canImport(WidgetKit)
+        WidgetCenter.shared.reloadAllTimelines()
+        #endif
+    }
     
     // MARK: - Local (in-memory) partial updates
     private func upsertLocalInMemory(_ item: QWERScheduleItem) {
@@ -126,6 +135,7 @@ final class QWERScheduleViewModel {
             await useCase.addLocal(item)
             upsertLocalInMemory(item)
             QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .add, item: item))
+            reloadWidgetTimelines()
         }
     }
 
@@ -135,6 +145,7 @@ final class QWERScheduleViewModel {
             await useCase.updateLocal(item)
             upsertLocalInMemory(item)
             QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .update, item: item))
+            reloadWidgetTimelines()
         }
     }
 
@@ -144,6 +155,7 @@ final class QWERScheduleViewModel {
             await useCase.deleteLocal(item)
             removeLocalInMemory(item)
             QWERScheduleViewModel.localChangeSubject.send(.init(sourceID: instanceID, op: .delete, item: item))
+            reloadWidgetTimelines()
         }
     }
     
@@ -211,6 +223,7 @@ final class QWERScheduleViewModel {
             let fetched = try await useCase.refreshAndCache(cacheStore: cacheStore, now: now)
             schedules = fetched
             lastFetchedAt = now
+            reloadWidgetTimelines()
             return true
         } catch {
             AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
@@ -225,6 +238,7 @@ final class QWERScheduleViewModel {
         lastFetchedAt = nil
         let locals = await useCase.fetchLocalOnly()
         schedules = mergeLocalSchedules(base: [], locals: locals)
+        reloadWidgetTimelines()
     }
 }
 

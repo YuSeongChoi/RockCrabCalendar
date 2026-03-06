@@ -17,20 +17,6 @@ struct CalendarView: View {
     
     @State private var dragOffset: CGFloat = 0
     
-    private let lastSyncFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = .autoupdatingCurrent
-        f.dateFormat = AppDateFormats.lastSync
-        return f
-    }()
-    private var lastSyncText: String {
-        if let dt = scheduleVM.lastFetchedAt {
-            return "최근 동기화: \(lastSyncFormatter.string(from: dt))"
-        } else {
-            return "최근 동기화 기록 없음"
-        }
-    }
-    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -54,12 +40,6 @@ struct CalendarView: View {
                         dragOffset: $dragOffset
                     )
                     
-                    // 최근 동기화 캡션
-                    Text(lastSyncText)
-                        .font(.caption2.monospacedDigit())
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding(.trailing, 4)
                     Divider()
                 }
                 

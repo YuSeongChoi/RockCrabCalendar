@@ -11,11 +11,17 @@ import RockCrabShared
 
 @main
 struct RockCrabCalendarApp: App {
+    private enum AppTab: Hashable {
+        case home
+        case settings
+    }
+
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
     private let environment: AppEnvironment
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
+    @State private var selectedTab: AppTab = .home
     
     var body: some Scene {
         WindowGroup {
@@ -25,7 +31,7 @@ struct RockCrabCalendarApp: App {
                 }
                 WindowAlertHostingView()
                 
-                TabView {
+                TabView(selection: $selectedTab) {
                     HomeMainView(
                         calendarVM: calendarVM,
                         scheduleVM: scheduleVM,
@@ -34,22 +40,32 @@ struct RockCrabCalendarApp: App {
                     .tabItem {
                         Label("홈", systemImage: "calendar")
                     }
+                    .tag(AppTab.home)
 
                     SettingsView(scheduleVM: scheduleVM, userVM: userVM)
                         .tabItem {
                             Label("설정", systemImage: "gearshape")
                         }
+                        .tag(AppTab.settings)
                 }
             }
             .environmentObject(appDelegate)
             .environment(\.locale, .autoupdatingCurrent)
+            .onOpenURL { url in
+                handleDeepLink(url)
+            }
         }
     }
     
     @MainActor
     init() {
         let runtimeMode = AppEnvironment.RuntimeMode.resolved()
-        self.environment = AppEnvironment.configured(mode: runtimeMode)
+        let sharedDefaults = AppGroupUserDefaults.shared
+        AppGroupUserDefaults.migrateFromStandardIfNeeded(
+            keys: AppStorageKeys.appGroupMigrationKeys,
+            target: sharedDefaults
+        )
+        self.environment = AppEnvironment.configured(mode: runtimeMode, userDefaults: sharedDefaults)
 
         _calendarVM = State(initialValue: CalendarViewModel(
             holidayUseCase: environment.holidayUseCase,
@@ -64,6 +80,33 @@ struct RockCrabCalendarApp: App {
             migrationStore: environment.userScheduleMigrationStore
         ))
         AppStartupCoordinator().start()
+    }
+
+    private func handleDeepLink(_ url: URL) {
+        guard url.scheme?.lowercased() == "rockcrabcalendar" else { return }
+
+        let targetDate = parseDateFromDeepLink(url) ?? Date()
+        selectedTab = .home
+        calendarVM.select(date: targetDate)
+        calendarVM.currentMonth = calendarVM.startOfMonth(for: targetDate)
+        scheduleVM.selectedDate = targetDate
+    }
+
+    private func parseDateFromDeepLink(_ url: URL) -> Date? {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return nil
+        }
+        guard components.host == "calendar" else { return nil }
+        guard let dateString = components.queryItems?.first(where: { $0.name == "date" })?.value else {
+            return nil
+        }
+
+        let formatter = DateFormatter()
+        formatter.calendar = .current
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = .current
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: dateString)
     }
 }
 
