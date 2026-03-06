@@ -20,7 +20,7 @@ struct SettingsView: View {
     @State private var exportErrorMessage = ""
     @State private var showSyncResult = false
     @State private var syncResultMessage = ""
-    @State private var showClearConfirm = false
+    @State private var showClearConfirmAlert = false
 
     init(scheduleVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
         _scheduleVM = State(initialValue: scheduleVM)
@@ -31,35 +31,28 @@ struct SettingsView: View {
         ZStack {
             Color.appBackground
                 .ignoresSafeArea()
-            
-            VStack {
-                Form {
-                    Section("QWER 서버 일정") {
-                        Button {
-                            syncServerSchedules()
-                        } label: {
-                            HStack {
-                                Text("서버에 저장된 스케줄 가져오기")
-                                Spacer()
-                                if isSyncingServer {
-                                    ProgressView()
-                                }
-                            }
-                        }
-                        .disabled(isSyncingServer || isClearingFetched)
 
-                        Button(role: .destructive) {
-                            showClearConfirm = true
-                        } label: {
-                            HStack {
-                                Text("가져온 스케줄 삭제하기")
-                                Spacer()
-                                if isClearingFetched {
-                                    ProgressView()
-                                }
-                            }
-                        }
-                        .disabled(isSyncingServer || isClearingFetched)
+            ScrollView {
+                VStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("QWER 서버 일정")
+                            .font(.headline)
+
+                        actionButton(
+                            title: "서버에 저장된 스케줄 가져오기",
+                            tint: .accentColor,
+                            isLoading: isSyncingServer,
+                            isDisabled: isSyncingServer || isClearingFetched,
+                            action: syncServerSchedules
+                        )
+
+                        actionButton(
+                            title: "가져온 스케줄 삭제하기",
+                            tint: .red,
+                            isLoading: isClearingFetched,
+                            isDisabled: isSyncingServer || isClearingFetched,
+                            action: { showClearConfirmAlert = true }
+                        )
 
                         if let lastFetchedAt = scheduleVM.lastFetchedAt {
                             Text("마지막 가져오기: \(formatDateTime(lastFetchedAt))")
@@ -71,28 +64,28 @@ struct SettingsView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .padding(16)
                     .background(Color.cardBackground)
-                    .cornerRadius(15)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 
-                    Section("일정") {
-                        Button {
-                            exportSchedules()
-                        } label: {
-                            HStack {
-                                Text("전체 일정 내보내기 (ICS)")
-                                Spacer()
-                                if isExporting {
-                                    ProgressView()
-                                }
-                            }
-                        }
-                        .padding()
-                        .disabled(isExporting)
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("일정")
+                            .font(.headline)
+
+                        actionButton(
+                            title: "전체 일정 내보내기 (ICS)",
+                            tint: .accentColor,
+                            isLoading: isExporting,
+                            isDisabled: isExporting,
+                            action: exportSchedules
+                        )
                     }
+                    .padding(16)
                     .background(Color.cardBackground)
-                    .cornerRadius(15)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                 }
-                .scrollContentBackground(.hidden)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
         }
         .foregroundStyle(Color.textColor)
@@ -113,7 +106,7 @@ struct SettingsView: View {
         } message: {
             Text(syncResultMessage)
         }
-        .confirmationDialog("가져온 스케줄을 삭제할까요?", isPresented: $showClearConfirm, titleVisibility: .visible) {
+        .alert("가져온 스케줄을 삭제할까요?", isPresented: $showClearConfirmAlert) {
             Button("삭제", role: .destructive) {
                 clearFetchedServerSchedules()
             }
@@ -178,5 +171,34 @@ struct SettingsView: View {
         formatter.locale = .autoupdatingCurrent
         formatter.dateFormat = "yyyy.MM.dd HH:mm"
         return formatter.string(from: date)
+    }
+
+    @ViewBuilder
+    private func actionButton(
+        title: String,
+        tint: Color,
+        isLoading: Bool,
+        isDisabled: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            HStack(spacing: 10) {
+                Text(title)
+                    .fontWeight(.semibold)
+                Spacer()
+                if isLoading {
+                    ProgressView()
+                        .tint(.white)
+                }
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity)
+            .background(tint.opacity(isDisabled ? 0.45 : 1.0))
+            .foregroundStyle(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .disabled(isDisabled)
     }
 }
