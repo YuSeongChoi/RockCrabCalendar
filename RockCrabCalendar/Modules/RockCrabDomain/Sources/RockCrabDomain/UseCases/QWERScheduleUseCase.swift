@@ -81,6 +81,11 @@ public struct QWERScheduleUseCase {
         return fetched
     }
 
+    // Clear cached server schedules and last fetch metadata.
+    public func clearCache(cacheStore: ScheduleCacheStoreProtocol) {
+        cacheStore.clearScheduleCache()
+    }
+
     // Create or upsert a remote schedule.
     public func add(_ schedule: QWERScheduleItem) async throws {
         try await repository.saveSchedule(schedule)

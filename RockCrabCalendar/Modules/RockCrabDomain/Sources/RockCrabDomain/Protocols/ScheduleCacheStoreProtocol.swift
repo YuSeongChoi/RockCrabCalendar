@@ -12,6 +12,7 @@ public protocol ScheduleCacheStoreProtocol {
     func saveCachedSchedules(_ schedules: [QWERScheduleItem])
     func loadLastFetchDate() -> Date?
     func saveLastFetchDate(_ date: Date)
+    func clearScheduleCache()
     func loadActiveCategories() -> Set<ScheduleCategory>?
     func saveActiveCategories(_ categories: Set<ScheduleCategory>)
 }
