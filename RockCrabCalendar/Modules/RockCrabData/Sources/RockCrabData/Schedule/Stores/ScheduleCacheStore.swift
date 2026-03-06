@@ -38,6 +38,11 @@ public struct ScheduleCacheStore: ScheduleCacheStoreProtocol {
         store.set(date, forKey: AppStorageKeys.qwerScheduleLastFetchDate)
     }
 
+    public func clearScheduleCache() {
+        store.removeObject(forKey: AppStorageKeys.qwerScheduleCacheData)
+        store.removeObject(forKey: AppStorageKeys.qwerScheduleLastFetchDate)
+    }
+
     public func loadActiveCategories() -> Set<ScheduleCategory>? {
         guard let raw = store.array(forKey: AppStorageKeys.activeScheduleCategories) as? [String] else {
             return nil

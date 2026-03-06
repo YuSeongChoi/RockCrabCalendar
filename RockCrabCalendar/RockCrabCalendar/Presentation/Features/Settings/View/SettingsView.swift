@@ -12,10 +12,15 @@ struct SettingsView: View {
     @State private var userVM: UserScheduleViewModel
 
     @State private var isExporting = false
+    @State private var isSyncingServer = false
+    @State private var isClearingFetched = false
     @State private var exportURL: URL? = nil
     @State private var showShareSheet = false
     @State private var showExportError = false
     @State private var exportErrorMessage = ""
+    @State private var showSyncResult = false
+    @State private var syncResultMessage = ""
+    @State private var showClearConfirm = false
 
     init(scheduleVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
         _scheduleVM = State(initialValue: scheduleVM)
@@ -29,6 +34,46 @@ struct SettingsView: View {
             
             VStack {
                 Form {
+                    Section("QWER 서버 일정") {
+                        Button {
+                            syncServerSchedules()
+                        } label: {
+                            HStack {
+                                Text("서버에 저장된 스케줄 가져오기")
+                                Spacer()
+                                if isSyncingServer {
+                                    ProgressView()
+                                }
+                            }
+                        }
+                        .disabled(isSyncingServer || isClearingFetched)
+
+                        Button(role: .destructive) {
+                            showClearConfirm = true
+                        } label: {
+                            HStack {
+                                Text("가져온 스케줄 삭제하기")
+                                Spacer()
+                                if isClearingFetched {
+                                    ProgressView()
+                                }
+                            }
+                        }
+                        .disabled(isSyncingServer || isClearingFetched)
+
+                        if let lastFetchedAt = scheduleVM.lastFetchedAt {
+                            Text("마지막 가져오기: \(formatDateTime(lastFetchedAt))")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            Text("아직 서버에서 가져온 스케줄이 없습니다.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .background(Color.cardBackground)
+                    .cornerRadius(15)
+
                     Section("일정") {
                         Button {
                             exportSchedules()
@@ -63,6 +108,19 @@ struct SettingsView: View {
         } message: {
             Text(exportErrorMessage)
         }
+        .alert("서버 일정 동기화", isPresented: $showSyncResult) {
+            Button("확인", role: .cancel) { }
+        } message: {
+            Text(syncResultMessage)
+        }
+        .confirmationDialog("가져온 스케줄을 삭제할까요?", isPresented: $showClearConfirm, titleVisibility: .visible) {
+            Button("삭제", role: .destructive) {
+                clearFetchedServerSchedules()
+            }
+            Button("취소", role: .cancel) { }
+        } message: {
+            Text("서버의 원본 데이터는 삭제되지 않습니다. 앱에 저장된 가져온 일정만 삭제합니다.")
+        }
     }
 
     private func exportSchedules() {
@@ -89,5 +147,36 @@ struct SettingsView: View {
 
             isExporting = false
         }
+    }
+
+    private func syncServerSchedules() {
+        isSyncingServer = true
+
+        Task { @MainActor in
+            let success = await scheduleVM.syncServerSchedules()
+            isSyncingServer = false
+            syncResultMessage = success
+                ? "서버에서 최신 QWER 일정을 가져왔습니다."
+                : "서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요."
+            showSyncResult = true
+        }
+    }
+
+    private func clearFetchedServerSchedules() {
+        isClearingFetched = true
+
+        Task { @MainActor in
+            await scheduleVM.clearFetchedServerSchedules()
+            isClearingFetched = false
+            syncResultMessage = "가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다."
+            showSyncResult = true
+        }
+    }
+
+    private func formatDateTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = .autoupdatingCurrent
+        formatter.dateFormat = "yyyy.MM.dd HH:mm"
+        return formatter.string(from: date)
     }
 }

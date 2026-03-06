@@ -71,7 +71,7 @@ struct HomeMainView: View {
                             viewType = (viewType == .calendar) ? .list : .calendar
                         },
                         onRefresh: {
-                            scheduleVM.fetchAllSchedules(force: true)
+                            scheduleVM.loadCachedAndLocalSchedules()
                             userVM.fetchAllSchedules()
                         }
                     )
@@ -162,7 +162,7 @@ struct HomeMainView: View {
         }
         .onAppear {
             scheduleVM.selectedDate = calendarVM.selectedDate
-            scheduleVM.fetchAllSchedules(force: false)
+            scheduleVM.loadCachedAndLocalSchedules()
             userVM.fetchAllSchedules()
             AnalyticsHelper.logEvent(eventName: "main_screen", parameters: ["label":"메인화면"])
         }
@@ -178,8 +178,8 @@ struct HomeMainView: View {
         }
         .onChange(of: navigationPath) { _, newValue in
             if newValue.isEmpty {
-                // 부분 갱신이 이미 반영되므로 전체 강제 fetch는 피합니다
-                scheduleVM.fetchAllSchedules(force: false)
+                // 부분 갱신이 이미 반영되므로 캐시+로컬 동기화만 수행합니다.
+                scheduleVM.loadCachedAndLocalSchedules()
                 // userVM은 로컬 변경 시 바로 schedules에 반영되므로 fetch 생략 가능
             }
         }

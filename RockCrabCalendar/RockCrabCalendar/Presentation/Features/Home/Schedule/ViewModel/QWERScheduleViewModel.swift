@@ -172,47 +172,59 @@ final class QWERScheduleViewModel {
     }
     
     // Firestore에서 전체 스케줄을 가져오기 (캐시 우선)
-    // Fetch schedules with cache-first policy, then use-case for network.
+    // force == true 인 경우에만 서버 동기화를 수행합니다.
     func fetchAllSchedules(force: Bool = false) {
-        let now = Date()
-
-        if isFetching {
-            return
-        }
-
-        // 1) Cache-first
-        let cache = useCase.loadCache(cacheStore: cacheStore)
-        if let cachedSchedules = cache.schedules {
-            schedules = cachedSchedules
-        }
-
-        if let lastFetch = cache.lastFetchedAt {
-            lastFetchedAt = lastFetch
-        }
-
-        if !useCase.shouldRefresh(cacheStore: cacheStore, now: now, force: force) {
-            AppLogger.debug("⏳ 캐시 유효 – Service fetch 생략 (force == false)", category: .scheduleVM)
+        if force {
             Task { @MainActor [weak self] in
                 guard let self else { return }
-                let locals = await self.useCase.fetchLocalOnly()
-                self.schedules = self.mergeLocalSchedules(base: self.schedules, locals: locals)
+                _ = await self.syncServerSchedules()
             }
             return
         }
 
-        // 2) Network
+        loadCachedAndLocalSchedules()
+    }
+
+    // 서버 요청 없이 캐시+로컬 일정만 로드합니다.
+    func loadCachedAndLocalSchedules() {
+        let cache = useCase.loadCache(cacheStore: cacheStore)
+        let cached = cache.schedules ?? []
+        lastFetchedAt = cache.lastFetchedAt
+
         Task { @MainActor [weak self] in
             guard let self else { return }
-            isFetching = true
-            defer { isFetching = false }
-            do {
-                let fetched = try await self.useCase.refreshAndCache(cacheStore: self.cacheStore, now: now)
-                self.schedules = fetched
-                self.lastFetchedAt = now
-            } catch {
-                AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
-            }
+            let locals = await self.useCase.fetchLocalOnly()
+            self.schedules = self.mergeLocalSchedules(base: cached, locals: locals)
         }
+    }
+
+    // 설정 화면의 수동 동작에서만 호출되는 서버 동기화 API입니다.
+    @MainActor
+    @discardableResult
+    func syncServerSchedules() async -> Bool {
+        guard !isFetching else { return false }
+        isFetching = true
+        defer { isFetching = false }
+
+        let now = Date()
+        do {
+            let fetched = try await useCase.refreshAndCache(cacheStore: cacheStore, now: now)
+            schedules = fetched
+            lastFetchedAt = now
+            return true
+        } catch {
+            AppLogger.error("전체 스케줄 가져오기 실패: \(error.localizedDescription)", category: .scheduleVM)
+            return false
+        }
+    }
+
+    // 서버에서 가져온 캐시 일정만 삭제하고, 로컬 일정은 유지합니다.
+    @MainActor
+    func clearFetchedServerSchedules() async {
+        useCase.clearCache(cacheStore: cacheStore)
+        lastFetchedAt = nil
+        let locals = await useCase.fetchLocalOnly()
+        schedules = mergeLocalSchedules(base: [], locals: locals)
     }
 }
 
