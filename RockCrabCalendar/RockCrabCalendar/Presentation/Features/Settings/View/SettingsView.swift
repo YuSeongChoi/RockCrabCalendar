@@ -40,7 +40,6 @@ struct SettingsView: View {
 
                         actionButton(
                             title: "서버에 저장된 스케줄 가져오기",
-                            tint: .accentColor,
                             isLoading: isSyncingServer,
                             isDisabled: isSyncingServer || isClearingFetched,
                             action: syncServerSchedules
@@ -48,7 +47,6 @@ struct SettingsView: View {
 
                         actionButton(
                             title: "가져온 스케줄 삭제하기",
-                            tint: .red,
                             isLoading: isClearingFetched,
                             isDisabled: isSyncingServer || isClearingFetched,
                             action: { showClearConfirmAlert = true }
@@ -74,7 +72,6 @@ struct SettingsView: View {
 
                         actionButton(
                             title: "전체 일정 내보내기 (ICS)",
-                            tint: .accentColor,
                             isLoading: isExporting,
                             isDisabled: isExporting,
                             action: exportSchedules
@@ -176,7 +173,6 @@ struct SettingsView: View {
     @ViewBuilder
     private func actionButton(
         title: String,
-        tint: Color,
         isLoading: Bool,
         isDisabled: Bool,
         action: @escaping () -> Void
@@ -188,15 +184,21 @@ struct SettingsView: View {
                 Spacer()
                 if isLoading {
                     ProgressView()
-                        .tint(.white)
+                        .tint(Color.textColor)
                 }
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
-            .background(tint.opacity(isDisabled ? 0.45 : 1.0))
-            .foregroundStyle(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(UIColor.secondarySystemFill))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(Color(UIColor.separator).opacity(0.35), lineWidth: 1)
+            )
+            .foregroundStyle(Color.textColor)
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)
