@@ -156,15 +156,17 @@ extension UserScheduleViewModel {
         rangeEnd: Date,
         calendar cal: Calendar
     ) -> [UserScheduleItem] {
+        let repeatType: UserScheduleItem.RepeatType = item.repeatType ?? .none
+
         // Non-repeating: include only if inside range
-        if !item.isRepeat || item.repeatType == .none {
+        if !item.isRepeat || repeatType == .none {
             let d = cal.startOfDay(for: item.date)
             guard d >= rangeStart && d <= rangeEnd else { return [] }
             return [UserScheduleItem(
                 id: item.id,
                 title: item.title,
                 date: d,
-                time: item.time,
+                time: legacyTimeString(from: item),
                 isAllDay: item.isAllDay,
                 startTime: item.startTime,
                 endTime: item.endTime,
@@ -183,7 +185,7 @@ extension UserScheduleViewModel {
         let effectiveEnd = min(rangeEnd, cal.startOfDay(for: item.repeatEndDate ?? rangeEnd))
 
         // Fast-forward to the first occurrence on/after rangeStart
-        switch item.repeatType ?? .none {
+        switch repeatType {
         case .week:
             if current < rangeStart {
                 if let days = cal.dateComponents([.day], from: current, to: rangeStart).day {
@@ -194,7 +196,7 @@ extension UserScheduleViewModel {
             }
         case .day, .month, .year, .none:
             while current < rangeStart {
-                guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
+                guard let next = nextOccurrenceDate(from: current, type: repeatType, calendar: cal) else { break }
                 current = next
             }
         }
@@ -205,7 +207,7 @@ extension UserScheduleViewModel {
                     id: item.id,
                     title: item.title,
                     date: current,
-                    time: item.time,
+                    time: legacyTimeString(from: item),
                     isAllDay: item.isAllDay,
                     startTime: item.startTime,
                     endTime: item.endTime,
@@ -217,7 +219,7 @@ extension UserScheduleViewModel {
                     colorHex: item.colorHex
                 ))
             }
-            guard let next = nextOccurrenceDate(from: current, type: item.repeatType ?? .none, calendar: cal) else { break }
+            guard let next = nextOccurrenceDate(from: current, type: repeatType, calendar: cal) else { break }
             current = next
         }
 
@@ -237,5 +239,13 @@ extension UserScheduleViewModel {
         case .year:
             return cal.date(byAdding: .year, value: 1, to: date)
         }
+    }
+
+    private func legacyTimeString(from item: UserScheduleItem) -> String {
+        guard !item.isAllDay, let start = item.startTime else { return "" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = .autoupdatingCurrent
+        return formatter.string(from: start)
     }
 }
