@@ -842,20 +842,20 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
-            title: "2026 D AWARDS",
-            date: simpleDateFormatter.date(from: "2026-02-11")!,
-            time: "18:00",
-            place: "고려대학교 화정체육관",
-            members: [.Q, .W, .E, .R],
-            category: .award
-        ),
-        QWERScheduleItem(
             title: "QWER WORLD TOUR(ROCKATION - HOMECOMING) 팬클럽 선예매 사전 인증 시작",
             date: simpleDateFormatter.date(from: "2026-02-09")!,
             time: "14:00",
             place: "멜론티켓",
             members: [.Q, .W, .E, .R],
             category: .concert
+        ),
+        QWERScheduleItem(
+            title: "2026 D AWARDS",
+            date: simpleDateFormatter.date(from: "2026-02-11")!,
+            time: "18:00",
+            place: "고려대학교 화정체육관",
+            members: [.Q, .W, .E, .R],
+            category: .award
         ),
         QWERScheduleItem(
             title: "QWER WORLD TOUR(ROCKATION - HOMECOMING) 선예매",
@@ -946,6 +946,14 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "인천 개항장 페스타 1901 LIVE ROAD",
+            date: simpleDateFormatter.date(from: "2026-03-29")!,
+            time: "21:00",
+            place: "인천 개항장 문화지구일원 (상상플랫폼 등)",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "체리 블라썸 뮤직 페스티벌",
             date: simpleDateFormatter.date(from: "2026-04-05")!,
             time: "14:00",
@@ -958,6 +966,30 @@ extension QWERScheduleItem {
             date: simpleDateFormatter.date(from: "2026-04-18")!,
             time: "15:00",
             place: "피아 아레나 MM",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "2026 서울 히어로 락 페스티벌 x 트리헌드레드",
+            date: simpleDateFormatter.date(from: "2026-04-25")!,
+            time: "",
+            place: "문화비축기지",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "PEAK FESTIVAL 2026",
+            date: simpleDateFormatter.date(from: "2026-05-23")!,
+            time: "",
+            place: "난지 한강공원",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "WEVERSE CON FESTIVAL",
+            date: simpleDateFormatter.date(from: "2026-06-06")!,
+            time: "",
+            place: "올림픽공원 KSPO DOME, 88잔디마당",
             members: [.Q, .W, .E, .R],
             category: .concert
         )
