@@ -31,7 +31,7 @@ struct CategoryFilterSheet: View {
 
                     ForEach(Array(ScheduleCategory.allCases), id: \.self) { cat in
                         CategoryFilterRow(
-                            title: cat.rawValue,
+                            title: cat.displayName,
                             isSelected: selected.contains(cat),
                             onToggle: { toggleCategory(cat) }
                         )

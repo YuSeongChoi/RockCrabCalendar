@@ -34,7 +34,7 @@ struct ScheduleEditQWERSection: View {
         Section("분류") {
             Picker("카테고리", selection: $category) {
                 ForEach(ScheduleCategory.allCases, id: \.self) { cat in
-                    Text(cat.rawValue).tag(cat)
+                    Text(cat.displayName).tag(cat)
                 }
             }
         }

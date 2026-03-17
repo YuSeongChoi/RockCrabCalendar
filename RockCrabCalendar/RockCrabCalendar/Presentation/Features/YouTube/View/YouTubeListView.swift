@@ -15,10 +15,7 @@ struct YouTubeListView: View {
     
     // 표시용 날짜 포매터
     private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = .autoupdatingCurrent
-        formatter.dateFormat = "yyyy.MM.dd HH:mm"
-        return formatter
+        AppDateFormatterFactory.dateTimeFormatter()
     }()
 
     // Inject environment for DI.
@@ -55,7 +52,10 @@ struct YouTubeListView: View {
                     LazyVStack(spacing: 12) {
                         if let synced = viewModel.lastSyncedAt {
                             HStack {
-                                Text("동기화 : \(dateFormatter.string(from: synced))")
+                                Text(String.localizedStringWithFormat(
+                                    NSLocalizedString("동기화 : %@", comment: ""),
+                                    dateFormatter.string(from: synced)
+                                ))
                                     .pretendReg(size: 14)
                                     .foregroundStyle(.secondary)
                                     .padding(.horizontal)

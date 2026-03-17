@@ -140,12 +140,16 @@ public enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
     case award = "시상식"
     case birthday = "생일"
     case other = "기타"
+
+    public var displayName: String {
+        NSLocalizedString(rawValue, bundle: .main, value: rawValue, comment: "")
+    }
 }
 
 extension QWERScheduleItem {
     public var displayTime: String {
-        if timeStatus == .allDay { return "하루종일" }
-        if timeStatus == .unspecified { return "시간 미정" }
+        if timeStatus == .allDay { return NSLocalizedString("하루종일", bundle: .main, value: "하루종일", comment: "") }
+        if timeStatus == .unspecified { return NSLocalizedString("시간 미정", bundle: .main, value: "시간 미정", comment: "") }
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
         if let s = startTime, let e = endTime {
@@ -153,9 +157,11 @@ extension QWERScheduleItem {
         } else if let s = startTime {
             return "\(f.string(from: s))"
         }
-        return legacyTime.isEmpty ? "시간 미정" : legacyTime
+        return legacyTime.isEmpty ? NSLocalizedString("시간 미정", bundle: .main, value: "시간 미정", comment: "") : legacyTime
     }
-    public var displayPlace: String { place.isEmpty ? "장소 미정" : place }
+    public var displayPlace: String {
+        place.isEmpty ? NSLocalizedString("장소 미정", bundle: .main, value: "장소 미정", comment: "") : place
+    }
 }
 
 private extension QWERScheduleItem {

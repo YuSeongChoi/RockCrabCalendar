@@ -101,11 +101,7 @@ struct RockCrabCalendarApp: App {
             return nil
         }
 
-        let formatter = DateFormatter()
-        formatter.calendar = .current
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.timeZone = .current
-        formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = AppDateFormatterFactory.fixedDayKeyFormatter()
         return formatter.date(from: dateString)
     }
 }

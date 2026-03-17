@@ -11,15 +11,19 @@ public enum QWERMember: String, CaseIterable, Codable {
     case Q, W, E, R
     
     public var name: String {
+        displayName
+    }
+
+    public var displayName: String {
         switch self {
         case .Q:
-            return "쵸단"
+            return NSLocalizedString("쵸단", bundle: .main, value: "쵸단", comment: "")
         case .W:
-            return "마젠타"
+            return NSLocalizedString("마젠타", bundle: .main, value: "마젠타", comment: "")
         case .E:
-            return "히나"
+            return NSLocalizedString("히나", bundle: .main, value: "히나", comment: "")
         case .R:
-            return "시연"
+            return NSLocalizedString("시연", bundle: .main, value: "시연", comment: "")
         }
     }
 }

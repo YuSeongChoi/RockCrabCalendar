@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 struct CalendarWeekdayHeaderView: View {
-    private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
+    private let daysOfWeek = AppDateFormatterFactory.veryShortWeekdaySymbols()
     private let gridColumns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 7)
 
     var body: some View {

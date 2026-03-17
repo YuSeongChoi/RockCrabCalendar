@@ -1,6 +1,7 @@
 import Foundation
 import WidgetKit
 import RockCrabDomain
+import RockCrabShared
 
 struct RockCrabCalendarWidgetProvider: TimelineProvider {
     typealias Entry = RockCrabCalendarWidgetEntry
@@ -29,7 +30,7 @@ struct RockCrabCalendarWidgetProvider: TimelineProvider {
         let qwerLocal = store.loadLocalQWERSchedules()
         let qwer = mergeQWERSchedules(cached: qwerCached, local: qwerLocal)
         let user = store.loadUserSchedules()
-        let holidayNames = store.loadHolidayNameMap()
+        let holidayNames = AppLocalization.showsKoreanHolidays ? store.loadHolidayNameMap() : [:]
         let items = useCase.makeSnapshot(
             period: period,
             baseDate: now,

@@ -33,7 +33,7 @@ enum ICSExporter {
                 endTime: item.endTime,
                 isAllDay: item.isAllDay,
                 location: item.place,
-                description: "QWER 일정",
+                description: NSLocalizedString("QWER 일정", comment: ""),
                 uidPrefix: "qwer",
                 uid: item.id.uuidString,
                 dtStamp: stamp
@@ -48,7 +48,7 @@ enum ICSExporter {
                 endTime: item.endTime,
                 isAllDay: item.isAllDay,
                 location: item.place,
-                description: "개인 일정",
+                description: NSLocalizedString("개인 일정", comment: ""),
                 uidPrefix: "user",
                 uid: item.id.uuidString,
                 dtStamp: stamp

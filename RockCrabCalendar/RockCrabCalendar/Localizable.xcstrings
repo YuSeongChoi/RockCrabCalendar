@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "ko",
   "strings" : {
+    "%@이(가) %lld분 후 시작돼요!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ starts in %2$lld minutes!"
+          }
+        }
+      }
+    },
     "%lld" : {
 
     },
@@ -8,29 +18,163 @@
 
     },
     "Firestore에 올라간 QWER 일정은 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제할 수 있어요." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QWER schedules stored in Firestore can't be deleted here.\nOnly QWER schedules added by the user can be removed."
+          }
+        }
+      }
     },
     "QWER 서버 일정" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QWER Server Schedule"
+          }
+        }
+      }
     },
     "QWER 스케줄" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QWER Schedule"
+          }
+        }
+      }
     },
     "QWER 영상" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QWER Videos"
+          }
+        }
+      }
     },
-    "UPLOAD" : {
-
+    "QWER 일정" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QWER Schedule"
+          }
+        }
+      }
+    },
+    "QWER 일정 추가" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add QWER Schedule"
+          }
+        }
+      }
+    },
+    "QWER 일정 편집" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit QWER Schedule"
+          }
+        }
+      }
+    },
+    "가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Imported server schedules were deleted. Locally added schedules were kept."
+          }
+        }
+      }
+    },
+    "가져온 스케줄 삭제하기" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Imported Schedules"
+          }
+        }
+      }
     },
     "가져온 스케줄을 삭제할까요?" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete imported schedules?"
+          }
+        }
+      }
     },
     "개인 스케줄" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Private Schedule"
+            "value" : "Personal Schedule"
+          }
+        }
+      }
+    },
+    "개인 일정" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal Schedule"
+          }
+        }
+      }
+    },
+    "개인 일정 추가" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Personal Schedule"
+          }
+        }
+      }
+    },
+    "개인 일정 편집" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Personal Schedule"
+          }
+        }
+      }
+    },
+    "곧 일정 시작" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule Starting Soon"
+          }
+        }
+      }
+    },
+    "공연" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concert"
           }
         }
       }
@@ -41,6 +185,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Basic Info"
+          }
+        }
+      }
+    },
+    "기타" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Other"
           }
         }
       }
@@ -56,20 +211,96 @@
       }
     },
     "내보내기 실패" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export Failed"
+          }
+        }
+      }
     },
     "동기화 : %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Synced: %@"
+          }
+        }
+      }
+    },
+    "마젠타" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Magenta"
+          }
+        }
+      }
     },
     "마지막 가져오기: %@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last fetched: %@"
+          }
+        }
+      }
+    },
+    "매년" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yearly"
+          }
+        }
+      }
+    },
+    "매월" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly"
+          }
+        }
+      }
+    },
+    "매일" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily"
+          }
+        }
+      }
+    },
+    "매주" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly"
+          }
+        }
+      }
     },
     "멤버" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Member"
+            "value" : "Members"
           }
         }
       }
@@ -79,7 +310,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "repeat"
+            "value" : "Repeat"
           }
         }
       }
@@ -89,7 +320,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "repeat end"
+            "value" : "Repeat End"
           }
         }
       }
@@ -99,7 +330,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "repeat type"
+            "value" : "Repeat Type"
           }
         }
       }
@@ -109,16 +340,30 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "category"
+            "value" : "Category"
           }
         }
       }
     },
     "분류 선택" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Categories"
+          }
+        }
+      }
     },
     "불러오는 중..." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading..."
+          }
+        }
+      }
     },
     "삭제" : {
 
@@ -127,85 +372,415 @@
 
     },
     "색상" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Color"
+          }
+        }
+      }
     },
     "색상 선택" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pick a Color"
+          }
+        }
+      }
+    },
+    "생일" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Birthday"
+          }
+        }
+      }
+    },
+    "서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch server schedules. Please check your network connection."
+          }
+        }
+      }
     },
     "서버 일정 동기화" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Server Schedule Sync"
+          }
+        }
+      }
+    },
+    "서버에 저장된 스케줄 가져오기" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetch Schedules from Server"
+          }
+        }
+      }
+    },
+    "서버에서 최신 QWER 일정을 가져왔습니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetched the latest QWER schedules from the server."
+          }
+        }
+      }
     },
     "서버의 원본 데이터는 삭제되지 않습니다. 앱에 저장된 가져온 일정만 삭제합니다." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The original server data will not be deleted. Only imported schedules stored in the app will be removed."
+          }
+        }
+      }
     },
     "설정" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
     },
     "시간" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        }
+      }
     },
     "시간 미정" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time TBD"
+          }
+        }
+      }
     },
     "시간 있음" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Has Time"
+          }
+        }
+      }
+    },
+    "시상식" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Awards"
+          }
+        }
+      }
+    },
+    "시연" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siyeon"
+          }
+        }
+      }
     },
     "시작 시간" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Time"
+          }
+        }
+      }
     },
     "시작 전에 알림 받기" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notify Before Start"
+          }
+        }
+      }
     },
     "아직 서버에서 가져온 스케줄이 없습니다." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No schedules have been fetched from the server yet."
+          }
+        }
+      }
+    },
+    "없음" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        }
+      }
     },
     "오늘" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
     },
     "이 일정은 Firestore에 등록된 항목이라 앱에서 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제 가능합니다." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This schedule is stored in Firestore and cannot be deleted in the app.\nOnly QWER schedules added by the user can be deleted."
+          }
+        }
+      }
     },
     "일정" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schedule"
+          }
+        }
+      }
+    },
+    "일정이 없습니다" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No schedules"
+          }
+        }
+      }
     },
     "장소" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place"
+          }
+        }
+      }
+    },
+    "장소 미정" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Place TBD"
+          }
+        }
+      }
     },
     "저장" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        }
+      }
     },
     "적용" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply"
+          }
+        }
+      }
     },
     "전체 선택" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select All"
+          }
+        }
+      }
+    },
+    "전체 일정 내보내기 (ICS)" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Export All Schedules (ICS)"
+          }
+        }
+      }
     },
     "제목" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        }
+      }
     },
     "종료 시간" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End Time"
+          }
+        }
+      }
+    },
+    "쵸단" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chodan"
+          }
+        }
+      }
     },
     "취소" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
     },
     "카테고리" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category"
+          }
+        }
+      }
+    },
+    "팬사인회" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fansign"
+          }
+        }
+      }
     },
     "표시할 영상이 없어요!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No videos to show!"
+          }
+        }
+      }
     },
     "필터" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        }
+      }
     },
     "하루종일" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All Day"
+          }
+        }
+      }
     },
     "홈" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
     },
     "확인" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "히나" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hina"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"

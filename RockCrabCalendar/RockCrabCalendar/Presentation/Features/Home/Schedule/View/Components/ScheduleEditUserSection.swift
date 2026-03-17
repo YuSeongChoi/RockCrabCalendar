@@ -27,7 +27,7 @@ struct ScheduleEditUserSection: View {
             if isRepeat {
                 Picker("반복 종류", selection: $repeatType) {
                     ForEach(UserScheduleItem.RepeatType.allCases, id: \.self) { t in
-                        Text(t.rawValue).tag(t)
+                        Text(t.displayName).tag(t)
                     }
                 }
                 DatePicker("반복 종료", selection: $repeatEndDate, displayedComponents: .date)

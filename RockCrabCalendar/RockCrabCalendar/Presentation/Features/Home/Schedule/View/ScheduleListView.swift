@@ -18,10 +18,7 @@ struct ScheduleListView: View {
     private let calendar = Calendar.current
     
     private let dayLabelFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = .autoupdatingCurrent
-        f.dateFormat = AppDateFormats.dayLabel
-        return f
+        AppDateFormatterFactory.dayLabelFormatter()
     }()
     private var monthRange: DateInterval {
         calendarVM.currentMonthRange()
