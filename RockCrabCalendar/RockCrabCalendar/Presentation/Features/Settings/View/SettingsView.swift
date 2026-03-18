@@ -9,6 +9,8 @@ import SwiftUI
 import RockCrabShared
 
 struct SettingsView: View {
+    @AppStorage(AppStorageKeys.preferredAppLanguage, store: AppGroupUserDefaults.shared)
+    private var preferredAppLanguageRaw = AppLanguageOption.system.rawValue
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
 
@@ -55,7 +57,7 @@ struct SettingsView: View {
 
                         if let lastFetchedAt = scheduleVM.lastFetchedAt {
                             Text(String.localizedStringWithFormat(
-                                NSLocalizedString("마지막 가져오기: %@", comment: ""),
+                                AppLocalization.string("마지막 가져오기: %@"),
                                 formatDateTime(lastFetchedAt)
                             ))
                                 .font(.footnote)
@@ -80,6 +82,49 @@ struct SettingsView: View {
                             isDisabled: isExporting,
                             action: exportSchedules
                         )
+                    }
+                    .padding(16)
+                    .background(Color.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("앱 언어")
+                            .font(.headline)
+
+                        Menu {
+                            Picker("앱 언어", selection: $preferredAppLanguageRaw) {
+                                ForEach(AppLanguageOption.allCases) { option in
+                                    Text(option.displayName)
+                                        .tag(option.rawValue)
+                                }
+                            }
+                        } label: {
+                            HStack(spacing: 10) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(selectedLanguage.displayName)
+                                        .fontWeight(.semibold)
+                                    Text("앱과 위젯에 사용할 언어를 선택합니다.")
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.up.chevron.down")
+                                    .font(.footnote.weight(.semibold))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .fill(Color(UIColor.secondarySystemFill))
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .stroke(Color(UIColor.separator).opacity(0.35), lineWidth: 1)
+                            )
+                        }
+                        .buttonStyle(.plain)
                     }
                     .padding(16)
                     .background(Color.cardBackground)
@@ -150,8 +195,8 @@ struct SettingsView: View {
             let success = await scheduleVM.syncServerSchedules()
             isSyncingServer = false
             syncResultMessage = success
-                ? NSLocalizedString("서버에서 최신 QWER 일정을 가져왔습니다.", comment: "")
-                : NSLocalizedString("서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요.", comment: "")
+                ? AppLocalization.string("서버에서 최신 QWER 일정을 가져왔습니다.")
+                : AppLocalization.string("서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요.")
             showSyncResult = true
         }
     }
@@ -162,13 +207,17 @@ struct SettingsView: View {
         Task { @MainActor in
             await scheduleVM.clearFetchedServerSchedules()
             isClearingFetched = false
-            syncResultMessage = NSLocalizedString("가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다.", comment: "")
+            syncResultMessage = AppLocalization.string("가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다.")
             showSyncResult = true
         }
     }
 
     private func formatDateTime(_ date: Date) -> String {
         return AppDateFormatterFactory.dateTimeFormatter().string(from: date)
+    }
+
+    private var selectedLanguage: AppLanguageOption {
+        AppLanguageOption(rawValue: preferredAppLanguageRaw) ?? .system
     }
 
     @ViewBuilder

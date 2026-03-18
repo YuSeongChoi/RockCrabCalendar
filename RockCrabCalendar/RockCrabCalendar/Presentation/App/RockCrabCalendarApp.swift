@@ -18,6 +18,8 @@ struct RockCrabCalendarApp: App {
     }
 
     @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    @AppStorage(AppStorageKeys.preferredAppLanguage, store: AppGroupUserDefaults.shared)
+    private var preferredAppLanguageRaw = AppLanguageOption.system.rawValue
     private let environment: AppEnvironment
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
@@ -51,9 +53,18 @@ struct RockCrabCalendarApp: App {
                 }
             }
             .environmentObject(appDelegate)
-            .environment(\.locale, .autoupdatingCurrent)
+            .environment(\.locale, AppLocalization.locale(for: selectedAppLanguage))
             .onOpenURL { url in
                 handleDeepLink(url)
+            }
+            .onChange(of: preferredAppLanguageRaw) { _, newValue in
+                let selectedLanguage = AppLanguageOption(rawValue: newValue) ?? .system
+                let didUpdatePreferredLanguage = AppLocalization.syncPreferredLanguageCode(
+                    selectedLanguage: selectedLanguage
+                )
+                if didUpdatePreferredLanguage {
+                    WidgetCenter.shared.reloadAllTimelines()
+                }
             }
         }
     }
@@ -66,7 +77,11 @@ struct RockCrabCalendarApp: App {
             keys: AppStorageKeys.appGroupMigrationKeys,
             target: sharedDefaults
         )
+        let selectedLanguage = AppLanguageOption(
+            rawValue: sharedDefaults.string(forKey: AppStorageKeys.preferredAppLanguage) ?? ""
+        ) ?? .system
         let didUpdatePreferredLanguage = AppLocalization.syncPreferredLanguageCode(
+            selectedLanguage: selectedLanguage,
             userDefaults: sharedDefaults
         )
         self.environment = AppEnvironment.configured(mode: runtimeMode, userDefaults: sharedDefaults)
@@ -87,6 +102,10 @@ struct RockCrabCalendarApp: App {
         if didUpdatePreferredLanguage {
             WidgetCenter.shared.reloadAllTimelines()
         }
+    }
+
+    private var selectedAppLanguage: AppLanguageOption {
+        AppLanguageOption(rawValue: preferredAppLanguageRaw) ?? .system
     }
 
     private func handleDeepLink(_ url: URL) {

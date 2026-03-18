@@ -1,7 +1,13 @@
 import XCTest
 @testable import RockCrabDomain
+import RockCrabShared
 
 final class QWERScheduleItemTimeStatusTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        AppGroupUserDefaults.shared.set("ko", forKey: AppStorageKeys.preferredLanguageCode)
+    }
+
     func testLegacyTimeWithoutStartTimeDecodesAsTimedWithoutForcedEndTime() throws {
         let date = Date(timeIntervalSince1970: 1_740_000_000)
         let payload: [String: Any] = [
@@ -62,5 +68,24 @@ final class QWERScheduleItemTimeStatusTests: XCTestCase {
         XCTAssertNil(item.startTime)
         XCTAssertNil(item.endTime)
         XCTAssertEqual(item.displayTime, "시간 미정")
+    }
+
+    func testEnglishDisplayTimeIncludesKSTForTimedQWERSchedule() {
+        AppGroupUserDefaults.shared.set("en", forKey: AppStorageKeys.preferredLanguageCode)
+        let start = QWERScheduleItem.simpleTimeFormatter.date(from: "18:30")
+        let item = QWERScheduleItem(
+            title: "영어 시간 표기",
+            date: Date(),
+            time: "",
+            isAllDay: false,
+            startTime: start,
+            endTime: nil,
+            timeStatus: .timed,
+            place: "",
+            members: [.Q],
+            category: .other
+        )
+
+        XCTAssertEqual(item.displayTime, "18:30 KST")
     }
 }

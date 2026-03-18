@@ -21,7 +21,14 @@ struct UserScheduleCard: View {
 
             HStack(spacing: 8) {
                 Label(item.displayTime, systemImage: "clock")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .allowsTightening(true)
                 Label(item.displayPlace, systemImage: "house.circle.fill")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .allowsTightening(true)
+                    .layoutPriority(1)
             }
             .pretendReg(size: 13)
             .foregroundColor(.gray)

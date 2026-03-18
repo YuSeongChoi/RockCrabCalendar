@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import RockCrabDomain
+import RockCrabShared
 
 @Observable
 final class ScheduleEditViewModel {
@@ -26,12 +27,12 @@ final class ScheduleEditViewModel {
         switch mode {
         case .create(let kind):
             return kind == .qwer
-                ? NSLocalizedString("QWER 일정 추가", comment: "")
-                : NSLocalizedString("개인 일정 추가", comment: "")
+                ? AppLocalization.string("QWER 일정 추가")
+                : AppLocalization.string("개인 일정 추가")
         case .editQWER:
-            return NSLocalizedString("QWER 일정 편집", comment: "")
+            return AppLocalization.string("QWER 일정 편집")
         case .editUser:
-            return NSLocalizedString("개인 일정 편집", comment: "")
+            return AppLocalization.string("개인 일정 편집")
         }
     }
 

@@ -68,9 +68,9 @@ final class NotificationManager: NotificationScheduling {
             guard fireDate > Date() else { continue }
 
             let content = UNMutableNotificationContent()
-            content.title = NSLocalizedString("곧 일정 시작", comment: "")
+            content.title = AppLocalization.string("곧 일정 시작")
             content.body = String.localizedStringWithFormat(
-                NSLocalizedString("%@이(가) %lld분 후 시작돼요!", comment: ""),
+                AppLocalization.string("%@이(가) %lld분 후 시작돼요!"),
                 schedule.title,
                 Int(offset / 60)
             )

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 public struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     public let id: UUID
@@ -77,16 +78,17 @@ public struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     }
     
     public var displayTime: String {
-        if isAllDay { return NSLocalizedString("하루종일", bundle: .main, value: "하루종일", comment: "") }
+        if isAllDay { return AppLocalization.string("하루종일", value: "하루종일") }
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
+        f.locale = AppLocalization.locale
         if let s = startTime, let e = endTime {
             return "\(f.string(from: s)) ~ \(f.string(from: e))"
         }
-        return time.isEmpty ? NSLocalizedString("시간 미정", bundle: .main, value: "시간 미정", comment: "") : time
+        return time.isEmpty ? AppLocalization.string("시간 미정", value: "시간 미정") : time
     }
     public var displayPlace: String {
-        place.isEmpty ? NSLocalizedString("장소 미정", bundle: .main, value: "장소 미정", comment: "") : place
+        place.isEmpty ? AppLocalization.string("장소 미정", value: "장소 미정") : place
     }
 }
 
@@ -99,7 +101,7 @@ extension UserScheduleItem {
         case year = "매년"
 
         public var displayName: String {
-            NSLocalizedString(rawValue, bundle: .main, value: rawValue, comment: "")
+            AppLocalization.string(rawValue, value: rawValue)
         }
     }
 }

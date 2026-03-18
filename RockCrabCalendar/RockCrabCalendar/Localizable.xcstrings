@@ -2,6 +2,7 @@
   "sourceLanguage" : "ko",
   "strings" : {
     "%@이(가) %lld분 후 시작돼요!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -32,7 +33,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "QWER Server Schedule"
+            "value" : "QWER Server Schedules"
           }
         }
       }
@@ -58,6 +59,7 @@
       }
     },
     "QWER 일정" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -68,6 +70,7 @@
       }
     },
     "QWER 일정 추가" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -78,6 +81,7 @@
       }
     },
     "QWER 일정 편집" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -88,6 +92,7 @@
       }
     },
     "가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -129,6 +134,7 @@
       }
     },
     "개인 일정" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -139,6 +145,7 @@
       }
     },
     "개인 일정 추가" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -149,6 +156,7 @@
       }
     },
     "개인 일정 편집" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -159,6 +167,7 @@
       }
     },
     "곧 일정 시작" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -221,6 +230,7 @@
       }
     },
     "동기화 : %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -242,11 +252,23 @@
       }
     },
     "마지막 가져오기: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Last fetched: %@"
+          }
+        }
+      }
+    },
+    "마지막 동기화: %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last synced: %@"
           }
         }
       }
@@ -403,6 +425,7 @@
       }
     },
     "서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -417,7 +440,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Server Schedule Sync"
+            "value" : "Sync Server Schedules"
           }
         }
       }
@@ -428,12 +451,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fetch Schedules from Server"
+            "value" : "Fetch QWER Schedules from Server"
           }
         }
       }
     },
     "서버에서 최신 QWER 일정을 가져왔습니다." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -504,6 +528,17 @@
         }
       }
     },
+    "시스템 설정 사용" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Default"
+          }
+        }
+      }
+    },
     "시연" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -541,6 +576,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No schedules have been fetched from the server yet."
+          }
+        }
+      }
+    },
+    "앱 언어" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App Language"
+          }
+        }
+      }
+    },
+    "앱과 위젯에 사용할 언어를 선택합니다." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the language used in the app and widgets."
           }
         }
       }
@@ -813,6 +868,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "All Day"
+          }
+        }
+      }
+    },
+    "한국어" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korean"
           }
         }
       }

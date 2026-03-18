@@ -30,4 +30,19 @@ final class AppLocalizationTests: XCTestCase {
 
         XCTAssertTrue(AppLocalization.prefersEnglish)
     }
+
+    func testSyncPreferredLanguageCodeUsesSelectedAppLanguageOverride() {
+        let userDefaults = UserDefaults(suiteName: #function)!
+        defer { userDefaults.removePersistentDomain(forName: #function) }
+
+        let didChange = AppLocalization.syncPreferredLanguageCode(
+            selectedLanguage: .korean,
+            preferredLanguages: ["en"],
+            userDefaults: userDefaults,
+            locale: Locale(identifier: "en_US")
+        )
+
+        XCTAssertTrue(didChange)
+        XCTAssertEqual(userDefaults.string(forKey: AppStorageKeys.preferredLanguageCode), "ko")
+    }
 }

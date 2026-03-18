@@ -53,7 +53,7 @@ struct YouTubeListView: View {
                         if let synced = viewModel.lastSyncedAt {
                             HStack {
                                 Text(String.localizedStringWithFormat(
-                                    NSLocalizedString("동기화 : %@", comment: ""),
+                                    AppLocalization.string("마지막 동기화: %@"),
                                     dateFormatter.string(from: synced)
                                 ))
                                     .pretendReg(size: 14)

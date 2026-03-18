@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     public enum TimeStatus: String, Codable, Equatable {
@@ -142,25 +143,32 @@ public enum ScheduleCategory: String, Codable, Equatable, CaseIterable {
     case other = "기타"
 
     public var displayName: String {
-        NSLocalizedString(rawValue, bundle: .main, value: rawValue, comment: "")
+        AppLocalization.string(rawValue, value: rawValue)
     }
 }
 
 extension QWERScheduleItem {
     public var displayTime: String {
-        if timeStatus == .allDay { return NSLocalizedString("하루종일", bundle: .main, value: "하루종일", comment: "") }
-        if timeStatus == .unspecified { return NSLocalizedString("시간 미정", bundle: .main, value: "시간 미정", comment: "") }
+        if timeStatus == .allDay { return AppLocalization.string("하루종일", value: "하루종일") }
+        if timeStatus == .unspecified { return AppLocalization.string("시간 미정", value: "시간 미정") }
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
+        f.locale = AppLocalization.locale
+        f.timeZone = TimeZone(identifier: "Asia/Seoul")
         if let s = startTime, let e = endTime {
-            return "\(f.string(from: s)) ~ \(f.string(from: e))"
+            return withTimeZoneSuffix("\(f.string(from: s)) ~ \(f.string(from: e))")
         } else if let s = startTime {
-            return "\(f.string(from: s))"
+            return withTimeZoneSuffix(f.string(from: s))
         }
-        return legacyTime.isEmpty ? NSLocalizedString("시간 미정", bundle: .main, value: "시간 미정", comment: "") : legacyTime
+        return legacyTime.isEmpty ? AppLocalization.string("시간 미정", value: "시간 미정") : withTimeZoneSuffix(legacyTime)
     }
     public var displayPlace: String {
-        place.isEmpty ? NSLocalizedString("장소 미정", bundle: .main, value: "장소 미정", comment: "") : place
+        place.isEmpty ? AppLocalization.string("장소 미정", value: "장소 미정") : place
+    }
+
+    private func withTimeZoneSuffix(_ value: String) -> String {
+        guard AppLocalization.prefersEnglish else { return value }
+        return "\(value) KST"
     }
 }
 
