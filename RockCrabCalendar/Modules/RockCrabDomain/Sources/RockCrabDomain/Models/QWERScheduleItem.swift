@@ -154,6 +154,7 @@ extension QWERScheduleItem {
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
         f.locale = AppLocalization.locale
+        f.timeZone = TimeZone(identifier: "Asia/Seoul")
         if let s = startTime, let e = endTime {
             return withTimeZoneSuffix("\(f.string(from: s)) ~ \(f.string(from: e))")
         } else if let s = startTime {

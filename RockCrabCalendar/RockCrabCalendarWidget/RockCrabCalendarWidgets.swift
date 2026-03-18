@@ -289,6 +289,7 @@ private struct WidgetRootView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         formatter.locale = AppLocalization.locale
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         let value = formatter.string(from: start)
         guard AppLocalization.prefersEnglish, item.source == .qwer else { return value }
         return "\(value) KST"
