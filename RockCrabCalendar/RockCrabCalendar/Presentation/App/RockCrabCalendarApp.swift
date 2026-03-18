@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import UIKit
 import UserNotifications
 import WidgetKit
 import RockCrabShared
 
 @main
 struct RockCrabCalendarApp: App {
+    private static let appStoreURL = URL(string: "https://apps.apple.com/app/id6752741744")!
+
     private enum AppTab: Hashable {
         case home
         case settings
@@ -21,10 +24,13 @@ struct RockCrabCalendarApp: App {
     @AppStorage(AppStorageKeys.preferredAppLanguage, store: AppGroupUserDefaults.shared)
     private var preferredAppLanguageRaw = AppLanguageOption.system.rawValue
     private let environment: AppEnvironment
+    private let appUpdateService: AppUpdatePromptService
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
     @State private var selectedTab: AppTab = .home
+    @State private var appUpdatePrompt: AppUpdatePrompt?
+    @State private var hasCheckedForUpdate = false
     
     var body: some Scene {
         WindowGroup {
@@ -57,6 +63,9 @@ struct RockCrabCalendarApp: App {
             .onOpenURL { url in
                 handleDeepLink(url)
             }
+            .task {
+                await checkForUpdateIfNeeded()
+            }
             .onChange(of: preferredAppLanguageRaw) { _, newValue in
                 let selectedLanguage = AppLanguageOption(rawValue: newValue) ?? .system
                 let didUpdatePreferredLanguage = AppLocalization.syncPreferredLanguageCode(
@@ -65,6 +74,18 @@ struct RockCrabCalendarApp: App {
                 if didUpdatePreferredLanguage {
                     WidgetCenter.shared.reloadAllTimelines()
                 }
+            }
+            .alert(updatePromptTitle, isPresented: isShowingUpdatePrompt) {
+                Button(updateLaterTitle, role: .cancel) {
+                    guard let prompt = appUpdatePrompt else { return }
+                    appUpdateService.snooze(prompt)
+                    appUpdatePrompt = nil
+                }
+                Button(updateNowTitle) {
+                    openAppStoreForUpdate()
+                }
+            } message: {
+                Text(updatePromptMessage)
             }
         }
     }
@@ -85,6 +106,10 @@ struct RockCrabCalendarApp: App {
             userDefaults: sharedDefaults
         )
         self.environment = AppEnvironment.configured(mode: runtimeMode, userDefaults: sharedDefaults)
+        self.appUpdateService = AppUpdatePromptService(
+            provider: AppStoreLookupClient(fallbackTrackViewURL: Self.appStoreURL),
+            userDefaults: sharedDefaults
+        )
 
         _calendarVM = State(initialValue: CalendarViewModel(
             holidayUseCase: environment.holidayUseCase,
@@ -108,6 +133,40 @@ struct RockCrabCalendarApp: App {
         AppLanguageOption(rawValue: preferredAppLanguageRaw) ?? .system
     }
 
+    private var isShowingUpdatePrompt: Binding<Bool> {
+        Binding(
+            get: { appUpdatePrompt != nil },
+            set: { isPresented in
+                if isPresented == false {
+                    appUpdatePrompt = nil
+                }
+            }
+        )
+    }
+
+    private var updatePromptTitle: String {
+        AppLocalization.localized(ko: "업데이트 가능", en: "Update Available")
+    }
+
+    private var updatePromptMessage: String {
+        guard let prompt = appUpdatePrompt else { return "" }
+        return String.localizedStringWithFormat(
+            AppLocalization.localized(
+                ko: "새 버전 %@가 출시되었습니다. 지금 업데이트할까요?",
+                en: "Version %@ is available. Update now?"
+            ),
+            prompt.latestVersion
+        )
+    }
+
+    private var updateLaterTitle: String {
+        AppLocalization.localized(ko: "나중에", en: "Later")
+    }
+
+    private var updateNowTitle: String {
+        AppLocalization.localized(ko: "업데이트", en: "Update")
+    }
+
     private func handleDeepLink(_ url: URL) {
         guard url.scheme?.lowercased() == "rockcrabcalendar" else { return }
 
@@ -129,6 +188,29 @@ struct RockCrabCalendarApp: App {
 
         let formatter = AppDateFormatterFactory.fixedDayKeyFormatter()
         return formatter.date(from: dateString)
+    }
+
+    @MainActor
+    private func checkForUpdateIfNeeded() async {
+        guard hasCheckedForUpdate == false else { return }
+        hasCheckedForUpdate = true
+
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier,
+              let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+              currentVersion.isEmpty == false else {
+            return
+        }
+
+        appUpdatePrompt = await appUpdateService.checkForUpdate(
+            bundleIdentifier: bundleIdentifier,
+            currentVersion: currentVersion
+        )
+    }
+
+    private func openAppStoreForUpdate() {
+        guard let trackViewURL = appUpdatePrompt?.trackViewURL else { return }
+        UIApplication.shared.open(trackViewURL)
+        appUpdatePrompt = nil
     }
 }
 
