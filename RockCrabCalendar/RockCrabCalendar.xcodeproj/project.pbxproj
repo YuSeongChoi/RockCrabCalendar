@@ -75,7 +75,6 @@
 		5DF8D4C32F17904600371672 /* CalendarMonthGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8D4C12F17904600371672 /* CalendarMonthGridView.swift */; };
 		5DF8D4C42F17904600371672 /* CalendarWeekdayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8D4C22F17904600371672 /* CalendarWeekdayHeaderView.swift */; };
 		5DFCA6682F1F507000271E4A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFCA6672F1F507000271E4A /* Localizable.xcstrings */; };
-		C0A100000000000000000001 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0A100000000000000000004 /* InfoPlist.strings */; };
 		5DFE3F9F2F17958700CDA23F /* ScheduleDayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F972F17958700CDA23F /* ScheduleDayHeaderView.swift */; };
 		5DFE3FA12F17958700CDA23F /* QWERScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F952F17958700CDA23F /* QWERScheduleCard.swift */; };
 		5DFE3FA22F17958700CDA23F /* QWERScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F962F17958700CDA23F /* QWERScheduleListView.swift */; };
@@ -96,9 +95,10 @@
 		A7A000012F70000100000026 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
 		A7A000012F70000100000027 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		A7A000012F70000100000028 /* RockCrabCalendarWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000006 /* RockCrabCalendarWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C0A100000000000000000011 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFCA6672F1F507000271E4A /* Localizable.xcstrings */; };
 		B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
 		B0A1D2C3E4F5061728394A72 /* RockCrabDataFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */; };
+		C0A100000000000000000001 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0A100000000000000000004 /* InfoPlist.strings */; };
+		C0A100000000000000000011 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFCA6672F1F507000271E4A /* Localizable.xcstrings */; };
 		D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */; };
 		D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */; };
 		D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */; };
@@ -204,8 +204,6 @@
 		5DF8D4C12F17904600371672 /* CalendarMonthGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthGridView.swift; sourceTree = "<group>"; };
 		5DF8D4C22F17904600371672 /* CalendarWeekdayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeekdayHeaderView.swift; sourceTree = "<group>"; };
 		5DFCA6672F1F507000271E4A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		C0A100000000000000000002 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		C0A100000000000000000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5DFE3F952F17958700CDA23F /* QWERScheduleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleCard.swift; sourceTree = "<group>"; };
 		5DFE3F962F17958700CDA23F /* QWERScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleListView.swift; sourceTree = "<group>"; };
 		5DFE3F972F17958700CDA23F /* ScheduleDayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDayHeaderView.swift; sourceTree = "<group>"; };
@@ -227,6 +225,8 @@
 		A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditActionHandler.swift; sourceTree = "<group>"; };
 		B28D645CD62B46769F355F50 /* ScheduleEditQWERSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditQWERSection.swift; sourceTree = "<group>"; };
 		B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditFormState.swift; sourceTree = "<group>"; };
+		C0A100000000000000000002 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C0A100000000000000000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditMode.swift; sourceTree = "<group>"; };
 		DF378DC10BF04A46A3DA9CFF /* ScheduleEditMemberToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditMemberToggle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1128,7 +1128,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1172,7 +1172,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1295,7 +1295,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1325,7 +1325,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.7;
+				MARKETING_VERSION = 1.1.8;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
