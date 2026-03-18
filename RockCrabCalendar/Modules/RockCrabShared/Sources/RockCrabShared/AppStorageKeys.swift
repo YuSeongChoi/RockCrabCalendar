@@ -10,6 +10,9 @@ import Foundation
 public enum AppStorageKeys {
     public static let preferredAppLanguage = "preferredAppLanguage"
     public static let preferredLanguageCode = "preferredLanguageCode"
+    public static let appUpdateLastCheckedAt = "appUpdateLastCheckedAt"
+    public static let appUpdateSnoozedVersion = "appUpdateSnoozedVersion"
+    public static let appUpdateSnoozedUntil = "appUpdateSnoozedUntil"
 
     public static let holidayCacheData = "holidayCacheData"
     public static let holidayCacheYears = "holidayCacheYears"
@@ -26,6 +29,9 @@ public enum AppStorageKeys {
     public static let appGroupMigrationKeys: [String] = [
         preferredLanguageCode,
         preferredAppLanguage,
+        appUpdateLastCheckedAt,
+        appUpdateSnoozedVersion,
+        appUpdateSnoozedUntil,
         holidayCacheData,
         holidayCacheYears,
         holidayCacheBaseYear,
