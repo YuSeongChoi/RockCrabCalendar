@@ -7,6 +7,7 @@
 
 import Foundation
 import RockCrabDomain
+import RockCrabShared
 
 enum ICSExporter {
     static func makeCalendar(
@@ -33,7 +34,7 @@ enum ICSExporter {
                 endTime: item.endTime,
                 isAllDay: item.isAllDay,
                 location: item.place,
-                description: NSLocalizedString("QWER 일정", comment: ""),
+                description: AppLocalization.string("QWER 일정"),
                 uidPrefix: "qwer",
                 uid: item.id.uuidString,
                 dtStamp: stamp
@@ -48,7 +49,7 @@ enum ICSExporter {
                 endTime: item.endTime,
                 isAllDay: item.isAllDay,
                 location: item.place,
-                description: NSLocalizedString("개인 일정", comment: ""),
+                description: AppLocalization.string("개인 일정"),
                 uidPrefix: "user",
                 uid: item.id.uuidString,
                 dtStamp: stamp

@@ -5,6 +5,11 @@ public enum AppLocalization {
         Locale(identifier: preferredLanguageCode)
     }
 
+    public static var selectedAppLanguage: AppLanguageOption {
+        let rawValue = AppGroupUserDefaults.shared.string(forKey: AppStorageKeys.preferredAppLanguage)
+        return AppLanguageOption(rawValue: rawValue ?? "") ?? .system
+    }
+
     public static var preferredLanguageCode: String {
         if let storedLanguage = AppGroupUserDefaults.shared.string(forKey: AppStorageKeys.preferredLanguageCode),
            storedLanguage.isEmpty == false {
@@ -26,14 +31,39 @@ public enum AppLocalization {
         prefersEnglish ? en : ko
     }
 
+    public static func locale(
+        for selectedLanguage: AppLanguageOption,
+        bundle: Bundle = .main,
+        preferredLanguages: [String]? = nil,
+        locale: Locale = .autoupdatingCurrent
+    ) -> Locale {
+        Locale(identifier: resolvePreferredLanguageCode(
+            selectedLanguage: selectedLanguage,
+            bundle: bundle,
+            preferredLanguages: preferredLanguages,
+            locale: locale
+        ))
+    }
+
+    public static func string(
+        _ key: String,
+        bundle: Bundle = .main,
+        value: String? = nil
+    ) -> String {
+        let localizedBundle = localizedBundle(for: bundle)
+        return localizedBundle.localizedString(forKey: key, value: value ?? key, table: nil)
+    }
+
     @discardableResult
     public static func syncPreferredLanguageCode(
+        selectedLanguage: AppLanguageOption = selectedAppLanguage,
         bundle: Bundle = .main,
         preferredLanguages: [String]? = nil,
         userDefaults: UserDefaults = AppGroupUserDefaults.shared,
         locale: Locale = .autoupdatingCurrent
     ) -> Bool {
         let resolvedLanguage = resolvePreferredLanguageCode(
+            selectedLanguage: selectedLanguage,
             bundle: bundle,
             preferredLanguages: preferredLanguages,
             locale: locale
@@ -49,10 +79,15 @@ public enum AppLocalization {
     }
 
     private static func resolvePreferredLanguageCode(
+        selectedLanguage: AppLanguageOption = selectedAppLanguage,
         bundle: Bundle = .main,
         preferredLanguages: [String]? = nil,
         locale: Locale = .autoupdatingCurrent
     ) -> String {
+        if let selectedCode = selectedLanguage.languageCode {
+            return selectedCode
+        }
+
         if let preferredLanguage = preferredLanguages?.first,
            preferredLanguage.isEmpty == false {
             return preferredLanguage
@@ -69,6 +104,29 @@ public enum AppLocalization {
         }
 
         return locale.identifier
+    }
+
+    private static func localizedBundle(for bundle: Bundle) -> Bundle {
+        let preferred = preferredLanguageCode
+        let normalized = normalizedLanguageCode(from: preferred)
+
+        let candidates = [preferred, normalized].filter { !$0.isEmpty }
+        for candidate in candidates {
+            if let path = bundle.path(forResource: candidate, ofType: "lproj"),
+               let localizedBundle = Bundle(path: path) {
+                return localizedBundle
+            }
+        }
+
+        return bundle
+    }
+
+    private static func normalizedLanguageCode(from identifier: String) -> String {
+        identifier
+            .replacingOccurrences(of: "_", with: "-")
+            .split(separator: "-")
+            .first
+            .map(String.init) ?? identifier
     }
 }
 
@@ -115,7 +173,7 @@ public enum AppDateFormatterFactory {
     private static func baseFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
-        formatter.locale = .autoupdatingCurrent
+        formatter.locale = AppLocalization.locale
         formatter.timeZone = .autoupdatingCurrent
         return formatter
     }

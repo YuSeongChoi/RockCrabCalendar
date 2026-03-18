@@ -289,7 +289,9 @@ private struct WidgetRootView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         formatter.locale = AppLocalization.locale
-        return formatter.string(from: start)
+        let value = formatter.string(from: start)
+        guard AppLocalization.prefersEnglish, item.source == .qwer else { return value }
+        return "\(value) KST"
     }
 
     private func smallSortRule(_ lhs: CalendarWidgetScheduleSummary, _ rhs: CalendarWidgetScheduleSummary) -> Bool {
