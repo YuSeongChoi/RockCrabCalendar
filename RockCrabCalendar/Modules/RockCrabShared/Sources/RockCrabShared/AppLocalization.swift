@@ -1,9 +1,21 @@
 import Foundation
 
 public enum AppLocalization {
+    public static var locale: Locale {
+        Locale(identifier: preferredLanguageCode)
+    }
+
+    public static var preferredLanguageCode: String {
+        if let storedLanguage = AppGroupUserDefaults.shared.string(forKey: AppStorageKeys.preferredLanguageCode),
+           storedLanguage.isEmpty == false {
+            return storedLanguage
+        }
+
+        return resolvePreferredLanguageCode()
+    }
+
     public static var prefersEnglish: Bool {
-        let preferred = Bundle.main.preferredLocalizations.first ?? Locale.autoupdatingCurrent.identifier
-        return preferred.hasPrefix("en")
+        preferredLanguageCode.lowercased().hasPrefix("en")
     }
 
     public static var showsKoreanHolidays: Bool {
@@ -12,6 +24,51 @@ public enum AppLocalization {
 
     public static func localized(ko: String, en: String) -> String {
         prefersEnglish ? en : ko
+    }
+
+    @discardableResult
+    public static func syncPreferredLanguageCode(
+        bundle: Bundle = .main,
+        preferredLanguages: [String]? = nil,
+        userDefaults: UserDefaults = AppGroupUserDefaults.shared,
+        locale: Locale = .autoupdatingCurrent
+    ) -> Bool {
+        let resolvedLanguage = resolvePreferredLanguageCode(
+            bundle: bundle,
+            preferredLanguages: preferredLanguages,
+            locale: locale
+        )
+        let currentLanguage = userDefaults.string(forKey: AppStorageKeys.preferredLanguageCode)
+
+        guard currentLanguage != resolvedLanguage else {
+            return false
+        }
+
+        userDefaults.set(resolvedLanguage, forKey: AppStorageKeys.preferredLanguageCode)
+        return true
+    }
+
+    private static func resolvePreferredLanguageCode(
+        bundle: Bundle = .main,
+        preferredLanguages: [String]? = nil,
+        locale: Locale = .autoupdatingCurrent
+    ) -> String {
+        if let preferredLanguage = preferredLanguages?.first,
+           preferredLanguage.isEmpty == false {
+            return preferredLanguage
+        }
+
+        if let bundleLanguage = bundle.preferredLocalizations.first,
+           bundleLanguage.isEmpty == false {
+            return bundleLanguage
+        }
+
+        if let preferredLanguage = Locale.preferredLanguages.first,
+           preferredLanguage.isEmpty == false {
+            return preferredLanguage
+        }
+
+        return locale.identifier
     }
 }
 

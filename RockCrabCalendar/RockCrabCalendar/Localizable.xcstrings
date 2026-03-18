@@ -566,12 +566,78 @@
         }
       }
     },
+    "오늘 일정" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today's Schedule"
+          }
+        }
+      }
+    },
+    "오늘 일정을 빠르게 확인합니다." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check today's schedule at a glance."
+          }
+        }
+      }
+    },
     "이 일정은 Firestore에 등록된 항목이라 앱에서 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제 가능합니다." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "This schedule is stored in Firestore and cannot be deleted in the app.\nOnly QWER schedules added by the user can be deleted."
+          }
+        }
+      }
+    },
+    "이번 달 일정" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Month's Schedule"
+          }
+        }
+      }
+    },
+    "이번 달 캘린더를 확인합니다." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check this month's calendar."
+          }
+        }
+      }
+    },
+    "이번 주 일정" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Week's Schedule"
+          }
+        }
+      }
+    },
+    "이번 주 캘린더를 확인합니다." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check this week's calendar."
           }
         }
       }

@@ -10,12 +10,18 @@ private struct WidgetRootView: View {
 
     private let calendar: Calendar = {
         var cal = Calendar(identifier: .gregorian)
-        cal.locale = .autoupdatingCurrent
+        cal.locale = AppLocalization.locale
         cal.timeZone = .current
         cal.firstWeekday = 1
         return cal
     }()
-    private let weekdaySymbols = AppDateFormatterFactory.veryShortWeekdaySymbols()
+    private var weekdaySymbols: [String] {
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.locale = AppLocalization.locale
+        formatter.timeZone = .autoupdatingCurrent
+        return formatter.veryShortStandaloneWeekdaySymbols
+    }
 
     var body: some View {
         switch family {
@@ -211,7 +217,7 @@ private struct WidgetRootView: View {
     private func monthTitle(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.calendar = calendar
-        formatter.locale = .autoupdatingCurrent
+        formatter.locale = AppLocalization.locale
         formatter.setLocalizedDateFormatFromTemplate("MMM")
         return formatter.string(from: date)
     }
@@ -282,7 +288,7 @@ private struct WidgetRootView: View {
         guard let start = item.startTime else { return AppLocalization.localized(ko: "시간 미정", en: "Time TBD") }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        formatter.locale = .autoupdatingCurrent
+        formatter.locale = AppLocalization.locale
         return formatter.string(from: start)
     }
 
@@ -364,8 +370,8 @@ private struct TodayWidget: Widget {
             WidgetRootView(entry: entry)
                 .containerBackground(.background, for: .widget)
         }
-        .configurationDisplayName(AppLocalization.localized(ko: "오늘 일정", en: "Today's Schedule"))
-        .description(AppLocalization.localized(ko: "오늘 일정을 빠르게 확인합니다.", en: "Check today's schedule at a glance."))
+        .configurationDisplayName("오늘 일정")
+        .description("오늘 일정을 빠르게 확인합니다.")
         .supportedFamilies([.systemSmall])
     }
 }
@@ -378,8 +384,8 @@ private struct WeekWidget: Widget {
             WidgetRootView(entry: entry)
                 .containerBackground(.background, for: .widget)
         }
-        .configurationDisplayName(AppLocalization.localized(ko: "이번 주 일정", en: "This Week's Schedule"))
-        .description(AppLocalization.localized(ko: "이번 주 캘린더를 확인합니다.", en: "Check this week's calendar."))
+        .configurationDisplayName("이번 주 일정")
+        .description("이번 주 캘린더를 확인합니다.")
         .supportedFamilies([.systemMedium])
     }
 }
@@ -392,8 +398,8 @@ private struct MonthWidget: Widget {
             WidgetRootView(entry: entry)
                 .containerBackground(.background, for: .widget)
         }
-        .configurationDisplayName(AppLocalization.localized(ko: "이번 달 일정", en: "This Month's Schedule"))
-        .description(AppLocalization.localized(ko: "이번 달 캘린더를 확인합니다.", en: "Check this month's calendar."))
+        .configurationDisplayName("이번 달 일정")
+        .description("이번 달 캘린더를 확인합니다.")
         .supportedFamilies([.systemLarge])
     }
 }
