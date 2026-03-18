@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 struct SettingsView: View {
     @State private var scheduleVM: QWERScheduleViewModel
@@ -53,7 +54,10 @@ struct SettingsView: View {
                         )
 
                         if let lastFetchedAt = scheduleVM.lastFetchedAt {
-                            Text("마지막 가져오기: \(formatDateTime(lastFetchedAt))")
+                            Text(String.localizedStringWithFormat(
+                                NSLocalizedString("마지막 가져오기: %@", comment: ""),
+                                formatDateTime(lastFetchedAt)
+                            ))
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
                         } else {
@@ -146,8 +150,8 @@ struct SettingsView: View {
             let success = await scheduleVM.syncServerSchedules()
             isSyncingServer = false
             syncResultMessage = success
-                ? "서버에서 최신 QWER 일정을 가져왔습니다."
-                : "서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요."
+                ? NSLocalizedString("서버에서 최신 QWER 일정을 가져왔습니다.", comment: "")
+                : NSLocalizedString("서버 일정 가져오기에 실패했습니다. 네트워크 상태를 확인해 주세요.", comment: "")
             showSyncResult = true
         }
     }
@@ -158,16 +162,13 @@ struct SettingsView: View {
         Task { @MainActor in
             await scheduleVM.clearFetchedServerSchedules()
             isClearingFetched = false
-            syncResultMessage = "가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다."
+            syncResultMessage = NSLocalizedString("가져온 서버 일정을 삭제했습니다. 로컬로 추가한 일정은 유지됩니다.", comment: "")
             showSyncResult = true
         }
     }
 
     private func formatDateTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = .autoupdatingCurrent
-        formatter.dateFormat = "yyyy.MM.dd HH:mm"
-        return formatter.string(from: date)
+        return AppDateFormatterFactory.dateTimeFormatter().string(from: date)
     }
 
     @ViewBuilder
@@ -179,7 +180,7 @@ struct SettingsView: View {
     ) -> some View {
         Button(action: action) {
             HStack(spacing: 10) {
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .fontWeight(.semibold)
                 Spacer()
                 if isLoading {

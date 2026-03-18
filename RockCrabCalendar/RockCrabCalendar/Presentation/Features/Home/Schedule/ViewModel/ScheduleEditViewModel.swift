@@ -25,11 +25,13 @@ final class ScheduleEditViewModel {
     var titleText: String {
         switch mode {
         case .create(let kind):
-            return kind == .qwer ? "QWER 일정 추가" : "개인 일정 추가"
+            return kind == .qwer
+                ? NSLocalizedString("QWER 일정 추가", comment: "")
+                : NSLocalizedString("개인 일정 추가", comment: "")
         case .editQWER:
-            return "QWER 일정 편집"
+            return NSLocalizedString("QWER 일정 편집", comment: "")
         case .editUser:
-            return "개인 일정 편집"
+            return NSLocalizedString("개인 일정 편집", comment: "")
         }
     }
 

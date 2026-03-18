@@ -1,6 +1,7 @@
 import SwiftUI
 import WidgetKit
 import RockCrabDomain
+import RockCrabShared
 
 private struct WidgetRootView: View {
     var entry: RockCrabCalendarWidgetEntry
@@ -9,12 +10,18 @@ private struct WidgetRootView: View {
 
     private let calendar: Calendar = {
         var cal = Calendar(identifier: .gregorian)
-        cal.locale = Locale(identifier: "ko_KR")
+        cal.locale = AppLocalization.locale
         cal.timeZone = .current
         cal.firstWeekday = 1
         return cal
     }()
-    private let weekdaySymbols = ["일", "월", "화", "수", "목", "금", "토"]
+    private var weekdaySymbols: [String] {
+        let formatter = DateFormatter()
+        formatter.calendar = calendar
+        formatter.locale = AppLocalization.locale
+        formatter.timeZone = .autoupdatingCurrent
+        return formatter.veryShortStandaloneWeekdaySymbols
+    }
 
     var body: some View {
         switch family {
@@ -35,11 +42,11 @@ private struct WidgetRootView: View {
         let hiddenCount = max(0, todayItems.count - visibleItems.count)
 
         return VStack(alignment: .leading, spacing: 3) {
-            Text("오늘")
+            Text(AppLocalization.localized(ko: "오늘", en: "Today"))
                 .font(.headline)
 
             if visibleItems.isEmpty {
-                Text("일정 없음")
+                Text(AppLocalization.localized(ko: "일정 없음", en: "No schedules"))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -61,7 +68,7 @@ private struct WidgetRootView: View {
                 if hiddenCount > 0 {
                     HStack {
                         Spacer()
-                        Text("외 \(hiddenCount)개 일정")
+                        Text(AppLocalization.prefersEnglish ? "\(hiddenCount) more" : "외 \(hiddenCount)개 일정")
                             .font(.caption2)
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
@@ -86,7 +93,7 @@ private struct WidgetRootView: View {
             let cellHeight = max(rowMinHeight, min(58, available))
 
             VStack(alignment: .leading, spacing: verticalSpacing) {
-                Text("이번 주")
+                Text(AppLocalization.localized(ko: "이번 주", en: "This Week"))
                     .font(.headline)
                     .frame(height: headerHeight, alignment: .topLeading)
                 HStack(spacing: 0) {
@@ -210,8 +217,8 @@ private struct WidgetRootView: View {
     private func monthTitle(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.calendar = calendar
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "M월"
+        formatter.locale = AppLocalization.locale
+        formatter.setLocalizedDateFormatFromTemplate("MMM")
         return formatter.string(from: date)
     }
 
@@ -277,11 +284,11 @@ private struct WidgetRootView: View {
     }
 
     private func timeText(for item: CalendarWidgetScheduleSummary) -> String {
-        if item.isAllDay { return "하루종일" }
-        guard let start = item.startTime else { return "시간 미정" }
+        if item.isAllDay { return AppLocalization.localized(ko: "하루종일", en: "All Day") }
+        guard let start = item.startTime else { return AppLocalization.localized(ko: "시간 미정", en: "Time TBD") }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-        formatter.locale = .autoupdatingCurrent
+        formatter.locale = AppLocalization.locale
         return formatter.string(from: start)
     }
 
@@ -301,11 +308,7 @@ private struct WidgetRootView: View {
     }
 
     private func dayKey(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.calendar = calendar
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.timeZone = .current
-        formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = AppDateFormatterFactory.fixedDayKeyFormatter()
         return formatter.string(from: date)
     }
 

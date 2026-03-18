@@ -77,15 +77,17 @@ public struct UserScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     }
     
     public var displayTime: String {
-        if isAllDay { return "하루종일" }
+        if isAllDay { return NSLocalizedString("하루종일", bundle: .main, value: "하루종일", comment: "") }
         let f = DateFormatter()
         f.dateFormat = "HH:mm"
         if let s = startTime, let e = endTime {
             return "\(f.string(from: s)) ~ \(f.string(from: e))"
         }
-        return time.isEmpty ? "시간 미정" : time
+        return time.isEmpty ? NSLocalizedString("시간 미정", bundle: .main, value: "시간 미정", comment: "") : time
     }
-    public var displayPlace: String { place.isEmpty ? "장소 미정" : place }
+    public var displayPlace: String {
+        place.isEmpty ? NSLocalizedString("장소 미정", bundle: .main, value: "장소 미정", comment: "") : place
+    }
 }
 
 extension UserScheduleItem {
@@ -95,5 +97,9 @@ extension UserScheduleItem {
         case week = "매주"
         case month = "매월"
         case year = "매년"
+
+        public var displayName: String {
+            NSLocalizedString(rawValue, bundle: .main, value: rawValue, comment: "")
+        }
     }
 }

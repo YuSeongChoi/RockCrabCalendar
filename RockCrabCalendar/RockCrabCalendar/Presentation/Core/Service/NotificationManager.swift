@@ -68,8 +68,12 @@ final class NotificationManager: NotificationScheduling {
             guard fireDate > Date() else { continue }
 
             let content = UNMutableNotificationContent()
-            content.title = "곧 일정 시작"
-            content.body = "\(schedule.title)이(가) \(Int(offset / 60))분 후 시작돼요!"
+            content.title = NSLocalizedString("곧 일정 시작", comment: "")
+            content.body = String.localizedStringWithFormat(
+                NSLocalizedString("%@이(가) %lld분 후 시작돼요!", comment: ""),
+                schedule.title,
+                Int(offset / 60)
+            )
             content.sound = .default
 
             let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: fireDate)

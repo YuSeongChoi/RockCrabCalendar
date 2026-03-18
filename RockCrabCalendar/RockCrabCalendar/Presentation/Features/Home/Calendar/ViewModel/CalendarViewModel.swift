@@ -70,13 +70,15 @@ final class CalendarViewModel {
     }
 
     func holidayName(on date: Date) -> String? {
-        holidayStore.name(on: date)
+        guard AppLocalization.showsKoreanHolidays else { return nil }
+        return holidayStore.name(on: date)
     }
 }
 
 extension CalendarViewModel {
     // Fetch holiday data once using the use-case boundary.
     func fetchHolidayOnce(baseYear: Int) async {
+        guard AppLocalization.showsKoreanHolidays else { return }
         do {
             if let items = try await holidayUseCase.fetchIfNeeded(baseYear: baseYear) {
                 holidayStore.updateWithItems(items)

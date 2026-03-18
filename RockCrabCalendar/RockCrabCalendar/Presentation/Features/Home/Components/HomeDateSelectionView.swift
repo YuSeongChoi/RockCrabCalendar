@@ -14,9 +14,7 @@ struct HomeDateSelectionView: View {
     let onNext: () -> Void
 
     private let monthYearFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = AppDateFormats.monthTitle
-        return formatter
+        AppDateFormatterFactory.monthYearFormatter()
     }()
 
     var body: some View {

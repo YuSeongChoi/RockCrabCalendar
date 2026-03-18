@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UserNotifications
+import WidgetKit
 import RockCrabShared
 
 @main
@@ -65,6 +66,9 @@ struct RockCrabCalendarApp: App {
             keys: AppStorageKeys.appGroupMigrationKeys,
             target: sharedDefaults
         )
+        let didUpdatePreferredLanguage = AppLocalization.syncPreferredLanguageCode(
+            userDefaults: sharedDefaults
+        )
         self.environment = AppEnvironment.configured(mode: runtimeMode, userDefaults: sharedDefaults)
 
         _calendarVM = State(initialValue: CalendarViewModel(
@@ -80,6 +84,9 @@ struct RockCrabCalendarApp: App {
             migrationStore: environment.userScheduleMigrationStore
         ))
         AppStartupCoordinator().start()
+        if didUpdatePreferredLanguage {
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
 
     private func handleDeepLink(_ url: URL) {
@@ -101,11 +108,7 @@ struct RockCrabCalendarApp: App {
             return nil
         }
 
-        let formatter = DateFormatter()
-        formatter.calendar = .current
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.timeZone = .current
-        formatter.dateFormat = "yyyy-MM-dd"
+        let formatter = AppDateFormatterFactory.fixedDayKeyFormatter()
         return formatter.date(from: dateString)
     }
 }

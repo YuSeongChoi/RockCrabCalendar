@@ -23,11 +23,11 @@ struct EmptyStateView: View {
             Image(systemName: systemImage)
                 .font(.system(size: 24))
                 .foregroundStyle(.tertiary)
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.callout)
                 .foregroundStyle(.secondary)
             if let subtitle, !subtitle.isEmpty {
-                Text(subtitle)
+                Text(LocalizedStringKey(subtitle))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

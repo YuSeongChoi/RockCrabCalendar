@@ -75,6 +75,7 @@
 		5DF8D4C32F17904600371672 /* CalendarMonthGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8D4C12F17904600371672 /* CalendarMonthGridView.swift */; };
 		5DF8D4C42F17904600371672 /* CalendarWeekdayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8D4C22F17904600371672 /* CalendarWeekdayHeaderView.swift */; };
 		5DFCA6682F1F507000271E4A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFCA6672F1F507000271E4A /* Localizable.xcstrings */; };
+		C0A100000000000000000001 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C0A100000000000000000004 /* InfoPlist.strings */; };
 		5DFE3F9F2F17958700CDA23F /* ScheduleDayHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F972F17958700CDA23F /* ScheduleDayHeaderView.swift */; };
 		5DFE3FA12F17958700CDA23F /* QWERScheduleCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F952F17958700CDA23F /* QWERScheduleCard.swift */; };
 		5DFE3FA22F17958700CDA23F /* QWERScheduleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFE3F962F17958700CDA23F /* QWERScheduleListView.swift */; };
@@ -95,6 +96,7 @@
 		A7A000012F70000100000026 /* RockCrabDomain in Frameworks */ = {isa = PBXBuildFile; productRef = E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */; };
 		A7A000012F70000100000027 /* RockCrabShared in Frameworks */ = {isa = PBXBuildFile; productRef = A622A078AF1AD2268F01F207 /* RockCrabShared */; };
 		A7A000012F70000100000028 /* RockCrabCalendarWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A7A000012F70000100000006 /* RockCrabCalendarWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C0A100000000000000000011 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5DFCA6672F1F507000271E4A /* Localizable.xcstrings */; };
 		B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A61 /* RockCrabData */; };
 		B0A1D2C3E4F5061728394A72 /* RockCrabDataFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */; };
 		D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */; };
@@ -202,6 +204,8 @@
 		5DF8D4C12F17904600371672 /* CalendarMonthGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarMonthGridView.swift; sourceTree = "<group>"; };
 		5DF8D4C22F17904600371672 /* CalendarWeekdayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeekdayHeaderView.swift; sourceTree = "<group>"; };
 		5DFCA6672F1F507000271E4A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		C0A100000000000000000002 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C0A100000000000000000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5DFE3F952F17958700CDA23F /* QWERScheduleCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleCard.swift; sourceTree = "<group>"; };
 		5DFE3F962F17958700CDA23F /* QWERScheduleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QWERScheduleListView.swift; sourceTree = "<group>"; };
 		5DFE3F972F17958700CDA23F /* ScheduleDayHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDayHeaderView.swift; sourceTree = "<group>"; };
@@ -565,6 +569,7 @@
 				5D029BD62CA3DE1D0090B4D1 /* RockTurtleCalendarResources.swift */,
 				5DE0243B2CA3D7A000472395 /* Preview Content */,
 				5DE0243A2CA3D7A000472395 /* RockTurtleCalendar.entitlements */,
+				C0A100000000000000000004 /* InfoPlist.strings */,
 				5DFCA6672F1F507000271E4A /* Localizable.xcstrings */,
 			);
 			name = Resources;
@@ -814,6 +819,7 @@
 				5DE0245A2CA3DC2500472395 /* Lato-LightItalic.ttf in Resources */,
 				5DE024682CA3DC2500472395 /* NotoSansCJKkr-Regular.otf in Resources */,
 				5DFCA6682F1F507000271E4A /* Localizable.xcstrings in Resources */,
+				C0A100000000000000000001 /* InfoPlist.strings in Resources */,
 				5DE024602CA3DC2500472395 /* NotoSansCJKkr-Medium.otf in Resources */,
 				5DE024612CA3DC2500472395 /* Lato-Regular.ttf in Resources */,
 				5DE024662CA3DC2500472395 /* Lato-Light.ttf in Resources */,
@@ -840,6 +846,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0A100000000000000000011 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -949,6 +956,18 @@
 			targetProxy = A7A000012F70000100000041 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C0A100000000000000000004 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C0A100000000000000000003 /* en */,
+				C0A100000000000000000002 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5DE0243E2CA3D7A000472395 /* Debug */ = {
