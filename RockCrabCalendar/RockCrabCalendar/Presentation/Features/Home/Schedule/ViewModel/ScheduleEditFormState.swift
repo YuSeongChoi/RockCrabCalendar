@@ -108,7 +108,7 @@ struct ScheduleEditFormState {
             timeStatus: qwerTimeStatus,
             place: trimmed(place),
             shouldNotify: qwerTimeStatus == .timed ? shouldNotify : false,
-            members: Array(selectedMembers).sorted { $0.rawValue < $1.rawValue },
+            members: QWERMember.fixedSorted(Array(selectedMembers)),
             category: category
         )
     }
