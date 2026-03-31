@@ -27,4 +27,21 @@ public enum QWERMember: String, CaseIterable, Codable {
             return AppLocalization.string("시연", value: "시연")
         }
     }
+
+    public var fixedOrder: Int {
+        switch self {
+        case .Q:
+            return 0
+        case .W:
+            return 1
+        case .E:
+            return 2
+        case .R:
+            return 3
+        }
+    }
+
+    public static func fixedSorted(_ members: [QWERMember]) -> [QWERMember] {
+        Array(Set(members)).sorted { $0.fixedOrder < $1.fixedOrder }
+    }
 }

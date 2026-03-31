@@ -12,19 +12,22 @@ struct HomeCalendarOptionView: View {
     let onShowFilter: () -> Void
     let onToday: () -> Void
     let onToggleView: () -> Void
-    let onRefresh: () -> Void
 
     var body: some View {
-        HStack {
-            Button(action: onShowFilter) {
-                Label("필터", systemImage: "line.3.horizontal.decrease.circle")
-                    .labelStyle(.titleAndIcon)
-                    .pretendSemiBold(size: 14)
-                    .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
-                    .background(Capsule().fill(Color.pillBackground))
-                    .foregroundColor(.primary)
+        HStack(spacing: 0) {
+            HStack {
+                Button(action: onShowFilter) {
+                    Label("필터", systemImage: "line.3.horizontal.decrease.circle")
+                        .labelStyle(.titleAndIcon)
+                        .pretendSemiBold(size: 14)
+                        .padding(EdgeInsets(top: 6, leading: 12, bottom: 6, trailing: 12))
+                        .background(Capsule().fill(Color.pillBackground))
+                        .foregroundColor(.primary)
+                }
+                Spacer()
             }
-            Spacer()
+            .frame(maxWidth: .infinity)
+
             Button(action: onToday) {
                 Text("오늘")
                     .pretendSemiBold(size: 14)
@@ -33,24 +36,18 @@ struct HomeCalendarOptionView: View {
                     .foregroundColor(.primary)
             }
 
-            Spacer()
-
-            Button(action: onToggleView) {
-                Image(systemName: viewType == .calendar ? "list.bullet" : "calendar")
+            HStack {
+                Spacer()
+                Button(action: onToggleView) {
+                    Image(systemName: viewType == .calendar ? "list.bullet" : "calendar")
+                }
+                .pretendSemiBold(size: 14)
+                .padding(6)
+                .animation(.easeInOut(duration: 0.25), value: viewType)
+                .background(Capsule().fill(Color.pillBackground))
+                .foregroundColor(.primary)
             }
-            .pretendSemiBold(size: 14)
-            .padding(6)
-            .animation(.easeInOut(duration: 0.25), value: viewType)
-            .background(Capsule().fill(Color.pillBackground))
-            .foregroundColor(.primary)
-
-            Button(action: onRefresh) {
-                Image(systemName: "arrow.circlepath")
-                    .pretendSemiBold(size: 14)
-                    .padding(6)
-                    .background(Capsule().fill(Color.pillBackground))
-                    .foregroundColor(.primary)
-            }
+            .frame(maxWidth: .infinity)
         }
         .padding(.horizontal, 12)
     }

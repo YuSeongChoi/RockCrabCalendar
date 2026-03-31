@@ -67,7 +67,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.timeStatus = timeStatus ?? .allDay
         self.place = place
         self.shouldNotify = shouldNotify
-        self.members = members
+        self.members = QWERMember.fixedSorted(members)
         self.category = category
 
         migrateLegacyTimeIfNeeded()
@@ -111,7 +111,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.shouldNotify = (try? container.decode(Bool.self, forKey: .shouldNotify)) ?? false
 
         let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
-        self.members = rawMembers.compactMap { QWERMember(rawValue: $0) }
+        self.members = QWERMember.fixedSorted(rawMembers.compactMap { QWERMember(rawValue: $0) })
         self.category = ScheduleCategory(rawValue: (try? container.decode(String.self, forKey: .category)) ?? "") ?? .other
 
         migrateLegacyTimeIfNeeded()
@@ -590,7 +590,7 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
-            title: "WORLD TOUR ROCKNATION SEOUL",
+            title: "WORLD TOUR ROCKATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-03")!,
             time: "17:00",
             isAllDay: false,
@@ -600,7 +600,7 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
-            title: "WORLD TOUR ROCKNATION SEOUL",
+            title: "WORLD TOUR ROCKATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-04")!,
             time: "17:00",
             isAllDay: false,
@@ -610,7 +610,7 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
-            title: "WORLD TOUR ROCKNATION SEOUL",
+            title: "WORLD TOUR ROCKATION SEOUL",
             date: simpleDateFormatter.date(from: "2025-10-05")!,
             time: "17:00",
             isAllDay: false,
@@ -968,10 +968,18 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "아주대학교 A-LOG",
+            date: simpleDateFormatter.date(from: "2026-04-03")!,
+            time: "17:30",
+            place: "아주대학교 노천극장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "체리 블라썸 뮤직 페스티벌",
             date: simpleDateFormatter.date(from: "2026-04-05")!,
             time: "14:00",
-            place: "진해공실운동장",
+            place: "진해공설운동장",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
@@ -992,10 +1000,34 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "포스코 노동조합 K-노사문화 콘서트",
+            date: simpleDateFormatter.date(from: "2026-05-14")!,
+            time: "",
+            place: "포항 종합운동장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "YOUTH WAVE: THE BAND NIGHT",
+            date: simpleDateFormatter.date(from: "2026-05-16")!,
+            time: "14:00 ~ 19:00",
+            place: "경희대학교 국제캠퍼스(수원) 신승관",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "PEAK FESTIVAL 2026",
             date: simpleDateFormatter.date(from: "2026-05-23")!,
             time: "",
             place: "난지 한강공원",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "슈퍼레이스 x 서울파크뮤직페스티벌",
+            date: simpleDateFormatter.date(from: "2026-05-24")!,
+            time: "",
+            place: "영암 국제 자동차 경주장",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),

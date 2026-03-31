@@ -69,10 +69,6 @@ struct HomeMainView: View {
                         },
                         onToggleView: {
                             viewType = (viewType == .calendar) ? .list : .calendar
-                        },
-                        onRefresh: {
-                            scheduleVM.loadCachedAndLocalSchedules()
-                            userVM.fetchAllSchedules()
                         }
                     )
                     
