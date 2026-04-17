@@ -992,10 +992,26 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "THIS IS OUR CEREMONY",
+            date: simpleDateFormatter.date(from: "2026-04-19")!,
+            time: "15:00",
+            place: "북서울꿈의숲 창포원 야외무대",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "2026 서울 히어로 락 페스티벌 x 트리헌드레드",
             date: simpleDateFormatter.date(from: "2026-04-25")!,
             time: "",
             place: "문화비축기지",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "CEREMONY MV RELEASE & SHOWCASE",
+            date: simpleDateFormatter.date(from: "2026-04-27")!,
+            time: "19:00",
+            place: "신촌 원더로크",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
@@ -1008,10 +1024,26 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "시연 생일",
+            date: simpleDateFormatter.date(from: "2026-05-16")!,
+            time: "",
+            place: "",
+            members: [.R],
+            category: .birthday
+        ),
+        QWERScheduleItem(
+            title: "위버스 팬사인회",
+            date: simpleDateFormatter.date(from: "2026-05-16")!,
+            time: "14:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
+        ),
+        QWERScheduleItem(
             title: "YOUTH WAVE: THE BAND NIGHT",
             date: simpleDateFormatter.date(from: "2026-05-16")!,
-            time: "14:00 ~ 19:00",
-            place: "경희대학교 국제캠퍼스(수원) 신승관",
+            time: "18:00",
+            place: "광운대학교 동해문화예술관대극장",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
@@ -1026,8 +1058,16 @@ extension QWERScheduleItem {
         QWERScheduleItem(
             title: "슈퍼레이스 x 서울파크뮤직페스티벌",
             date: simpleDateFormatter.date(from: "2026-05-24")!,
-            time: "",
+            time: "19:20",
             place: "영암 국제 자동차 경주장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "2026 푸본 G!POP 뮤직페스티벌",
+            date: simpleDateFormatter.date(from: "2026-05-30")!,
+            time: "",
+            place: "타이베이돔",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
@@ -1036,6 +1076,14 @@ extension QWERScheduleItem {
             date: simpleDateFormatter.date(from: "2026-06-06")!,
             time: "",
             place: "올림픽공원 KSPO DOME, 88잔디마당",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "The 21th KKBOX Music Awards(대만)",
+            date: simpleDateFormatter.date(from: "2026-06-13")!,
+            time: "18:00",
+            place: "대만 타이베이 아레나",
             members: [.Q, .W, .E, .R],
             category: .concert
         )
