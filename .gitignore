@@ -20,6 +20,9 @@ xcuserdata/
 # Logs
 *.log
 
+# Marketing
+marketing/node_modules/
+
 # 기타 민감정보
 *.env
 
