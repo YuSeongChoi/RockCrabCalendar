@@ -37,7 +37,6 @@ struct QWERScheduleListView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .top)
-        .transition(.opacity)
 
         if embedInScrollView {
             ScrollView { content }

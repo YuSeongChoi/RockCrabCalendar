@@ -11,6 +11,7 @@ struct HomeCalendarOptionView: View {
     let viewType: HomeMainView.ViewType
     let onShowFilter: () -> Void
     let onToday: () -> Void
+    let onSearch: () -> Void
     let onToggleView: () -> Void
 
     var body: some View {
@@ -38,6 +39,14 @@ struct HomeCalendarOptionView: View {
 
             HStack {
                 Spacer()
+                Button(action: onSearch) {
+                    Image(systemName: "magnifyingglass")
+                }
+                .pretendSemiBold(size: 14)
+                .padding(6)
+                .background(Capsule().fill(Color.pillBackground))
+                .foregroundColor(.primary)
+
                 Button(action: onToggleView) {
                     Image(systemName: viewType == .calendar ? "list.bullet" : "calendar")
                 }
