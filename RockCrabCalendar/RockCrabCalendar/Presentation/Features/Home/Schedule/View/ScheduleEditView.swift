@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 struct ScheduleEditView: View {
     @Environment(\.dismiss) private var dismiss
@@ -35,9 +34,6 @@ struct ScheduleEditView: View {
                     shouldNotify: $viewModel.form.shouldNotify,
                     notificationLeadTime: $viewModel.form.notificationLeadTime,
                     place: $viewModel.form.place,
-                    notificationAuthorizationStatus: viewModel.notificationAuthorizationStatus,
-                    notificationAvailability: viewModel.notificationAvailability,
-                    openNotificationSettings: openNotificationSettings,
                     defaultStartTime: defaultStartTime,
                     defaultEndTime: defaultEndTime,
                     rowBackground: listRowBackgroundColor
@@ -100,12 +96,6 @@ struct ScheduleEditView: View {
         }
         .task {
             await viewModel.refreshLocalFlagIfNeeded()
-            await viewModel.refreshNotificationAuthorizationStatus()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-            Task {
-                await viewModel.refreshNotificationAuthorizationStatus()
-            }
         }
         .onAppear {
             AnalyticsHelper.logEvent(eventName: "schedule_edit_screen", parameters: ["label":"일정수정화면"])
@@ -129,10 +119,6 @@ private extension ScheduleEditView {
         }
     }
 
-    func openNotificationSettings() {
-        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-        UIApplication.shared.open(url)
-    }
 }
 
 // MARK: - Sections
