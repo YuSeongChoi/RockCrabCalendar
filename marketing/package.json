@@ -1,0 +1,12 @@
+{
+  "name": "rockcrabcalendar-marketing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "export:iphone": "node export-screenshots.mjs",
+    "export:ipad": "node export-ipad-screenshots.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.59.1"
+  }
+}

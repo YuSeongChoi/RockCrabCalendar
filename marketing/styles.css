@@ -1,0 +1,321 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("../RockCrabCalendar/RockCrabCalendar/Font/Pretendard-Regular.otf") format("opentype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("../RockCrabCalendar/RockCrabCalendar/Font/Pretendard-SemiBold.otf") format("opentype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("../RockCrabCalendar/RockCrabCalendar/Font/Pretendard-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+:root {
+  --slide-width: 1290px;
+  --page-bg: #f4f8fb;
+  --panel: rgba(255, 255, 255, 0.84);
+  --line: rgba(22, 42, 66, 0.08);
+  --text: #0d1b2a;
+  --muted: rgba(13, 27, 42, 0.68);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: "Pretendard", sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(169, 236, 207, 0.72), transparent 26%),
+    radial-gradient(circle at top right, rgba(157, 208, 255, 0.52), transparent 28%),
+    linear-gradient(180deg, #f8fbff 0%, #eef7f8 55%, #f6fbf7 100%);
+}
+
+.page-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(16px);
+  background: rgba(248, 252, 255, 0.82);
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(44, 134, 103, 0.18);
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #1aa577;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.toolbar-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border: 1px solid rgba(20, 53, 79, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(33, 63, 92, 0.08);
+}
+
+.slides {
+  display: grid;
+  gap: 36px;
+  justify-content: center;
+  padding: 36px 24px 96px;
+}
+
+.slide-frame {
+  position: relative;
+  isolation: isolate;
+  width: min(var(--slide-width), calc(100vw - 48px));
+  aspect-ratio: 1290 / 2796;
+  overflow: hidden;
+  border-radius: 42px;
+  padding: 184px 72px 56px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 30px 90px rgba(44, 78, 108, 0.16);
+}
+
+.theme-mint {
+  background: linear-gradient(180deg, #f7fffc 0%, #f0fffb 34%, #eef8ff 100%);
+}
+
+.theme-coral {
+  background: linear-gradient(180deg, #fff9f6 0%, #fff6f2 34%, #fdfcff 100%);
+}
+
+.theme-sky {
+  background: linear-gradient(180deg, #f7fbff 0%, #eef6ff 38%, #f7fcff 100%);
+}
+
+.theme-lilac {
+  background: linear-gradient(180deg, #fbf8ff 0%, #f7f3ff 36%, #f7fbff 100%);
+}
+
+.theme-cream {
+  background: linear-gradient(180deg, #fffdf8 0%, #fff9ed 40%, #fbfcff 100%);
+}
+
+.theme-ocean {
+  background: linear-gradient(180deg, #f7ffff 0%, #eefcff 34%, #eef7ff 100%);
+}
+
+.theme-graphite {
+  background: linear-gradient(180deg, #f7fafb 0%, #edf4f6 42%, #f7fbfc 100%);
+}
+
+.ambient {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(10px);
+  opacity: 0.8;
+  z-index: -1;
+}
+
+.ambient-a,
+.ambient-e,
+.ambient-k {
+  top: -60px;
+  left: -40px;
+  width: 360px;
+  height: 360px;
+  background: rgba(146, 233, 197, 0.52);
+}
+
+.ambient-b,
+.ambient-f,
+.ambient-m {
+  right: -80px;
+  top: 280px;
+  width: 300px;
+  height: 300px;
+  background: rgba(164, 211, 255, 0.42);
+}
+
+.ambient-c,
+.ambient-i,
+.ambient-n {
+  top: -10px;
+  right: -30px;
+  width: 320px;
+  height: 320px;
+  background: rgba(255, 204, 189, 0.48);
+}
+
+.ambient-d,
+.ambient-h,
+.ambient-j {
+  left: -90px;
+  bottom: 180px;
+  width: 340px;
+  height: 340px;
+  background: rgba(199, 184, 255, 0.3);
+}
+
+.ambient-g,
+.ambient-l {
+  right: -60px;
+  bottom: 120px;
+  width: 280px;
+  height: 280px;
+  background: rgba(157, 247, 234, 0.35);
+}
+
+.copy-block {
+  text-align: center;
+}
+
+.feature-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 132px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(16, 34, 56, 0.06);
+  box-shadow: 0 18px 40px rgba(56, 96, 128, 0.08);
+  color: #148c67;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.copy-block h2 {
+  margin: 26px 0 18px;
+  font-size: 72px;
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+.slide-body {
+  margin: 0 auto;
+  max-width: 1120px;
+  color: var(--muted);
+  font-size: 24px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.phone-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 110px;
+}
+
+.phone-shell {
+  position: relative;
+  width: min(100%, 870px);
+  aspect-ratio: 1206 / 2622;
+  padding: 20px;
+  border-radius: 84px;
+  background:
+    linear-gradient(180deg, #0d1117 0%, #1a2430 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.06),
+    inset 0 0 0 10px rgba(255, 255, 255, 0.02),
+    0 36px 90px rgba(24, 40, 62, 0.22);
+}
+
+.phone-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 68px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 18%);
+  pointer-events: none;
+}
+
+.app-shot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 68px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 1100px) {
+  .page-header {
+    position: static;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .slide-frame {
+    padding: 120px 24px 24px;
+    border-radius: 28px;
+  }
+
+  .feature-chip {
+    font-size: 18px;
+    padding: 10px 18px;
+  }
+
+  .copy-block h2 {
+    font-size: 52px;
+    white-space: normal;
+  }
+
+  .slide-body {
+    font-size: 19px;
+    max-width: 760px;
+    white-space: normal;
+  }
+
+  .phone-stage {
+    margin-top: 56px;
+  }
+
+  .phone-shell {
+    width: min(100%, 760px);
+    padding: 14px;
+    border-radius: 56px;
+  }
+
+  .app-shot {
+    border-radius: 44px;
+  }
+}
