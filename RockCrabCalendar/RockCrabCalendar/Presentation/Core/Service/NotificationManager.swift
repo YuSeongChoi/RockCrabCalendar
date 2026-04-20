@@ -168,7 +168,7 @@ final class NotificationManager: NotificationScheduling {
             let content = UNMutableNotificationContent()
             content.title = AppLocalization.string("곧 일정 시작")
             content.body = String.localizedStringWithFormat(
-                AppLocalization.string("%@이(가) %lld분 후 시작돼요!"),
+                AppLocalization.string("%@ 시작까지 %lld분 남았어요."),
                 schedule.title,
                 Int(offset / 60)
             )

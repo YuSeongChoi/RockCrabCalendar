@@ -118,7 +118,7 @@ struct ScheduleEditBasicInfoSection: View {
             if let message = notificationAvailability.message {
                 Text(message)
                     .font(.footnote)
-                    .foregroundStyle(notificationAvailability == .available ? .secondary : .orange)
+                    .foregroundStyle(notificationAvailability == .available ? .secondary : Color.orange)
             }
 
             HStack(alignment: .top, spacing: 8) {
