@@ -33,6 +33,7 @@ struct ScheduleEditView: View {
                     endTime: $viewModel.form.endTime,
                     qwerTimeStatus: viewModel.kind == .qwer ? $viewModel.form.qwerTimeStatus : nil,
                     shouldNotify: $viewModel.form.shouldNotify,
+                    notificationLeadTime: $viewModel.form.notificationLeadTime,
                     place: $viewModel.form.place,
                     notificationAuthorizationStatus: viewModel.notificationAuthorizationStatus,
                     notificationAvailability: viewModel.notificationAvailability,

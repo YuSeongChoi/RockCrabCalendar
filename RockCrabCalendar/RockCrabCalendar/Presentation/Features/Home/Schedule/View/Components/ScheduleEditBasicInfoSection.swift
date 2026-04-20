@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RockCrabDomain
+import RockCrabShared
 
 struct ScheduleEditBasicInfoSection: View {
     @Binding var title: String
@@ -16,6 +17,7 @@ struct ScheduleEditBasicInfoSection: View {
     @Binding var endTime: Date?
     var qwerTimeStatus: Binding<QWERScheduleItem.TimeStatus>?
     @Binding var shouldNotify: Bool
+    @Binding var notificationLeadTime: NotificationLeadTime
     @Binding var place: String
     let notificationAuthorizationStatus: NotificationAuthorizationStatus
     let notificationAvailability: NotificationAvailability
@@ -57,6 +59,9 @@ struct ScheduleEditBasicInfoSection: View {
                     DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
                     DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
                     Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                    if shouldNotify {
+                        notificationLeadTimeMenu
+                    }
                     notificationGuide
                 }
             } else {
@@ -66,6 +71,9 @@ struct ScheduleEditBasicInfoSection: View {
                     DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
                     DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
                     Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                    if shouldNotify {
+                        notificationLeadTimeMenu
+                    }
                     notificationGuide
                 }
             }
@@ -113,9 +121,44 @@ struct ScheduleEditBasicInfoSection: View {
     }
 
     @ViewBuilder
+    private var notificationLeadTimeMenu: some View {
+        Menu {
+            Picker("알림 시간", selection: $notificationLeadTime) {
+                ForEach(NotificationLeadTime.allCases) { leadTime in
+                    Text(leadTime.displayText).tag(leadTime)
+                }
+            }
+        } label: {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("알림 시간")
+                    Text(notificationLeadTime.displayText)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    @ViewBuilder
     private var notificationGuide: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let message = notificationAvailability.message {
+            if notificationAvailability == .available {
+                Text(
+                    String.localizedStringWithFormat(
+                        AppLocalization.string("알림을 켜면 시작 %@ 알려드려요."),
+                        notificationLeadTime.displayText
+                    )
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            } else if let message = notificationAvailability.message {
                 Text(message)
                     .font(.footnote)
                     .foregroundStyle(notificationAvailability == .available ? .secondary : Color.orange)
@@ -128,6 +171,14 @@ struct ScheduleEditBasicInfoSection: View {
                     Text(notificationAuthorizationStatus.detailText)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
+                    Text(
+                        String.localizedStringWithFormat(
+                            AppLocalization.string("현재 알림 시각: %@"),
+                            notificationLeadTime.displayText
+                        )
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
                 }
 
                 Spacer()

@@ -99,7 +99,7 @@ struct SettingsView: View {
                             Text(notificationAuthorizationStatus.detailText)
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
-                            Text("현재 알림 규칙: 일정 시작 10분 전, 5분 전")
+                            Text("일정 추가/수정 화면에서 일정별 알림 시간을 선택할 수 있어요.")
                                 .font(.footnote)
                                 .foregroundStyle(.secondary)
                         }

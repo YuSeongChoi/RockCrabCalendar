@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RockCrabShared
 
 /// 스케줄 아이템 프로토콜
 public protocol SchedulableItemProtocol: Identifiable, Codable {
@@ -26,4 +27,6 @@ public protocol SchedulableItemProtocol: Identifiable, Codable {
     var place: String { get set }
     /// 알람여부
     var shouldNotify: Bool { get }
+    /// 일정별 알림 시각
+    var notificationLeadTime: NotificationLeadTime? { get set }
 }

@@ -50,13 +50,14 @@ enum NotificationAvailability: Equatable {
     case allDay
     case timeUnspecified
     case pastEvent
+    case noUpcomingTrigger
 
     var message: String? {
         switch self {
         case .disabled:
             return nil
         case .available:
-            return AppLocalization.string("알림을 켜면 시작 10분 전, 5분 전에 알려드려요.")
+            return nil
         case .denied:
             return AppLocalization.string("현재 기기 설정에서 알림이 꺼져 있어 저장해도 알림이 오지 않아요.")
         case .notDetermined:
@@ -67,6 +68,8 @@ enum NotificationAvailability: Equatable {
             return AppLocalization.string("시간 미정 일정은 시작 시각이 없어 알림을 보낼 수 없어요.")
         case .pastEvent:
             return AppLocalization.string("이미 지난 시점의 일정이라 알림을 예약하지 않아요.")
+        case .noUpcomingTrigger:
+            return AppLocalization.string("선택한 알림 시간이 이미 지나 이번 일정에는 알림을 보낼 수 없어요.")
         }
     }
 
@@ -82,6 +85,8 @@ enum NotificationAvailability: Equatable {
             return AppLocalization.string("일정은 저장됐지만 시간 미정 일정은 알림을 보낼 수 없어요.")
         case .pastEvent:
             return AppLocalization.string("일정은 저장됐지만 이미 지난 시점이라 알림을 예약하지 않았어요.")
+        case .noUpcomingTrigger:
+            return AppLocalization.string("일정은 저장됐지만 선택한 알림 시간이 이미 지나 이번 일정에는 알림을 예약하지 않았어요.")
         case .disabled, .available:
             return nil
         }
@@ -100,11 +105,12 @@ protocol NotificationScheduling {
 
 extension NotificationScheduling {
     func schedule<T: SchedulableItemProtocol>(for item: T) {
-        self.schedule(for: item, offsets: [300, 600])
+        let leadTime = item.notificationLeadTime ?? .defaultValue
+        self.schedule(for: item, offsets: [leadTime.timeInterval])
     }
 
     func cancel<T: SchedulableItemProtocol>(for item: T) {
-        self.cancel(for: item, offsets: [300, 600])
+        self.cancel(for: item, offsets: NotificationLeadTime.allCases.map(\.timeInterval))
     }
 }
 
@@ -144,13 +150,13 @@ final class NotificationManager: NotificationScheduling {
         }
     }
 
-    /// 일정 알림 예약 (기본 5분/10분 전)
+    /// 일정 알림 예약
     /// - Parameters:
     ///   - schedule: `SchedulableItemProtocol`을 따르는 일정 모델
-    ///   - offsets: 알림을 울릴 시간(초) 배열. 기본값은 300초(5분), 600초(10분)
+    ///   - offsets: 알림을 울릴 시간(초) 배열
     func schedule<T: SchedulableItemProtocol>(
         for schedule: T,
-        offsets: [TimeInterval] = [300, 600]
+        offsets: [TimeInterval]
     ) {
         guard schedule.shouldNotify else {
             #if DEBUG
@@ -188,7 +194,7 @@ final class NotificationManager: NotificationScheduling {
     /// 예약된 일정 알림 취소 (수정/삭제 시 사용)
     func cancel<T: SchedulableItemProtocol>(
         for schedule: T,
-        offsets: [TimeInterval] = [300, 600]
+        offsets: [TimeInterval]
     ) {
         let ids = offsets.map { notificationID(for: schedule.id, offset: $0) }
         center.removePendingNotificationRequests(withIdentifiers: ids)
@@ -212,8 +218,18 @@ final class NotificationManager: NotificationScheduling {
             return .timeUnspecified
         }
 
-        guard let eventDate = buildStartDate(from: schedule), eventDate > Date() else {
+        guard let eventDate = buildStartDate(from: schedule) else {
             return .pastEvent
+        }
+
+        let now = Date()
+        guard eventDate > now else {
+            return .pastEvent
+        }
+
+        let leadTime = schedule.notificationLeadTime ?? .defaultValue
+        guard eventDate.addingTimeInterval(-leadTime.timeInterval) > now else {
+            return .noUpcomingTrigger
         }
 
         return .available
