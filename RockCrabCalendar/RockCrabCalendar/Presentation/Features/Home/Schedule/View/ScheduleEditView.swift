@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ScheduleEditView: View {
     @Environment(\.dismiss) private var dismiss
@@ -33,6 +34,9 @@ struct ScheduleEditView: View {
                     qwerTimeStatus: viewModel.kind == .qwer ? $viewModel.form.qwerTimeStatus : nil,
                     shouldNotify: $viewModel.form.shouldNotify,
                     place: $viewModel.form.place,
+                    notificationAuthorizationStatus: viewModel.notificationAuthorizationStatus,
+                    notificationAvailability: viewModel.notificationAvailability,
+                    openNotificationSettings: openNotificationSettings,
                     defaultStartTime: defaultStartTime,
                     defaultEndTime: defaultEndTime,
                     rowBackground: listRowBackgroundColor
@@ -86,8 +90,21 @@ struct ScheduleEditView: View {
         } message: {
             Text("Firestore에 올라간 QWER 일정은 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제할 수 있어요.")
         }
+        .alert("알림 안내", isPresented: $viewModel.showSaveFeedbackAlert) {
+            Button("확인") {
+                dismiss()
+            }
+        } message: {
+            Text(viewModel.saveFeedbackMessage)
+        }
         .task {
             await viewModel.refreshLocalFlagIfNeeded()
+            await viewModel.refreshNotificationAuthorizationStatus()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            Task {
+                await viewModel.refreshNotificationAuthorizationStatus()
+            }
         }
         .onAppear {
             AnalyticsHelper.logEvent(eventName: "schedule_edit_screen", parameters: ["label":"일정수정화면"])
@@ -98,15 +115,22 @@ struct ScheduleEditView: View {
 // MARK: - Save
 private extension ScheduleEditView {
     func save() {
-        viewModel.save()
+        let feedback = viewModel.save()
 
-        dismiss()
+        if feedback == .none {
+            dismiss()
+        }
     }
     
     func deleteItem() {
         if viewModel.deleteButtonTapped() {
             dismiss()
         }
+    }
+
+    func openNotificationSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(url)
     }
 }
 

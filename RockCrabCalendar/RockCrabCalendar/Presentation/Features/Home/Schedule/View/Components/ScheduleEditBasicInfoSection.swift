@@ -17,6 +17,9 @@ struct ScheduleEditBasicInfoSection: View {
     var qwerTimeStatus: Binding<QWERScheduleItem.TimeStatus>?
     @Binding var shouldNotify: Bool
     @Binding var place: String
+    let notificationAuthorizationStatus: NotificationAuthorizationStatus
+    let notificationAvailability: NotificationAvailability
+    let openNotificationSettings: () -> Void
 
     let defaultStartTime: () -> Date
     let defaultEndTime: () -> Date
@@ -54,6 +57,7 @@ struct ScheduleEditBasicInfoSection: View {
                     DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
                     DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
                     Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                    notificationGuide
                 }
             } else {
                 Toggle("하루종일", isOn: $isAllDay)
@@ -62,6 +66,7 @@ struct ScheduleEditBasicInfoSection: View {
                     DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
                     DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
                     Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                    notificationGuide
                 }
             }
 
@@ -91,6 +96,7 @@ struct ScheduleEditBasicInfoSection: View {
             if newValue {
                 startTime = nil
                 endTime = nil
+                shouldNotify = false
             } else {
                 startTime = startTime ?? defaultStartTime()
                 endTime = endTime ?? defaultEndTime()
@@ -103,6 +109,39 @@ struct ScheduleEditBasicInfoSection: View {
             if endTime == nil || endTime! <= newStart {
                 endTime = Calendar.current.date(byAdding: .hour, value: 1, to: newStart)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var notificationGuide: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let message = notificationAvailability.message {
+                Text(message)
+                    .font(.footnote)
+                    .foregroundStyle(notificationAvailability == .available ? .secondary : .orange)
+            }
+
+            HStack(alignment: .top, spacing: 8) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(notificationAuthorizationStatus.summaryText)
+                        .font(.footnote.weight(.semibold))
+                    Text(notificationAuthorizationStatus.detailText)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                if notificationAuthorizationStatus != .authorized {
+                    Button("설정 열기", action: openNotificationSettings)
+                        .font(.footnote.weight(.semibold))
+                }
+            }
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color(UIColor.secondarySystemFill))
+            )
         }
     }
 }

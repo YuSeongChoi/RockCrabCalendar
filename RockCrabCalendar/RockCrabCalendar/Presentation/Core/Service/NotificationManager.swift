@@ -10,9 +10,92 @@ import UserNotifications
 import RockCrabDomain
 import RockCrabShared
 
+enum NotificationAuthorizationStatus: Equatable {
+    case notDetermined
+    case denied
+    case authorized
+
+    var isAuthorized: Bool {
+        self == .authorized
+    }
+
+    var summaryText: String {
+        switch self {
+        case .authorized:
+            return AppLocalization.string("알림이 켜져 있어요")
+        case .denied:
+            return AppLocalization.string("기기 설정에서 알림이 꺼져 있어요")
+        case .notDetermined:
+            return AppLocalization.string("알림 권한이 아직 정해지지 않았어요")
+        }
+    }
+
+    var detailText: String {
+        switch self {
+        case .authorized:
+            return AppLocalization.string("일정 알림을 받을 수 있습니다.")
+        case .denied:
+            return AppLocalization.string("설정 앱에서 알림을 켜야 일정 시작 전에 안내를 받을 수 있어요.")
+        case .notDetermined:
+            return AppLocalization.string("알림 권한이 없으면 저장해도 알림이 오지 않을 수 있어요.")
+        }
+    }
+}
+
+enum NotificationAvailability: Equatable {
+    case disabled
+    case available
+    case denied
+    case notDetermined
+    case allDay
+    case timeUnspecified
+    case pastEvent
+
+    var message: String? {
+        switch self {
+        case .disabled:
+            return nil
+        case .available:
+            return AppLocalization.string("알림을 켜면 시작 10분 전, 5분 전에 알려드려요.")
+        case .denied:
+            return AppLocalization.string("현재 기기 설정에서 알림이 꺼져 있어 저장해도 알림이 오지 않아요.")
+        case .notDetermined:
+            return AppLocalization.string("알림 권한이 아직 정해지지 않아 저장 후 알림이 오지 않을 수 있어요.")
+        case .allDay:
+            return AppLocalization.string("하루종일 일정은 시작 시각이 없어 알림을 보낼 수 없어요.")
+        case .timeUnspecified:
+            return AppLocalization.string("시간 미정 일정은 시작 시각이 없어 알림을 보낼 수 없어요.")
+        case .pastEvent:
+            return AppLocalization.string("이미 지난 시점의 일정이라 알림을 예약하지 않아요.")
+        }
+    }
+
+    var saveFeedbackMessage: String? {
+        switch self {
+        case .denied:
+            return AppLocalization.string("일정은 저장됐지만 기기 설정에서 알림이 꺼져 있어 알림은 예약되지 않았어요.")
+        case .notDetermined:
+            return AppLocalization.string("일정은 저장됐지만 알림 권한이 없어 알림이 예약되지 않았을 수 있어요.")
+        case .allDay:
+            return AppLocalization.string("일정은 저장됐지만 하루종일 일정은 알림을 보낼 수 없어요.")
+        case .timeUnspecified:
+            return AppLocalization.string("일정은 저장됐지만 시간 미정 일정은 알림을 보낼 수 없어요.")
+        case .pastEvent:
+            return AppLocalization.string("일정은 저장됐지만 이미 지난 시점이라 알림을 예약하지 않았어요.")
+        case .disabled, .available:
+            return nil
+        }
+    }
+}
+
 protocol NotificationScheduling {
     func schedule<T: SchedulableItemProtocol>(for schedule: T, offsets: [TimeInterval])
     func cancel<T: SchedulableItemProtocol>(for schedule: T, offsets: [TimeInterval])
+    func authorizationStatus() async -> NotificationAuthorizationStatus
+    func availability<T: SchedulableItemProtocol>(
+        for schedule: T,
+        authorizationStatus: NotificationAuthorizationStatus
+    ) -> NotificationAvailability
 }
 
 extension NotificationScheduling {
@@ -43,6 +126,21 @@ final class NotificationManager: NotificationScheduling {
             AppLogger.error("Notification auth error: \(error.localizedDescription)", category: .notification)
             #endif
             return false
+        }
+    }
+
+    func authorizationStatus() async -> NotificationAuthorizationStatus {
+        let settings = await center.notificationSettings()
+
+        switch settings.authorizationStatus {
+        case .authorized, .ephemeral, .provisional:
+            return .authorized
+        case .denied:
+            return .denied
+        case .notDetermined:
+            return .notDetermined
+        @unknown default:
+            return .notDetermined
         }
     }
 
@@ -94,6 +192,31 @@ final class NotificationManager: NotificationScheduling {
     ) {
         let ids = offsets.map { notificationID(for: schedule.id, offset: $0) }
         center.removePendingNotificationRequests(withIdentifiers: ids)
+    }
+
+    func availability<T: SchedulableItemProtocol>(
+        for schedule: T,
+        authorizationStatus: NotificationAuthorizationStatus
+    ) -> NotificationAvailability {
+        guard schedule.shouldNotify else { return .disabled }
+
+        guard authorizationStatus.isAuthorized else {
+            return authorizationStatus == .denied ? .denied : .notDetermined
+        }
+
+        if schedule.isAllDay {
+            return .allDay
+        }
+
+        guard schedule.startTime != nil else {
+            return .timeUnspecified
+        }
+
+        guard let eventDate = buildStartDate(from: schedule), eventDate > Date() else {
+            return .pastEvent
+        }
+
+        return .available
     }
 }
 
