@@ -1,5 +1,6 @@
 import XCTest
 import RockCrabDomain
+import RockCrabShared
 @testable import RockCrabData
 
 final class ScheduleCacheStoreTests: XCTestCase {
@@ -45,5 +46,26 @@ final class ScheduleCacheStoreTests: XCTestCase {
 
         XCTAssertNil(store.loadCachedSchedules())
         XCTAssertNil(store.loadLastFetchDate())
+    }
+
+    func testSaveCachedSchedulesPreservesNotificationLeadTime() {
+        let sample = QWERScheduleItem(
+            title: "알림 일정",
+            date: Date(timeIntervalSince1970: 0),
+            time: "",
+            isAllDay: false,
+            startTime: QWERScheduleItem.simpleTimeFormatter.date(from: "18:00"),
+            endTime: nil,
+            place: "서울",
+            shouldNotify: true,
+            notificationLeadTime: .thirtyMinutes,
+            members: [.Q],
+            category: .other
+        )
+
+        store.saveCachedSchedules([sample])
+
+        let loaded = store.loadCachedSchedules()
+        XCTAssertEqual(loaded?.first?.notificationLeadTime, .thirtyMinutes)
     }
 }

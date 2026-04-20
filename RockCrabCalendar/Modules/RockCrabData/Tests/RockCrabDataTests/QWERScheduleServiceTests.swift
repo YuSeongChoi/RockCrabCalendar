@@ -1,5 +1,6 @@
 import XCTest
 import RockCrabDomain
+import RockCrabShared
 @testable import RockCrabData
 
 final class QWERScheduleServiceTests: XCTestCase {
@@ -88,6 +89,27 @@ final class QWERScheduleServiceTests: XCTestCase {
         XCTAssertEqual(fetched.count, 2)
         XCTAssertTrue(fetched.contains(where: { $0.title == "remote" }))
         XCTAssertTrue(fetched.contains(where: { $0.title == "local" }))
+    }
+
+    func testSaveLocalPreservesNotificationLeadTime() async {
+        let item = QWERScheduleItem(
+            title: "알림 로컬",
+            date: sampleDate,
+            time: "",
+            isAllDay: false,
+            startTime: QWERScheduleItem.simpleTimeFormatter.date(from: "19:00"),
+            endTime: nil,
+            place: "서울",
+            shouldNotify: true,
+            notificationLeadTime: .oneHour,
+            members: [.Q],
+            category: .other
+        )
+
+        await service.saveLocalSchedule(item)
+
+        let locals = await service.fetchLocalOnly()
+        XCTAssertEqual(locals.first?.notificationLeadTime, .oneHour)
     }
 }
 

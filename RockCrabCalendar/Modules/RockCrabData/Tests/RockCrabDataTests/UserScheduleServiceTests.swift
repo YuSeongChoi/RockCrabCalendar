@@ -1,5 +1,6 @@
 import XCTest
 import RockCrabDomain
+import RockCrabShared
 @testable import RockCrabData
 
 final class UserScheduleServiceTests: XCTestCase {
@@ -62,5 +63,24 @@ final class UserScheduleServiceTests: XCTestCase {
 
         let fetched = try await service.fetchSchedule()
         XCTAssertTrue(fetched.isEmpty)
+    }
+
+    func testSaveAndFetchPreservesNotificationLeadTime() async throws {
+        let item = UserScheduleItem(
+            title: "알림 일정",
+            date: Date(timeIntervalSince1970: 0),
+            time: "",
+            isAllDay: false,
+            startTime: Date(timeIntervalSince1970: 3_600),
+            endTime: Date(timeIntervalSince1970: 7_200),
+            place: "서울",
+            shouldNotify: true,
+            notificationLeadTime: .fiveMinutes
+        )
+
+        try await service.saveSchedule(item)
+        let fetched = try await service.fetchSchedule()
+
+        XCTAssertEqual(fetched.first?.notificationLeadTime, .fiveMinutes)
     }
 }
