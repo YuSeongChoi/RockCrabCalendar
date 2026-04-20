@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RockCrabDomain
+import RockCrabShared
 
 struct ScheduleEditFormState {
     var title: String
@@ -18,6 +19,7 @@ struct ScheduleEditFormState {
     var endTime: Date?
     var qwerTimeStatus: QWERScheduleItem.TimeStatus
     var shouldNotify: Bool
+    var notificationLeadTime: NotificationLeadTime
 
     var selectedMembers: Set<QWERMember>
     var category: ScheduleCategory
@@ -39,6 +41,7 @@ struct ScheduleEditFormState {
             self.endTime = nil
             self.qwerTimeStatus = .allDay
             self.shouldNotify = false
+            self.notificationLeadTime = .defaultValue
             self.selectedMembers = kind == .qwer ? Set(QWERMember.allCases) : []
             self.category = .other
             self.isRepeat = false
@@ -58,6 +61,7 @@ struct ScheduleEditFormState {
             self.endTime = item.endTime
             self.qwerTimeStatus = item.timeStatus
             self.shouldNotify = item.shouldNotify
+            self.notificationLeadTime = item.notificationLeadTime ?? .defaultValue
             self.selectedMembers = Set(item.members)
             self.category = item.category
             self.isRepeat = false
@@ -77,6 +81,7 @@ struct ScheduleEditFormState {
             self.endTime = item.endTime
             self.qwerTimeStatus = .allDay
             self.shouldNotify = item.shouldNotify
+            self.notificationLeadTime = item.notificationLeadTime ?? .defaultValue
             self.selectedMembers = []
             self.category = .other
             self.isRepeat = item.isRepeat
@@ -108,6 +113,7 @@ struct ScheduleEditFormState {
             timeStatus: qwerTimeStatus,
             place: trimmed(place),
             shouldNotify: qwerTimeStatus == .timed ? shouldNotify : false,
+            notificationLeadTime: qwerTimeStatus == .timed && shouldNotify ? notificationLeadTime : nil,
             members: QWERMember.fixedSorted(Array(selectedMembers)),
             category: category
         )
@@ -124,6 +130,7 @@ struct ScheduleEditFormState {
             endTime: isAllDay ? nil : endTime,
             place: trimmed(place),
             shouldNotify: shouldNotify,
+            notificationLeadTime: shouldNotify ? notificationLeadTime : nil,
             isRepeat: isRepeat,
             repeatType: isRepeat ? repeatType : nil,
             repeatEndDate: isRepeat ? repeatEndDate : nil,

@@ -16,10 +16,14 @@ final class ScheduleEditViewModel {
     let qwerVM: QWERScheduleViewModel
     let userVM: UserScheduleViewModel
     private let actionHandler: ScheduleEditActionHandler
+    private let notificationManager: NotificationScheduling
 
     var form: ScheduleEditFormState
     var showNonDeletableAlert: Bool = false
+    var showSaveFeedbackAlert: Bool = false
     var isQWERLocalSchedule: Bool = false
+    var saveFeedbackMessage: String = ""
+    var notificationAuthorizationStatus: NotificationAuthorizationStatus = .notDetermined
 
     var kind: ScheduleEditKind { mode.kind }
 
@@ -51,6 +55,7 @@ final class ScheduleEditViewModel {
         self.mode = mode
         self.qwerVM = qwerVM
         self.userVM = userVM
+        self.notificationManager = notificationManager
         self.actionHandler = ScheduleEditActionHandler(
             qwerVM: qwerVM,
             userVM: userVM,
@@ -89,8 +94,38 @@ final class ScheduleEditViewModel {
         isQWERLocalSchedule = await qwerVM.isLocalSchedule(item)
     }
 
-    func save() {
-        actionHandler.save(mode: mode, form: form)
+    func refreshNotificationAuthorizationStatus() async {
+        notificationAuthorizationStatus = await notificationManager.authorizationStatus()
+    }
+
+    var notificationAvailability: NotificationAvailability {
+        let item: any SchedulableItemProtocol
+        switch kind {
+        case .qwer:
+            item = form.buildQWERSchedule()
+        case .user:
+            item = form.buildUserSchedule()
+        }
+
+        return notificationManager.availability(
+            for: item,
+            authorizationStatus: notificationAuthorizationStatus
+        )
+    }
+
+    func save() -> ScheduleSaveFeedback {
+        let feedback = actionHandler.save(
+            mode: mode,
+            form: form,
+            notificationAvailability: notificationAvailability
+        )
+
+        if case .notificationWarning(let message) = feedback {
+            saveFeedbackMessage = message
+            showSaveFeedbackAlert = true
+        }
+
+        return feedback
     }
 
     func deleteButtonTapped() -> Bool {

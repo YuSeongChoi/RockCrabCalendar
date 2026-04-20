@@ -39,6 +39,8 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
     public var place: String
     /// 알람여부
     public var shouldNotify: Bool
+    /// 일정별 알림 시각
+    public var notificationLeadTime: NotificationLeadTime?
     /// 참석멤버
     public var members: [QWERMember]
     public var category: ScheduleCategory
@@ -54,6 +56,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         timeStatus: TimeStatus? = nil,
         place: String,
         shouldNotify: Bool = false,
+        notificationLeadTime: NotificationLeadTime? = nil,
         members: [QWERMember],
         category: ScheduleCategory
     ) {
@@ -67,6 +70,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         self.timeStatus = timeStatus ?? .allDay
         self.place = place
         self.shouldNotify = shouldNotify
+        self.notificationLeadTime = notificationLeadTime
         self.members = QWERMember.fixedSorted(members)
         self.category = category
 
@@ -85,6 +89,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         case timeStatus
         case place
         case shouldNotify
+        case notificationLeadTime
         case members
         case category
     }
@@ -109,6 +114,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
 
         self.place = (try? container.decode(String.self, forKey: .place)) ?? ""
         self.shouldNotify = (try? container.decode(Bool.self, forKey: .shouldNotify)) ?? false
+        self.notificationLeadTime = try? container.decode(NotificationLeadTime.self, forKey: .notificationLeadTime)
 
         let rawMembers = (try? container.decode([String].self, forKey: .members)) ?? []
         self.members = QWERMember.fixedSorted(rawMembers.compactMap { QWERMember(rawValue: $0) })
@@ -130,6 +136,7 @@ public struct QWERScheduleItem: SchedulableItemProtocol, Identifiable, Codable {
         try container.encode(timeStatus, forKey: .timeStatus)
         try container.encode(place, forKey: .place)
         try container.encode(shouldNotify, forKey: .shouldNotify)
+        try container.encodeIfPresent(notificationLeadTime, forKey: .notificationLeadTime)
         try container.encode(members.map { $0.rawValue }, forKey: .members)
         try container.encode(category.rawValue, forKey: .category)
     }

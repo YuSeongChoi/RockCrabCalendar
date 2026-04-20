@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RockCrabDomain
+import RockCrabShared
 
 struct ScheduleEditBasicInfoSection: View {
     @Binding var title: String
@@ -16,6 +17,7 @@ struct ScheduleEditBasicInfoSection: View {
     @Binding var endTime: Date?
     var qwerTimeStatus: Binding<QWERScheduleItem.TimeStatus>?
     @Binding var shouldNotify: Bool
+    @Binding var notificationLeadTime: NotificationLeadTime
     @Binding var place: String
 
     let defaultStartTime: () -> Date
@@ -54,6 +56,9 @@ struct ScheduleEditBasicInfoSection: View {
                     DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
                     DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
                     Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                    if shouldNotify {
+                        notificationLeadTimeMenu
+                    }
                 }
             } else {
                 Toggle("하루종일", isOn: $isAllDay)
@@ -62,6 +67,9 @@ struct ScheduleEditBasicInfoSection: View {
                     DatePicker("시작 시간", selection: startTimeBinding, displayedComponents: .hourAndMinute)
                     DatePicker("종료 시간", selection: endTimeBinding, displayedComponents: .hourAndMinute)
                     Toggle("시작 전에 알림 받기", isOn: $shouldNotify)
+                    if shouldNotify {
+                        notificationLeadTimeMenu
+                    }
                 }
             }
 
@@ -91,6 +99,7 @@ struct ScheduleEditBasicInfoSection: View {
             if newValue {
                 startTime = nil
                 endTime = nil
+                shouldNotify = false
             } else {
                 startTime = startTime ?? defaultStartTime()
                 endTime = endTime ?? defaultEndTime()
@@ -103,6 +112,34 @@ struct ScheduleEditBasicInfoSection: View {
             if endTime == nil || endTime! <= newStart {
                 endTime = Calendar.current.date(byAdding: .hour, value: 1, to: newStart)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var notificationLeadTimeMenu: some View {
+        Menu {
+            Picker("알림 시간", selection: $notificationLeadTime) {
+                ForEach(NotificationLeadTime.allCases) { leadTime in
+                    Text(leadTime.displayText).tag(leadTime)
+                }
+            }
+        } label: {
+            HStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("알림 시간")
+                        .foregroundStyle(Color.textColor)
+                    Text(notificationLeadTime.displayText)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+            .foregroundStyle(Color.textColor)
         }
     }
 }

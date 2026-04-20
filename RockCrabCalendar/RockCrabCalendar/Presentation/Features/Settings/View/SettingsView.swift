@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import RockCrabShared
 
 struct SettingsView: View {
@@ -24,6 +25,7 @@ struct SettingsView: View {
     @State private var showSyncResult = false
     @State private var syncResultMessage = ""
     @State private var showClearConfirmAlert = false
+    @State private var notificationAuthorizationStatus: NotificationAuthorizationStatus = .notDetermined
 
     init(scheduleVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
         _scheduleVM = State(initialValue: scheduleVM)
@@ -82,6 +84,34 @@ struct SettingsView: View {
                             isDisabled: isExporting,
                             action: exportSchedules
                         )
+                    }
+                    .padding(16)
+                    .background(Color.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("알림")
+                            .font(.headline)
+
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(notificationAuthorizationStatus.summaryText)
+                                .font(.subheadline.weight(.semibold))
+                            Text(notificationAuthorizationStatus.detailText)
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                            Text("일정 추가/수정 화면에서 일정별 알림 시간을 선택할 수 있어요.")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+
+                        if notificationAuthorizationStatus != .authorized {
+                            actionButton(
+                                title: "기기 설정에서 알림 켜기",
+                                isLoading: false,
+                                isDisabled: false,
+                                action: openNotificationSettings
+                            )
+                        }
                     }
                     .padding(16)
                     .background(Color.cardBackground)
@@ -160,6 +190,14 @@ struct SettingsView: View {
         } message: {
             Text("서버의 원본 데이터는 삭제되지 않습니다. 앱에 저장된 가져온 일정만 삭제합니다.")
         }
+        .task {
+            await refreshNotificationAuthorizationStatus()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            Task {
+                await refreshNotificationAuthorizationStatus()
+            }
+        }
     }
 
     private func exportSchedules() {
@@ -214,6 +252,15 @@ struct SettingsView: View {
 
     private func formatDateTime(_ date: Date) -> String {
         return AppDateFormatterFactory.dateTimeFormatter().string(from: date)
+    }
+
+    private func refreshNotificationAuthorizationStatus() async {
+        notificationAuthorizationStatus = await NotificationManager.shared.authorizationStatus()
+    }
+
+    private func openNotificationSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(url)
     }
 
     private var selectedLanguage: AppLanguageOption {

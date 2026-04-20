@@ -32,6 +32,7 @@ struct ScheduleEditView: View {
                     endTime: $viewModel.form.endTime,
                     qwerTimeStatus: viewModel.kind == .qwer ? $viewModel.form.qwerTimeStatus : nil,
                     shouldNotify: $viewModel.form.shouldNotify,
+                    notificationLeadTime: $viewModel.form.notificationLeadTime,
                     place: $viewModel.form.place,
                     defaultStartTime: defaultStartTime,
                     defaultEndTime: defaultEndTime,
@@ -86,6 +87,13 @@ struct ScheduleEditView: View {
         } message: {
             Text("Firestore에 올라간 QWER 일정은 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제할 수 있어요.")
         }
+        .alert("알림 안내", isPresented: $viewModel.showSaveFeedbackAlert) {
+            Button("확인") {
+                dismiss()
+            }
+        } message: {
+            Text(viewModel.saveFeedbackMessage)
+        }
         .task {
             await viewModel.refreshLocalFlagIfNeeded()
         }
@@ -98,9 +106,11 @@ struct ScheduleEditView: View {
 // MARK: - Save
 private extension ScheduleEditView {
     func save() {
-        viewModel.save()
+        let feedback = viewModel.save()
 
-        dismiss()
+        if feedback == .none {
+            dismiss()
+        }
     }
     
     func deleteItem() {
@@ -108,6 +118,7 @@ private extension ScheduleEditView {
             dismiss()
         }
     }
+
 }
 
 // MARK: - Sections

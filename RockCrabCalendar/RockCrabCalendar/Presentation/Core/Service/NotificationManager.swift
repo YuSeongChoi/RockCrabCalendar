@@ -10,18 +10,107 @@ import UserNotifications
 import RockCrabDomain
 import RockCrabShared
 
+enum NotificationAuthorizationStatus: Equatable {
+    case notDetermined
+    case denied
+    case authorized
+
+    var isAuthorized: Bool {
+        self == .authorized
+    }
+
+    var summaryText: String {
+        switch self {
+        case .authorized:
+            return AppLocalization.string("알림이 켜져 있어요")
+        case .denied:
+            return AppLocalization.string("기기 설정에서 알림이 꺼져 있어요")
+        case .notDetermined:
+            return AppLocalization.string("알림 권한이 아직 정해지지 않았어요")
+        }
+    }
+
+    var detailText: String {
+        switch self {
+        case .authorized:
+            return AppLocalization.string("일정 알림을 받을 수 있습니다.")
+        case .denied:
+            return AppLocalization.string("설정 앱에서 알림을 켜야 일정 시작 전에 안내를 받을 수 있어요.")
+        case .notDetermined:
+            return AppLocalization.string("알림 권한이 없으면 저장해도 알림이 오지 않을 수 있어요.")
+        }
+    }
+}
+
+enum NotificationAvailability: Equatable {
+    case disabled
+    case available
+    case denied
+    case notDetermined
+    case allDay
+    case timeUnspecified
+    case pastEvent
+    case noUpcomingTrigger
+
+    var message: String? {
+        switch self {
+        case .disabled:
+            return nil
+        case .available:
+            return nil
+        case .denied:
+            return AppLocalization.string("현재 기기 설정에서 알림이 꺼져 있어 저장해도 알림이 오지 않아요.")
+        case .notDetermined:
+            return AppLocalization.string("알림 권한이 아직 정해지지 않아 저장 후 알림이 오지 않을 수 있어요.")
+        case .allDay:
+            return AppLocalization.string("하루종일 일정은 시작 시각이 없어 알림을 보낼 수 없어요.")
+        case .timeUnspecified:
+            return AppLocalization.string("시간 미정 일정은 시작 시각이 없어 알림을 보낼 수 없어요.")
+        case .pastEvent:
+            return AppLocalization.string("이미 지난 시점의 일정이라 알림을 예약하지 않아요.")
+        case .noUpcomingTrigger:
+            return AppLocalization.string("선택한 알림 시간이 이미 지나 이번 일정에는 알림을 보낼 수 없어요.")
+        }
+    }
+
+    var saveFeedbackMessage: String? {
+        switch self {
+        case .denied:
+            return AppLocalization.string("일정은 저장됐지만 기기 설정에서 알림이 꺼져 있어 알림은 예약되지 않았어요.")
+        case .notDetermined:
+            return AppLocalization.string("일정은 저장됐지만 알림 권한이 없어 알림이 예약되지 않았을 수 있어요.")
+        case .allDay:
+            return AppLocalization.string("일정은 저장됐지만 하루종일 일정은 알림을 보낼 수 없어요.")
+        case .timeUnspecified:
+            return AppLocalization.string("일정은 저장됐지만 시간 미정 일정은 알림을 보낼 수 없어요.")
+        case .pastEvent:
+            return AppLocalization.string("일정은 저장됐지만 이미 지난 시점이라 알림을 예약하지 않았어요.")
+        case .noUpcomingTrigger:
+            return AppLocalization.string("일정은 저장됐지만 선택한 알림 시간이 이미 지나 이번 일정에는 알림을 예약하지 않았어요.")
+        case .disabled, .available:
+            return nil
+        }
+    }
+}
+
 protocol NotificationScheduling {
     func schedule<T: SchedulableItemProtocol>(for schedule: T, offsets: [TimeInterval])
     func cancel<T: SchedulableItemProtocol>(for schedule: T, offsets: [TimeInterval])
+    func authorizationStatus() async -> NotificationAuthorizationStatus
+    func availability<T: SchedulableItemProtocol>(
+        for schedule: T,
+        authorizationStatus: NotificationAuthorizationStatus
+    ) -> NotificationAvailability
 }
 
 extension NotificationScheduling {
     func schedule<T: SchedulableItemProtocol>(for item: T) {
-        self.schedule(for: item, offsets: [300, 600])
+        let leadTime = item.notificationLeadTime ?? .defaultValue
+        self.schedule(for: item, offsets: [leadTime.timeInterval])
     }
 
     func cancel<T: SchedulableItemProtocol>(for item: T) {
-        self.cancel(for: item, offsets: [300, 600])
+        self.cancel(for: item, offsets: NotificationLeadTime.allCases.map(\.timeInterval))
     }
 }
 
@@ -46,13 +135,28 @@ final class NotificationManager: NotificationScheduling {
         }
     }
 
-    /// 일정 알림 예약 (기본 5분/10분 전)
+    func authorizationStatus() async -> NotificationAuthorizationStatus {
+        let settings = await center.notificationSettings()
+
+        switch settings.authorizationStatus {
+        case .authorized, .ephemeral, .provisional:
+            return .authorized
+        case .denied:
+            return .denied
+        case .notDetermined:
+            return .notDetermined
+        @unknown default:
+            return .notDetermined
+        }
+    }
+
+    /// 일정 알림 예약
     /// - Parameters:
     ///   - schedule: `SchedulableItemProtocol`을 따르는 일정 모델
-    ///   - offsets: 알림을 울릴 시간(초) 배열. 기본값은 300초(5분), 600초(10분)
+    ///   - offsets: 알림을 울릴 시간(초) 배열
     func schedule<T: SchedulableItemProtocol>(
         for schedule: T,
-        offsets: [TimeInterval] = [300, 600]
+        offsets: [TimeInterval]
     ) {
         guard schedule.shouldNotify else {
             #if DEBUG
@@ -70,7 +174,7 @@ final class NotificationManager: NotificationScheduling {
             let content = UNMutableNotificationContent()
             content.title = AppLocalization.string("곧 일정 시작")
             content.body = String.localizedStringWithFormat(
-                AppLocalization.string("%@이(가) %lld분 후 시작돼요!"),
+                AppLocalization.string("%@ 시작까지 %lld분 남았어요."),
                 schedule.title,
                 Int(offset / 60)
             )
@@ -90,10 +194,45 @@ final class NotificationManager: NotificationScheduling {
     /// 예약된 일정 알림 취소 (수정/삭제 시 사용)
     func cancel<T: SchedulableItemProtocol>(
         for schedule: T,
-        offsets: [TimeInterval] = [300, 600]
+        offsets: [TimeInterval]
     ) {
         let ids = offsets.map { notificationID(for: schedule.id, offset: $0) }
         center.removePendingNotificationRequests(withIdentifiers: ids)
+    }
+
+    func availability<T: SchedulableItemProtocol>(
+        for schedule: T,
+        authorizationStatus: NotificationAuthorizationStatus
+    ) -> NotificationAvailability {
+        guard schedule.shouldNotify else { return .disabled }
+
+        guard authorizationStatus.isAuthorized else {
+            return authorizationStatus == .denied ? .denied : .notDetermined
+        }
+
+        if schedule.isAllDay {
+            return .allDay
+        }
+
+        guard schedule.startTime != nil else {
+            return .timeUnspecified
+        }
+
+        guard let eventDate = buildStartDate(from: schedule) else {
+            return .pastEvent
+        }
+
+        let now = Date()
+        guard eventDate > now else {
+            return .pastEvent
+        }
+
+        let leadTime = schedule.notificationLeadTime ?? .defaultValue
+        guard eventDate.addingTimeInterval(-leadTime.timeInterval) > now else {
+            return .noUpcomingTrigger
+        }
+
+        return .available
     }
 }
 

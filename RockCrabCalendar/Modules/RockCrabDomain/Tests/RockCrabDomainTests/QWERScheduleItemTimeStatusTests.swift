@@ -88,4 +88,24 @@ final class QWERScheduleItemTimeStatusTests: XCTestCase {
 
         XCTAssertEqual(item.displayTime, "18:30 KST")
     }
+
+    func testDecodePreservesNotificationLeadTime() throws {
+        let date = Date(timeIntervalSince1970: 1_740_000_000)
+        let payload: [String: Any] = [
+            "title": "알림 일정",
+            "date": date.timeIntervalSince1970,
+            "time": "19:00",
+            "isAllDay": false,
+            "place": "",
+            "shouldNotify": true,
+            "notificationLeadTime": NotificationLeadTime.tenMinutes.rawValue,
+            "members": ["Q"],
+            "category": ScheduleCategory.other.rawValue
+        ]
+
+        let data = try JSONSerialization.data(withJSONObject: payload)
+        let decoded = try JSONDecoder().decode(QWERScheduleItem.self, from: data)
+
+        XCTAssertEqual(decoded.notificationLeadTime, .tenMinutes)
+    }
 }

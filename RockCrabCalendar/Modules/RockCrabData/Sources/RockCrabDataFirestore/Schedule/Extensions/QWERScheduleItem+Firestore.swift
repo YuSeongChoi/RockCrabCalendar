@@ -28,6 +28,7 @@ extension QWERScheduleItem {
             "category": category.rawValue,
             "isAllDay": resolvedIsAllDay,
             "timeStatus": timeStatus.rawValue,
+            "shouldNotify": shouldNotify,
             // Backward compatibility for older app versions still reading legacy field.
             "time": legacyTimeString
         ]
@@ -37,6 +38,9 @@ extension QWERScheduleItem {
         }
         if let endTime = endTime {
             dict["endTime"] = Timestamp(date: endTime)
+        }
+        if let notificationLeadTime {
+            dict["notificationLeadTime"] = notificationLeadTime.rawValue
         }
 
         return dict
