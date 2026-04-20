@@ -13,6 +13,7 @@ struct ScheduleListView: View {
     var calendarVM: CalendarViewModel
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
+    let searchText: String
     let onEdit: (ScheduleEditMode) -> Void
     
     private let calendar = Calendar.current
@@ -23,19 +24,29 @@ struct ScheduleListView: View {
     private var monthRange: DateInterval {
         calendarVM.currentMonthRange()
     }
+
+    private var searchAnimation: Animation {
+        .easeInOut(duration: 0.18)
+    }
     
     var body: some View {
         Group {
-            let qwerMonth = monthSchedulesForCurrentMonth()
-            let userMonth = monthUserSchedulesForCurrentMonth()
+            let searchResult = ScheduleSearchMatcher.filter(
+                qwerSchedules: monthSchedulesForCurrentMonth(),
+                userSchedules: monthUserSchedulesForCurrentMonth(),
+                query: searchText
+            )
+            let qwerMonth = searchResult.0
+            let userMonth = searchResult.1
             if qwerMonth.isEmpty && userMonth.isEmpty {
                 EmptyStateView(
-                    systemImage: "calendar.badge.exclamationmark",
-                    title: "이번 달 일정이 없습니다"
+                    systemImage: searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "calendar.badge.exclamationmark" : "magnifyingglass",
+                    title: searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "이번 달 일정이 없습니다" : "검색 결과가 없습니다"
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
+                .transition(.opacity)
             } else {
                 let groupedQ = Dictionary(grouping: qwerMonth) { calendar.startOfDay(for: $0.date) }
                 let groupedU = Dictionary(grouping: userMonth) { calendar.startOfDay(for: $0.date) }
@@ -74,6 +85,8 @@ struct ScheduleListView: View {
                 .transition(.opacity)
             }
         }
+        .id(searchText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased())
+        .animation(searchAnimation, value: searchText.trimmingCharacters(in: .whitespacesAndNewlines))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.appBackground)
     }

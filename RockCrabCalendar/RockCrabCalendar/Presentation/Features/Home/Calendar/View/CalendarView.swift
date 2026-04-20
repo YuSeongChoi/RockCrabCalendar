@@ -58,7 +58,7 @@ struct CalendarView: View {
                                         },
                                         embedInScrollView: false
                                     )
-                                        .padding(.top, 12)
+                                    .padding(.top, 12)
                                 }
                                 if !selectedUser.isEmpty {
                                     UserScheduleListView(
@@ -68,7 +68,7 @@ struct CalendarView: View {
                                         },
                                         embedInScrollView: false
                                     )
-                                        .padding(.top, selectedQWER.isEmpty ? 12 : 0)
+                                    .padding(.top, selectedQWER.isEmpty ? 12 : 0)
                                 }
                             }
                         }

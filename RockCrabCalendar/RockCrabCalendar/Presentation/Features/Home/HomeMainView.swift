@@ -17,6 +17,8 @@ struct HomeMainView: View {
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
     @State private var navigationPath: [HomeRoute] = []
+    @State private var searchText: String = ""
+    @State private var isSearchExpanded: Bool = false
     
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
@@ -67,10 +69,33 @@ struct HomeMainView: View {
                             calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
                             scheduleVM.selectedDate = today
                         },
+                        onSearch: {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                if viewType == .calendar {
+                                    viewType = .list
+                                    isSearchExpanded = true
+                                } else {
+                                    isSearchExpanded.toggle()
+                                }
+                            }
+
+                            if !isSearchExpanded {
+                                searchText = ""
+                            }
+                        },
                         onToggleView: {
                             viewType = (viewType == .calendar) ? .list : .calendar
+                            if viewType == .calendar {
+                                isSearchExpanded = false
+                                searchText = ""
+                            }
                         }
                     )
+
+                    if viewType == .list && isSearchExpanded {
+                        HomeSearchBarView(text: $searchText)
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                    }
                     
                     switch viewType {
                     case .calendar:
@@ -87,6 +112,7 @@ struct HomeMainView: View {
                             calendarVM: calendarVM,
                             scheduleVM: scheduleVM,
                             userVM: userVM,
+                            searchText: searchText,
                             onEdit: { mode in
                                 navigationPath.append(.editSchedule(mode: mode))
                             }
@@ -177,6 +203,12 @@ struct HomeMainView: View {
                 // 부분 갱신이 이미 반영되므로 캐시+로컬 동기화만 수행합니다.
                 scheduleVM.loadCachedAndLocalSchedules()
                 // userVM은 로컬 변경 시 바로 schedules에 반영되므로 fetch 생략 가능
+            }
+        }
+        .onChange(of: viewType) { _, newValue in
+            if newValue == .calendar {
+                isSearchExpanded = false
+                searchText = ""
             }
         }
     }
