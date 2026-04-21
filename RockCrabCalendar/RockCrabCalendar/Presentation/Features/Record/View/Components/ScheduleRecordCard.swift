@@ -6,6 +6,7 @@
 //
 
 import RockCrabDomain
+import RockCrabShared
 import SwiftUI
 
 struct ScheduleRecordCard: View {
@@ -65,9 +66,7 @@ struct ScheduleRecordCard: View {
     }
 
     private static let scheduleDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "M월 d일 EEEE"
+        let formatter = AppDateFormatterFactory.recordDetailDateFormatter()
         return formatter
     }()
 }

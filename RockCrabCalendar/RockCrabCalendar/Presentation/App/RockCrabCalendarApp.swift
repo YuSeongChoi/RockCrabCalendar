@@ -45,7 +45,8 @@ struct RockCrabCalendarApp: App {
                     HomeMainView(
                         calendarVM: calendarVM,
                         scheduleVM: scheduleVM,
-                        userVM: userVM
+                        userVM: userVM,
+                        scheduleRecordStore: environment.scheduleRecordStore
                     )
                     .tabItem {
                         Label("홈", systemImage: "calendar")

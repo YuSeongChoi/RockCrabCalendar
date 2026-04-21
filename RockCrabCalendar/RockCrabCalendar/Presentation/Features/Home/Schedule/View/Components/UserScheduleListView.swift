@@ -11,22 +11,29 @@ import RockCrabDomain
 struct UserScheduleListView: View {
     let schedules: [UserScheduleItem]
     let onEdit: (UserScheduleItem) -> Void
+    let onRecord: (UserScheduleItem) -> Void
     let embedInScrollView: Bool
 
     init(
         schedules: [UserScheduleItem],
         onEdit: @escaping (UserScheduleItem) -> Void,
+        onRecord: @escaping (UserScheduleItem) -> Void,
         embedInScrollView: Bool = true
     ) {
         self.schedules = schedules
         self.onEdit = onEdit
+        self.onRecord = onRecord
         self.embedInScrollView = embedInScrollView
     }
 
     var body: some View {
         let content = VStack(alignment: .leading, spacing: 8) {
             ForEach(schedules, id: \.id) { item in
-                UserScheduleCard(item: item, onTap: { onEdit(item) })
+                UserScheduleCard(
+                    item: item,
+                    onTap: { onEdit(item) },
+                    onRecord: { onRecord(item) }
+                )
             }
         }
         .frame(maxWidth: .infinity, alignment: .top)

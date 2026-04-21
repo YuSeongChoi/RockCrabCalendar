@@ -6,12 +6,15 @@
 //
 
 import RockCrabDomain
+import RockCrabShared
 import SwiftUI
 
 struct ScheduleRecordListView: View {
+    private let store: ScheduleRecordStoreProtocol
     @State private var viewModel: ScheduleRecordViewModel
 
     init(store: ScheduleRecordStoreProtocol) {
+        self.store = store
         _viewModel = State(initialValue: ScheduleRecordViewModel(store: store))
     }
 
@@ -40,7 +43,10 @@ struct ScheduleRecordListView: View {
 
                                     LazyVStack(spacing: 10) {
                                         ForEach(section.records) { record in
-                                            ScheduleRecordCard(record: record)
+                                            NavigationLink(value: ScheduleRecordTarget(record: record)) {
+                                                ScheduleRecordCard(record: record)
+                                            }
+                                            .buttonStyle(.plain)
                                         }
                                     }
                                     .padding(.horizontal, 16)
@@ -54,6 +60,16 @@ struct ScheduleRecordListView: View {
             .foregroundStyle(Color.textColor)
             .navigationTitle("기록")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(Color.appBackground, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .navigationDestination(for: ScheduleRecordTarget.self) { target in
+                ScheduleRecordEditView(
+                    viewModel: ScheduleRecordEditViewModel(
+                        target: target,
+                        store: store
+                    )
+                )
+            }
         }
         .onAppear {
             viewModel.loadRecords()
@@ -83,9 +99,7 @@ struct ScheduleRecordListView: View {
     }
 
     private static let monthFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.dateFormat = "yyyy년 M월"
+        let formatter = AppDateFormatterFactory.monthYearFormatter()
         return formatter
     }()
 }

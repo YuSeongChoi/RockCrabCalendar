@@ -150,6 +150,12 @@ public enum AppDateFormatterFactory {
         return formatter
     }
 
+    public static func recordDetailDateFormatter() -> DateFormatter {
+        let formatter = baseFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("yMMMMEEEEd")
+        return formatter
+    }
+
     public static func widgetMonthFormatter() -> DateFormatter {
         let formatter = baseFormatter()
         formatter.setLocalizedDateFormatFromTemplate("MMM")
