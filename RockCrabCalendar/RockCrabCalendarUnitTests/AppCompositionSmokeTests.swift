@@ -12,5 +12,6 @@ final class AppCompositionSmokeTests: XCTestCase {
         XCTAssertNotNil(environment.userScheduleUseCase)
         XCTAssertNotNil(environment.holidayUseCase)
         XCTAssertNotNil(environment.youTubeUseCase)
+        XCTAssertNotNil(environment.scheduleRecordStore)
     }
 }

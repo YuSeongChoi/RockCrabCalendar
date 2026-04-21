@@ -17,6 +17,7 @@ struct RockCrabCalendarApp: App {
 
     private enum AppTab: Hashable {
         case home
+        case record
         case settings
     }
 
@@ -50,6 +51,12 @@ struct RockCrabCalendarApp: App {
                         Label("홈", systemImage: "calendar")
                     }
                     .tag(AppTab.home)
+
+                    ScheduleRecordListView(store: environment.scheduleRecordStore)
+                        .tabItem {
+                            Label("기록", systemImage: "book.closed")
+                        }
+                        .tag(AppTab.record)
 
                     SettingsView(scheduleVM: scheduleVM, userVM: userVM)
                         .tabItem {
