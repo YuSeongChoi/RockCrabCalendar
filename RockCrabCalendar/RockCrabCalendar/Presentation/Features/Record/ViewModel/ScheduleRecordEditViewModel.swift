@@ -12,21 +12,30 @@ import RockCrabDomain
 final class ScheduleRecordEditViewModel {
     let target: ScheduleRecordTarget
     private let store: ScheduleRecordStoreProtocol
+    private let photoStore: RecordPhotoStore
     private let originalRecord: ScheduleRecord?
+    private var pendingDeletedFileNames: Set<String> = []
 
     var form: ScheduleRecordEditFormState
+    var photos: [ScheduleRecord.Photo]
     var errorMessage: String?
 
     var isEditing: Bool {
         originalRecord != nil
     }
 
+    var canAddPhoto: Bool {
+        photos.count < ScheduleRecord.maxPhotoCount
+    }
+
     init(
         target: ScheduleRecordTarget,
-        store: ScheduleRecordStoreProtocol
+        store: ScheduleRecordStoreProtocol,
+        photoStore: RecordPhotoStore = RecordPhotoStore()
     ) {
         self.target = target
         self.store = store
+        self.photoStore = photoStore
 
         let existingRecord = try? store.record(
             linkedTo: target.scheduleID,
@@ -38,6 +47,7 @@ final class ScheduleRecordEditViewModel {
             record: existingRecord,
             target: target
         )
+        self.photos = existingRecord?.photos ?? []
     }
 
     @discardableResult
@@ -54,18 +64,59 @@ final class ScheduleRecordEditViewModel {
             emoji: form.normalizedEmoji,
             title: form.trimmedTitle.isEmpty ? target.title : form.trimmedTitle,
             body: form.trimmedBody,
-            photos: originalRecord?.photos ?? [],
+            photos: photos,
             createdAt: originalRecord?.createdAt ?? now,
             updatedAt: now
         )
 
         do {
             try store.saveRecord(record)
+            deletePendingPhotos()
             errorMessage = nil
             return true
         } catch {
             errorMessage = "기록을 저장하지 못했습니다."
             return false
         }
+    }
+
+    func addPhoto(data: Data) {
+        guard canAddPhoto else {
+            errorMessage = "사진은 최대 \(ScheduleRecord.maxPhotoCount)장까지 추가할 수 있습니다."
+            return
+        }
+
+        do {
+            let fileName = try photoStore.saveImageData(data)
+            photos.append(
+                ScheduleRecord.Photo(
+                    fileName: fileName,
+                    createdAt: Date()
+                )
+            )
+            errorMessage = nil
+        } catch {
+            errorMessage = "사진을 추가하지 못했습니다."
+        }
+    }
+
+    func removePhoto(id: UUID) {
+        guard let index = photos.firstIndex(where: { $0.id == id }) else {
+            return
+        }
+
+        let removed = photos.remove(at: index)
+        pendingDeletedFileNames.insert(removed.fileName)
+    }
+
+    func imageData(for photo: ScheduleRecord.Photo) -> Data? {
+        photoStore.imageData(fileName: photo.fileName)
+    }
+
+    private func deletePendingPhotos() {
+        pendingDeletedFileNames.forEach {
+            photoStore.delete(fileName: $0)
+        }
+        pendingDeletedFileNames.removeAll()
     }
 }
