@@ -50,6 +50,7 @@
 		5D63B19D2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */; };
 		5D63B1A12F97426300FC6C1D /* ScheduleRecordEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */; };
 		5D63B1A72F97467600FC6C1D /* ScheduleRecordEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */; };
+		E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000202F97000000ABC010 /* RecordPhotoStore.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5DCF9A9D2F5955BA008EA555 /* AppCompositionSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */; };
@@ -186,6 +187,7 @@
 		5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditFormState.swift; sourceTree = "<group>"; };
 		5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditViewModel.swift; sourceTree = "<group>"; };
 		5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditView.swift; sourceTree = "<group>"; };
+		E40000202F97000000ABC010 /* RecordPhotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPhotoStore.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCompositionSmokeTests.swift; sourceTree = "<group>"; };
@@ -656,8 +658,17 @@
 			children = (
 				E40000052F97000000ABC005 /* View */,
 				E40000062F97000000ABC006 /* ViewModel */,
+				E40000222F97000000ABC012 /* Support */,
 			);
 			path = Record;
+			sourceTree = "<group>";
+		};
+		E40000222F97000000ABC012 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				E40000202F97000000ABC010 /* RecordPhotoStore.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		E40000052F97000000ABC005 /* View */ = {
@@ -968,6 +979,7 @@
 				5DFE3FA52F17958700CDA23F /* UserScheduleListView.swift in Sources */,
 				5DFE3FA62F17958700CDA23F /* UserScheduleCard.swift in Sources */,
 				E40000132F97000000ABC003 /* ScheduleRecordCard.swift in Sources */,
+				E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */,
 				5D1A73F32F178DB0007F3FB8 /* HomeCalendarOptionView.swift in Sources */,
 				5DFE40B82F18E24200CDA23F /* QWERStyleMapper.swift in Sources */,
 				5D1A73092F177562007F3FB8 /* LoadingIndicatorView.swift in Sources */,

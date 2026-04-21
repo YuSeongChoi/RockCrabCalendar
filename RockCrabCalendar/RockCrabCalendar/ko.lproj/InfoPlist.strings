@@ -1,1 +1,2 @@
 "CFBundleDisplayName" = "바위게캘린더";
+"NSPhotoLibraryUsageDescription" = "기록에 첨부할 사진을 선택하기 위해 사진 보관함 접근이 필요합니다.";

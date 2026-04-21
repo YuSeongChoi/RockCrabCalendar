@@ -1,1 +1,2 @@
 "CFBundleDisplayName" = "BAWIGE Calendar";
+"NSPhotoLibraryUsageDescription" = "Photo library access is needed to attach photos to your records.";
