@@ -107,7 +107,7 @@ body {
   aspect-ratio: 2064 / 2752;
   overflow: hidden;
   border-radius: 52px;
-  padding: 138px 108px 72px;
+  padding: 108px 108px 120px;
   border: 1px solid rgba(255, 255, 255, 0.45);
   box-shadow: 0 30px 90px rgba(44, 78, 108, 0.16);
 }
@@ -218,8 +218,8 @@ body {
 }
 
 .copy-block h2 {
-  margin: 26px 0 16px;
-  font-size: 82px;
+  margin: 24px 0 14px;
+  font-size: 78px;
   line-height: 1.08;
   letter-spacing: -0.045em;
   white-space: nowrap;
@@ -239,12 +239,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 82px;
+  margin-top: 48px;
 }
 
 .ipad-shell {
   position: relative;
-  width: min(100%, 1730px);
+  width: min(100%, 1380px);
   aspect-ratio: 2064 / 2752;
   padding: 18px;
   border-radius: 42px;

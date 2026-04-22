@@ -6,8 +6,8 @@
 
 ## 파일
 
-- `index.html`: iPhone App Store 스크린샷 7장 페이지
-- `ipad.html`: iPad App Store 스크린샷 7장 페이지
+- `index.html`: iPhone App Store 스크린샷 9장 페이지
+- `ipad.html`: iPad App Store 스크린샷 9장 페이지
 - `styles.css`: 라이트 톤 기반 마케팅 레이아웃
 - `ipad.css`: iPad 제출용 마케팅 레이아웃
 - `export-screenshots.mjs`: Playwright 기반 PNG export 스크립트
@@ -25,22 +25,26 @@ npm run export:iphone
 npm run export:ipad
 ```
 
-## 현재 화면 매핑
+## 현재 iPhone 화면 매핑
 
-- Slide 1: `calendar.png`
-- Slide 2: `qwer_schedule_filter.png`
-- Slide 3: `schedule_list.png`
-- Slide 4: `schedule_qwer_add.png`
-- Slide 5: `schedule_private_add.png`
-- Slide 6: `widget.png`
-- Slide 7: `setting.png`
+- Slide 1: `image/iPhone/calendar.png`
+- Slide 2: `image/iPhone/schedule_list.png`
+- Slide 3: `image/iPhone/record.png`
+- Slide 4: `image/iPhone/record_add.png`
+- Slide 5: `image/iPhone/qwer_schedule_filter.png`
+- Slide 6: `image/iPhone/schedule_qwer_add.png`
+- Slide 7: `image/iPhone/schedule_private_add.png`
+- Slide 8: `image/iPhone/widget.png`
+- Slide 9: `image/iPhone/setting.png`
 
 ## iPad 화면 매핑
 
 - Slide 1: `image/iPad/calendar.png`
-- Slide 2: `image/iPad/qwer_schedule_filter.png`
-- Slide 3: `image/iPad/schedule_list.png`
-- Slide 4: `image/iPad/schedule_qwer_add.png`
-- Slide 5: `image/iPad/schedule_private_add.png`
-- Slide 6: `image/iPad/widget.png`
-- Slide 7: `image/iPad/setting.png`
+- Slide 2: `image/iPad/schedule_list.png`
+- Slide 3: `image/iPad/record.png`
+- Slide 4: `image/iPad/record_add.png`
+- Slide 5: `image/iPad/qwer_schedule_filter.png`
+- Slide 6: `image/iPad/schedule_qwer_add.png`
+- Slide 7: `image/iPad/schedule_private_add.png`
+- Slide 8: `image/iPad/widget.png`
+- Slide 9: `image/iPad/setting.png`

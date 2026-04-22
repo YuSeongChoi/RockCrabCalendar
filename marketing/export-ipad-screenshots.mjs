@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,16 +13,26 @@ const htmlUrl = pathToFileURL(path.join(__dirname, "ipad.html")).href;
 
 const names = [
   "01-rockcrabcalendar-ipad-main-calendar.png",
-  "02-rockcrabcalendar-ipad-qwer-filter.png",
-  "03-rockcrabcalendar-ipad-monthly-list.png",
-  "04-rockcrabcalendar-ipad-add-qwer.png",
-  "05-rockcrabcalendar-ipad-add-private.png",
-  "06-rockcrabcalendar-ipad-widget.png",
-  "07-rockcrabcalendar-ipad-settings.png"
+  "02-rockcrabcalendar-ipad-monthly-list.png",
+  "03-rockcrabcalendar-ipad-records.png",
+  "04-rockcrabcalendar-ipad-record-write.png",
+  "05-rockcrabcalendar-ipad-qwer-filter.png",
+  "06-rockcrabcalendar-ipad-add-qwer.png",
+  "07-rockcrabcalendar-ipad-add-private.png",
+  "08-rockcrabcalendar-ipad-widget.png",
+  "09-rockcrabcalendar-ipad-settings.png"
 ];
 
 fs.mkdirSync(outputDir, { recursive: true });
 fs.mkdirSync(appStoreDir, { recursive: true });
+
+for (const dir of [outputDir, appStoreDir]) {
+  for (const file of fs.readdirSync(dir)) {
+    if (file.endsWith(".png")) {
+      fs.unlinkSync(path.join(dir, file));
+    }
+  }
+}
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({
@@ -48,7 +59,9 @@ for (let i = 0; i < count; i += 1) {
     type: "png"
   });
 
-  fs.copyFileSync(outputPath, appStorePath);
+  execFileSync("sips", ["-z", "2752", "2064", outputPath, "--out", appStorePath], {
+    stdio: "ignore"
+  });
 
   console.log(`saved ${outputPath}`);
   console.log(`saved ${appStorePath}`);

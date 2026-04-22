@@ -50,7 +50,6 @@
 		5D63B19D2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */; };
 		5D63B1A12F97426300FC6C1D /* ScheduleRecordEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */; };
 		5D63B1A72F97467600FC6C1D /* ScheduleRecordEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */; };
-		E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000202F97000000ABC010 /* RecordPhotoStore.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5DCF9A9D2F5955BA008EA555 /* AppCompositionSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */; };
@@ -112,6 +111,7 @@
 		E40000112F97000000ABC001 /* ScheduleRecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000012F97000000ABC001 /* ScheduleRecordListView.swift */; };
 		E40000122F97000000ABC002 /* ScheduleRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000022F97000000ABC002 /* ScheduleRecordViewModel.swift */; };
 		E40000132F97000000ABC003 /* ScheduleRecordCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000032F97000000ABC003 /* ScheduleRecordCard.swift */; };
+		E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000202F97000000ABC010 /* RecordPhotoStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,7 +187,6 @@
 		5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditFormState.swift; sourceTree = "<group>"; };
 		5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditViewModel.swift; sourceTree = "<group>"; };
 		5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditView.swift; sourceTree = "<group>"; };
-		E40000202F97000000ABC010 /* RecordPhotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPhotoStore.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCompositionSmokeTests.swift; sourceTree = "<group>"; };
@@ -249,6 +248,7 @@
 		E40000012F97000000ABC001 /* ScheduleRecordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordListView.swift; sourceTree = "<group>"; };
 		E40000022F97000000ABC002 /* ScheduleRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordViewModel.swift; sourceTree = "<group>"; };
 		E40000032F97000000ABC003 /* ScheduleRecordCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordCard.swift; sourceTree = "<group>"; };
+		E40000202F97000000ABC010 /* RecordPhotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPhotoStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -663,14 +663,6 @@
 			path = Record;
 			sourceTree = "<group>";
 		};
-		E40000222F97000000ABC012 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-				E40000202F97000000ABC010 /* RecordPhotoStore.swift */,
-			);
-			path = Support;
-			sourceTree = "<group>";
-		};
 		E40000052F97000000ABC005 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,6 +690,14 @@
 				E40000032F97000000ABC003 /* ScheduleRecordCard.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		E40000222F97000000ABC012 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				E40000202F97000000ABC010 /* RecordPhotoStore.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		F60CBDF887AD4524883CF013 /* Components */ = {
@@ -1208,7 +1208,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1252,7 +1252,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1375,7 +1375,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1405,7 +1405,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.9;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
