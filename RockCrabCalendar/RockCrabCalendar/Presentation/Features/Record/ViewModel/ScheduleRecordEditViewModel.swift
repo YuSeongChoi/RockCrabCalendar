@@ -19,6 +19,7 @@ final class ScheduleRecordEditViewModel {
     var form: ScheduleRecordEditFormState
     var photos: [ScheduleRecord.Photo]
     var errorMessage: String?
+    var errorTitle: String = "저장 실패"
 
     var isEditing: Bool {
         originalRecord != nil
@@ -79,7 +80,24 @@ final class ScheduleRecordEditViewModel {
             errorMessage = nil
             return true
         } catch {
+            errorTitle = "저장 실패"
             errorMessage = "기록을 저장하지 못했습니다."
+            return false
+        }
+    }
+
+    @discardableResult
+    func deleteRecord() -> Bool {
+        guard let originalRecord else { return false }
+
+        do {
+            let removedRecord = try store.deleteRecord(id: originalRecord.id) ?? originalRecord
+            deletePhotos(removedRecord.photos)
+            errorMessage = nil
+            return true
+        } catch {
+            errorTitle = "삭제 실패"
+            errorMessage = "기록을 삭제하지 못했습니다."
             return false
         }
     }
@@ -122,5 +140,11 @@ final class ScheduleRecordEditViewModel {
             photoStore.delete(fileName: $0)
         }
         pendingDeletedFileNames.removeAll()
+    }
+
+    private func deletePhotos(_ photos: [ScheduleRecord.Photo]) {
+        photos.forEach {
+            photoStore.delete(fileName: $0.fileName)
+        }
     }
 }

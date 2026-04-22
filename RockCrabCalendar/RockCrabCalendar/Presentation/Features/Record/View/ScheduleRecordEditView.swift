@@ -12,11 +12,13 @@ import RockCrabDomain
 
 struct ScheduleRecordEditView: View {
     @Environment(\.dismiss) private var dismiss
+    private let onRecordChanged: () -> Void
     @State private var viewModel: ScheduleRecordEditViewModel
     @State private var isShowingEmojiPicker = false
     @State private var selectedPhotoItems: [PhotosPickerItem] = []
     @State private var isLoadingPhotos = false
     @State private var previewPhoto: RecordPhotoPreview?
+    @State private var isShowingDeleteConfirm = false
 
     private var scheduleDateText: String {
         Self.scheduleDateFormatter.string(from: viewModel.target.date)
@@ -37,7 +39,11 @@ struct ScheduleRecordEditView: View {
         max(0, ScheduleRecord.maxPhotoCount - viewModel.photos.count)
     }
 
-    init(viewModel: ScheduleRecordEditViewModel) {
+    init(
+        viewModel: ScheduleRecordEditViewModel,
+        onRecordChanged: @escaping () -> Void = {}
+    ) {
+        self.onRecordChanged = onRecordChanged
         _viewModel = State(initialValue: viewModel)
     }
 
@@ -52,6 +58,7 @@ struct ScheduleRecordEditView: View {
                     emotionSection
                     recordInputSection
                     photosSection
+                    deleteSection
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
@@ -67,6 +74,7 @@ struct ScheduleRecordEditView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("저장") {
                     if viewModel.save() {
+                        onRecordChanged()
                         dismiss()
                     }
                 }
@@ -74,10 +82,21 @@ struct ScheduleRecordEditView: View {
                 .disabled(viewModel.canSave == false)
             }
         }
-        .alert("저장 실패", isPresented: errorBinding) {
+        .alert(viewModel.errorTitle, isPresented: errorBinding) {
             Button("확인", role: .cancel) { }
         } message: {
             Text(viewModel.errorMessage ?? "")
+        }
+        .alert("기록을 삭제할까요?", isPresented: $isShowingDeleteConfirm) {
+            Button("삭제", role: .destructive) {
+                if viewModel.deleteRecord() {
+                    onRecordChanged()
+                    dismiss()
+                }
+            }
+            Button("취소", role: .cancel) { }
+        } message: {
+            Text("삭제한 기록과 첨부 사진은 복구할 수 없습니다.")
         }
         .sheet(isPresented: $isShowingEmojiPicker) {
             emojiPickerSheet
@@ -216,6 +235,24 @@ struct ScheduleRecordEditView: View {
                 }
                 .scrollIndicators(.hidden)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var deleteSection: some View {
+        if viewModel.isEditing {
+            Button(role: .destructive) {
+                isShowingDeleteConfirm = true
+            } label: {
+                Text("기록 삭제")
+                    .font(.subheadline.weight(.semibold))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(Color.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
         }
     }
 

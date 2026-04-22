@@ -67,7 +67,10 @@ struct ScheduleRecordListView: View {
                     viewModel: ScheduleRecordEditViewModel(
                         target: target,
                         store: store
-                    )
+                    ),
+                    onRecordChanged: {
+                        viewModel.loadRecords()
+                    }
                 )
             }
         }
