@@ -28,6 +28,10 @@ final class ScheduleRecordEditViewModel {
         photos.count < ScheduleRecord.maxPhotoCount
     }
 
+    var canSave: Bool {
+        form.trimmedBody.isEmpty == false || photos.isEmpty == false
+    }
+
     init(
         target: ScheduleRecordTarget,
         store: ScheduleRecordStoreProtocol,
@@ -52,8 +56,8 @@ final class ScheduleRecordEditViewModel {
 
     @discardableResult
     func save() -> Bool {
-        guard form.canSave else {
-            errorMessage = "제목 또는 내용을 입력해주세요."
+        guard canSave else {
+            errorMessage = "내용 또는 사진을 추가해주세요."
             return false
         }
 
@@ -62,7 +66,7 @@ final class ScheduleRecordEditViewModel {
             id: originalRecord?.id ?? UUID(),
             linkedSchedule: target.snapshot,
             emoji: form.normalizedEmoji,
-            title: form.trimmedTitle.isEmpty ? target.title : form.trimmedTitle,
+            title: target.title,
             body: form.trimmedBody,
             photos: photos,
             createdAt: originalRecord?.createdAt ?? now,

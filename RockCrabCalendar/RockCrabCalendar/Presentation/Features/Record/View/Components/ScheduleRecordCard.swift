@@ -11,24 +11,16 @@ import SwiftUI
 
 struct ScheduleRecordCard: View {
     let record: ScheduleRecord
+    private let photoStore = RecordPhotoStore()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .top, spacing: 12) {
-                Text(record.emoji)
-                    .font(.system(size: 32))
-                    .frame(width: 48, height: 48)
-                    .background(Color.appBackground)
-                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                leadingMedia
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(record.title)
-                        .font(.headline)
-                        .lineLimit(1)
-
                     Text(record.linkedSchedule.title)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .font(.headline)
                         .lineLimit(1)
 
                     Text(scheduleDateText)
@@ -61,6 +53,29 @@ struct ScheduleRecordCard: View {
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
     }
 
+    @ViewBuilder
+    private var leadingMedia: some View {
+        if let image = firstPhotoImage {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(width: Self.mediaSize, height: Self.mediaSize)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                .clipped()
+        } else {
+            Text(record.emoji)
+                .font(.system(size: 32))
+                .frame(width: Self.mediaSize, height: Self.mediaSize)
+                .background(Color.appBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+        }
+    }
+
+    private var firstPhotoImage: UIImage? {
+        guard let firstPhoto = record.photos.first else { return nil }
+        return photoStore.image(fileName: firstPhoto.fileName)
+    }
+
     private var scheduleDateText: String {
         Self.scheduleDateFormatter.string(from: record.linkedSchedule.date)
     }
@@ -69,4 +84,6 @@ struct ScheduleRecordCard: View {
         let formatter = AppDateFormatterFactory.recordDetailDateFormatter()
         return formatter
     }()
+
+    private static let mediaSize: CGFloat = 56
 }

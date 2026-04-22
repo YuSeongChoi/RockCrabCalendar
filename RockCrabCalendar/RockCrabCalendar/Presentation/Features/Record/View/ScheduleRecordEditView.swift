@@ -48,6 +48,7 @@ struct ScheduleRecordEditView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     linkedScheduleSection
+                    emotionSection
                     recordInputSection
                     photosSection
                 }
@@ -69,7 +70,7 @@ struct ScheduleRecordEditView: View {
                     }
                 }
                 .fontWeight(.semibold)
-                .disabled(viewModel.form.canSave == false)
+                .disabled(viewModel.canSave == false)
             }
         }
         .alert("저장 실패", isPresented: errorBinding) {
@@ -112,29 +113,45 @@ struct ScheduleRecordEditView: View {
     }
 
     @ViewBuilder
+    private var emotionSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("감정")
+                .font(.headline)
+
+            Button {
+                isShowingEmojiPicker = true
+            } label: {
+                HStack(spacing: 10) {
+                    Text(verbatim: viewModel.form.normalizedEmoji)
+                        .font(.system(size: 28))
+                        .frame(width: 52, height: 52)
+                        .background(Color.appBackground)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+
+                    Text("탭해서 이모지를 선택하세요.")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(Color.textColor)
+
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.bold))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(14)
+                .background(Color.cardBackground)
+                .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    @ViewBuilder
     private var recordInputSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("기록")
                 .font(.headline)
 
-            VStack(spacing: 12) {
-                HStack(spacing: 12) {
-                    Button {
-                        isShowingEmojiPicker = true
-                    } label: {
-                        Text(verbatim: viewModel.form.normalizedEmoji)
-                            .font(.system(size: 28))
-                            .frame(width: 58, height: 52)
-                            .background(Color.appBackground)
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    }
-                    .buttonStyle(.plain)
-
-                    TextField("기록 제목", text: $viewModel.form.title)
-                        .font(.headline)
-                        .textInputAutocapitalization(.never)
-                }
-
+            VStack(alignment: .leading, spacing: 12) {
                 TextField(
                     "일정은 어땠나요?",
                     text: $viewModel.form.body,
@@ -146,10 +163,6 @@ struct ScheduleRecordEditView: View {
             .padding(14)
             .background(Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-
-            Text("사진과 함께 그날의 기억을 남겨보세요.")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
         }
     }
 
