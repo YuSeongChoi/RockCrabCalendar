@@ -6,6 +6,8 @@ Config/Secrets.xcconfig
 **/Config/*.xcconfig
 
 # Xcode
+.DS_Store
+**/.DS_Store
 DerivedData/
 build/
 *.xcworkspace
