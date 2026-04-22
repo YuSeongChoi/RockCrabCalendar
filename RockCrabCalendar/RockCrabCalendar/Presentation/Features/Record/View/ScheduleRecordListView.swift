@@ -47,6 +47,19 @@ struct ScheduleRecordListView: View {
                                                 ScheduleRecordCard(record: record)
                                             }
                                             .buttonStyle(.plain)
+                                            .simultaneousGesture(
+                                                TapGesture().onEnded {
+                                                    AnalyticsHelper.logAction(
+                                                        actionName: "record_card_tap",
+                                                        label: "기록 카드 선택",
+                                                        parameters: [
+                                                            "schedule_kind": record.linkedSchedule.kind.analyticsLabel,
+                                                            "photo_count": record.photos.count,
+                                                            "has_body": record.body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0 : 1
+                                                        ]
+                                                    )
+                                                }
+                                            )
                                         }
                                     }
                                     .padding(.horizontal, 16)
@@ -76,6 +89,14 @@ struct ScheduleRecordListView: View {
         }
         .onAppear {
             viewModel.loadRecords()
+            AnalyticsHelper.logScreen(
+                screenName: "record_list",
+                label: "기록 탭",
+                parameters: [
+                    "record_count": viewModel.records.count,
+                    "is_empty": viewModel.records.isEmpty ? 1 : 0
+                ]
+            )
         }
     }
 

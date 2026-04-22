@@ -67,6 +67,10 @@ struct HomeMainView: View {
                     HomeCalendarOptionView(
                         viewType: viewType,
                         onShowFilter: {
+                            AnalyticsHelper.logAction(
+                                actionName: "home_filter_open",
+                                label: "홈 필터 열기"
+                            )
                             showCategorySheet = true
                         },
                         onToday: {
@@ -74,6 +78,10 @@ struct HomeMainView: View {
                             calendarVM.select(date: today)
                             calendarVM.currentMonth = calendarVM.startOfMonth(for: today)
                             scheduleVM.selectedDate = today
+                            AnalyticsHelper.logAction(
+                                actionName: "home_today_tap",
+                                label: "오늘 버튼 선택"
+                            )
                         },
                         onSearch: {
                             withAnimation(.easeInOut(duration: 0.2)) {
@@ -88,6 +96,13 @@ struct HomeMainView: View {
                             if !isSearchExpanded {
                                 searchText = ""
                             }
+                            AnalyticsHelper.logAction(
+                                actionName: "schedule_search_toggle",
+                                label: isSearchExpanded ? "검색 열기" : "검색 닫기",
+                                parameters: [
+                                    "view_type": viewType.analyticsLabel
+                                ]
+                            )
                         },
                         onToggleView: {
                             viewType = (viewType == .calendar) ? .list : .calendar
@@ -95,6 +110,13 @@ struct HomeMainView: View {
                                 isSearchExpanded = false
                                 searchText = ""
                             }
+                            AnalyticsHelper.logAction(
+                                actionName: "home_view_type_change",
+                                label: "홈 보기 방식 변경",
+                                parameters: [
+                                    "view_type": viewType.analyticsLabel
+                                ]
+                            )
                         }
                     )
 
@@ -110,9 +132,11 @@ struct HomeMainView: View {
                             scheduleVM: scheduleVM,
                             userVM: userVM,
                             onEdit: { mode in
+                                logScheduleEditOpen(mode)
                                 navigationPath.append(.editSchedule(mode: mode))
                             },
                             onRecord: { target in
+                                logRecordEditOpen(target)
                                 navigationPath.append(.editRecord(target: target))
                             }
                         )
@@ -123,9 +147,11 @@ struct HomeMainView: View {
                             userVM: userVM,
                             searchText: searchText,
                             onEdit: { mode in
+                                logScheduleEditOpen(mode)
                                 navigationPath.append(.editSchedule(mode: mode))
                             },
                             onRecord: { target in
+                                logRecordEditOpen(target)
                                 navigationPath.append(.editRecord(target: target))
                             }
                         )
@@ -144,10 +170,20 @@ struct HomeMainView: View {
                     isExpanded: $isFabExpanded,
                     onAddQWER: {
                         showCategorySheet = false
+                        AnalyticsHelper.logAction(
+                            actionName: "schedule_create_open",
+                            label: "QWER 일정 추가 열기",
+                            parameters: ["schedule_kind": "QWER"]
+                        )
                         navigationPath.append(.addSchedule(kind: .qwer))
                     },
                     onAddUser: {
                         showCategorySheet = false
+                        AnalyticsHelper.logAction(
+                            actionName: "schedule_create_open",
+                            label: "개인 일정 추가 열기",
+                            parameters: ["schedule_kind": "개인"]
+                        )
                         navigationPath.append(.addSchedule(kind: .user))
                     }
                 )
@@ -205,13 +241,28 @@ struct HomeMainView: View {
             scheduleVM.selectedDate = calendarVM.selectedDate
             scheduleVM.loadCachedAndLocalSchedules()
             userVM.fetchAllSchedules()
-            AnalyticsHelper.logEvent(eventName: "main_screen", parameters: ["label":"메인화면"])
+            AnalyticsHelper.logScreen(
+                screenName: "home",
+                label: "홈 화면",
+                parameters: [
+                    "selected_view": viewType.analyticsLabel,
+                    "qwer_schedule_count": scheduleVM.schedules.count,
+                    "user_schedule_count": userVM.schedules.count
+                ]
+            )
         }
         .sheet(isPresented: $showCategorySheet) {
             CategoryFilterSheet(
                 active: scheduleVM.activeCategories,
                 onApply: { selected in
                     scheduleVM.setCategories(selected)
+                    AnalyticsHelper.logAction(
+                        actionName: "home_filter_apply",
+                        label: "홈 필터 적용",
+                        parameters: [
+                            "selected_category_count": selected.count
+                        ]
+                    )
                 }
             )
             .presentationDragIndicator(.visible)
@@ -234,6 +285,31 @@ struct HomeMainView: View {
 
 }
 
+private extension HomeMainView {
+    func logScheduleEditOpen(_ mode: ScheduleEditMode) {
+        AnalyticsHelper.logAction(
+            actionName: "schedule_edit_open",
+            label: "일정 수정 열기",
+            parameters: [
+                "schedule_kind": mode.kind.analyticsLabel,
+                "edit_mode": mode.analyticsModeLabel,
+                "source_view": viewType.analyticsLabel
+            ]
+        )
+    }
+
+    func logRecordEditOpen(_ target: ScheduleRecordTarget) {
+        AnalyticsHelper.logAction(
+            actionName: "record_edit_open",
+            label: "일정 기록 열기",
+            parameters: [
+                "schedule_kind": target.kind.analyticsLabel,
+                "source_view": viewType.analyticsLabel
+            ]
+        )
+    }
+}
+
 extension HomeMainView {
     private enum HomeRoute: Hashable {
         case addSchedule(kind: ScheduleEditKind)
@@ -246,5 +322,14 @@ extension HomeMainView {
         case calendar
         /// 리스트
         case list
+
+        var analyticsLabel: String {
+            switch self {
+            case .calendar:
+                return "캘린더"
+            case .list:
+                return "리스트"
+            }
+        }
     }
 }

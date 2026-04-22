@@ -84,6 +84,15 @@ struct RockCrabCalendarApp: App {
                     WidgetCenter.shared.reloadAllTimelines()
                 }
             }
+            .onChange(of: selectedTab) { _, newValue in
+                AnalyticsHelper.logAction(
+                    actionName: "tab_selected",
+                    label: "탭 선택",
+                    parameters: [
+                        "tab_name": tabLabel(for: newValue)
+                    ]
+                )
+            }
             .alert(updatePromptTitle, isPresented: isShowingUpdatePrompt) {
                 Button(updateLaterTitle, role: .cancel) {
                     guard let prompt = appUpdatePrompt else { return }
@@ -174,6 +183,17 @@ struct RockCrabCalendarApp: App {
 
     private var updateNowTitle: String {
         AppLocalization.localized(ko: "업데이트", en: "Update")
+    }
+
+    private func tabLabel(for tab: AppTab) -> String {
+        switch tab {
+        case .home:
+            return "홈"
+        case .record:
+            return "기록"
+        case .settings:
+            return "설정"
+        }
     }
 
     private func handleDeepLink(_ url: URL) {
@@ -295,11 +315,7 @@ private struct TabBarAppearanceConfigurator: TabBarAppearanceConfiguring {
     @MainActor
     func configure() {
         let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor { trait in
-            trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
-        }
-        appearance.shadowColor = .clear
+        appearance.configureWithDefaultBackground()
 
         [appearance.stackedLayoutAppearance, appearance.inlineLayoutAppearance, appearance.compactInlineLayoutAppearance]
             .forEach { itemAppearance in
@@ -314,7 +330,6 @@ private struct TabBarAppearanceConfigurator: TabBarAppearanceConfiguring {
         tabBar.scrollEdgeAppearance = appearance
         tabBar.tintColor = .label
         tabBar.unselectedItemTintColor = .secondaryLabel
-        tabBar.isTranslucent = false
     }
 }
 
