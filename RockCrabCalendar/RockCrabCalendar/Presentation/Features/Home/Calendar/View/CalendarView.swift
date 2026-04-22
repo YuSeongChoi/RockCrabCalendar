@@ -14,6 +14,7 @@ struct CalendarView: View {
     var scheduleVM: QWERScheduleViewModel
     var userVM: UserScheduleViewModel
     let onEdit: (ScheduleEditMode) -> Void
+    let onRecord: (ScheduleRecordTarget) -> Void
     
     @State private var dragOffset: CGFloat = 0
     
@@ -56,6 +57,9 @@ struct CalendarView: View {
                                         onEdit: { item in
                                             onEdit(.editQWER(item))
                                         },
+                                        onRecord: { item in
+                                            onRecord(ScheduleRecordTarget(qwerSchedule: item))
+                                        },
                                         embedInScrollView: false
                                     )
                                     .padding(.top, 12)
@@ -65,6 +69,9 @@ struct CalendarView: View {
                                         schedules: selectedUser,
                                         onEdit: { item in
                                             onEdit(.editUser(userVM.latestSchedule(for: item)))
+                                        },
+                                        onRecord: { item in
+                                            onRecord(ScheduleRecordTarget(userSchedule: userVM.latestSchedule(for: item)))
                                         },
                                         embedInScrollView: false
                                     )

@@ -15,6 +15,7 @@ struct ScheduleListView: View {
     var userVM: UserScheduleViewModel
     let searchText: String
     let onEdit: (ScheduleEditMode) -> Void
+    let onRecord: (ScheduleRecordTarget) -> Void
     
     private let calendar = Calendar.current
     
@@ -67,6 +68,9 @@ struct ScheduleListView: View {
                                     memberColor: QWERStyleMapper.memberColor,
                                     onEdit: { item in
                                         onEdit(.editQWER(item))
+                                    },
+                                    onRecord: { item in
+                                        onRecord(ScheduleRecordTarget(qwerSchedule: item))
                                     }
                                 )
                             }
@@ -75,6 +79,9 @@ struct ScheduleListView: View {
                                     schedules: uItems,
                                     onEdit: { item in
                                         onEdit(.editUser(userVM.latestSchedule(for: item)))
+                                    },
+                                    onRecord: { item in
+                                        onRecord(ScheduleRecordTarget(userSchedule: userVM.latestSchedule(for: item)))
                                     }
                                 )
                             }

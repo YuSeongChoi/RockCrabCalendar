@@ -12,17 +12,20 @@ struct QWERScheduleListView: View {
     let schedules: [QWERScheduleItem]
     let memberColor: (QWERMember) -> Color
     let onEdit: (QWERScheduleItem) -> Void
+    let onRecord: (QWERScheduleItem) -> Void
     let embedInScrollView: Bool
 
     init(
         schedules: [QWERScheduleItem],
         memberColor: @escaping (QWERMember) -> Color,
         onEdit: @escaping (QWERScheduleItem) -> Void,
+        onRecord: @escaping (QWERScheduleItem) -> Void,
         embedInScrollView: Bool = true
     ) {
         self.schedules = schedules
         self.memberColor = memberColor
         self.onEdit = onEdit
+        self.onRecord = onRecord
         self.embedInScrollView = embedInScrollView
     }
 
@@ -32,7 +35,8 @@ struct QWERScheduleListView: View {
                 QWERScheduleCard(
                     item: item,
                     memberColor: memberColor,
-                    onTap: { onEdit(item) }
+                    onTap: { onEdit(item) },
+                    onRecord: { onRecord(item) }
                 )
             }
         }

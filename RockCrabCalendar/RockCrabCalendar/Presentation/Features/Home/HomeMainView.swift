@@ -7,19 +7,22 @@
 
 import SwiftUI
 import RockCrabShared
+import RockCrabDomain
 
 struct HomeMainView: View {
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
-    
+
     @State private var showCategorySheet: Bool = false
     @State private var isFabExpanded: Bool = false
     @State private var viewType: ViewType = .calendar
     @State private var navigationPath: [HomeRoute] = []
     @State private var searchText: String = ""
     @State private var isSearchExpanded: Bool = false
-    
+
+    private let scheduleRecordStore: ScheduleRecordStoreProtocol
+
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
         _calendarVM = State(initialValue: CalendarViewModel(
@@ -34,24 +37,27 @@ struct HomeMainView: View {
             useCase: environment.userScheduleUseCase,
             migrationStore: environment.userScheduleMigrationStore
         ))
+        self.scheduleRecordStore = environment.scheduleRecordStore
     }
 
     init(
         calendarVM: CalendarViewModel,
         scheduleVM: QWERScheduleViewModel,
-        userVM: UserScheduleViewModel
+        userVM: UserScheduleViewModel,
+        scheduleRecordStore: ScheduleRecordStoreProtocol
     ) {
+        self.scheduleRecordStore = scheduleRecordStore
         _calendarVM = State(initialValue: calendarVM)
         _scheduleVM = State(initialValue: scheduleVM)
         _userVM = State(initialValue: userVM)
     }
-    
+
     var body: some View {
         NavigationStack(path: $navigationPath) {
             ZStack {
                 Color.appBackground
                     .ignoresSafeArea()
-                
+
                 VStack(spacing: 10) {
                     HomeDateSelectionView(
                         currentMonth: calendarVM.currentMonth,
@@ -96,7 +102,7 @@ struct HomeMainView: View {
                         HomeSearchBarView(text: $searchText)
                             .transition(.move(edge: .top).combined(with: .opacity))
                     }
-                    
+
                     switch viewType {
                     case .calendar:
                         CalendarView(
@@ -105,6 +111,9 @@ struct HomeMainView: View {
                             userVM: userVM,
                             onEdit: { mode in
                                 navigationPath.append(.editSchedule(mode: mode))
+                            },
+                            onRecord: { target in
+                                navigationPath.append(.editRecord(target: target))
                             }
                         )
                     case .list:
@@ -115,11 +124,14 @@ struct HomeMainView: View {
                             searchText: searchText,
                             onEdit: { mode in
                                 navigationPath.append(.editSchedule(mode: mode))
+                            },
+                            onRecord: { target in
+                                navigationPath.append(.editRecord(target: target))
                             }
                         )
                     }
                 }
-                
+
                 if isFabExpanded {
                     Color.black.opacity(0.001)
                         .ignoresSafeArea()
@@ -127,7 +139,7 @@ struct HomeMainView: View {
                             withAnimation(.easeInOut(duration: 0.2)) { isFabExpanded = false }
                         }
                 }
-                
+
                 HomeScheduleFloatingButton(
                     isExpanded: $isFabExpanded,
                     onAddQWER: {
@@ -174,6 +186,13 @@ struct HomeMainView: View {
                             userVM: userVM
                         )
                     )
+                case .editRecord(let target):
+                    ScheduleRecordEditView(
+                        viewModel: ScheduleRecordEditViewModel(
+                            target: target,
+                            store: scheduleRecordStore
+                        )
+                    )
                 }
             }
         }
@@ -212,13 +231,14 @@ struct HomeMainView: View {
             }
         }
     }
-    
+
 }
 
 extension HomeMainView {
     private enum HomeRoute: Hashable {
         case addSchedule(kind: ScheduleEditKind)
         case editSchedule(mode: ScheduleEditMode)
+        case editRecord(target: ScheduleRecordTarget)
     }
 
     enum ViewType {

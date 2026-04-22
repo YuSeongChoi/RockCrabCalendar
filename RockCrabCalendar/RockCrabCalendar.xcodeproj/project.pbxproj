@@ -46,6 +46,11 @@
 		5D5115BD2F1E2FCB00545259 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5115BC2F1E2FCB00545259 /* ActivityView.swift */; };
 		5D63B1732F96100000FC6C1D /* ScheduleSearchMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1722F96100000FC6C1D /* ScheduleSearchMatcher.swift */; };
 		5D63B17C2F96159700FC6C1D /* HomeSearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B17B2F96159700FC6C1D /* HomeSearchBarView.swift */; };
+		5D63B1982F9740F300FC6C1D /* ScheduleRecordTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1972F9740F300FC6C1D /* ScheduleRecordTarget.swift */; };
+		5D63B19D2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */; };
+		5D63B1A12F97426300FC6C1D /* ScheduleRecordEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */; };
+		5D63B1A72F97467600FC6C1D /* ScheduleRecordEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */; };
+		E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000202F97000000ABC010 /* RecordPhotoStore.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5DCF9A9D2F5955BA008EA555 /* AppCompositionSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */; };
@@ -104,6 +109,9 @@
 		D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F1C2D3E4B5A69788776655 /* ScheduleEditActionHandler.swift */; };
 		D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E2D3C4A5F6988777665544 /* ScheduleEditFormState.swift */; };
 		D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */; };
+		E40000112F97000000ABC001 /* ScheduleRecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000012F97000000ABC001 /* ScheduleRecordListView.swift */; };
+		E40000122F97000000ABC002 /* ScheduleRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000022F97000000ABC002 /* ScheduleRecordViewModel.swift */; };
+		E40000132F97000000ABC003 /* ScheduleRecordCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40000032F97000000ABC003 /* ScheduleRecordCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +183,11 @@
 		5D5115BC2F1E2FCB00545259 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		5D63B1722F96100000FC6C1D /* ScheduleSearchMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleSearchMatcher.swift; sourceTree = "<group>"; };
 		5D63B17B2F96159700FC6C1D /* HomeSearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchBarView.swift; sourceTree = "<group>"; };
+		5D63B1972F9740F300FC6C1D /* ScheduleRecordTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordTarget.swift; sourceTree = "<group>"; };
+		5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditFormState.swift; sourceTree = "<group>"; };
+		5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditViewModel.swift; sourceTree = "<group>"; };
+		5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditView.swift; sourceTree = "<group>"; };
+		E40000202F97000000ABC010 /* RecordPhotoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordPhotoStore.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCompositionSmokeTests.swift; sourceTree = "<group>"; };
@@ -233,6 +246,9 @@
 		C0A100000000000000000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C1D2E3F4A5B6988777665543 /* ScheduleEditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditMode.swift; sourceTree = "<group>"; };
 		DF378DC10BF04A46A3DA9CFF /* ScheduleEditMemberToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEditMemberToggle.swift; sourceTree = "<group>"; };
+		E40000012F97000000ABC001 /* ScheduleRecordListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordListView.swift; sourceTree = "<group>"; };
+		E40000022F97000000ABC002 /* ScheduleRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordViewModel.swift; sourceTree = "<group>"; };
+		E40000032F97000000ABC003 /* ScheduleRecordCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -437,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				5D1A72DC2F177562007F3FB8 /* Home */,
+				E40000042F97000000ABC004 /* Record */,
 				5D5115AF2F1E2F8F00545259 /* Settings */,
 				5D1A72E92F177562007F3FB8 /* YouTube */,
 			);
@@ -634,6 +651,53 @@
 				A7A000012F70000100000004 /* RockCrabCalendarWidgets.swift */,
 			);
 			path = RockCrabCalendarWidget;
+			sourceTree = "<group>";
+		};
+		E40000042F97000000ABC004 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				E40000052F97000000ABC005 /* View */,
+				E40000062F97000000ABC006 /* ViewModel */,
+				E40000222F97000000ABC012 /* Support */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		E40000222F97000000ABC012 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				E40000202F97000000ABC010 /* RecordPhotoStore.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		E40000052F97000000ABC005 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E40000012F97000000ABC001 /* ScheduleRecordListView.swift */,
+				5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */,
+				E40000072F97000000ABC007 /* Components */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E40000062F97000000ABC006 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E40000022F97000000ABC002 /* ScheduleRecordViewModel.swift */,
+				5D63B1972F9740F300FC6C1D /* ScheduleRecordTarget.swift */,
+				5D63B19C2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift */,
+				5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E40000072F97000000ABC007 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E40000032F97000000ABC003 /* ScheduleRecordCard.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		F60CBDF887AD4524883CF013 /* Components */ = {
@@ -867,12 +931,14 @@
 				5D1A72F22F177562007F3FB8 /* EmptyStateView.swift in Sources */,
 				5D1A72F32F177562007F3FB8 /* NotificationManager.swift in Sources */,
 				5D1A72F42F177562007F3FB8 /* CategoryFilterSheet.swift in Sources */,
+				5D63B1A72F97467600FC6C1D /* ScheduleRecordEditView.swift in Sources */,
 				5D5115B92F1E2FB800545259 /* ICSExporter.swift in Sources */,
 				5D1A72F52F177562007F3FB8 /* CalendarGenerator.swift in Sources */,
 				5D1A72F62F177562007F3FB8 /* WindowOverlayView.swift in Sources */,
 				5D1A72F72F177562007F3FB8 /* DateUtil.swift in Sources */,
 				5D1A72F82F177562007F3FB8 /* RockCrabCalendarApp.swift in Sources */,
 				5D63B17C2F96159700FC6C1D /* HomeSearchBarView.swift in Sources */,
+				E40000112F97000000ABC001 /* ScheduleRecordListView.swift in Sources */,
 				5D1A72F92F177562007F3FB8 /* CalendarView.swift in Sources */,
 				5D5115652F1DFC7700545259 /* ScheduleEditViewModel.swift in Sources */,
 				5D1A72FA2F177562007F3FB8 /* ScheduleListView.swift in Sources */,
@@ -886,10 +952,12 @@
 				5D1A73012F177562007F3FB8 /* ScheduleEditView.swift in Sources */,
 				43B6C6B3FA9049E5ADE1E6A0 /* ScheduleEditBasicInfoSection.swift in Sources */,
 				8D20BA2F3A754B829FA771D7 /* ScheduleEditMemberToggle.swift in Sources */,
+				5D63B1A12F97426300FC6C1D /* ScheduleRecordEditViewModel.swift in Sources */,
 				9495EDAF8C2A40E9A6638CD1 /* ScheduleEditQWERSection.swift in Sources */,
 				6EB5BEE66D53465B879776B9 /* ScheduleEditUserSection.swift in Sources */,
 				5D1A73022F177562007F3FB8 /* HomeMainView.swift in Sources */,
 				5D1A73032F177562007F3FB8 /* SwiftUI+Extension.swift in Sources */,
+				E40000122F97000000ABC002 /* ScheduleRecordViewModel.swift in Sources */,
 				5D5115BD2F1E2FCB00545259 /* ActivityView.swift in Sources */,
 				316E54F6B60741D6A13BE539 /* Color+Hex.swift in Sources */,
 				5D1A73042F177562007F3FB8 /* CalendarDayCell.swift in Sources */,
@@ -901,6 +969,7 @@
 				5D1A73062F177562007F3FB8 /* CalendarViewModel.swift in Sources */,
 				5D1A73072F177562007F3FB8 /* WindowDelegate.swift in Sources */,
 				5D1A73082F177562007F3FB8 /* YouTubeListView.swift in Sources */,
+				5D63B1982F9740F300FC6C1D /* ScheduleRecordTarget.swift in Sources */,
 				5D1A73F12F178DB0007F3FB8 /* HomeDateSelectionView.swift in Sources */,
 				5D1A73F22F178DB0007F3FB8 /* HomeScheduleFloatingButton.swift in Sources */,
 				5D63B1732F96100000FC6C1D /* ScheduleSearchMatcher.swift in Sources */,
@@ -909,12 +978,15 @@
 				5DFE3FA22F17958700CDA23F /* QWERScheduleListView.swift in Sources */,
 				5DFE3FA52F17958700CDA23F /* UserScheduleListView.swift in Sources */,
 				5DFE3FA62F17958700CDA23F /* UserScheduleCard.swift in Sources */,
+				E40000132F97000000ABC003 /* ScheduleRecordCard.swift in Sources */,
+				E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */,
 				5D1A73F32F178DB0007F3FB8 /* HomeCalendarOptionView.swift in Sources */,
 				5DFE40B82F18E24200CDA23F /* QWERStyleMapper.swift in Sources */,
 				5D1A73092F177562007F3FB8 /* LoadingIndicatorView.swift in Sources */,
 				5DF8D4C32F17904600371672 /* CalendarMonthGridView.swift in Sources */,
 				5DF8D4C42F17904600371672 /* CalendarWeekdayHeaderView.swift in Sources */,
 				5D029BD42CA3DD5A0090B4D1 /* SwiftUI+Resources.swift in Sources */,
+				5D63B19D2F9741C000FC6C1D /* ScheduleRecordEditFormState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

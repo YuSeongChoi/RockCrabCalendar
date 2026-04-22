@@ -47,6 +47,7 @@ enum AppEnvironmentFactory {
         let scheduleCacheStore = ScheduleCacheStore(userDefaults: userDefaults)
         let holidayStore = HolidayStore(userDefaults: userDefaults)
         let userScheduleMigrationStore = UserScheduleMigrationStore(userDefaults: userDefaults)
+        let scheduleRecordStore = UserDefaultsScheduleRecordStore(userDefaults: userDefaults)
 
         return AppEnvironment(
             qwerScheduleUseCase: qwerUseCase,
@@ -55,7 +56,8 @@ enum AppEnvironmentFactory {
             youTubeUseCase: youtubeUseCase,
             scheduleCacheStore: scheduleCacheStore,
             holidayStore: holidayStore,
-            userScheduleMigrationStore: userScheduleMigrationStore
+            userScheduleMigrationStore: userScheduleMigrationStore,
+            scheduleRecordStore: scheduleRecordStore
         )
     }
 }

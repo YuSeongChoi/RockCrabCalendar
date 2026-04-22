@@ -34,6 +34,7 @@ final class AppEnvironment: ObservableObject {
     let scheduleCacheStore: ScheduleCacheStoreProtocol
     let holidayStore: HolidayStoreProtocol
     let userScheduleMigrationStore: UserScheduleMigrationStoreProtocol
+    let scheduleRecordStore: ScheduleRecordStoreProtocol
 
     // Compose dependencies from the live graph.
     init(
@@ -43,7 +44,8 @@ final class AppEnvironment: ObservableObject {
         youTubeUseCase: YouTubeUseCase,
         scheduleCacheStore: ScheduleCacheStoreProtocol,
         holidayStore: HolidayStoreProtocol,
-        userScheduleMigrationStore: UserScheduleMigrationStoreProtocol
+        userScheduleMigrationStore: UserScheduleMigrationStoreProtocol,
+        scheduleRecordStore: ScheduleRecordStoreProtocol
     ) {
         self.qwerScheduleUseCase = qwerScheduleUseCase
         self.userScheduleUseCase = userScheduleUseCase
@@ -52,6 +54,7 @@ final class AppEnvironment: ObservableObject {
         self.scheduleCacheStore = scheduleCacheStore
         self.holidayStore = holidayStore
         self.userScheduleMigrationStore = userScheduleMigrationStore
+        self.scheduleRecordStore = scheduleRecordStore
     }
 
     // Composition root with runtime-selectable remote strategy.

@@ -11,8 +11,23 @@ import RockCrabDomain
 struct UserScheduleCard: View {
     let item: UserScheduleItem
     let onTap: () -> Void
+    let onRecord: () -> Void
 
     var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            tappableContent
+            recordButton
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.cardBackground)
+        )
+        .padding(.horizontal, 10)
+    }
+
+    private var tappableContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 6) {
                 Text(item.title)
@@ -33,14 +48,17 @@ struct UserScheduleCard: View {
             .pretendReg(size: 13)
             .foregroundColor(.gray)
         }
-        .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.cardBackground)
-        )
-        .padding(.horizontal, 10)
         .contentShape(Rectangle())
         .onTapGesture(perform: onTap)
+    }
+
+    private var recordButton: some View {
+        Button(action: onRecord) {
+            Label("기록", systemImage: "square.and.pencil")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.plain)
     }
 }
