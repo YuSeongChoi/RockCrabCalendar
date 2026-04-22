@@ -5,13 +5,36 @@
 //  Created by YuSeongChoi on 4/21/26.
 //
 
-import RockCrabShared
 import SwiftUI
+import PhotosUI
+import RockCrabShared
+import RockCrabDomain
 
 struct ScheduleRecordEditView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: ScheduleRecordEditViewModel
     @State private var isShowingEmojiPicker = false
+    @State private var selectedPhotoItems: [PhotosPickerItem] = []
+    @State private var isLoadingPhotos = false
+
+    private var scheduleDateText: String {
+        Self.scheduleDateFormatter.string(from: viewModel.target.date)
+    }
+
+    private var errorBinding: Binding<Bool> {
+        Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { isPresented in
+                if isPresented == false {
+                    viewModel.errorMessage = nil
+                }
+            }
+        )
+    }
+
+    private var maxSelectablePhotoCount: Int {
+        max(0, ScheduleRecord.maxPhotoCount - viewModel.photos.count)
+    }
 
     init(viewModel: ScheduleRecordEditViewModel) {
         _viewModel = State(initialValue: viewModel)
@@ -26,6 +49,7 @@ struct ScheduleRecordEditView: View {
                 VStack(alignment: .leading, spacing: 16) {
                     linkedScheduleSection
                     recordInputSection
+                    photosSection
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
@@ -57,6 +81,11 @@ struct ScheduleRecordEditView: View {
             emojiPickerSheet
                 .presentationDetents([.height(260)])
                 .presentationDragIndicator(.visible)
+        }
+        .onChange(of: selectedPhotoItems) { _, newItems in
+            Task {
+                await handleSelectedPhotoItems(newItems)
+            }
         }
     }
 
@@ -118,9 +147,57 @@ struct ScheduleRecordEditView: View {
             .background(Color.cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
 
-            Text("사진 추가는 다음 단계에서 연결합니다.")
+            Text("사진과 함께 그날의 기억을 남겨보세요.")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private var photosSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("사진")
+                    .font(.headline)
+
+                Spacer()
+
+                Text("\(viewModel.photos.count)/\(ScheduleRecord.maxPhotoCount)")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+
+            if viewModel.photos.isEmpty {
+                PhotosPicker(
+                    selection: $selectedPhotoItems,
+                    maxSelectionCount: maxSelectablePhotoCount,
+                    matching: .images
+                ) {
+                    emptyPhotoPicker
+                }
+                .disabled(viewModel.canAddPhoto == false || isLoadingPhotos)
+            } else {
+                ScrollView(.horizontal) {
+                    HStack(spacing: 10) {
+                        ForEach(viewModel.photos) { photo in
+                            photoThumbnail(photo)
+                        }
+
+                        if viewModel.canAddPhoto {
+                            PhotosPicker(
+                                selection: $selectedPhotoItems,
+                                maxSelectionCount: maxSelectablePhotoCount,
+                                matching: .images
+                            ) {
+                                addPhotoTile
+                            }
+                            .disabled(isLoadingPhotos)
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+                .scrollIndicators(.hidden)
+            }
         }
     }
 
@@ -163,21 +240,121 @@ struct ScheduleRecordEditView: View {
         }
     }
 
-    private var scheduleDateText: String {
-        Self.scheduleDateFormatter.string(from: viewModel.target.date)
-    }
+    private var emptyPhotoPicker: some View {
+        HStack(spacing: 14) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(Color.appBackground)
+                    .frame(width: 58, height: 58)
 
-    private var errorBinding: Binding<Bool> {
-        Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { isPresented in
-                if isPresented == false {
-                    viewModel.errorMessage = nil
+                if isLoadingPhotos {
+                    ProgressView()
+                } else {
+                    Image(systemName: "photo.on.rectangle.angled")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(.secondary)
                 }
             }
+
+            VStack(alignment: .leading, spacing: 5) {
+                Text("사진 추가")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(Color.textColor)
+
+                Text("최대 5장까지 좌우로 넘겨볼 수 있어요.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer(minLength: 0)
+
+            Image(systemName: "chevron.right")
+                .font(.footnote.weight(.bold))
+                .foregroundStyle(.secondary)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    private var addPhotoTile: some View {
+        VStack(spacing: 8) {
+            if isLoadingPhotos {
+                ProgressView()
+            } else {
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 26, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                Text("추가")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(width: Self.photoTileSize, height: Self.photoTileSize)
+        .background(Color.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .strokeBorder(
+                    Color.secondary.opacity(0.18),
+                    style: StrokeStyle(lineWidth: 1, dash: [5, 5])
+                )
         )
     }
 
+    private func photoThumbnail(_ photo: ScheduleRecord.Photo) -> some View {
+        ZStack(alignment: .topTrailing) {
+            Group {
+                if let data = viewModel.imageData(for: photo),
+                   let image = UIImage(data: data) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Image(systemName: "photo")
+                        .font(.title2)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.cardBackground)
+                }
+            }
+            .frame(width: Self.photoTileSize, height: Self.photoTileSize)
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .clipped()
+
+            Button {
+                viewModel.removePhoto(id: photo.id)
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.title3)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.white, .black.opacity(0.6))
+                    .padding(6)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    @MainActor
+    private func handleSelectedPhotoItems(_ items: [PhotosPickerItem]) async {
+        guard items.isEmpty == false else { return }
+
+        isLoadingPhotos = true
+        defer {
+            isLoadingPhotos = false
+            selectedPhotoItems = []
+        }
+
+        for item in items.prefix(maxSelectablePhotoCount) {
+            if let data = try? await item.loadTransferable(type: Data.self) {
+                viewModel.addPhoto(data: data)
+            }
+        }
+    }
+}
+
+extension ScheduleRecordEditView {
     private static let scheduleDateFormatter: DateFormatter = {
         let formatter = AppDateFormatterFactory.recordDetailDateFormatter()
         return formatter
@@ -187,4 +364,6 @@ struct ScheduleRecordEditView: View {
         "🦀", "😀", "🥰", "😭", "🤩",
         "❤️", "🍀", "🔥", "✨", "🎉"
     ]
+
+    private static let photoTileSize: CGFloat = 112
 }
