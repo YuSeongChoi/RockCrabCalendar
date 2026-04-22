@@ -14,6 +14,7 @@ final class ScheduleRecordEditViewModel {
     private let store: ScheduleRecordStoreProtocol
     private let photoStore: RecordPhotoStore
     private let originalRecord: ScheduleRecord?
+    private var newlyAddedFileNames: Set<String> = []
     private var pendingDeletedFileNames: Set<String> = []
 
     var form: ScheduleRecordEditFormState
@@ -77,6 +78,7 @@ final class ScheduleRecordEditViewModel {
         do {
             try store.saveRecord(record)
             deletePendingPhotos()
+            newlyAddedFileNames.removeAll()
             errorMessage = nil
             return true
         } catch {
@@ -93,6 +95,9 @@ final class ScheduleRecordEditViewModel {
         do {
             let removedRecord = try store.deleteRecord(id: originalRecord.id) ?? originalRecord
             deletePhotos(removedRecord.photos)
+            deletePhotos(photos)
+            deletePendingPhotos()
+            newlyAddedFileNames.removeAll()
             errorMessage = nil
             return true
         } catch {
@@ -110,6 +115,7 @@ final class ScheduleRecordEditViewModel {
 
         do {
             let fileName = try photoStore.saveImageData(data)
+            newlyAddedFileNames.insert(fileName)
             photos.append(
                 ScheduleRecord.Photo(
                     fileName: fileName,
@@ -128,11 +134,22 @@ final class ScheduleRecordEditViewModel {
         }
 
         let removed = photos.remove(at: index)
-        pendingDeletedFileNames.insert(removed.fileName)
+        if newlyAddedFileNames.remove(removed.fileName) != nil {
+            photoStore.delete(fileName: removed.fileName)
+        } else {
+            pendingDeletedFileNames.insert(removed.fileName)
+        }
     }
 
     func imageData(for photo: ScheduleRecord.Photo) -> Data? {
         photoStore.imageData(fileName: photo.fileName)
+    }
+
+    func discardUnsavedPhotoFiles() {
+        newlyAddedFileNames.forEach {
+            photoStore.delete(fileName: $0)
+        }
+        newlyAddedFileNames.removeAll()
     }
 
     private func deletePendingPhotos() {

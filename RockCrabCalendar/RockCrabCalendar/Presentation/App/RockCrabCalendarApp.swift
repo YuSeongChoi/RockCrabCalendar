@@ -65,6 +65,7 @@ struct RockCrabCalendarApp: App {
                         }
                         .tag(AppTab.settings)
                 }
+                .tint(Color.textColor)
             }
             .environmentObject(appDelegate)
             .environment(\.locale, AppLocalization.locale(for: selectedAppLanguage))
@@ -224,15 +225,18 @@ struct RockCrabCalendarApp: App {
 
 private struct AppStartupCoordinator {
     private let appearanceConfigurator: NavigationBarAppearanceConfiguring
+    private let tabBarAppearanceConfigurator: TabBarAppearanceConfiguring
     private let fontRegistrar: AppFontRegistering
     private let notificationRequester: NotificationPermissionRequesting
 
     init(
         appearanceConfigurator: NavigationBarAppearanceConfiguring = NavigationBarAppearanceConfigurator(),
+        tabBarAppearanceConfigurator: TabBarAppearanceConfiguring = TabBarAppearanceConfigurator(),
         fontRegistrar: AppFontRegistering = RockTurtleFontRegistrar(),
         notificationRequester: NotificationPermissionRequesting = UserNotificationPermissionRequester()
     ) {
         self.appearanceConfigurator = appearanceConfigurator
+        self.tabBarAppearanceConfigurator = tabBarAppearanceConfigurator
         self.fontRegistrar = fontRegistrar
         self.notificationRequester = notificationRequester
     }
@@ -240,6 +244,7 @@ private struct AppStartupCoordinator {
     @MainActor
     func start() {
         appearanceConfigurator.configure()
+        tabBarAppearanceConfigurator.configure()
         fontRegistrar.register()
         notificationRequester.request()
     }
@@ -278,6 +283,38 @@ private struct NavigationBarAppearanceConfigurator: NavigationBarAppearanceConfi
         navBar.compactAppearance = appearance
         navBar.tintColor = .label
         navBar.isTranslucent = false
+    }
+}
+
+private protocol TabBarAppearanceConfiguring {
+    @MainActor
+    func configure()
+}
+
+private struct TabBarAppearanceConfigurator: TabBarAppearanceConfiguring {
+    @MainActor
+    func configure() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor { trait in
+            trait.userInterfaceStyle == .dark ? .secondarySystemBackground : .white
+        }
+        appearance.shadowColor = .clear
+
+        [appearance.stackedLayoutAppearance, appearance.inlineLayoutAppearance, appearance.compactInlineLayoutAppearance]
+            .forEach { itemAppearance in
+                itemAppearance.selected.iconColor = .label
+                itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.label]
+                itemAppearance.normal.iconColor = .secondaryLabel
+                itemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.secondaryLabel]
+            }
+
+        let tabBar = UITabBar.appearance()
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+        tabBar.tintColor = .label
+        tabBar.unselectedItemTintColor = .secondaryLabel
+        tabBar.isTranslucent = false
     }
 }
 

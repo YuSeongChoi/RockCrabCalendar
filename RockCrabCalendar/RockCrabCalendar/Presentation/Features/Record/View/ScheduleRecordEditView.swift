@@ -111,6 +111,10 @@ struct ScheduleRecordEditView: View {
                 await handleSelectedPhotoItems(newItems)
             }
         }
+        .onDisappear {
+            guard previewPhoto == nil, isShowingEmojiPicker == false else { return }
+            viewModel.discardUnsavedPhotoFiles()
+        }
     }
 
     @ViewBuilder

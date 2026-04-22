@@ -5,9 +5,11 @@
 //  Created by Codex on 2026/04/21.
 //
 
+import Foundation
 import RockCrabDomain
 import RockCrabShared
 import SwiftUI
+import UIKit
 
 struct ScheduleRecordCard: View {
     let record: ScheduleRecord
@@ -73,7 +75,18 @@ struct ScheduleRecordCard: View {
 
     private var firstPhotoImage: UIImage? {
         guard let firstPhoto = record.photos.first else { return nil }
-        return photoStore.image(fileName: firstPhoto.fileName)
+
+        let cacheKey = firstPhoto.fileName as NSString
+        if let cachedImage = Self.imageCache.object(forKey: cacheKey) {
+            return cachedImage
+        }
+
+        guard let image = photoStore.image(fileName: firstPhoto.fileName) else {
+            return nil
+        }
+
+        Self.imageCache.setObject(image, forKey: cacheKey)
+        return image
     }
 
     private var scheduleDateText: String {
@@ -86,4 +99,5 @@ struct ScheduleRecordCard: View {
     }()
 
     private static let mediaSize: CGFloat = 56
+    private static let imageCache = NSCache<NSString, UIImage>()
 }

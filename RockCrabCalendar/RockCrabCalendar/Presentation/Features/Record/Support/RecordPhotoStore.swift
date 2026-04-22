@@ -41,12 +41,13 @@ struct RecordPhotoStore {
 
         let filename = "\(UUID().uuidString).jpg"
         try ensureDirectoryExists()
-        try jpegData.write(to: fileURL(for: filename), options: [.atomic])
+        try jpegData.write(to: try fileURL(for: filename), options: [.atomic])
         return filename
     }
 
     func imageData(fileName: String) -> Data? {
-        try? Data(contentsOf: fileURL(for: fileName))
+        guard let url = try? fileURL(for: fileName) else { return nil }
+        return try? Data(contentsOf: url)
     }
 
     func image(fileName: String) -> UIImage? {
@@ -55,31 +56,34 @@ struct RecordPhotoStore {
     }
 
     func delete(fileName: String) {
-        try? fileManager.removeItem(at: fileURL(for: fileName))
+        guard let url = try? fileURL(for: fileName) else { return }
+        try? fileManager.removeItem(at: url)
     }
 }
 
 private extension RecordPhotoStore {
     var directoryURL: URL {
-        let baseURL = (try? fileManager.url(
-            for: .applicationSupportDirectory,
-            in: .userDomainMask,
-            appropriateFor: nil,
-            create: true
-        )) ?? fileManager.temporaryDirectory
+        get throws {
+            let baseURL = try fileManager.url(
+                for: .applicationSupportDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: true
+            )
 
-        return baseURL.appendingPathComponent(directoryName, isDirectory: true)
+            return baseURL.appendingPathComponent(directoryName, isDirectory: true)
+        }
     }
 
     func ensureDirectoryExists() throws {
         try fileManager.createDirectory(
-            at: directoryURL,
+            at: try directoryURL,
             withIntermediateDirectories: true
         )
     }
 
-    func fileURL(for fileName: String) -> URL {
-        directoryURL.appendingPathComponent(fileName, isDirectory: false)
+    func fileURL(for fileName: String) throws -> URL {
+        try directoryURL.appendingPathComponent(fileName, isDirectory: false)
     }
 }
 
@@ -94,7 +98,10 @@ private extension UIImage {
             height: floor(size.height * scale)
         )
 
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        let format = UIGraphicsImageRendererFormat.default()
+        format.scale = 1
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize, format: format)
         return renderer.image { _ in
             draw(in: CGRect(origin: .zero, size: targetSize))
         }
