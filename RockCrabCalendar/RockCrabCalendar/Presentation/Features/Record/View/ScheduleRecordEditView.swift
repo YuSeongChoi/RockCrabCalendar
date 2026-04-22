@@ -16,6 +16,7 @@ struct ScheduleRecordEditView: View {
     @State private var isShowingEmojiPicker = false
     @State private var selectedPhotoItems: [PhotosPickerItem] = []
     @State private var isLoadingPhotos = false
+    @State private var previewPhoto: RecordPhotoPreview?
 
     private var scheduleDateText: String {
         Self.scheduleDateFormatter.string(from: viewModel.target.date)
@@ -82,6 +83,9 @@ struct ScheduleRecordEditView: View {
             emojiPickerSheet
                 .presentationDetents([.height(260)])
                 .presentationDragIndicator(.visible)
+        }
+        .fullScreenCover(item: $previewPhoto) { preview in
+            photoPreview(preview)
         }
         .onChange(of: selectedPhotoItems) { _, newItems in
             Task {
@@ -194,6 +198,7 @@ struct ScheduleRecordEditView: View {
                     HStack(spacing: 10) {
                         ForEach(viewModel.photos) { photo in
                             photoThumbnail(photo)
+                                .transition(.scale(scale: 0.92).combined(with: .opacity))
                         }
 
                         if viewModel.canAddPhoto {
@@ -318,26 +323,33 @@ struct ScheduleRecordEditView: View {
 
     private func photoThumbnail(_ photo: ScheduleRecord.Photo) -> some View {
         ZStack(alignment: .topTrailing) {
-            Group {
-                if let data = viewModel.imageData(for: photo),
-                   let image = UIImage(data: data) {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                } else {
-                    Image(systemName: "photo")
-                        .font(.title2)
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.cardBackground)
+            Button {
+                openPhotoPreview(photo)
+            } label: {
+                Group {
+                    if let data = viewModel.imageData(for: photo),
+                       let image = UIImage(data: data) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                    } else {
+                        Image(systemName: "photo")
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.cardBackground)
+                    }
                 }
+                .frame(width: Self.photoTileSize, height: Self.photoTileSize)
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .clipped()
             }
-            .frame(width: Self.photoTileSize, height: Self.photoTileSize)
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .clipped()
+            .buttonStyle(.plain)
 
             Button {
-                viewModel.removePhoto(id: photo.id)
+                withAnimation(.snappy(duration: 0.22)) {
+                    viewModel.removePhoto(id: photo.id)
+                }
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
@@ -347,6 +359,34 @@ struct ScheduleRecordEditView: View {
             }
             .buttonStyle(.plain)
         }
+        .animation(.snappy(duration: 0.22), value: viewModel.photos)
+    }
+
+    private func photoPreview(_ preview: RecordPhotoPreview) -> some View {
+        ZStack(alignment: .topTrailing) {
+            Color.black
+                .ignoresSafeArea()
+
+            ZoomableImageView(image: preview.image)
+                .ignoresSafeArea()
+
+            Button {
+                previewPhoto = nil
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .font(.system(size: 30, weight: .semibold))
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.white, .black.opacity(0.45))
+                    .padding(20)
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
+    private func openPhotoPreview(_ photo: ScheduleRecord.Photo) {
+        guard let data = viewModel.imageData(for: photo),
+              let image = UIImage(data: data) else { return }
+        previewPhoto = RecordPhotoPreview(id: photo.id, image: image)
     }
 
     @MainActor
@@ -379,4 +419,57 @@ extension ScheduleRecordEditView {
     ]
 
     private static let photoTileSize: CGFloat = 112
+}
+
+private struct RecordPhotoPreview: Identifiable {
+    let id: UUID
+    let image: UIImage
+}
+
+private struct ZoomableImageView: UIViewRepresentable {
+    let image: UIImage
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    func makeUIView(context: Context) -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.delegate = context.coordinator
+        scrollView.minimumZoomScale = 1
+        scrollView.maximumZoomScale = 4
+        scrollView.backgroundColor = .black
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.bouncesZoom = true
+
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(imageView)
+        context.coordinator.imageView = imageView
+
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            imageView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor)
+        ])
+
+        return scrollView
+    }
+
+    func updateUIView(_ scrollView: UIScrollView, context: Context) {
+        context.coordinator.imageView?.image = image
+    }
+
+    final class Coordinator: NSObject, UIScrollViewDelegate {
+        weak var imageView: UIImageView?
+
+        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+            imageView
+        }
+    }
 }
