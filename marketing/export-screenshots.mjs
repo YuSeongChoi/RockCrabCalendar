@@ -13,16 +13,26 @@ const htmlUrl = pathToFileURL(path.join(__dirname, "index.html")).href;
 
 const names = [
   "01-rockcrabcalendar-main-calendar.png",
-  "02-rockcrabcalendar-qwer-filter.png",
-  "03-rockcrabcalendar-monthly-list.png",
-  "04-rockcrabcalendar-add-qwer.png",
-  "05-rockcrabcalendar-add-private.png",
-  "06-rockcrabcalendar-widget.png",
-  "07-rockcrabcalendar-settings.png"
+  "02-rockcrabcalendar-monthly-list.png",
+  "03-rockcrabcalendar-records.png",
+  "04-rockcrabcalendar-record-write.png",
+  "05-rockcrabcalendar-qwer-filter.png",
+  "06-rockcrabcalendar-add-qwer.png",
+  "07-rockcrabcalendar-add-private.png",
+  "08-rockcrabcalendar-widget.png",
+  "09-rockcrabcalendar-settings.png"
 ];
 
 fs.mkdirSync(outputDir, { recursive: true });
 fs.mkdirSync(appStoreDir, { recursive: true });
+
+for (const dir of [outputDir, appStoreDir]) {
+  for (const file of fs.readdirSync(dir)) {
+    if (file.endsWith(".png")) {
+      fs.unlinkSync(path.join(dir, file));
+    }
+  }
+}
 
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({
