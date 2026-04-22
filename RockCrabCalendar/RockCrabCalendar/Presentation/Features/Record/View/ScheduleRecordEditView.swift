@@ -74,8 +74,19 @@ struct ScheduleRecordEditView: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("저장") {
                     if viewModel.save() {
+                        AnalyticsHelper.logAction(
+                            actionName: "record_save",
+                            label: viewModel.isEditing ? "기록 수정 저장" : "기록 신규 저장",
+                            parameters: recordAnalyticsParameters()
+                        )
                         onRecordChanged()
                         dismiss()
+                    } else {
+                        AnalyticsHelper.logAction(
+                            actionName: "record_save_failed",
+                            label: "기록 저장 실패",
+                            parameters: recordAnalyticsParameters()
+                        )
                     }
                 }
                 .fontWeight(.semibold)
@@ -90,8 +101,19 @@ struct ScheduleRecordEditView: View {
         .alert("기록을 삭제할까요?", isPresented: $isShowingDeleteConfirm) {
             Button("삭제", role: .destructive) {
                 if viewModel.deleteRecord() {
+                    AnalyticsHelper.logAction(
+                        actionName: "record_delete",
+                        label: "기록 삭제 성공",
+                        parameters: recordAnalyticsParameters()
+                    )
                     onRecordChanged()
                     dismiss()
+                } else {
+                    AnalyticsHelper.logAction(
+                        actionName: "record_delete_failed",
+                        label: "기록 삭제 실패",
+                        parameters: recordAnalyticsParameters()
+                    )
                 }
             }
             Button("취소", role: .cancel) { }
@@ -110,6 +132,13 @@ struct ScheduleRecordEditView: View {
             Task {
                 await handleSelectedPhotoItems(newItems)
             }
+        }
+        .onAppear {
+            AnalyticsHelper.logScreen(
+                screenName: "record_edit",
+                label: viewModel.isEditing ? "기록 수정 화면" : "기록 작성 화면",
+                parameters: recordAnalyticsParameters()
+            )
         }
         .onDisappear {
             guard previewPhoto == nil, isShowingEmojiPicker == false else { return }
@@ -278,6 +307,11 @@ struct ScheduleRecordEditView: View {
                         Button {
                             viewModel.form.emoji = emoji
                             isShowingEmojiPicker = false
+                            AnalyticsHelper.logAction(
+                                actionName: "record_emoji_select",
+                                label: "기록 이모지 선택",
+                                parameters: recordAnalyticsParameters()
+                            )
                         } label: {
                             Text(verbatim: emoji)
                                 .font(.system(size: 30))
@@ -391,6 +425,11 @@ struct ScheduleRecordEditView: View {
                 withAnimation(.snappy(duration: 0.22)) {
                     viewModel.removePhoto(id: photo.id)
                 }
+                AnalyticsHelper.logAction(
+                    actionName: "record_photo_remove",
+                    label: "기록 사진 삭제",
+                    parameters: recordAnalyticsParameters()
+                )
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title3)
@@ -428,6 +467,11 @@ struct ScheduleRecordEditView: View {
         guard let data = viewModel.imageData(for: photo),
               let image = UIImage(data: data) else { return }
         previewPhoto = RecordPhotoPreview(id: photo.id, image: image)
+        AnalyticsHelper.logAction(
+            actionName: "record_photo_preview",
+            label: "기록 사진 크게 보기",
+            parameters: recordAnalyticsParameters()
+        )
     }
 
     @MainActor
@@ -442,9 +486,26 @@ struct ScheduleRecordEditView: View {
 
         for item in items.prefix(maxSelectablePhotoCount) {
             if let data = try? await item.loadTransferable(type: Data.self) {
+                let previousCount = viewModel.photos.count
                 viewModel.addPhoto(data: data)
+                if viewModel.photos.count > previousCount {
+                    AnalyticsHelper.logAction(
+                        actionName: "record_photo_add",
+                        label: "기록 사진 추가",
+                        parameters: recordAnalyticsParameters()
+                    )
+                }
             }
         }
+    }
+
+    private func recordAnalyticsParameters() -> [String: Any] {
+        [
+            "schedule_kind": viewModel.target.kind.analyticsLabel,
+            "edit_mode": viewModel.isEditing ? "수정" : "추가",
+            "photo_count": viewModel.photos.count,
+            "has_body": viewModel.form.trimmedBody.isEmpty ? 0 : 1
+        ]
     }
 }
 

@@ -98,7 +98,27 @@ struct ScheduleEditView: View {
             await viewModel.refreshLocalFlagIfNeeded()
         }
         .onAppear {
-            AnalyticsHelper.logEvent(eventName: "schedule_edit_screen", parameters: ["label":"일정수정화면"])
+            AnalyticsHelper.logScreen(
+                screenName: "schedule_edit",
+                label: viewModel.mode.analyticsModeLabel == "추가" ? "일정 추가 화면" : "일정 수정 화면",
+                parameters: scheduleAnalyticsParameters()
+            )
+        }
+        .onChange(of: viewModel.form.shouldNotify) { _, isEnabled in
+            AnalyticsHelper.logAction(
+                actionName: "notification_toggle",
+                label: isEnabled ? "일정 알림 켜기" : "일정 알림 끄기",
+                parameters: scheduleAnalyticsParameters()
+            )
+        }
+        .onChange(of: viewModel.form.notificationLeadTime) { _, leadTime in
+            AnalyticsHelper.logAction(
+                actionName: "notification_lead_change",
+                label: "일정 알림 시간 변경",
+                parameters: scheduleAnalyticsParameters().merging([
+                    "notification_lead_time": leadTime.displayText
+                ]) { _, new in new }
+            )
         }
     }
 }
@@ -107,6 +127,13 @@ struct ScheduleEditView: View {
 private extension ScheduleEditView {
     func save() {
         let feedback = viewModel.save()
+        AnalyticsHelper.logAction(
+            actionName: "schedule_save",
+            label: feedback == .none ? "일정 저장 성공" : "일정 저장 알림 경고",
+            parameters: scheduleAnalyticsParameters().merging([
+                "save_result": feedback == .none ? "성공" : "알림 경고"
+            ]) { _, new in new }
+        )
 
         if feedback == .none {
             dismiss()
@@ -115,7 +142,18 @@ private extension ScheduleEditView {
     
     func deleteItem() {
         if viewModel.deleteButtonTapped() {
+            AnalyticsHelper.logAction(
+                actionName: "schedule_delete",
+                label: "일정 삭제 성공",
+                parameters: scheduleAnalyticsParameters()
+            )
             dismiss()
+        } else {
+            AnalyticsHelper.logAction(
+                actionName: "schedule_delete_blocked",
+                label: "일정 삭제 차단",
+                parameters: scheduleAnalyticsParameters()
+            )
         }
     }
 
@@ -142,5 +180,34 @@ private extension ScheduleEditView {
     func defaultEndTime() -> Date {
         let start = defaultStartTime()
         return Calendar.current.date(byAdding: .hour, value: 1, to: start) ?? start
+    }
+
+    func scheduleAnalyticsParameters() -> [String: Any] {
+        [
+            "schedule_kind": viewModel.kind.analyticsLabel,
+            "edit_mode": viewModel.mode.analyticsModeLabel,
+            "time_type": timeTypeLabel,
+            "notification_enabled": viewModel.form.shouldNotify ? 1 : 0,
+            "notification_lead_time": viewModel.form.shouldNotify
+                ? viewModel.form.notificationLeadTime.displayText
+                : "사용 안 함",
+            "has_place": viewModel.form.place.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0 : 1
+        ]
+    }
+
+    var timeTypeLabel: String {
+        switch viewModel.kind {
+        case .qwer:
+            switch viewModel.form.qwerTimeStatus {
+            case .allDay:
+                return "하루종일"
+            case .timed:
+                return "시간 있음"
+            case .unspecified:
+                return "시간 미정"
+            }
+        case .user:
+            return viewModel.form.isAllDay ? "하루종일" : "시간 있음"
+        }
     }
 }
