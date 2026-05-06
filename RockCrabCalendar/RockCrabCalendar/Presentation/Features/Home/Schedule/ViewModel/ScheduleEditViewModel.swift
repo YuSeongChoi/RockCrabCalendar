@@ -27,6 +27,13 @@ final class ScheduleEditViewModel {
 
     var kind: ScheduleEditKind { mode.kind }
 
+    var isNewUserSchedule: Bool {
+        if case .create(.user) = mode {
+            return true
+        }
+        return false
+    }
+
     var titleText: String {
         switch mode {
         case .create(let kind):

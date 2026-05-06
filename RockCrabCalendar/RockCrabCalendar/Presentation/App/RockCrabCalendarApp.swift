@@ -26,6 +26,9 @@ struct RockCrabCalendarApp: App {
     private var preferredAppLanguageRaw = AppLanguageOption.system.rawValue
     private let environment: AppEnvironment
     private let appUpdateService: AppUpdatePromptService
+    @State private var adRemovalManager: AdRemovalPurchaseManager
+    @State private var interstitialAdService: InterstitialAdService
+    private let userScheduleAdCounter: UserScheduleAdCounter
     @State private var calendarVM: CalendarViewModel
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
@@ -41,31 +44,48 @@ struct RockCrabCalendarApp: App {
                 }
                 WindowAlertHostingView()
                 
-                TabView(selection: $selectedTab) {
-                    HomeMainView(
-                        calendarVM: calendarVM,
-                        scheduleVM: scheduleVM,
-                        userVM: userVM,
-                        scheduleRecordStore: environment.scheduleRecordStore
-                    )
-                    .tabItem {
-                        Label("홈", systemImage: "calendar")
-                    }
-                    .tag(AppTab.home)
-
-                    ScheduleRecordListView(store: environment.scheduleRecordStore)
+                VStack(spacing: 0) {
+                    TabView(selection: $selectedTab) {
+                        HomeMainView(
+                            calendarVM: calendarVM,
+                            scheduleVM: scheduleVM,
+                            userVM: userVM,
+                            scheduleRecordStore: environment.scheduleRecordStore,
+                            adRemovalManager: adRemovalManager,
+                            interstitialAdService: interstitialAdService,
+                            userScheduleAdCounter: userScheduleAdCounter
+                        )
                         .tabItem {
-                            Label("기록", systemImage: "book.closed")
+                            Label("홈", systemImage: "calendar")
                         }
-                        .tag(AppTab.record)
+                        .tag(AppTab.home)
 
-                    SettingsView(scheduleVM: scheduleVM, userVM: userVM)
+                        ScheduleRecordListView(store: environment.scheduleRecordStore)
+                            .tabItem {
+                                Label("기록", systemImage: "book.closed")
+                            }
+                            .tag(AppTab.record)
+
+                        SettingsView(
+                            scheduleVM: scheduleVM,
+                            userVM: userVM,
+                            adRemovalManager: adRemovalManager
+                        )
                         .tabItem {
                             Label("설정", systemImage: "gearshape")
                         }
                         .tag(AppTab.settings)
+                    }
+                    .tint(Color.textColor)
+
+                    if !adRemovalManager.isAdsRemoved {
+                        BannerAdView()
+                            .frame(width: 320, height: 50)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 6)
+                            .background(Color.appBackground)
+                    }
                 }
-                .tint(Color.textColor)
             }
             .environmentObject(appDelegate)
             .environment(\.locale, AppLocalization.locale(for: selectedAppLanguage))
@@ -74,6 +94,8 @@ struct RockCrabCalendarApp: App {
             }
             .task {
                 await checkForUpdateIfNeeded()
+                await adRemovalManager.refresh()
+                await interstitialAdService.preload()
             }
             .onChange(of: preferredAppLanguageRaw) { _, newValue in
                 let selectedLanguage = AppLanguageOption(rawValue: newValue) ?? .system
@@ -128,7 +150,10 @@ struct RockCrabCalendarApp: App {
             provider: AppStoreLookupClient(fallbackTrackViewURL: Self.appStoreURL),
             userDefaults: sharedDefaults
         )
+        self.userScheduleAdCounter = UserScheduleAdCounter(userDefaults: sharedDefaults)
 
+        _adRemovalManager = State(initialValue: AdRemovalPurchaseManager(userDefaults: sharedDefaults))
+        _interstitialAdService = State(initialValue: InterstitialAdService())
         _calendarVM = State(initialValue: CalendarViewModel(
             holidayUseCase: environment.holidayUseCase,
             holidayStore: environment.holidayStore

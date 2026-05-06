@@ -11,9 +11,21 @@ struct ScheduleEditView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel: ScheduleEditViewModel
+    private let adRemovalManager: AdRemovalPurchaseManager
+    private let interstitialAdService: InterstitialAdService
+    private let userScheduleAdCounter: UserScheduleAdCounter
+    @State private var shouldPresentInterstitialAfterDismiss = false
 
-    init(viewModel: ScheduleEditViewModel) {
+    init(
+        viewModel: ScheduleEditViewModel,
+        adRemovalManager: AdRemovalPurchaseManager,
+        interstitialAdService: InterstitialAdService,
+        userScheduleAdCounter: UserScheduleAdCounter
+    ) {
         _viewModel = State(initialValue: viewModel)
+        self.adRemovalManager = adRemovalManager
+        self.interstitialAdService = interstitialAdService
+        self.userScheduleAdCounter = userScheduleAdCounter
     }
 
     var body: some View {
@@ -90,6 +102,7 @@ struct ScheduleEditView: View {
         .alert("알림 안내", isPresented: $viewModel.showSaveFeedbackAlert) {
             Button("확인") {
                 dismiss()
+                presentPendingInterstitialIfNeeded()
             }
         } message: {
             Text(viewModel.saveFeedbackMessage)
@@ -127,6 +140,7 @@ struct ScheduleEditView: View {
 private extension ScheduleEditView {
     func save() {
         let feedback = viewModel.save()
+        shouldPresentInterstitialAfterDismiss = shouldRequestInterstitial()
         AnalyticsHelper.logAction(
             actionName: "schedule_save",
             label: feedback == .none ? "일정 저장 성공" : "일정 저장 알림 경고",
@@ -137,6 +151,7 @@ private extension ScheduleEditView {
 
         if feedback == .none {
             dismiss()
+            presentPendingInterstitialIfNeeded()
         }
     }
     
@@ -154,6 +169,21 @@ private extension ScheduleEditView {
                 label: "일정 삭제 차단",
                 parameters: scheduleAnalyticsParameters()
             )
+        }
+    }
+
+    func shouldRequestInterstitial() -> Bool {
+        guard viewModel.isNewUserSchedule else { return false }
+        guard !adRemovalManager.isAdsRemoved else { return false }
+        return userScheduleAdCounter.recordUserScheduleCreation()
+    }
+
+    func presentPendingInterstitialIfNeeded() {
+        guard shouldPresentInterstitialAfterDismiss else { return }
+        shouldPresentInterstitialAfterDismiss = false
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 350_000_000)
+            await interstitialAdService.presentIfReady()
         }
     }
 

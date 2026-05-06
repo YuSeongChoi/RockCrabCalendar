@@ -26,6 +26,8 @@ public enum AppStorageKeys {
     public static let userSchedules = "userSchedules"
     public static let userScheduleLegacyTimeMigration = "hasMigratedUserScheduleTimes"
     public static let scheduleRecords = "scheduleRecords"
+    public static let adsRemoved = "adsRemoved"
+    public static let userScheduleAdCreationCount = "userScheduleAdCreationCount"
 
     public static let appGroupMigrationKeys: [String] = [
         preferredLanguageCode,
@@ -42,6 +44,8 @@ public enum AppStorageKeys {
         qwerLocalSchedules,
         userSchedules,
         userScheduleLegacyTimeMigration,
-        scheduleRecords
+        scheduleRecords,
+        adsRemoved,
+        userScheduleAdCreationCount
     ]
 }
