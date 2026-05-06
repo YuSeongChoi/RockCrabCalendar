@@ -64,6 +64,7 @@
 >   make test-app DESTINATION='platform=iOS Simulator,name=iPhone 17,OS=latest'
 >   ```
 > - 아키텍처 개요: `RockCrabCalendar/ARCHITECTURE.md`
+> - 광고 수익화 운영 체크리스트: `docs/ad-monetization-checklist.md`
 
 ---
 
