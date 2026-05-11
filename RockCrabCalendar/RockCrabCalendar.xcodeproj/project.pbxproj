@@ -51,13 +51,13 @@
 		5D63B1A12F97426300FC6C1D /* ScheduleRecordEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A02F97426300FC6C1D /* ScheduleRecordEditViewModel.swift */; };
 		5D63B1A72F97467600FC6C1D /* ScheduleRecordEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
+		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5DAAD0012FAD000000000001 /* AdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0112FAD000000000001 /* AdConfiguration.swift */; };
 		5DAAD0022FAD000000000002 /* AdRemovalPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0122FAD000000000002 /* AdRemovalPurchaseManager.swift */; };
 		5DAAD0032FAD000000000003 /* UserScheduleAdCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0132FAD000000000003 /* UserScheduleAdCounter.swift */; };
 		5DAAD0042FAD000000000004 /* InterstitialAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0142FAD000000000004 /* InterstitialAdService.swift */; };
 		5DAAD0052FAD000000000005 /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0152FAD000000000005 /* BannerAdView.swift */; };
 		5DAAD0222FAD000000000022 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 5DAAD0212FAD000000000021 /* GoogleMobileAds */; };
-		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
 		5DCF9A9D2F5955BA008EA555 /* AppCompositionSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */; };
 		5DCF9AB12F595A59008EA555 /* RockCrabCalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9AAE2F595A59008EA555 /* RockCrabCalendarUITests.swift */; };
 		5DCF9AB22F595A59008EA555 /* RockCrabCalendarUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9AAF2F595A59008EA555 /* RockCrabCalendarUITestsLaunchTests.swift */; };
@@ -1242,7 +1242,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1286,7 +1286,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1409,7 +1409,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1439,7 +1439,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;

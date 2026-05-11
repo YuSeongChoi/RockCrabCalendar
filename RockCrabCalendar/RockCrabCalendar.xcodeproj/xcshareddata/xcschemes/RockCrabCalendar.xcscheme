@@ -54,7 +54,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -100,7 +100,7 @@
          </AdditionalOption>
       </AdditionalOptions>
       <StoreKitConfigurationFileReference
-         identifier = "../RockCrabCalendar/StoreKit/RockCrabCalendar.storekit">
+         identifier = "../../RockCrabCalendar/StoreKit/RockCrabCalendar.storekit">
       </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
