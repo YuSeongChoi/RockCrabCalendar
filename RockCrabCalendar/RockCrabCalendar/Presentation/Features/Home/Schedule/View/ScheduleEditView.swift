@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RockCrabShared
 
 struct ScheduleEditView: View {
     @Environment(\.dismiss) private var dismiss
@@ -14,18 +15,21 @@ struct ScheduleEditView: View {
     private let adRemovalManager: AdRemovalPurchaseManager
     private let interstitialAdService: InterstitialAdService
     private let userScheduleAdCounter: UserScheduleAdCounter
+    private let userDefaults: UserDefaults
     @State private var shouldPresentInterstitialAfterDismiss = false
 
     init(
         viewModel: ScheduleEditViewModel,
         adRemovalManager: AdRemovalPurchaseManager,
         interstitialAdService: InterstitialAdService,
-        userScheduleAdCounter: UserScheduleAdCounter
+        userScheduleAdCounter: UserScheduleAdCounter,
+        userDefaults: UserDefaults = AppGroupUserDefaults.shared
     ) {
         _viewModel = State(initialValue: viewModel)
         self.adRemovalManager = adRemovalManager
         self.interstitialAdService = interstitialAdService
         self.userScheduleAdCounter = userScheduleAdCounter
+        self.userDefaults = userDefaults
     }
 
     var body: some View {
@@ -101,6 +105,7 @@ struct ScheduleEditView: View {
         }
         .alert("알림 안내", isPresented: $viewModel.showSaveFeedbackAlert) {
             Button("확인") {
+                saveLastUserScheduleColorIfNeeded()
                 dismiss()
                 presentPendingInterstitialIfNeeded()
             }
@@ -150,6 +155,7 @@ private extension ScheduleEditView {
         )
 
         if feedback == .none {
+            saveLastUserScheduleColorIfNeeded()
             dismiss()
             presentPendingInterstitialIfNeeded()
         }
@@ -176,6 +182,14 @@ private extension ScheduleEditView {
         guard viewModel.isNewUserSchedule else { return false }
         guard !adRemovalManager.isAdsRemoved else { return false }
         return userScheduleAdCounter.recordContentCreation()
+    }
+
+    func saveLastUserScheduleColorIfNeeded() {
+        guard viewModel.kind == .user else { return }
+        userDefaults.set(
+            viewModel.form.selectedColor.toHexString(),
+            forKey: AppStorageKeys.lastUserScheduleColorHex
+        )
     }
 
     func presentPendingInterstitialIfNeeded() {

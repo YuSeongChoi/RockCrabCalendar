@@ -24,6 +24,7 @@ public enum AppStorageKeys {
     public static let qwerLocalSchedules = "localQWERSchedules"
 
     public static let userSchedules = "userSchedules"
+    public static let lastUserScheduleColorHex = "lastUserScheduleColorHex"
     public static let userScheduleLegacyTimeMigration = "hasMigratedUserScheduleTimes"
     public static let scheduleRecords = "scheduleRecords"
     public static let adsRemoved = "adsRemoved"
@@ -43,6 +44,7 @@ public enum AppStorageKeys {
         activeScheduleCategories,
         qwerLocalSchedules,
         userSchedules,
+        lastUserScheduleColorHex,
         userScheduleLegacyTimeMigration,
         scheduleRecords,
         adsRemoved,

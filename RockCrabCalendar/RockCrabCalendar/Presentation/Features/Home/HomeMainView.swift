@@ -25,6 +25,7 @@ struct HomeMainView: View {
     private let adRemovalManager: AdRemovalPurchaseManager
     private let interstitialAdService: InterstitialAdService
     private let userScheduleAdCounter: UserScheduleAdCounter
+    private let userDefaults: UserDefaults
 
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
@@ -44,6 +45,7 @@ struct HomeMainView: View {
         self.adRemovalManager = AdRemovalPurchaseManager()
         self.interstitialAdService = InterstitialAdService()
         self.userScheduleAdCounter = UserScheduleAdCounter()
+        self.userDefaults = AppGroupUserDefaults.shared
     }
 
     init(
@@ -53,12 +55,14 @@ struct HomeMainView: View {
         scheduleRecordStore: ScheduleRecordStoreProtocol,
         adRemovalManager: AdRemovalPurchaseManager,
         interstitialAdService: InterstitialAdService,
-        userScheduleAdCounter: UserScheduleAdCounter
+        userScheduleAdCounter: UserScheduleAdCounter,
+        userDefaults: UserDefaults = AppGroupUserDefaults.shared
     ) {
         self.scheduleRecordStore = scheduleRecordStore
         self.adRemovalManager = adRemovalManager
         self.interstitialAdService = interstitialAdService
         self.userScheduleAdCounter = userScheduleAdCounter
+        self.userDefaults = userDefaults
         _calendarVM = State(initialValue: calendarVM)
         _scheduleVM = State(initialValue: scheduleVM)
         _userVM = State(initialValue: userVM)
@@ -210,9 +214,7 @@ struct HomeMainView: View {
                                 defaultDate: scheduleVM.selectedDate,
                                 qwerVM: scheduleVM,
                                 userVM: userVM,
-                                defaultColor: userVM.schedules.last?.colorHex != nil
-                                    ? Color(hex: userVM.schedules.last!.colorHex)
-                                    : .purple
+                                defaultColor: defaultUserScheduleColor
                             ),
                             adRemovalManager: adRemovalManager,
                             interstitialAdService: interstitialAdService,
@@ -331,6 +333,17 @@ private extension HomeMainView {
                 "source_view": viewType.analyticsLabel
             ]
         )
+    }
+
+    var defaultUserScheduleColor: Color {
+        if let colorHex = userDefaults.string(forKey: AppStorageKeys.lastUserScheduleColorHex),
+           colorHex.isEmpty == false {
+            return Color(hex: colorHex)
+        }
+        if let colorHex = userVM.schedules.last?.colorHex {
+            return Color(hex: colorHex)
+        }
+        return .purple
     }
 }
 
