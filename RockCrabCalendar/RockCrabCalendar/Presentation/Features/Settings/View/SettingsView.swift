@@ -117,7 +117,7 @@ struct SettingsView: View {
                             )
                         } else {
                             actionButton(
-                                title: "광고 제거 구매 \(adRemovalManager.displayPrice)",
+                                title: removeAdsButtonTitle,
                                 isLoading: adRemovalManager.isPurchaseActionRunning,
                                 isDisabled: adRemovalManager.isPurchaseActionRunning,
                                 action: purchaseRemoveAds
@@ -130,6 +130,17 @@ struct SettingsView: View {
                             isDisabled: adRemovalManager.isPurchaseActionRunning,
                             action: restorePurchases
                         )
+
+                        #if DEBUG
+                        if adRemovalManager.isAdsRemoved {
+                            actionButton(
+                                title: "광고 제거 테스트 해제",
+                                isLoading: false,
+                                isDisabled: adRemovalManager.isPurchaseActionRunning,
+                                action: resetDebugAdRemoval
+                            )
+                        }
+                        #endif
                     }
                     .padding(16)
                     .background(Color.cardBackground)
@@ -282,6 +293,14 @@ struct SettingsView: View {
         }
     }
 
+    #if DEBUG
+    private func resetDebugAdRemoval() {
+        adRemovalManager.resetDebugPurchase()
+        purchaseResultMessage = AppLocalization.string("광고 제거 테스트가 해제되었습니다.")
+        showPurchaseResult = true
+    }
+    #endif
+
     private func updatePurchaseResultMessage() {
         switch adRemovalManager.state {
         case .purchased:
@@ -302,6 +321,14 @@ struct SettingsView: View {
 
     private var selectedLanguage: AppLanguageOption {
         AppLanguageOption(rawValue: preferredAppLanguageRaw) ?? .system
+    }
+
+    private var removeAdsButtonTitle: String {
+        #if DEBUG
+        return "광고 제거 테스트 적용"
+        #else
+        return "광고 제거 구매 \(adRemovalManager.displayPrice)"
+        #endif
     }
 
     @ViewBuilder

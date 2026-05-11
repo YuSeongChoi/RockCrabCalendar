@@ -40,19 +40,36 @@ final class AdRemovalPurchaseManager {
         self.productID = productID
         self.userDefaults = userDefaults
         self.isAdsRemoved = userDefaults.bool(forKey: AppStorageKeys.adsRemoved)
+        #if DEBUG
+        self.updatesTask = nil
+        #else
         self.updatesTask = observeTransactions()
+        #endif
     }
 
     var displayPrice: String {
+        #if DEBUG
+        return "테스트"
+        #else
         product?.displayPrice ?? "3,900원"
+        #endif
     }
 
     func refresh() async {
+        #if DEBUG
+        state = isAdsRemoved ? .purchased : .idle
+        #else
         await loadProduct()
         await refreshEntitlements()
+        #endif
     }
 
     func purchase() async {
+        #if DEBUG
+        state = .purchasing
+        isAdsRemoved = true
+        state = .purchased
+        #else
         if product == nil {
             await loadProduct()
         }
@@ -79,9 +96,15 @@ final class AdRemovalPurchaseManager {
         } catch {
             state = .failed(error.localizedDescription)
         }
+        #endif
     }
 
     func restorePurchases() async {
+        #if DEBUG
+        state = .restoring
+        isAdsRemoved = true
+        state = .purchased
+        #else
         state = .restoring
         do {
             try await AppStore.sync()
@@ -90,7 +113,15 @@ final class AdRemovalPurchaseManager {
         } catch {
             state = .failed(error.localizedDescription)
         }
+        #endif
     }
+
+    #if DEBUG
+    func resetDebugPurchase() {
+        isAdsRemoved = false
+        state = .idle
+    }
+    #endif
 
     private func loadProduct() async {
         state = .loading
