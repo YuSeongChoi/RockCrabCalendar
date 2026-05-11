@@ -181,7 +181,7 @@ private extension ScheduleEditView {
     func shouldRequestInterstitial() -> Bool {
         guard viewModel.isNewUserSchedule else { return false }
         guard !adRemovalManager.isAdsRemoved else { return false }
-        return userScheduleAdCounter.recordContentCreation()
+        return userScheduleAdCounter.shouldPresentAfterRecordingCreation()
     }
 
     func saveLastUserScheduleColorIfNeeded() {
@@ -197,7 +197,10 @@ private extension ScheduleEditView {
         shouldPresentInterstitialAfterDismiss = false
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 350_000_000)
-            await interstitialAdService.presentIfReady()
+            let didPresent = await interstitialAdService.presentIfReady()
+            if didPresent {
+                userScheduleAdCounter.resetAfterPresentingInterstitial()
+            }
         }
     }
 

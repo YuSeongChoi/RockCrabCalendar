@@ -20,10 +20,13 @@ struct UserScheduleAdCounter {
         self.triggerCount = max(triggerCount, 1)
     }
 
-    func recordContentCreation() -> Bool {
+    func shouldPresentAfterRecordingCreation() -> Bool {
         let nextCount = userDefaults.integer(forKey: AppStorageKeys.userScheduleAdCreationCount) + 1
-        let shouldPresent = nextCount >= triggerCount
-        userDefaults.set(shouldPresent ? 0 : nextCount, forKey: AppStorageKeys.userScheduleAdCreationCount)
-        return shouldPresent
+        userDefaults.set(nextCount, forKey: AppStorageKeys.userScheduleAdCreationCount)
+        return nextCount >= triggerCount
+    }
+
+    func resetAfterPresentingInterstitial() {
+        userDefaults.set(0, forKey: AppStorageKeys.userScheduleAdCreationCount)
     }
 }

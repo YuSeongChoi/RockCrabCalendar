@@ -319,6 +319,10 @@ struct SettingsView: View {
         switch adRemovalManager.state {
         case .purchased:
             purchaseResultMessage = AppLocalization.string("광고 제거가 적용되었습니다.")
+        case .cancelled:
+            purchaseResultMessage = AppLocalization.string("구매가 취소되었습니다.")
+        case .pending:
+            purchaseResultMessage = AppLocalization.string("구매 승인 대기 중입니다. 승인 완료 후 광고 제거가 적용됩니다.")
         case .failed(let message):
             purchaseResultMessage = message
         default:
@@ -385,7 +389,7 @@ private extension AdRemovalPurchaseManager {
         switch state {
         case .loading, .purchasing, .restoring:
             return true
-        case .idle, .purchased, .failed:
+        case .idle, .purchased, .cancelled, .pending, .failed:
             return false
         }
     }

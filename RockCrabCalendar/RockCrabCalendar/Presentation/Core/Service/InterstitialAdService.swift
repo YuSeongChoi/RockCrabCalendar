@@ -35,19 +35,21 @@ final class InterstitialAdService: NSObject {
         }
     }
 
-    func presentIfReady() async {
+    @discardableResult
+    func presentIfReady() async -> Bool {
         guard let rootViewController = UIApplication.shared.topMostViewController() else {
             await preload()
-            return
+            return false
         }
 
         guard let interstitialAd else {
             await preload()
-            return
+            return false
         }
 
         self.interstitialAd = nil
         interstitialAd.present(from: rootViewController)
+        return true
     }
 }
 

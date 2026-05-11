@@ -18,6 +18,8 @@ final class AdRemovalPurchaseManager {
         case purchasing
         case restoring
         case purchased
+        case cancelled
+        case pending
         case failed(String)
     }
 
@@ -25,7 +27,7 @@ final class AdRemovalPurchaseManager {
     private let userDefaults: UserDefaults
     private var updatesTask: Task<Void, Never>?
     #if DEBUG
-    private let debugOverrideKey: String
+    private let debugOverrideStore: DebugAdRemovalOverrideStore
     #endif
 
     private(set) var product: Product?
@@ -43,8 +45,8 @@ final class AdRemovalPurchaseManager {
         self.productID = productID
         self.userDefaults = userDefaults
         #if DEBUG
-        self.debugOverrideKey = "\(AppStorageKeys.adsRemoved).debugOverride"
-        self.isAdsRemoved = userDefaults.object(forKey: debugOverrideKey) as? Bool
+        self.debugOverrideStore = DebugAdRemovalOverrideStore(userDefaults: userDefaults)
+        self.isAdsRemoved = debugOverrideStore.value
             ?? userDefaults.bool(forKey: AppStorageKeys.adsRemoved)
         #else
         self.isAdsRemoved = userDefaults.bool(forKey: AppStorageKeys.adsRemoved)
@@ -84,8 +86,10 @@ final class AdRemovalPurchaseManager {
                 await transaction.finish()
                 isAdsRemoved = transaction.productID == productID && transaction.revocationDate == nil
                 state = isAdsRemoved ? .purchased : .idle
-            case .userCancelled, .pending:
-                state = .idle
+            case .userCancelled:
+                state = .cancelled
+            case .pending:
+                state = .pending
             @unknown default:
                 state = .idle
             }
@@ -110,19 +114,19 @@ final class AdRemovalPurchaseManager {
 
     #if DEBUG
     func applyDebugPurchase() {
-        userDefaults.set(true, forKey: debugOverrideKey)
+        debugOverrideStore.set(true)
         isAdsRemoved = true
         state = .purchased
     }
 
     func resetDebugPurchase() {
-        userDefaults.set(false, forKey: debugOverrideKey)
+        debugOverrideStore.set(false)
         isAdsRemoved = false
         state = .idle
     }
 
     private func clearDebugOverride() {
-        userDefaults.removeObject(forKey: debugOverrideKey)
+        debugOverrideStore.clear()
     }
     #endif
 
@@ -157,7 +161,7 @@ final class AdRemovalPurchaseManager {
         }
 
         #if DEBUG
-        if let debugOverride = userDefaults.object(forKey: debugOverrideKey) as? Bool {
+        if let debugOverride = debugOverrideStore.value {
             isAdsRemoved = debugOverride
             state = debugOverride ? .purchased : .idle
             return
@@ -194,3 +198,26 @@ final class AdRemovalPurchaseManager {
         }
     }
 }
+
+#if DEBUG
+private struct DebugAdRemovalOverrideStore {
+    private let userDefaults: UserDefaults
+    private let key = "\(AppStorageKeys.adsRemoved).debugOverride"
+
+    init(userDefaults: UserDefaults) {
+        self.userDefaults = userDefaults
+    }
+
+    var value: Bool? {
+        userDefaults.object(forKey: key) as? Bool
+    }
+
+    func set(_ value: Bool) {
+        userDefaults.set(value, forKey: key)
+    }
+
+    func clear() {
+        userDefaults.removeObject(forKey: key)
+    }
+}
+#endif

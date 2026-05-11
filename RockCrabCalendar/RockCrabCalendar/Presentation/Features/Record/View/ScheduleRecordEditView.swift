@@ -162,7 +162,7 @@ struct ScheduleRecordEditView: View {
     private func shouldRequestInterstitial(isNewRecord: Bool) -> Bool {
         guard isNewRecord else { return false }
         guard !adRemovalManager.isAdsRemoved else { return false }
-        return userScheduleAdCounter.recordContentCreation()
+        return userScheduleAdCounter.shouldPresentAfterRecordingCreation()
     }
 
     private func presentPendingInterstitialIfNeeded() {
@@ -170,7 +170,10 @@ struct ScheduleRecordEditView: View {
         shouldPresentInterstitialAfterDismiss = false
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 350_000_000)
-            await interstitialAdService.presentIfReady()
+            let didPresent = await interstitialAdService.presentIfReady()
+            if didPresent {
+                userScheduleAdCounter.resetAfterPresentingInterstitial()
+            }
         }
     }
 
