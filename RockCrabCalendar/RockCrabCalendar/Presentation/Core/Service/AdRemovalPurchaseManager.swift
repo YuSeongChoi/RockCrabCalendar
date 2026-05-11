@@ -24,6 +24,9 @@ final class AdRemovalPurchaseManager {
     private let productID: String
     private let userDefaults: UserDefaults
     private var updatesTask: Task<Void, Never>?
+    #if DEBUG
+    private let debugOverrideKey: String
+    #endif
 
     private(set) var product: Product?
     private(set) var state: PurchaseState = .idle
@@ -39,7 +42,13 @@ final class AdRemovalPurchaseManager {
     ) {
         self.productID = productID
         self.userDefaults = userDefaults
+        #if DEBUG
+        self.debugOverrideKey = "\(AppStorageKeys.adsRemoved).debugOverride"
+        self.isAdsRemoved = userDefaults.object(forKey: debugOverrideKey) as? Bool
+            ?? userDefaults.bool(forKey: AppStorageKeys.adsRemoved)
+        #else
         self.isAdsRemoved = userDefaults.bool(forKey: AppStorageKeys.adsRemoved)
+        #endif
         self.updatesTask = observeTransactions()
     }
 
@@ -53,12 +62,16 @@ final class AdRemovalPurchaseManager {
     }
 
     func purchase() async {
+        #if DEBUG
+        clearDebugOverride()
+        #endif
+
         if product == nil {
             await loadProduct()
         }
 
         guard let product else {
-            state = .failed(AppLocalization.string("구매 상품을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요."))
+            state = .failed(productUnavailableMessage)
             return
         }
 
@@ -84,6 +97,9 @@ final class AdRemovalPurchaseManager {
     func restorePurchases() async {
         state = .restoring
         do {
+            #if DEBUG
+            clearDebugOverride()
+            #endif
             try await AppStore.sync()
             await refreshEntitlements()
             state = isAdsRemoved ? .purchased : .idle
@@ -94,13 +110,19 @@ final class AdRemovalPurchaseManager {
 
     #if DEBUG
     func applyDebugPurchase() {
+        userDefaults.set(true, forKey: debugOverrideKey)
         isAdsRemoved = true
         state = .purchased
     }
 
     func resetDebugPurchase() {
+        userDefaults.set(false, forKey: debugOverrideKey)
         isAdsRemoved = false
         state = .idle
+    }
+
+    private func clearDebugOverride() {
+        userDefaults.removeObject(forKey: debugOverrideKey)
     }
     #endif
 
@@ -109,11 +131,19 @@ final class AdRemovalPurchaseManager {
         do {
             product = try await Product.products(for: [productID]).first
             state = product == nil
-                ? .failed(AppLocalization.string("구매 상품을 찾을 수 없습니다."))
+                ? .failed(productUnavailableMessage)
                 : .idle
         } catch {
             state = .failed(error.localizedDescription)
         }
+    }
+
+    private var productUnavailableMessage: String {
+        #if DEBUG
+        AppLocalization.string("StoreKit 테스트 상품을 찾을 수 없습니다. Scheme의 StoreKit Configuration과 상품 ID를 확인해 주세요.")
+        #else
+        AppLocalization.string("구매 상품을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.")
+        #endif
     }
 
     private func refreshEntitlements() async {
@@ -125,6 +155,14 @@ final class AdRemovalPurchaseManager {
                 break
             }
         }
+
+        #if DEBUG
+        if let debugOverride = userDefaults.object(forKey: debugOverrideKey) as? Bool {
+            isAdsRemoved = debugOverride
+            state = debugOverride ? .purchased : .idle
+            return
+        }
+        #endif
 
         isAdsRemoved = hasEntitlement
         if hasEntitlement {
