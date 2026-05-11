@@ -1023,10 +1023,66 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "SHOW! CHAMPION 사전녹화",
+            date: simpleDateFormatter.date(from: "2026-04-29")!,
+            time: "14:00",
+            place: "일산 MBC 드림센터",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "쇼! 음악중심 사전녹화",
+            date: simpleDateFormatter.date(from: "2026-05-02")!,
+            time: "09:00",
+            place: "상암동 MBC 신사옥 공개홀",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "쇼! 음악중심 미니팬미팅",
+            date: simpleDateFormatter.date(from: "2026-05-02")!,
+            time: "10:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "후즈팬 스토어 팬사인회",
+            date: simpleDateFormatter.date(from: "2026-05-10")!,
+            time: "11:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
+        ),
+        QWERScheduleItem(
+            title: "와일드리프트 팝업스토어",
+            date: simpleDateFormatter.date(from: "2026-05-11")!,
+            time: "16:30",
+            place: "롯데월드몰 노티드 매장",
+            members: [.E, .R],
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "상지대학교 대동제 SPARKLE",
+            date: simpleDateFormatter.date(from: "2026-05-12")!,
+            time: "20:10",
+            place: "상지대학교 교정",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "포스코 노동조합 K-노사문화 콘서트",
             date: simpleDateFormatter.date(from: "2026-05-14")!,
             time: "",
             place: "포항 종합운동장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "성균관대학교 문행대동제",
+            date: simpleDateFormatter.date(from: "2026-05-15")!,
+            time: "20:00",
+            place: "성균관대학교 수원캠퍼스",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
@@ -1055,6 +1111,46 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "연세대학교 총동문회 연세여 사랑한다",
+            date: simpleDateFormatter.date(from: "2026-05-17")!,
+            time: "12:00",
+            place: "연세대학교 신촌캠퍼스 노천극장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "비트로드 팬사인회",
+            date: simpleDateFormatter.date(from: "2026-05-17")!,
+            time: "14:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
+        ),
+        QWERScheduleItem(
+            title: "국립한밭대학교 METEOR",
+            date: simpleDateFormatter.date(from: "2026-05-18")!,
+            time: "",
+            place: "국립한밭대학교",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "홍익대학교 세종캠퍼스 2026 대동제:잔상",
+            date: simpleDateFormatter.date(from: "2026-05-19")!,
+            time: "",
+            place: "홍익대학교 세종캠퍼스",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "대구가톨릭대학교 DAYDREAM",
+            date: simpleDateFormatter.date(from: "2026-05-21")!,
+            time: "18:00",
+            place: "대구가톨릭대학교",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "PEAK FESTIVAL 2026",
             date: simpleDateFormatter.date(from: "2026-05-23")!,
             time: "",
@@ -1069,6 +1165,14 @@ extension QWERScheduleItem {
             place: "영암 국제 자동차 경주장",
             members: [.Q, .W, .E, .R],
             category: .concert
+        ),
+        QWERScheduleItem(
+            title: "FAN SIGNING EVENT IN TAIPEI",
+            date: simpleDateFormatter.date(from: "2026-05-29")!,
+            time: "19:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .fanSign
         ),
         QWERScheduleItem(
             title: "2026 푸본 G!POP 뮤직페스티벌",
@@ -1093,6 +1197,14 @@ extension QWERScheduleItem {
             place: "대만 타이베이 아레나",
             members: [.Q, .W, .E, .R],
             category: .concert
-        )
+        ),
+        QWERScheduleItem(
+            title: "ACON 2026 IN TAIPEI",
+            date: simpleDateFormatter.date(from: "2026-07-25")!,
+            time: "17:00",
+            place: "NTSU ARENA (대만)",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
     ]
 }
