@@ -175,7 +175,7 @@ private extension ScheduleEditView {
     func shouldRequestInterstitial() -> Bool {
         guard viewModel.isNewUserSchedule else { return false }
         guard !adRemovalManager.isAdsRemoved else { return false }
-        return userScheduleAdCounter.recordUserScheduleCreation()
+        return userScheduleAdCounter.recordContentCreation()
     }
 
     func presentPendingInterstitialIfNeeded() {

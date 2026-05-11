@@ -248,7 +248,10 @@ struct HomeMainView: View {
                         viewModel: ScheduleRecordEditViewModel(
                             target: target,
                             store: scheduleRecordStore
-                        )
+                        ),
+                        adRemovalManager: adRemovalManager,
+                        interstitialAdService: interstitialAdService,
+                        userScheduleAdCounter: userScheduleAdCounter
                     )
                 }
             }

@@ -60,7 +60,12 @@ struct RockCrabCalendarApp: App {
                         }
                         .tag(AppTab.home)
 
-                        ScheduleRecordListView(store: environment.scheduleRecordStore)
+                        ScheduleRecordListView(
+                            store: environment.scheduleRecordStore,
+                            adRemovalManager: adRemovalManager,
+                            interstitialAdService: interstitialAdService,
+                            userScheduleAdCounter: userScheduleAdCounter
+                        )
                             .tabItem {
                                 Label("기록", systemImage: "book.closed")
                             }

@@ -20,7 +20,7 @@ struct UserScheduleAdCounter {
         self.triggerCount = max(triggerCount, 1)
     }
 
-    func recordUserScheduleCreation() -> Bool {
+    func recordContentCreation() -> Bool {
         let nextCount = userDefaults.integer(forKey: AppStorageKeys.userScheduleAdCreationCount) + 1
         let shouldPresent = nextCount >= triggerCount
         userDefaults.set(shouldPresent ? 0 : nextCount, forKey: AppStorageKeys.userScheduleAdCreationCount)
