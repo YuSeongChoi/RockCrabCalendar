@@ -200,6 +200,7 @@
 		5DAAD0132FAD000000000003 /* UserScheduleAdCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleAdCounter.swift; sourceTree = "<group>"; };
 		5DAAD0142FAD000000000004 /* InterstitialAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAdService.swift; sourceTree = "<group>"; };
 		5DAAD0152FAD000000000005 /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
+		5DAAD0162FAD000000000006 /* RockCrabCalendar.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = RockCrabCalendar.storekit; sourceTree = "<group>"; };
 		5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCompositionSmokeTests.swift; sourceTree = "<group>"; };
 		5DCF9AAD2F595A59008EA555 /* HomeSmokeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSmokeUITests.swift; sourceTree = "<group>"; };
 		5DCF9AAE2F595A59008EA555 /* RockCrabCalendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarUITests.swift; sourceTree = "<group>"; };
@@ -535,6 +536,14 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		5DAAD0172FAD000000000007 /* StoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				5DAAD0162FAD000000000006 /* RockCrabCalendar.storekit */,
+			);
+			path = StoreKit;
+			sourceTree = "<group>";
+		};
 		5DCF9AB02F595A59008EA555 /* RockCrabCalendarUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -586,6 +595,7 @@
 				5D7FC9CC2E5EDA6100B5EDCA /* Config */,
 				5D1A72F12F177562007F3FB8 /* Presentation */,
 				5DE024442CA3DA5900472395 /* Resources */,
+				5DAAD0172FAD000000000007 /* StoreKit */,
 				62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */,
 			);
 			path = RockCrabCalendar;

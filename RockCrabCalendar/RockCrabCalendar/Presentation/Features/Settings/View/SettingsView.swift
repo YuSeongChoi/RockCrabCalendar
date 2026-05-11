@@ -132,9 +132,17 @@ struct SettingsView: View {
                         )
 
                         #if DEBUG
+                        if !adRemovalManager.isAdsRemoved {
+                            actionButton(
+                                title: "광고 제거 로컬 적용",
+                                isLoading: false,
+                                isDisabled: adRemovalManager.isPurchaseActionRunning,
+                                action: applyDebugAdRemoval
+                            )
+                        }
                         if adRemovalManager.isAdsRemoved {
                             actionButton(
-                                title: "광고 제거 테스트 해제",
+                                title: "광고 제거 로컬 해제",
                                 isLoading: false,
                                 isDisabled: adRemovalManager.isPurchaseActionRunning,
                                 action: resetDebugAdRemoval
@@ -294,9 +302,15 @@ struct SettingsView: View {
     }
 
     #if DEBUG
+    private func applyDebugAdRemoval() {
+        adRemovalManager.applyDebugPurchase()
+        purchaseResultMessage = AppLocalization.string("광고 제거 로컬 테스트가 적용되었습니다.")
+        showPurchaseResult = true
+    }
+
     private func resetDebugAdRemoval() {
         adRemovalManager.resetDebugPurchase()
-        purchaseResultMessage = AppLocalization.string("광고 제거 테스트가 해제되었습니다.")
+        purchaseResultMessage = AppLocalization.string("광고 제거 로컬 테스트가 해제되었습니다.")
         showPurchaseResult = true
     }
     #endif
@@ -325,7 +339,7 @@ struct SettingsView: View {
 
     private var removeAdsButtonTitle: String {
         #if DEBUG
-        return "광고 제거 테스트 적용"
+        return "광고 제거 구매 테스트 \(adRemovalManager.displayPrice)"
         #else
         return "광고 제거 구매 \(adRemovalManager.displayPrice)"
         #endif

@@ -11,7 +11,8 @@
 - 광고 제거 인앱결제 코드 연결 완료
 - 설정 화면에 광고 제거 구매/복원 UI 추가 완료
 - Debug 빌드에서는 Google 테스트 광고 ID 사용
-- Debug 빌드에서는 광고 제거 구매를 로컬 테스트 상태로 시뮬레이션
+- Debug 빌드에서는 Xcode StoreKit Configuration으로 광고 제거 결제 시트를 테스트
+- Debug 빌드에서는 광고 제거 로컬 적용/해제 보조 버튼 제공
 - Release 빌드에서는 운영 광고 ID 사용
 - Release 빌드에서는 App Store 실제 인앱결제 사용
 
@@ -91,5 +92,6 @@
 - App Store Connect의 인앱결제 상품 ID가 코드의 `rockcrabcalendar.remove_ads`와 반드시 일치해야 합니다.
 - AdMob 운영 광고는 실제 앱 심사/배포 상태에 따라 바로 노출되지 않을 수 있습니다.
 - Debug 환경에서는 테스트 광고 ID를 사용하므로 운영 광고 노출 여부는 Release/TestFlight 기준으로 확인해야 합니다.
-- Debug 환경의 광고 제거 버튼은 StoreKit 결제를 호출하지 않고 로컬 테스트 상태만 변경합니다.
+- Debug 환경의 광고 제거 구매 테스트 버튼은 `RockCrabCalendar.storekit`의 로컬 상품으로 StoreKit 결제 시트를 표시합니다.
+- Debug 환경의 광고 제거 로컬 적용/해제 버튼은 StoreKit 결제 없이 광고 제거 상태만 변경하는 보조 테스트 기능입니다.
 - 광고 제거 구매가 승인되지 않은 상태에서 앱 버전을 제출하면 심사 또는 배포 단계에서 막힐 수 있습니다.
