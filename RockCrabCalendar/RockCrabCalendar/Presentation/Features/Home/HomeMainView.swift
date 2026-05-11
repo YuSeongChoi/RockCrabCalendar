@@ -22,6 +22,10 @@ struct HomeMainView: View {
     @State private var isSearchExpanded: Bool = false
 
     private let scheduleRecordStore: ScheduleRecordStoreProtocol
+    private let adRemovalManager: AdRemovalPurchaseManager
+    private let interstitialAdService: InterstitialAdService
+    private let userScheduleAdCounter: UserScheduleAdCounter
+    private let userDefaults: UserDefaults
 
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
@@ -38,15 +42,27 @@ struct HomeMainView: View {
             migrationStore: environment.userScheduleMigrationStore
         ))
         self.scheduleRecordStore = environment.scheduleRecordStore
+        self.adRemovalManager = AdRemovalPurchaseManager()
+        self.interstitialAdService = InterstitialAdService()
+        self.userScheduleAdCounter = UserScheduleAdCounter()
+        self.userDefaults = AppGroupUserDefaults.shared
     }
 
     init(
         calendarVM: CalendarViewModel,
         scheduleVM: QWERScheduleViewModel,
         userVM: UserScheduleViewModel,
-        scheduleRecordStore: ScheduleRecordStoreProtocol
+        scheduleRecordStore: ScheduleRecordStoreProtocol,
+        adRemovalManager: AdRemovalPurchaseManager,
+        interstitialAdService: InterstitialAdService,
+        userScheduleAdCounter: UserScheduleAdCounter,
+        userDefaults: UserDefaults = AppGroupUserDefaults.shared
     ) {
         self.scheduleRecordStore = scheduleRecordStore
+        self.adRemovalManager = adRemovalManager
+        self.interstitialAdService = interstitialAdService
+        self.userScheduleAdCounter = userScheduleAdCounter
+        self.userDefaults = userDefaults
         _calendarVM = State(initialValue: calendarVM)
         _scheduleVM = State(initialValue: scheduleVM)
         _userVM = State(initialValue: userVM)
@@ -198,10 +214,11 @@ struct HomeMainView: View {
                                 defaultDate: scheduleVM.selectedDate,
                                 qwerVM: scheduleVM,
                                 userVM: userVM,
-                                defaultColor: userVM.schedules.last?.colorHex != nil
-                                    ? Color(hex: userVM.schedules.last!.colorHex)
-                                    : .purple
-                            )
+                                defaultColor: defaultUserScheduleColor
+                            ),
+                            adRemovalManager: adRemovalManager,
+                            interstitialAdService: interstitialAdService,
+                            userScheduleAdCounter: userScheduleAdCounter
                         )
                     } else {
                         ScheduleEditView(
@@ -210,7 +227,10 @@ struct HomeMainView: View {
                                 defaultDate: scheduleVM.selectedDate,
                                 qwerVM: scheduleVM,
                                 userVM: userVM
-                            )
+                            ),
+                            adRemovalManager: adRemovalManager,
+                            interstitialAdService: interstitialAdService,
+                            userScheduleAdCounter: userScheduleAdCounter
                         )
                     }
                 case .editSchedule(let mode):
@@ -220,14 +240,20 @@ struct HomeMainView: View {
                             defaultDate: scheduleVM.selectedDate,
                             qwerVM: scheduleVM,
                             userVM: userVM
-                        )
+                        ),
+                        adRemovalManager: adRemovalManager,
+                        interstitialAdService: interstitialAdService,
+                        userScheduleAdCounter: userScheduleAdCounter
                     )
                 case .editRecord(let target):
                     ScheduleRecordEditView(
                         viewModel: ScheduleRecordEditViewModel(
                             target: target,
                             store: scheduleRecordStore
-                        )
+                        ),
+                        adRemovalManager: adRemovalManager,
+                        interstitialAdService: interstitialAdService,
+                        userScheduleAdCounter: userScheduleAdCounter
                     )
                 }
             }
@@ -307,6 +333,17 @@ private extension HomeMainView {
                 "source_view": viewType.analyticsLabel
             ]
         )
+    }
+
+    var defaultUserScheduleColor: Color {
+        if let colorHex = userDefaults.string(forKey: AppStorageKeys.lastUserScheduleColorHex),
+           colorHex.isEmpty == false {
+            return Color(hex: colorHex)
+        }
+        if let colorHex = userVM.schedules.last?.colorHex {
+            return Color(hex: colorHex)
+        }
+        return .purple
     }
 }
 

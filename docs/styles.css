@@ -324,7 +324,7 @@ figcaption {
 
 .support-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   padding-top: 24px;
 }
@@ -337,6 +337,23 @@ figcaption {
 .text-link {
   color: var(--mint-dark);
   font-weight: 800;
+}
+
+.policy-hero {
+  padding-bottom: 24px;
+}
+
+.policy-updated {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.policy-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding-top: 24px;
 }
 
 .site-footer {
@@ -354,6 +371,13 @@ figcaption {
   text-decoration: none;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: flex-end;
+}
+
 @media (max-width: 980px) {
   .hero {
     grid-template-columns: 1fr;
@@ -365,7 +389,8 @@ figcaption {
   }
 
   .feature-grid,
-  .support-grid {
+  .support-grid,
+  .policy-content {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -414,6 +439,7 @@ figcaption {
 
   .feature-grid,
   .support-grid,
+  .policy-content,
   .screenshot-row {
     grid-template-columns: 1fr;
   }

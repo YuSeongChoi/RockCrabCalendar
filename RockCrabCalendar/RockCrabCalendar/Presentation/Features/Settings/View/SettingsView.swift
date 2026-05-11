@@ -14,6 +14,7 @@ struct SettingsView: View {
     private var preferredAppLanguageRaw = AppLanguageOption.system.rawValue
     @State private var scheduleVM: QWERScheduleViewModel
     @State private var userVM: UserScheduleViewModel
+    @State private var adRemovalManager: AdRemovalPurchaseManager
 
     @State private var isExporting = false
     @State private var isSyncingServer = false
@@ -25,10 +26,17 @@ struct SettingsView: View {
     @State private var showSyncResult = false
     @State private var syncResultMessage = ""
     @State private var showClearConfirmAlert = false
+    @State private var showPurchaseResult = false
+    @State private var purchaseResultMessage = ""
 
-    init(scheduleVM: QWERScheduleViewModel, userVM: UserScheduleViewModel) {
+    init(
+        scheduleVM: QWERScheduleViewModel,
+        userVM: UserScheduleViewModel,
+        adRemovalManager: AdRemovalPurchaseManager
+    ) {
         _scheduleVM = State(initialValue: scheduleVM)
         _userVM = State(initialValue: userVM)
+        _adRemovalManager = State(initialValue: adRemovalManager)
     }
 
     var body: some View {
@@ -83,6 +91,64 @@ struct SettingsView: View {
                             isDisabled: isExporting,
                             action: exportSchedules
                         )
+                    }
+                    .padding(16)
+                    .background(Color.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("광고")
+                            .font(.headline)
+
+                        if adRemovalManager.isAdsRemoved {
+                            HStack(spacing: 10) {
+                                Image(systemName: "checkmark.seal.fill")
+                                    .foregroundStyle(Color.green)
+                                Text("광고 제거가 적용되어 있습니다.")
+                                    .fontWeight(.semibold)
+                                Spacer()
+                            }
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 12)
+                            .frame(maxWidth: .infinity)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .fill(Color(UIColor.secondarySystemFill))
+                            )
+                        } else {
+                            actionButton(
+                                title: removeAdsButtonTitle,
+                                isLoading: adRemovalManager.isPurchaseActionRunning,
+                                isDisabled: adRemovalManager.isPurchaseActionRunning,
+                                action: purchaseRemoveAds
+                            )
+                        }
+
+                        actionButton(
+                            title: "구매 복원",
+                            isLoading: adRemovalManager.isRestoring,
+                            isDisabled: adRemovalManager.isPurchaseActionRunning,
+                            action: restorePurchases
+                        )
+
+                        #if DEBUG
+                        if !adRemovalManager.isAdsRemoved {
+                            actionButton(
+                                title: "광고 제거 로컬 적용",
+                                isLoading: false,
+                                isDisabled: adRemovalManager.isPurchaseActionRunning,
+                                action: applyDebugAdRemoval
+                            )
+                        }
+                        if adRemovalManager.isAdsRemoved {
+                            actionButton(
+                                title: "광고 제거 로컬 해제",
+                                isLoading: false,
+                                isDisabled: adRemovalManager.isPurchaseActionRunning,
+                                action: resetDebugAdRemoval
+                            )
+                        }
+                        #endif
                     }
                     .padding(16)
                     .background(Color.cardBackground)
@@ -161,6 +227,14 @@ struct SettingsView: View {
         } message: {
             Text("서버의 원본 데이터는 삭제되지 않습니다. 앱에 저장된 가져온 일정만 삭제합니다.")
         }
+        .alert("광고 제거", isPresented: $showPurchaseResult) {
+            Button("확인", role: .cancel) { }
+        } message: {
+            Text(purchaseResultMessage)
+        }
+        .task {
+            await adRemovalManager.refresh()
+        }
     }
 
     private func exportSchedules() {
@@ -213,12 +287,66 @@ struct SettingsView: View {
         }
     }
 
+    private func purchaseRemoveAds() {
+        Task { @MainActor in
+            await adRemovalManager.purchase()
+            updatePurchaseResultMessage()
+        }
+    }
+
+    private func restorePurchases() {
+        Task { @MainActor in
+            await adRemovalManager.restorePurchases()
+            updatePurchaseResultMessage()
+        }
+    }
+
+    #if DEBUG
+    private func applyDebugAdRemoval() {
+        adRemovalManager.applyDebugPurchase()
+        purchaseResultMessage = AppLocalization.string("광고 제거 로컬 테스트가 적용되었습니다.")
+        showPurchaseResult = true
+    }
+
+    private func resetDebugAdRemoval() {
+        adRemovalManager.resetDebugPurchase()
+        purchaseResultMessage = AppLocalization.string("광고 제거 로컬 테스트가 해제되었습니다.")
+        showPurchaseResult = true
+    }
+    #endif
+
+    private func updatePurchaseResultMessage() {
+        switch adRemovalManager.state {
+        case .purchased:
+            purchaseResultMessage = AppLocalization.string("광고 제거가 적용되었습니다.")
+        case .cancelled:
+            purchaseResultMessage = AppLocalization.string("구매가 취소되었습니다.")
+        case .pending:
+            purchaseResultMessage = AppLocalization.string("구매 승인 대기 중입니다. 승인 완료 후 광고 제거가 적용됩니다.")
+        case .failed(let message):
+            purchaseResultMessage = message
+        default:
+            purchaseResultMessage = adRemovalManager.isAdsRemoved
+                ? AppLocalization.string("광고 제거가 적용되었습니다.")
+                : AppLocalization.string("복원할 구매 내역이 없습니다.")
+        }
+        showPurchaseResult = true
+    }
+
     private func formatDateTime(_ date: Date) -> String {
         return AppDateFormatterFactory.dateTimeFormatter().string(from: date)
     }
 
     private var selectedLanguage: AppLanguageOption {
         AppLanguageOption(rawValue: preferredAppLanguageRaw) ?? .system
+    }
+
+    private var removeAdsButtonTitle: String {
+        #if DEBUG
+        return "광고 제거 구매 테스트 \(adRemovalManager.displayPrice)"
+        #else
+        return "광고 제거 구매 \(adRemovalManager.displayPrice)"
+        #endif
     }
 
     @ViewBuilder
@@ -253,5 +381,23 @@ struct SettingsView: View {
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)
+    }
+}
+
+private extension AdRemovalPurchaseManager {
+    var isPurchaseActionRunning: Bool {
+        switch state {
+        case .loading, .purchasing, .restoring:
+            return true
+        case .idle, .purchased, .cancelled, .pending, .failed:
+            return false
+        }
+    }
+
+    var isRestoring: Bool {
+        if case .restoring = state {
+            return true
+        }
+        return false
     }
 }

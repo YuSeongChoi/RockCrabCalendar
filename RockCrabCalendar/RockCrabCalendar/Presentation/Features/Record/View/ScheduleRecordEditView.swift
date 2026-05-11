@@ -13,12 +13,16 @@ import RockCrabDomain
 struct ScheduleRecordEditView: View {
     @Environment(\.dismiss) private var dismiss
     private let onRecordChanged: () -> Void
+    private let adRemovalManager: AdRemovalPurchaseManager
+    private let interstitialAdService: InterstitialAdService
+    private let userScheduleAdCounter: UserScheduleAdCounter
     @State private var viewModel: ScheduleRecordEditViewModel
     @State private var isShowingEmojiPicker = false
     @State private var selectedPhotoItems: [PhotosPickerItem] = []
     @State private var isLoadingPhotos = false
     @State private var previewPhoto: RecordPhotoPreview?
     @State private var isShowingDeleteConfirm = false
+    @State private var shouldPresentInterstitialAfterDismiss = false
 
     private var scheduleDateText: String {
         Self.scheduleDateFormatter.string(from: viewModel.target.date)
@@ -41,9 +45,15 @@ struct ScheduleRecordEditView: View {
 
     init(
         viewModel: ScheduleRecordEditViewModel,
+        adRemovalManager: AdRemovalPurchaseManager,
+        interstitialAdService: InterstitialAdService,
+        userScheduleAdCounter: UserScheduleAdCounter,
         onRecordChanged: @escaping () -> Void = {}
     ) {
         self.onRecordChanged = onRecordChanged
+        self.adRemovalManager = adRemovalManager
+        self.interstitialAdService = interstitialAdService
+        self.userScheduleAdCounter = userScheduleAdCounter
         _viewModel = State(initialValue: viewModel)
     }
 
@@ -73,7 +83,9 @@ struct ScheduleRecordEditView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("저장") {
+                    let isNewRecord = viewModel.isEditing == false
                     if viewModel.save() {
+                        shouldPresentInterstitialAfterDismiss = shouldRequestInterstitial(isNewRecord: isNewRecord)
                         AnalyticsHelper.logAction(
                             actionName: "record_save",
                             label: viewModel.isEditing ? "기록 수정 저장" : "기록 신규 저장",
@@ -81,6 +93,7 @@ struct ScheduleRecordEditView: View {
                         )
                         onRecordChanged()
                         dismiss()
+                        presentPendingInterstitialIfNeeded()
                     } else {
                         AnalyticsHelper.logAction(
                             actionName: "record_save_failed",
@@ -143,6 +156,24 @@ struct ScheduleRecordEditView: View {
         .onDisappear {
             guard previewPhoto == nil, isShowingEmojiPicker == false else { return }
             viewModel.discardUnsavedPhotoFiles()
+        }
+    }
+
+    private func shouldRequestInterstitial(isNewRecord: Bool) -> Bool {
+        guard isNewRecord else { return false }
+        guard !adRemovalManager.isAdsRemoved else { return false }
+        return userScheduleAdCounter.shouldPresentAfterRecordingCreation()
+    }
+
+    private func presentPendingInterstitialIfNeeded() {
+        guard shouldPresentInterstitialAfterDismiss else { return }
+        shouldPresentInterstitialAfterDismiss = false
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 350_000_000)
+            let didPresent = await interstitialAdService.presentIfReady()
+            if didPresent {
+                userScheduleAdCounter.resetAfterPresentingInterstitial()
+            }
         }
     }
 

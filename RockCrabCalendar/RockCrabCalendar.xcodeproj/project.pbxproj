@@ -52,6 +52,12 @@
 		5D63B1A72F97467600FC6C1D /* ScheduleRecordEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */; };
 		5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 5D68DCF12E39E8B400A69D92 /* FirebaseAnalytics */; };
 		5D7FC9BC2E5ED6FB00B5EDCA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D7FC9BB2E5ED6FB00B5EDCA /* Alamofire */; };
+		5DAAD0012FAD000000000001 /* AdConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0112FAD000000000001 /* AdConfiguration.swift */; };
+		5DAAD0022FAD000000000002 /* AdRemovalPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0122FAD000000000002 /* AdRemovalPurchaseManager.swift */; };
+		5DAAD0032FAD000000000003 /* UserScheduleAdCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0132FAD000000000003 /* UserScheduleAdCounter.swift */; };
+		5DAAD0042FAD000000000004 /* InterstitialAdService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0142FAD000000000004 /* InterstitialAdService.swift */; };
+		5DAAD0052FAD000000000005 /* BannerAdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAAD0152FAD000000000005 /* BannerAdView.swift */; };
+		5DAAD0222FAD000000000022 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 5DAAD0212FAD000000000021 /* GoogleMobileAds */; };
 		5DCF9A9D2F5955BA008EA555 /* AppCompositionSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */; };
 		5DCF9AB12F595A59008EA555 /* RockCrabCalendarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9AAE2F595A59008EA555 /* RockCrabCalendarUITests.swift */; };
 		5DCF9AB22F595A59008EA555 /* RockCrabCalendarUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DCF9AAF2F595A59008EA555 /* RockCrabCalendarUITestsLaunchTests.swift */; };
@@ -189,6 +195,12 @@
 		5D63B1A62F97467600FC6C1D /* ScheduleRecordEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRecordEditView.swift; sourceTree = "<group>"; };
 		5D7FC95A2E555DB600B5EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5D7FC9E02E5EE56D00B5EDCA /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		5DAAD0112FAD000000000001 /* AdConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdConfiguration.swift; sourceTree = "<group>"; };
+		5DAAD0122FAD000000000002 /* AdRemovalPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdRemovalPurchaseManager.swift; sourceTree = "<group>"; };
+		5DAAD0132FAD000000000003 /* UserScheduleAdCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserScheduleAdCounter.swift; sourceTree = "<group>"; };
+		5DAAD0142FAD000000000004 /* InterstitialAdService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialAdService.swift; sourceTree = "<group>"; };
+		5DAAD0152FAD000000000005 /* BannerAdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAdView.swift; sourceTree = "<group>"; };
+		5DAAD0162FAD000000000006 /* RockCrabCalendar.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = RockCrabCalendar.storekit; sourceTree = "<group>"; };
 		5DCF9A9C2F5955BA008EA555 /* AppCompositionSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCompositionSmokeTests.swift; sourceTree = "<group>"; };
 		5DCF9AAD2F595A59008EA555 /* HomeSmokeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSmokeUITests.swift; sourceTree = "<group>"; };
 		5DCF9AAE2F595A59008EA555 /* RockCrabCalendarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RockCrabCalendarUITests.swift; sourceTree = "<group>"; };
@@ -263,6 +275,7 @@
 				B0A1D2C3E4F5061728394A62 /* RockCrabData in Frameworks */,
 				B0A1D2C3E4F5061728394A72 /* RockCrabDataFirestore in Frameworks */,
 				5D68DCF22E39E8B400A69D92 /* FirebaseAnalytics in Frameworks */,
+				5DAAD0222FAD000000000022 /* GoogleMobileAds in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +344,11 @@
 			isa = PBXGroup;
 			children = (
 				5D1A72D02F177562007F3FB8 /* NotificationManager.swift */,
+				5DAAD0112FAD000000000001 /* AdConfiguration.swift */,
+				5DAAD0122FAD000000000002 /* AdRemovalPurchaseManager.swift */,
+				5DAAD0132FAD000000000003 /* UserScheduleAdCounter.swift */,
+				5DAAD0142FAD000000000004 /* InterstitialAdService.swift */,
+				5DAAD0152FAD000000000005 /* BannerAdView.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -518,6 +536,14 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		5DAAD0172FAD000000000007 /* StoreKit */ = {
+			isa = PBXGroup;
+			children = (
+				5DAAD0162FAD000000000006 /* RockCrabCalendar.storekit */,
+			);
+			path = StoreKit;
+			sourceTree = "<group>";
+		};
 		5DCF9AB02F595A59008EA555 /* RockCrabCalendarUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +595,7 @@
 				5D7FC9CC2E5EDA6100B5EDCA /* Config */,
 				5D1A72F12F177562007F3FB8 /* Presentation */,
 				5DE024442CA3DA5900472395 /* Resources */,
+				5DAAD0172FAD000000000007 /* StoreKit */,
 				62FF6C822E3DD90B0060012F /* GoogleService-Info.plist */,
 			);
 			path = RockCrabCalendar;
@@ -743,6 +770,7 @@
 				E6BA8F8430D6433EF12F1E5E /* RockCrabDomain */,
 				B0A1D2C3E4F5061728394A61 /* RockCrabData */,
 				B0A1D2C3E4F5061728394A71 /* RockCrabDataFirestore */,
+				5DAAD0212FAD000000000021 /* GoogleMobileAds */,
 			);
 			productName = RockTurtleCalendar;
 			productReference = 5DE024312CA3D79E00472395 /* RockCrabCalendar.app */;
@@ -854,6 +882,7 @@
 				5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */,
 				5D68DCF02E39E8B400A69D92 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */,
+				5DAAD0202FAD000000000020 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			productRefGroup = 5DE024322CA3D79E00472395 /* Products */;
 			projectDirPath = "";
@@ -950,10 +979,13 @@
 				5D1A72FF2F177562007F3FB8 /* AppDelegate.swift in Sources */,
 				5D1A73002F177562007F3FB8 /* YouTubeListViewModel.swift in Sources */,
 				5D1A73012F177562007F3FB8 /* ScheduleEditView.swift in Sources */,
+				5DAAD0012FAD000000000001 /* AdConfiguration.swift in Sources */,
 				43B6C6B3FA9049E5ADE1E6A0 /* ScheduleEditBasicInfoSection.swift in Sources */,
 				8D20BA2F3A754B829FA771D7 /* ScheduleEditMemberToggle.swift in Sources */,
+				5DAAD0022FAD000000000002 /* AdRemovalPurchaseManager.swift in Sources */,
 				5D63B1A12F97426300FC6C1D /* ScheduleRecordEditViewModel.swift in Sources */,
 				9495EDAF8C2A40E9A6638CD1 /* ScheduleEditQWERSection.swift in Sources */,
+				5DAAD0032FAD000000000003 /* UserScheduleAdCounter.swift in Sources */,
 				6EB5BEE66D53465B879776B9 /* ScheduleEditUserSection.swift in Sources */,
 				5D1A73022F177562007F3FB8 /* HomeMainView.swift in Sources */,
 				5D1A73032F177562007F3FB8 /* SwiftUI+Extension.swift in Sources */,
@@ -966,6 +998,7 @@
 				D1E2F3A4B5C6988777665542 /* ScheduleEditActionHandler.swift in Sources */,
 				D2E3F4A5B6C7988777665541 /* ScheduleEditFormState.swift in Sources */,
 				D3E4F5A6B7C8988777665540 /* ScheduleEditMode.swift in Sources */,
+				5DAAD0042FAD000000000004 /* InterstitialAdService.swift in Sources */,
 				5D1A73062F177562007F3FB8 /* CalendarViewModel.swift in Sources */,
 				5D1A73072F177562007F3FB8 /* WindowDelegate.swift in Sources */,
 				5D1A73082F177562007F3FB8 /* YouTubeListView.swift in Sources */,
@@ -981,6 +1014,7 @@
 				E40000132F97000000ABC003 /* ScheduleRecordCard.swift in Sources */,
 				E40000212F97000000ABC011 /* RecordPhotoStore.swift in Sources */,
 				5D1A73F32F178DB0007F3FB8 /* HomeCalendarOptionView.swift in Sources */,
+				5DAAD0052FAD000000000005 /* BannerAdView.swift in Sources */,
 				5DFE40B82F18E24200CDA23F /* QWERStyleMapper.swift in Sources */,
 				5D1A73092F177562007F3FB8 /* LoadingIndicatorView.swift in Sources */,
 				5DF8D4C32F17904600371672 /* CalendarMonthGridView.swift in Sources */,
@@ -1208,7 +1242,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1252,7 +1286,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -1375,7 +1409,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1405,7 +1439,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ys.RockCrabCalendar.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1502,6 +1536,14 @@
 				minimumVersion = 5.10.2;
 			};
 		};
+		5DAAD0202FAD000000000020 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
 		5DE0246B2CA3DC4A00472395 /* XCRemoteSwiftPackageReference "R" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mac-cain13/R.swift";
@@ -1527,6 +1569,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5D7FC9BA2E5ED6FB00B5EDCA /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		5DAAD0212FAD000000000021 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5DAAD0202FAD000000000020 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 		5DDE85F12E7BF02D00643DB5 /* RswiftLibrary */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -11,10 +11,21 @@ import SwiftUI
 
 struct ScheduleRecordListView: View {
     private let store: ScheduleRecordStoreProtocol
+    private let adRemovalManager: AdRemovalPurchaseManager
+    private let interstitialAdService: InterstitialAdService
+    private let userScheduleAdCounter: UserScheduleAdCounter
     @State private var viewModel: ScheduleRecordViewModel
 
-    init(store: ScheduleRecordStoreProtocol) {
+    init(
+        store: ScheduleRecordStoreProtocol,
+        adRemovalManager: AdRemovalPurchaseManager,
+        interstitialAdService: InterstitialAdService,
+        userScheduleAdCounter: UserScheduleAdCounter
+    ) {
         self.store = store
+        self.adRemovalManager = adRemovalManager
+        self.interstitialAdService = interstitialAdService
+        self.userScheduleAdCounter = userScheduleAdCounter
         _viewModel = State(initialValue: ScheduleRecordViewModel(store: store))
     }
 
@@ -81,6 +92,9 @@ struct ScheduleRecordListView: View {
                         target: target,
                         store: store
                     ),
+                    adRemovalManager: adRemovalManager,
+                    interstitialAdService: interstitialAdService,
+                    userScheduleAdCounter: userScheduleAdCounter,
                     onRecordChanged: {
                         viewModel.loadRecords()
                     }

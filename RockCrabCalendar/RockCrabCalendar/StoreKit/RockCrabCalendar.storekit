@@ -1,0 +1,43 @@
+{
+  "identifier" : "8E1D3D8D-5E21-4D56-9DFE-087E21F16F8E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "3900",
+      "familyShareable" : false,
+      "internalID" : "7B7754D8-4C5F-47A4-BB61-7D28B1928E15",
+      "localizations" : [
+        {
+          "description" : "바위게캘린더에서 배너 및 전면 광고를 제거합니다.",
+          "displayName" : "광고 제거",
+          "locale" : "ko_KR"
+        },
+        {
+          "description" : "Remove banner and interstitial ads from RockCrabCalendar.",
+          "displayName" : "Remove Ads",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "rockcrabcalendar.remove_ads",
+      "referenceName" : "광고 제거",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "2F871192-CA4C-4E89-9D60-F16406E73C52",
+    "_developerTeamID" : "",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "ko_KR",
+    "_storefront" : "KOR"
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
