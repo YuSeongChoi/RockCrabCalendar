@@ -10,6 +10,7 @@ import UIKit
 import RockCrabShared
 
 struct SettingsView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage(AppStorageKeys.preferredAppLanguage, store: AppGroupUserDefaults.shared)
     private var preferredAppLanguageRaw = AppLanguageOption.system.rawValue
     @State private var scheduleVM: QWERScheduleViewModel
@@ -28,6 +29,7 @@ struct SettingsView: View {
     @State private var showClearConfirmAlert = false
     @State private var showPurchaseResult = false
     @State private var purchaseResultMessage = ""
+    @State private var notificationAuthorizationStatus: NotificationAuthorizationStatus = .notDetermined
 
     init(
         scheduleVM: QWERScheduleViewModel,
@@ -91,6 +93,42 @@ struct SettingsView: View {
                             isDisabled: isExporting,
                             action: exportSchedules
                         )
+                    }
+                    .padding(16)
+                    .background(Color.cardBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("알림")
+                            .font(.headline)
+
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack(spacing: 10) {
+                                Image(systemName: notificationAuthorizationStatus.isAuthorized ? "bell.badge.fill" : "bell.slash.fill")
+                                    .foregroundStyle(notificationAuthorizationStatus.isAuthorized ? Color.green : Color.orange)
+                                Text(notificationAuthorizationStatus.summaryText)
+                                    .fontWeight(.semibold)
+                            }
+                            Text(notificationAuthorizationStatus.detailText)
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(Color(UIColor.secondarySystemFill))
+                        )
+
+                        if notificationAuthorizationStatus.isAuthorized == false {
+                            actionButton(
+                                title: notificationSettingsButtonTitle,
+                                isLoading: false,
+                                isDisabled: false,
+                                action: handleNotificationSettingsTap
+                            )
+                        }
                     }
                     .padding(16)
                     .background(Color.cardBackground)
@@ -234,6 +272,13 @@ struct SettingsView: View {
         }
         .task {
             await adRemovalManager.refresh()
+            await refreshNotificationAuthorizationStatus()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            guard newPhase == .active else { return }
+            Task { @MainActor in
+                await refreshNotificationAuthorizationStatus()
+            }
         }
     }
 
@@ -333,6 +378,25 @@ struct SettingsView: View {
         showPurchaseResult = true
     }
 
+    private func refreshNotificationAuthorizationStatus() async {
+        notificationAuthorizationStatus = await NotificationManager.shared.authorizationStatus()
+    }
+
+    private func handleNotificationSettingsTap() {
+        Task { @MainActor in
+            switch notificationAuthorizationStatus {
+            case .notDetermined:
+                _ = await NotificationManager.shared.requestAuthorization()
+                await refreshNotificationAuthorizationStatus()
+            case .denied:
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                await UIApplication.shared.open(url)
+            case .authorized:
+                break
+            }
+        }
+    }
+
     private func formatDateTime(_ date: Date) -> String {
         return AppDateFormatterFactory.dateTimeFormatter().string(from: date)
     }
@@ -347,6 +411,17 @@ struct SettingsView: View {
         #else
         return "광고 제거 구매 \(adRemovalManager.displayPrice)"
         #endif
+    }
+
+    private var notificationSettingsButtonTitle: String {
+        switch notificationAuthorizationStatus {
+        case .notDetermined:
+            return AppLocalization.string("알림 켜기")
+        case .denied:
+            return AppLocalization.string("기기 알림 설정 열기")
+        case .authorized:
+            return ""
+        }
     }
 
     @ViewBuilder

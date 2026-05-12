@@ -23,6 +23,7 @@ final class ScheduleEditViewModel {
     var showSaveFeedbackAlert: Bool = false
     var isQWERLocalSchedule: Bool = false
     var saveFeedbackMessage: String = ""
+    var saveFeedbackAvailability: NotificationAvailability?
     var notificationAuthorizationStatus: NotificationAuthorizationStatus = .notDetermined
 
     var kind: ScheduleEditKind { mode.kind }
@@ -120,16 +121,27 @@ final class ScheduleEditViewModel {
         )
     }
 
-    func save() -> ScheduleSaveFeedback {
+    var shouldOfferNotificationSettingsNavigation: Bool {
+        saveFeedbackAvailability == .denied || saveFeedbackAvailability == .notDetermined
+    }
+
+    @MainActor
+    func save() async -> ScheduleSaveFeedback {
+        await refreshNotificationAuthorizationStatus()
+
+        let availability = notificationAvailability
         let feedback = actionHandler.save(
             mode: mode,
             form: form,
-            notificationAvailability: notificationAvailability
+            notificationAvailability: availability
         )
 
         if case .notificationWarning(let message) = feedback {
             saveFeedbackMessage = message
+            saveFeedbackAvailability = availability
             showSaveFeedbackAlert = true
+        } else {
+            saveFeedbackAvailability = nil
         }
 
         return feedback

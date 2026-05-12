@@ -16,6 +16,7 @@ struct ScheduleEditView: View {
     private let interstitialAdService: InterstitialAdService
     private let userScheduleAdCounter: UserScheduleAdCounter
     private let userDefaults: UserDefaults
+    private let onOpenNotificationSettings: () -> Void
     @State private var shouldPresentInterstitialAfterDismiss = false
 
     init(
@@ -23,13 +24,15 @@ struct ScheduleEditView: View {
         adRemovalManager: AdRemovalPurchaseManager,
         interstitialAdService: InterstitialAdService,
         userScheduleAdCounter: UserScheduleAdCounter,
-        userDefaults: UserDefaults = AppGroupUserDefaults.shared
+        userDefaults: UserDefaults = AppGroupUserDefaults.shared,
+        onOpenNotificationSettings: @escaping () -> Void = {}
     ) {
         _viewModel = State(initialValue: viewModel)
         self.adRemovalManager = adRemovalManager
         self.interstitialAdService = interstitialAdService
         self.userScheduleAdCounter = userScheduleAdCounter
         self.userDefaults = userDefaults
+        self.onOpenNotificationSettings = onOpenNotificationSettings
     }
 
     var body: some View {
@@ -104,15 +107,27 @@ struct ScheduleEditView: View {
             Text("Firestore에 올라간 QWER 일정은 삭제할 수 없습니다.\n사용자가 직접 추가한 QWER 일정만 삭제할 수 있어요.")
         }
         .alert("알림 안내", isPresented: $viewModel.showSaveFeedbackAlert) {
-            Button("확인") {
-                saveLastUserScheduleColorIfNeeded()
-                dismiss()
-                presentPendingInterstitialIfNeeded()
+            if viewModel.shouldOfferNotificationSettingsNavigation {
+                Button("아니오", role: .cancel) {
+                    finishAfterNotificationAlert()
+                }
+                Button("예") {
+                    finishAfterNotificationAlert()
+                    Task { @MainActor in
+                        try? await Task.sleep(nanoseconds: 250_000_000)
+                        onOpenNotificationSettings()
+                    }
+                }
+            } else {
+                Button("확인") {
+                    finishAfterNotificationAlert()
+                }
             }
         } message: {
             Text(viewModel.saveFeedbackMessage)
         }
         .task {
+            await viewModel.refreshNotificationAuthorizationStatus()
             await viewModel.refreshLocalFlagIfNeeded()
         }
         .onAppear {
@@ -144,20 +159,22 @@ struct ScheduleEditView: View {
 // MARK: - Save
 private extension ScheduleEditView {
     func save() {
-        let feedback = viewModel.save()
-        shouldPresentInterstitialAfterDismiss = shouldRequestInterstitial()
-        AnalyticsHelper.logAction(
-            actionName: "schedule_save",
-            label: feedback == .none ? "일정 저장 성공" : "일정 저장 알림 경고",
-            parameters: scheduleAnalyticsParameters().merging([
-                "save_result": feedback == .none ? "성공" : "알림 경고"
-            ]) { _, new in new }
-        )
+        Task { @MainActor in
+            let feedback = await viewModel.save()
+            shouldPresentInterstitialAfterDismiss = shouldRequestInterstitial()
+            AnalyticsHelper.logAction(
+                actionName: "schedule_save",
+                label: feedback == .none ? "일정 저장 성공" : "일정 저장 알림 경고",
+                parameters: scheduleAnalyticsParameters().merging([
+                    "save_result": feedback == .none ? "성공" : "알림 경고"
+                ]) { _, new in new }
+            )
 
-        if feedback == .none {
-            saveLastUserScheduleColorIfNeeded()
-            dismiss()
-            presentPendingInterstitialIfNeeded()
+            if feedback == .none {
+                saveLastUserScheduleColorIfNeeded()
+                dismiss()
+                presentPendingInterstitialIfNeeded()
+            }
         }
     }
     
@@ -202,6 +219,12 @@ private extension ScheduleEditView {
                 userScheduleAdCounter.resetAfterPresentingInterstitial()
             }
         }
+    }
+
+    func finishAfterNotificationAlert() {
+        saveLastUserScheduleColorIfNeeded()
+        dismiss()
+        presentPendingInterstitialIfNeeded()
     }
 
 }

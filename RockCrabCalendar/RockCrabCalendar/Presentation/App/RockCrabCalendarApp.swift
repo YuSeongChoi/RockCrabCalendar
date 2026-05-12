@@ -53,7 +53,10 @@ struct RockCrabCalendarApp: App {
                             scheduleRecordStore: environment.scheduleRecordStore,
                             adRemovalManager: adRemovalManager,
                             interstitialAdService: interstitialAdService,
-                            userScheduleAdCounter: userScheduleAdCounter
+                            userScheduleAdCounter: userScheduleAdCounter,
+                            onOpenNotificationSettings: {
+                                selectedTab = .settings
+                            }
                         )
                         .tabItem {
                             Label("홈", systemImage: "calendar")
@@ -67,7 +70,7 @@ struct RockCrabCalendarApp: App {
                             userScheduleAdCounter: userScheduleAdCounter
                         )
                             .tabItem {
-                                Label("기록", systemImage: "book.closed")
+                                Label(recordTabTitle, systemImage: "book.closed")
                             }
                             .tag(AppTab.record)
 
@@ -179,6 +182,11 @@ struct RockCrabCalendarApp: App {
 
     private var selectedAppLanguage: AppLanguageOption {
         AppLanguageOption(rawValue: preferredAppLanguageRaw) ?? .system
+    }
+
+    private var recordTabTitle: String {
+        let languageCode = AppLocalization.locale(for: selectedAppLanguage).identifier.lowercased()
+        return languageCode.hasPrefix("en") ? "Records" : "기록"
     }
 
     private var isShowingUpdatePrompt: Binding<Bool> {
