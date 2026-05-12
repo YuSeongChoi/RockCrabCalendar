@@ -26,6 +26,7 @@ struct HomeMainView: View {
     private let interstitialAdService: InterstitialAdService
     private let userScheduleAdCounter: UserScheduleAdCounter
     private let userDefaults: UserDefaults
+    private let onOpenNotificationSettings: () -> Void
 
     // Inject environment to build ViewModels with use-cases.
     init(environment: AppEnvironment = .live()) {
@@ -46,6 +47,7 @@ struct HomeMainView: View {
         self.interstitialAdService = InterstitialAdService()
         self.userScheduleAdCounter = UserScheduleAdCounter()
         self.userDefaults = AppGroupUserDefaults.shared
+        self.onOpenNotificationSettings = {}
     }
 
     init(
@@ -56,13 +58,15 @@ struct HomeMainView: View {
         adRemovalManager: AdRemovalPurchaseManager,
         interstitialAdService: InterstitialAdService,
         userScheduleAdCounter: UserScheduleAdCounter,
-        userDefaults: UserDefaults = AppGroupUserDefaults.shared
+        userDefaults: UserDefaults = AppGroupUserDefaults.shared,
+        onOpenNotificationSettings: @escaping () -> Void = {}
     ) {
         self.scheduleRecordStore = scheduleRecordStore
         self.adRemovalManager = adRemovalManager
         self.interstitialAdService = interstitialAdService
         self.userScheduleAdCounter = userScheduleAdCounter
         self.userDefaults = userDefaults
+        self.onOpenNotificationSettings = onOpenNotificationSettings
         _calendarVM = State(initialValue: calendarVM)
         _scheduleVM = State(initialValue: scheduleVM)
         _userVM = State(initialValue: userVM)
@@ -218,7 +222,8 @@ struct HomeMainView: View {
                             ),
                             adRemovalManager: adRemovalManager,
                             interstitialAdService: interstitialAdService,
-                            userScheduleAdCounter: userScheduleAdCounter
+                            userScheduleAdCounter: userScheduleAdCounter,
+                            onOpenNotificationSettings: onOpenNotificationSettings
                         )
                     } else {
                         ScheduleEditView(
@@ -230,7 +235,8 @@ struct HomeMainView: View {
                             ),
                             adRemovalManager: adRemovalManager,
                             interstitialAdService: interstitialAdService,
-                            userScheduleAdCounter: userScheduleAdCounter
+                            userScheduleAdCounter: userScheduleAdCounter,
+                            onOpenNotificationSettings: onOpenNotificationSettings
                         )
                     }
                 case .editSchedule(let mode):
@@ -243,7 +249,8 @@ struct HomeMainView: View {
                         ),
                         adRemovalManager: adRemovalManager,
                         interstitialAdService: interstitialAdService,
-                        userScheduleAdCounter: userScheduleAdCounter
+                        userScheduleAdCounter: userScheduleAdCounter,
+                        onOpenNotificationSettings: onOpenNotificationSettings
                     )
                 case .editRecord(let target):
                     ScheduleRecordEditView(

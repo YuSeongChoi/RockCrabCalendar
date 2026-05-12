@@ -82,7 +82,7 @@ struct ScheduleRecordListView: View {
                 }
             }
             .foregroundStyle(Color.textColor)
-            .navigationTitle("기록")
+            .navigationTitle(recordListTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbarBackground(Color.appBackground, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
@@ -130,6 +130,10 @@ struct ScheduleRecordListView: View {
                     records: grouped[month]?.sorted { $0.linkedSchedule.date > $1.linkedSchedule.date } ?? []
                 )
             }
+    }
+
+    private var recordListTitle: String {
+        AppLocalization.localized(ko: "기록", en: "Records")
     }
 
     private func monthTitle(for date: Date) -> String {

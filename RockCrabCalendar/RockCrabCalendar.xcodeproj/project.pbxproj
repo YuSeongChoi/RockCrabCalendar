@@ -851,6 +851,11 @@
 				TargetAttributes = {
 					5DE024302CA3D79E00472395 = {
 						CreatedOnToolsVersion = 15.0;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					5DE212132E6FC0F400E465E8 = {
 						CreatedOnToolsVersion = 16.4;
@@ -1217,7 +1222,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RockCrabCalendar/RockTurtleCalendar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = 8N7PD4AXR6;
@@ -1261,7 +1266,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RockCrabCalendar/RockTurtleCalendar.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RockCrabCalendar/Preview Content\"";
 				DEVELOPMENT_TEAM = 8N7PD4AXR6;
@@ -1399,7 +1404,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = RockCrabCalendarWidget/RockCrabCalendarWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8N7PD4AXR6;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RockCrabCalendarWidget/Info.plist;
@@ -1429,7 +1434,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = RockCrabCalendarWidget/RockCrabCalendarWidget.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 8N7PD4AXR6;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = RockCrabCalendarWidget/Info.plist;
