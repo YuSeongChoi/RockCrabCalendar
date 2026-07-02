@@ -1151,6 +1151,14 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "경성대학교 LIBESTA",
+            date: simpleDateFormatter.date(from: "2026-05-21")!,
+            time: "",
+            place: "경성대학교",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "PEAK FESTIVAL 2026",
             date: simpleDateFormatter.date(from: "2026-05-23")!,
             time: "",
@@ -1183,6 +1191,14 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "동아방송예술대학교 2026 Arterra",
+            date: simpleDateFormatter.date(from: "2026-06-02")!,
+            time: "",
+            place: "동아방송예술대학교 대운동장",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "WEVERSE CON FESTIVAL",
             date: simpleDateFormatter.date(from: "2026-06-06")!,
             time: "",
@@ -1206,5 +1222,29 @@ extension QWERScheduleItem {
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
+        QWERScheduleItem(
+            title: "펜타포트 락 페스티벌 2026",
+            date: simpleDateFormatter.date(from: "2026-07-31")!,
+            time: "",
+            place: "인천 송도달빛축제공원",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "2026 진주 Music & Media Festival",
+            date: simpleDateFormatter.date(from: "2026-08-08")!,
+            time: "",
+            place: "진주 촉석루 맞은편 남강둔치",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "OBJET K-POP FESTA 2026",
+            date: simpleDateFormatter.date(from: "2026-09-27")!,
+            time: "",
+            place: "일산 KINTEX",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        )
     ]
 }
