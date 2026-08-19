@@ -1239,10 +1239,154 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "2026 KT WATER FESTIVAL 키움전 시구",
+            date: simpleDateFormatter.date(from: "2026-08-16")!,
+            time: "",
+            place: "수원 KT 위즈파크",
+            members: [.Q],
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "TFT WILD FANFEST",
+            date: simpleDateFormatter.date(from: "2026-08-17")!,
+            time: "19:30",
+            place: "더현대서울",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "제 14회 부산국제코미디페스티벌 개막공연",
+            date: simpleDateFormatter.date(from: "2026-08-21")!,
+            time: "19:00",
+            place: "벡스코 오디토리움",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "2026 CassCool Festival",
+            date: simpleDateFormatter.date(from: "2026-08-22")!,
+            time: "15:55",
+            place: "Seoul Land",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "2026 K-WORLD DREAM AWARDS",
+            date: simpleDateFormatter.date(from: "2026-08-27")!,
+            time: "",
+            place: "킨텍스",
+            members: [.Q, .W, .E, .R],
+            category: .award
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION SEOUL",
+            date: simpleDateFormatter.date(from: "2026-09-12")!,
+            time: "17:00",
+            place: "고려대학교 화정체육관",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION SEOUL",
+            date: simpleDateFormatter.date(from: "2026-09-13")!,
+            time: "16:00",
+            place: "고려대학교 화정체육관",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "우리금융 우리 모모콘",
+            date: simpleDateFormatter.date(from: "2026-09-19")!,
+            time: "",
+            place: "과천 서울랜드 피크닉 광장 일대",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "OBJET K-POP FESTA 2026",
             date: simpleDateFormatter.date(from: "2026-09-27")!,
             time: "",
             place: "일산 KINTEX",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION TAIPEI",
+            date: simpleDateFormatter.date(from: "2026-10-10")!,
+            time: "17:00",
+            place: "NTSU ARENA",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION TAIPEI",
+            date: simpleDateFormatter.date(from: "2026-10-11")!,
+            time: "17:00",
+            place: "NTSU ARENA",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION FUKUOKA",
+            date: simpleDateFormatter.date(from: "2026-10-13")!,
+            time: "",
+            place: "UNITEDLAB",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION OSAKA",
+            date: simpleDateFormatter.date(from: "2026-10-15")!,
+            time: "",
+            place: "GORILLA HALL OSAKA",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION TOKYO",
+            date: simpleDateFormatter.date(from: "2026-10-17")!,
+            time: "",
+            place: "Spotify O-EAST",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION KUALA LUMPUR",
+            date: simpleDateFormatter.date(from: "2026-11-07")!,
+            time: "",
+            place: "MEGA STAR ARENA",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION BANGKOK",
+            date: simpleDateFormatter.date(from: "2026-11-14")!,
+            time: "",
+            place: "MCC HALL THE MALL",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION HONGKONG",
+            date: simpleDateFormatter.date(from: "2027-01-02")!,
+            time: "",
+            place: "ASIAWORLD-EXPO HALL 10",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION SINGAPORE",
+            date: simpleDateFormatter.date(from: "2027-01-08")!,
+            time: "",
+            place: "THE THEATRE AT MEDIACORP",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "QWER 2nd TOUR ROCKATION SINGAPORE",
+            date: simpleDateFormatter.date(from: "2027-01-09")!,
+            time: "",
+            place: "THE THEATRE AT MEDIACORP",
             members: [.Q, .W, .E, .R],
             category: .concert
         )
