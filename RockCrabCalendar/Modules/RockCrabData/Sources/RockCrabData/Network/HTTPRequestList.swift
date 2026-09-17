@@ -10,6 +10,18 @@ import Alamofire
 
 public enum HTTPRequestList {}
 
+protocol YouTubeRequestFormProtocol: DataRequestFormProtocol, Encodable {}
+
+extension YouTubeRequestFormProtocol {
+    func asURLRequest() throws -> URLRequest {
+        var request = try encoder.encode(self, into: baseRequest)
+        if let bundleIdentifier = Bundle.main.bundleIdentifier {
+            request.setValue(bundleIdentifier, forHTTPHeaderField: "X-Ios-Bundle-Identifier")
+        }
+        return request
+    }
+}
+
 extension HTTPRequestList {
     // MARK: 공휴일 조회
     struct HolidayDateInfoRequest: DataRequestFormProtocol, Encodable {
@@ -46,7 +58,7 @@ extension HTTPRequestList {
     }
     
     // MARK: 채널 리스트 조회
-    struct ChannelListRequest: DataRequestFormProtocol, Encodable {
+    struct ChannelListRequest: YouTubeRequestFormProtocol {
         var path: String { "search" }
         var method: HTTPMethod { .get }
         var validation: DataRequest.Validation? { nil }
@@ -77,13 +89,17 @@ extension HTTPRequestList {
     }
     
     // MARK: 채널 정보 조회
-    struct ChannelInfoRequest: DataRequestFormProtocol, Encodable {
+    struct ChannelInfoRequest: YouTubeRequestFormProtocol {
         var path: String { "channels" }
         var method: HTTPMethod { .get }
         var validation: DataRequest.Validation? { nil }
-        let key: String = API_KEY
+        let key: String
         let part: String = "snippet"
         let forHandle: String = "QWER_Band_official"
+
+        init(key: String = API_KEY) {
+            self.key = key
+        }
         
         var parameters: Parameters? {
             return [
