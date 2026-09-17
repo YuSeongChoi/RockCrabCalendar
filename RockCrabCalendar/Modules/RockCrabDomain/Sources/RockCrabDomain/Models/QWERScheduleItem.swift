@@ -1303,6 +1303,22 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "소년만화, 피키레스크 음원 RELEASE",
+            date: simpleDateFormatter.date(from: "2026-09-21")!,
+            time: "18:00",
+            place: "",
+            members: [.Q, .W, .E, .R],
+            category: .other
+        ),
+        QWERScheduleItem(
+            title: "2026 여수세계섬박람회 K-POP 콘서트",
+            date: simpleDateFormatter.date(from: "2026-09-26")!,
+            time: "18:30",
+            place: "여수세계섬박람회장 열린무대",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "OBJET K-POP FESTA 2026",
             date: simpleDateFormatter.date(from: "2026-09-27")!,
             time: "",
@@ -1351,6 +1367,14 @@ extension QWERScheduleItem {
             category: .concert
         ),
         QWERScheduleItem(
+            title: "K-LIVE FESTIVAL <BAND:AGE> IN HANOI",
+            date: simpleDateFormatter.date(from: "2026-10-24")!,
+            time: "12:00",
+            place: "주베트남 대한민국 대사관 후문근처 야외무대",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
             title: "QWER 2nd TOUR ROCKATION KUALA LUMPUR",
             date: simpleDateFormatter.date(from: "2026-11-07")!,
             time: "",
@@ -1363,6 +1387,14 @@ extension QWERScheduleItem {
             date: simpleDateFormatter.date(from: "2026-11-14")!,
             time: "",
             place: "MCC HALL THE MALL",
+            members: [.Q, .W, .E, .R],
+            category: .concert
+        ),
+        QWERScheduleItem(
+            title: "WONDERLIVET 2026",
+            date: simpleDateFormatter.date(from: "2026-11-22")!,
+            time: "",
+            place: "일산 KINTEX",
             members: [.Q, .W, .E, .R],
             category: .concert
         ),
